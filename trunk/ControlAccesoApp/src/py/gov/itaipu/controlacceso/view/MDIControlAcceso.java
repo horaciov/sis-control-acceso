@@ -97,6 +97,7 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         });
         jMenuParametroGeneral.add(jMenuItemEstado);
 
+        jMenuItemAntecedente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/tipoAntecente.gif"))); // NOI18N
         jMenuItemAntecedente.setText("Tipo Antecedente");
         jMenuItemAntecedente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
