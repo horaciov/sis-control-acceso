@@ -16,18 +16,16 @@ import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
  */
 public class JDialogoTipoAntecedente extends javax.swing.JDialog {
     private TipoAntecedente tipoAntecedente;
-     public TipoAntecedente getTipoAntecedente() {
-        return tipoAntecedente;
-    }
-
-    public void setTipoAntecedente(TipoAntecedente tipoAntecedente) {
-        this.tipoAntecedente = tipoAntecedente;
-    }
+    private Boolean readOnly;
+    
+    
+    
     /**
      * Creates new form JDialogoTipoAntecedente
      */
     public JDialogoTipoAntecedente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        readOnly = false;
         initComponents();
     }
 
@@ -145,7 +143,13 @@ public class JDialogoTipoAntecedente extends javax.swing.JDialog {
        
             jTextAreaDescripcion.setText(tipoAntecedente.getDescripcion());
             jTextFieldNombre.setText(tipoAntecedente.getNombre());
-      
+            if (readOnly) {
+                this.jTextAreaDescripcion.setEnabled(false);
+                this.jTextFieldNombre.setEnabled(false);
+                this.jButtonGuardar.setVisible(false);
+            }
+            
+            
       
     }//GEN-LAST:event_windowsActivate
 
@@ -199,6 +203,26 @@ public class JDialogoTipoAntecedente extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldNombre;
     // End of variables declaration//GEN-END:variables
 
-   
+    void setInactivefields(boolean b) {
+        
+        }
+
+
+     public TipoAntecedente getTipoAntecedente() {
+        return tipoAntecedente;
+    }
+
+    public void setTipoAntecedente(TipoAntecedente tipoAntecedente) {
+        this.tipoAntecedente = tipoAntecedente;
+    }
+
+    public Boolean getReadOnly() {
+        return readOnly;
+    }
+
+    public void setReadOnly(Boolean readOnly) {
+        this.readOnly = readOnly;
+    }
+    
 
 }

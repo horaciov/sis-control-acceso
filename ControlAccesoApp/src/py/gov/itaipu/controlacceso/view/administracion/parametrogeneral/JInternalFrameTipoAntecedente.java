@@ -5,6 +5,7 @@
 package py.gov.itaipu.controlacceso.view.administracion.parametrogeneral;
 
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import org.jdesktop.observablecollections.ObservableCollections;
 import py.gov.itaipu.controlacceso.action.administracion.parametrogeneral.CRUDAction;
 import py.gov.itaipu.controlacceso.model.Motivo;
@@ -52,6 +53,9 @@ public class JInternalFrameTipoAntecedente extends javax.swing.JInternalFrame {
         jTableTiposAntecedentes = new javax.swing.JTable();
         jButtonNuevo = new javax.swing.JButton();
         jButtonEditar = new javax.swing.JButton();
+        jButtonEliminar = new javax.swing.JButton();
+        jButtonEliminar1 = new javax.swing.JButton();
+        jButtonVer = new javax.swing.JButton();
 
         jDialogNuevoTipoAntecedente.setTitle("Nuevo Tipo Antecedente");
         jDialogNuevoTipoAntecedente.setAlwaysOnTop(true);
@@ -122,9 +126,6 @@ public class JInternalFrameTipoAntecedente extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setForeground(java.awt.Color.white);
-        setIconifiable(true);
-        setMaximizable(true);
-        setResizable(true);
         setTitle("Tipo Antecedente");
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listaTipoAntecedente, jTableTiposAntecedentes);
@@ -136,18 +137,55 @@ public class JInternalFrameTipoAntecedente extends javax.swing.JInternalFrame {
         jTableBinding.bind();
         jScrollPane1.setViewportView(jTableTiposAntecedentes);
 
+        jButtonNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/new.jpg"))); // NOI18N
         jButtonNuevo.setText("Nuevo");
+        jButtonNuevo.setMaximumSize(new java.awt.Dimension(89, 25));
+        jButtonNuevo.setMinimumSize(new java.awt.Dimension(89, 25));
+        jButtonNuevo.setPreferredSize(new java.awt.Dimension(89, 25));
         jButtonNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonNuevoActionPerformed(evt);
             }
         });
 
+        jButtonEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/edit.png"))); // NOI18N
         jButtonEditar.setText("Editar");
         jButtonEditar.setActionCommand("editar");
+        jButtonEditar.setMaximumSize(new java.awt.Dimension(89, 25));
+        jButtonEditar.setMinimumSize(new java.awt.Dimension(89, 25));
+        jButtonEditar.setPreferredSize(new java.awt.Dimension(89, 25));
         jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonEditarActionPerformed(evt);
+            }
+        });
+
+        jButtonEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/delete.png"))); // NOI18N
+        jButtonEliminar.setText("Eliminar");
+        jButtonEliminar.setPreferredSize(new java.awt.Dimension(95, 25));
+        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarActionPerformed(evt);
+            }
+        });
+
+        jButtonEliminar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/delete.png"))); // NOI18N
+        jButtonEliminar1.setText("Eliminar");
+        jButtonEliminar1.setPreferredSize(new java.awt.Dimension(95, 25));
+        jButtonEliminar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminar1ActionPerformed(evt);
+            }
+        });
+
+        jButtonVer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/view.png"))); // NOI18N
+        jButtonVer.setText("Ver");
+        jButtonVer.setMaximumSize(new java.awt.Dimension(89, 25));
+        jButtonVer.setMinimumSize(new java.awt.Dimension(89, 25));
+        jButtonVer.setPreferredSize(new java.awt.Dimension(89, 25));
+        jButtonVer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVerActionPerformed(evt);
             }
         });
 
@@ -158,15 +196,24 @@ public class JInternalFrameTipoAntecedente extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonNuevo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonEditar)
-                        .addGap(148, 148, 148))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonVer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonEliminar1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)))
                 .addGap(25, 25, 25))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(214, 214, 214)
+                    .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(214, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,9 +222,16 @@ public class JInternalFrameTipoAntecedente extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonNuevo)
-                    .addComponent(jButtonEditar))
-                .addContainerGap(23, Short.MAX_VALUE))
+                    .addComponent(jButtonNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonEliminar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonVer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(159, 159, 159)
+                    .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(142, Short.MAX_VALUE)))
         );
 
         bindingGroup.bind();
@@ -223,10 +277,49 @@ public class JInternalFrameTipoAntecedente extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
+    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
+        // TODO add your handling code here:
+   
+    }//GEN-LAST:event_jButtonEliminarActionPerformed
+
+    private void jButtonEliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminar1ActionPerformed
+        // TODO add your handling code here:
+         if(jTableTiposAntecedentes.getSelectedRow()<0){
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un Tipo de Antecedente","Error",0);
+            return;
+        }
+        if(JOptionPane.showConfirmDialog(this,"Está seguro que desea eliminar?","Eliminar Motivo",0)!=0)
+            return;       
+        TipoAntecedente ta=(TipoAntecedente) listaTipoAntecedente.get(jTableTiposAntecedentes.getSelectedRow());
+        tipoAntecedenteAction.setEntity(ta);
+        tipoAntecedenteAction.eliminar();
+        listaTipoAntecedente.clear();
+        listaTipoAntecedente.addAll(tipoAntecedenteAction.findAll());
+        JOptionPane.showMessageDialog(this, "Se ha eliminado correctamente","Info",1);
+    }//GEN-LAST:event_jButtonEliminar1ActionPerformed
+
+    private void jButtonVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerActionPerformed
+        if(jTableTiposAntecedentes.getSelectedRow()<0){
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un Tipo de Antecedente","Error",0);
+            return;
+        }
+         tipoAntecedente = (TipoAntecedente) listaTipoAntecedente.get(jTableTiposAntecedentes.getSelectedRow());
+         JDialogoTipoAntecedente dialogoNuevo = new JDialogoTipoAntecedente(null, closable);
+         dialogoNuevo.setTipoAntecedente(tipoAntecedente);
+         dialogoNuevo.setReadOnly(true);
+         dialogoNuevo.setVisible(true);
+                
+      
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonVerActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonEditar;
+    private javax.swing.JButton jButtonEliminar;
+    private javax.swing.JButton jButtonEliminar1;
     private javax.swing.JButton jButtonGuardar;
     private javax.swing.JButton jButtonNuevo;
+    private javax.swing.JButton jButtonVer;
     private javax.swing.JDialog jDialogNuevoTipoAntecedente;
     private javax.swing.JLabel jLabelNombre;
     private javax.swing.JLabel jLabelNombreDescripcion;
