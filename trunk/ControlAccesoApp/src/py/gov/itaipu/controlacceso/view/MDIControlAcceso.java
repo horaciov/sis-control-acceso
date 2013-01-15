@@ -10,6 +10,7 @@ import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameEstado;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameMotivo;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameTipoAntecedente;
+import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameTipoDocumento;
 
 /**
  *
@@ -45,6 +46,7 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         jMenuItemMotivoVisita = new javax.swing.JMenuItem();
         jMenuItemEstado = new javax.swing.JMenuItem();
         jMenuItemAntecedente = new javax.swing.JMenuItem();
+        jMenuItemTipoDocumento = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         contentMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
@@ -102,6 +104,15 @@ public class MDIControlAcceso extends javax.swing.JFrame {
             }
         });
         jMenuParametroGeneral.add(jMenuItemAntecedente);
+
+        jMenuItemTipoDocumento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/icon-doc.gif"))); // NOI18N
+        jMenuItemTipoDocumento.setText("Tipo Documento");
+        jMenuItemTipoDocumento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemTipoDocumentoActionPerformed(evt);
+            }
+        });
+        jMenuParametroGeneral.add(jMenuItemTipoDocumento);
 
         jMenuAdministracion.add(jMenuParametroGeneral);
 
@@ -170,6 +181,13 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         this.desktopPane.add(tipoAntecedenteFrame);
     }//GEN-LAST:event_jMenuItemAntecedenteActionPerformed
 
+    private void jMenuItemTipoDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemTipoDocumentoActionPerformed
+        // TODO add your handling code here:
+        JInternalFrameTipoDocumento tipoDocumentoFrame=new JInternalFrameTipoDocumento();
+        tipoDocumentoFrame.setVisible(true);
+        this.desktopPane.add(tipoDocumentoFrame);
+    }//GEN-LAST:event_jMenuItemTipoDocumentoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -214,6 +232,7 @@ public class MDIControlAcceso extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemEstado;
     private javax.swing.JMenuItem jMenuItemMotivoVisita;
     private javax.swing.JMenuItem jMenuItemPersonaNueva;
+    private javax.swing.JMenuItem jMenuItemTipoDocumento;
     private javax.swing.JMenu jMenuParametroGeneral;
     private javax.swing.JMenu jMenuPersona;
     private javax.swing.JMenuBar menuBar;
