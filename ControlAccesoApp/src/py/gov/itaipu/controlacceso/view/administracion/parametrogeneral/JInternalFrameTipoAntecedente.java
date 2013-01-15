@@ -8,7 +8,6 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import org.jdesktop.observablecollections.ObservableCollections;
 import py.gov.itaipu.controlacceso.action.administracion.parametrogeneral.CRUDAction;
-import py.gov.itaipu.controlacceso.model.Motivo;
 import py.gov.itaipu.controlacceso.model.TipoAntecedente;
 
 /**
@@ -268,7 +267,11 @@ public class JInternalFrameTipoAntecedente extends javax.swing.JInternalFrame {
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         // TODO add your handling code here:
-         tipoAntecedente = (TipoAntecedente) listaTipoAntecedente.get(jTableTiposAntecedentes.getSelectedRow());
+         if(jTableTiposAntecedentes.getSelectedRow()<0){
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un Tipo de Antecedente","Error",0);
+            return;
+        } 
+        tipoAntecedente = (TipoAntecedente) listaTipoAntecedente.get(jTableTiposAntecedentes.getSelectedRow());
          JDialogoTipoAntecedente dialogoNuevo = new JDialogoTipoAntecedente(null, closable);
          dialogoNuevo.setTipoAntecedente(tipoAntecedente);
          dialogoNuevo.setVisible(true);
@@ -288,7 +291,7 @@ public class JInternalFrameTipoAntecedente extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un Tipo de Antecedente","Error",0);
             return;
         }
-        if(JOptionPane.showConfirmDialog(this,"Está seguro que desea eliminar?","Eliminar Motivo",0)!=0)
+        if(JOptionPane.showConfirmDialog(this,"Está seguro que desea eliminar?","Eliminar Tipo Antecedente",0)!=0)
             return;       
         TipoAntecedente ta=(TipoAntecedente) listaTipoAntecedente.get(jTableTiposAntecedentes.getSelectedRow());
         tipoAntecedenteAction.setEntity(ta);
