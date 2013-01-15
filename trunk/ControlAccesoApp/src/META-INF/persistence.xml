@@ -3,6 +3,8 @@
   <persistence-unit name="ControlAccesoAppPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <class>py.gov.itaipu.controlacceso.model.Motivo</class>
+    <class>py.gov.itaipu.controlacceso.model.Antecedente</class>
+    <class>py.gov.itaipu.controlacceso.model.Visita</class>
     <properties>
       <property name="hibernate.connection.username" value="controlacceso"/>
       <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>

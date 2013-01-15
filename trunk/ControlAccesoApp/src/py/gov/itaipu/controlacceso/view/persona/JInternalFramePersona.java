@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package py.gov.itaipu.controlacceso.view;
+package py.gov.itaipu.controlacceso.view.persona;
 
 import java.awt.Dimension;
 
