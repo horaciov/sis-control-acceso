@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameEstado;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameMotivo;
+import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameNacionalidad;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameTipoAntecedente;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameTipoDocumento;
 
@@ -47,6 +48,7 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         jMenuItemEstado = new javax.swing.JMenuItem();
         jMenuItemAntecedente = new javax.swing.JMenuItem();
         jMenuItemTipoDocumento = new javax.swing.JMenuItem();
+        jMenuItemNacionalidad = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         contentMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
@@ -114,6 +116,15 @@ public class MDIControlAcceso extends javax.swing.JFrame {
             }
         });
         jMenuParametroGeneral.add(jMenuItemTipoDocumento);
+
+        jMenuItemNacionalidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/mundo.png"))); // NOI18N
+        jMenuItemNacionalidad.setText("Nacionalidad");
+        jMenuItemNacionalidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemNacionalidadActionPerformed(evt);
+            }
+        });
+        jMenuParametroGeneral.add(jMenuItemNacionalidad);
 
         jMenuAdministracion.add(jMenuParametroGeneral);
 
@@ -189,6 +200,13 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         this.desktopPane.add(tipoDocumentoFrame);
     }//GEN-LAST:event_jMenuItemTipoDocumentoActionPerformed
 
+    private void jMenuItemNacionalidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemNacionalidadActionPerformed
+        // TODO add your handling code here:
+        JInternalFrameNacionalidad nacionalidadFrame=new JInternalFrameNacionalidad();
+        nacionalidadFrame.setVisible(true);
+        this.desktopPane.add(nacionalidadFrame);
+    }//GEN-LAST:event_jMenuItemNacionalidadActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -232,6 +250,7 @@ public class MDIControlAcceso extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemAntecedente;
     private javax.swing.JMenuItem jMenuItemEstado;
     private javax.swing.JMenuItem jMenuItemMotivoVisita;
+    private javax.swing.JMenuItem jMenuItemNacionalidad;
     private javax.swing.JMenuItem jMenuItemPersonaNueva;
     private javax.swing.JMenuItem jMenuItemTipoDocumento;
     private javax.swing.JMenu jMenuParametroGeneral;
