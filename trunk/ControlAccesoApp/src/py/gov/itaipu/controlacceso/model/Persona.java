@@ -32,11 +32,13 @@ public class Persona implements Serializable{
     private Nacionalidad nacionalidad;
     private String sexo;
     private String estadoCivil;
+    private Organizacion organizacion;
     private List<Antecedente> antecedentes;
     private List<Visita> visitasRealizadas;
     private List<Visita> visitasRecibidas;
 
     public Persona() {
+        
     }
 
     public Persona(String nombre, String apellido, Date fechaNacimiento) {
@@ -159,6 +161,16 @@ public class Persona implements Serializable{
         this.visitasRecibidas = visitasRecibidas;
     }
 
+    @ManyToOne
+    public Organizacion getOrganizacion() {
+        return organizacion;
+    }
+
+    public void setOrganizacion(Organizacion organizacion) {
+        this.organizacion = organizacion;
+    }
+    
+        
     @Override
     public int hashCode() {
         int hash = 7;
