@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.swingbinding.JTableBinding;
-import py.gov.itaipu.controlacceso.action.administracion.parametrogeneral.CRUDAction;
+import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.model.Motivo;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 
