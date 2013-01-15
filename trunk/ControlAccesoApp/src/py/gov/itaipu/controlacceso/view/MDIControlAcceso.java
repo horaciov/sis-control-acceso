@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameEstado;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameMotivo;
+import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameTipoAntecedente;
 
 /**
  *
@@ -95,6 +96,11 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         jMenuParametroGeneral.add(jMenuItemEstado);
 
         jMenuItemAntecedente.setText("Tipo Antecedente");
+        jMenuItemAntecedente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemAntecedenteActionPerformed(evt);
+            }
+        });
         jMenuParametroGeneral.add(jMenuItemAntecedente);
 
         jMenuAdministracion.add(jMenuParametroGeneral);
@@ -156,6 +162,13 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         estadoFrame.setVisible(true);
         this.desktopPane.add(estadoFrame);
     }//GEN-LAST:event_jMenuItemEstadoActionPerformed
+
+    private void jMenuItemAntecedenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAntecedenteActionPerformed
+        // TODO add your handling code here:
+        JInternalFrameTipoAntecedente tipoAntecedenteFrame=new JInternalFrameTipoAntecedente();
+        tipoAntecedenteFrame.setVisible(true);
+        this.desktopPane.add(tipoAntecedenteFrame);
+    }//GEN-LAST:event_jMenuItemAntecedenteActionPerformed
 
     /**
      * @param args the command line arguments

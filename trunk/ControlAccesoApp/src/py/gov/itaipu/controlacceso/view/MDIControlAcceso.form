@@ -67,6 +67,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Tipo Antecedente"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemAntecedenteActionPerformed"/>
+                  </Events>
                 </MenuItem>
               </SubComponents>
             </Menu>
