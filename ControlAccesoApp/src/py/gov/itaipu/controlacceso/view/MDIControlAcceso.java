@@ -11,6 +11,7 @@ import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameEstado;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameMotivo;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameNacionalidad;
+import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameOrganizacionInterna;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameTipoAntecedente;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameTipoDocumento;
 
@@ -50,6 +51,9 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         jMenuItemAntecedente = new javax.swing.JMenuItem();
         jMenuItemTipoDocumento = new javax.swing.JMenuItem();
         jMenuItemNacionalidad = new javax.swing.JMenuItem();
+        jMenuOrganizacion = new javax.swing.JMenu();
+        jMenuItemOrganizacionInterna = new javax.swing.JMenuItem();
+        jMenuItemOrganizacionExterna = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         contentMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
@@ -128,6 +132,21 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         jMenuParametroGeneral.add(jMenuItemNacionalidad);
 
         jMenuAdministracion.add(jMenuParametroGeneral);
+
+        jMenuOrganizacion.setText("Organizacion");
+
+        jMenuItemOrganizacionInterna.setText("Organizacion Interna");
+        jMenuItemOrganizacionInterna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemOrganizacionInternaActionPerformed(evt);
+            }
+        });
+        jMenuOrganizacion.add(jMenuItemOrganizacionInterna);
+
+        jMenuItemOrganizacionExterna.setText("Organizacion Externa");
+        jMenuOrganizacion.add(jMenuItemOrganizacionExterna);
+
+        jMenuAdministracion.add(jMenuOrganizacion);
 
         menuBar.add(jMenuAdministracion);
 
@@ -208,6 +227,13 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         this.desktopPane.add(personaFrame);
     }//GEN-LAST:event_jMenuItemRegistroActionPerformed
 
+    private void jMenuItemOrganizacionInternaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemOrganizacionInternaActionPerformed
+        // TODO add your handling code here:
+        JInternalFrameOrganizacionInterna organizacionInternaFrame=new JInternalFrameOrganizacionInterna();
+        organizacionInternaFrame.setVisible(true);
+        this.desktopPane.add(organizacionInternaFrame);
+    }//GEN-LAST:event_jMenuItemOrganizacionInternaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -252,8 +278,11 @@ public class MDIControlAcceso extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemEstado;
     private javax.swing.JMenuItem jMenuItemMotivoVisita;
     private javax.swing.JMenuItem jMenuItemNacionalidad;
+    private javax.swing.JMenuItem jMenuItemOrganizacionExterna;
+    private javax.swing.JMenuItem jMenuItemOrganizacionInterna;
     private javax.swing.JMenuItem jMenuItemRegistro;
     private javax.swing.JMenuItem jMenuItemTipoDocumento;
+    private javax.swing.JMenu jMenuOrganizacion;
     private javax.swing.JMenu jMenuParametroGeneral;
     private javax.swing.JMenu jMenuPersona;
     private javax.swing.JMenuBar menuBar;
