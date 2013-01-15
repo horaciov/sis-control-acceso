@@ -12,15 +12,15 @@
             <Property name="text" type="java.lang.String" value="Persona"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemPersonaNueva">
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemRegistro">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/resource/img/edit.png"/>
+                  <Image iconType="3" name="/resource/img/Boss.gif"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Nueva"/>
+                <Property name="text" type="java.lang.String" value="Registro de Personas"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemPersonaNuevaActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemRegistroActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
