@@ -6,34 +6,35 @@ package py.gov.itaipu.controlacceso.view.administracion.parametrogeneral;
 
 import javax.swing.JOptionPane;
 import py.gov.itaipu.controlacceso.action.administracion.parametrogeneral.CRUDAction;
-import py.gov.itaipu.controlacceso.model.Estado;
-import py.gov.itaipu.controlacceso.model.Motivo;
+import py.gov.itaipu.controlacceso.model.TipoDocumento;
 
 /**
  *
  * @author vimartih
  */
-public class JDialogEstado extends javax.swing.JDialog {
+public class JDialogTipoDocumento extends javax.swing.JDialog {
 
-    private Estado estado;
+    private TipoDocumento tipoDocumento;
     private Boolean readOnly;
     
     /**
      * Creates new form JDialogMotivo
      */
-    public JDialogEstado(java.awt.Frame parent, boolean modal) {
+    public JDialogTipoDocumento(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         readOnly=false;
         initComponents();        
     }
 
-    public Estado getEstado() {
-        return estado;
+    public TipoDocumento getTipoDocumento() {
+        return tipoDocumento;
     }
 
-    public void setEstado(Estado estado) {
-        this.estado = estado;
-    } 
+    public void setTipoDocumento(TipoDocumento tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
+    }
+
+    
 
     public Boolean getReadOnly() {
         return readOnly;
@@ -54,7 +55,7 @@ public class JDialogEstado extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextFieldEstado = new javax.swing.JTextField();
+        jTextFieldTipoDocumento = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaDescripcion = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
@@ -65,7 +66,7 @@ public class JDialogEstado extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Estado de la persona");
+        setTitle("Tipo de Documento");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
@@ -76,7 +77,7 @@ public class JDialogEstado extends javax.swing.JDialog {
         jTextAreaDescripcion.setRows(5);
         jScrollPane1.setViewportView(jTextAreaDescripcion);
 
-        jLabel2.setText("Estado:");
+        jLabel2.setText("Tipo:");
 
         jLabel3.setText("Descripción:");
 
@@ -96,7 +97,7 @@ public class JDialogEstado extends javax.swing.JDialog {
             }
         });
 
-        jLabel4.setText("Estado");
+        jLabel4.setText("Tipo de documento");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -121,8 +122,8 @@ public class JDialogEstado extends javax.swing.JDialog {
                                     .addComponent(jLabel3))
                                 .addGap(32, 32, 32)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
-                                    .addComponent(jTextFieldEstado)))
+                                    .addComponent(jScrollPane1)
+                                    .addComponent(jTextFieldTipoDocumento)))
                             .addComponent(jSeparator1))))
                 .addGap(63, 63, 63))
         );
@@ -135,7 +136,7 @@ public class JDialogEstado extends javax.swing.JDialog {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldTipoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,16 +159,16 @@ public class JDialogEstado extends javax.swing.JDialog {
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
-        if(estado==null)
+        if(tipoDocumento==null)
             return;
-        CRUDAction<Estado> action=new CRUDAction<Estado>(estado);
-        if(jTextFieldEstado.getText()==null || jTextFieldEstado.getText().equals("")){
-            JOptionPane.showMessageDialog(this, "El estado es obligatorio","Error",0);
+        CRUDAction<TipoDocumento> action=new CRUDAction<TipoDocumento>(tipoDocumento);
+        if(jTextFieldTipoDocumento.getText()==null || jTextFieldTipoDocumento.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "El tipo es obligatorio","Error",0);
             return;
         }
-        estado.setNombre(jTextFieldEstado.getText());
-        estado.setDescripcion(jTextAreaDescripcion.getText());
-        if(estado.getId()==null) {
+        tipoDocumento.setNombre(jTextFieldTipoDocumento.getText());
+        tipoDocumento.setDescripcion(jTextAreaDescripcion.getText());
+        if(tipoDocumento.getId()==null) {
             action.crear();
             JOptionPane.showMessageDialog(this, "Se ha creado con éxito","Info",1);
         }
@@ -180,11 +181,11 @@ public class JDialogEstado extends javax.swing.JDialog {
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
-        jTextFieldEstado.setText(estado.getNombre());
-        jTextAreaDescripcion.setText(estado.getDescripcion());
+        jTextFieldTipoDocumento.setText(tipoDocumento.getNombre());
+        jTextAreaDescripcion.setText(tipoDocumento.getDescripcion());
         
         if(readOnly){
-            jTextFieldEstado.setEnabled(false);
+            jTextFieldTipoDocumento.setEnabled(false);
             jTextAreaDescripcion.setEnabled(false);
             jButtonGuardar.setVisible(false);
         }
@@ -207,20 +208,20 @@ public class JDialogEstado extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JDialogEstado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDialogTipoDocumento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JDialogEstado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDialogTipoDocumento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JDialogEstado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDialogTipoDocumento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JDialogEstado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDialogTipoDocumento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JDialogEstado dialog = new JDialogEstado(new javax.swing.JFrame(), true);
+                JDialogTipoDocumento dialog = new JDialogTipoDocumento(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -240,6 +241,6 @@ public class JDialogEstado extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextArea jTextAreaDescripcion;
-    private javax.swing.JTextField jTextFieldEstado;
+    private javax.swing.JTextField jTextFieldTipoDocumento;
     // End of variables declaration//GEN-END:variables
 }
