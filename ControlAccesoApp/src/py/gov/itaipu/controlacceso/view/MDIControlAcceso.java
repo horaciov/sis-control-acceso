@@ -43,6 +43,7 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         jMenuParametroGeneral = new javax.swing.JMenu();
         jMenuItemMotivoVisita = new javax.swing.JMenuItem();
         jMenuItemEstado = new javax.swing.JMenuItem();
+        jMenuItemAntecedente = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         contentMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
@@ -92,6 +93,9 @@ public class MDIControlAcceso extends javax.swing.JFrame {
             }
         });
         jMenuParametroGeneral.add(jMenuItemEstado);
+
+        jMenuItemAntecedente.setText("Tipo Antecedente");
+        jMenuParametroGeneral.add(jMenuItemAntecedente);
 
         jMenuAdministracion.add(jMenuParametroGeneral);
 
@@ -193,6 +197,7 @@ public class MDIControlAcceso extends javax.swing.JFrame {
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JMenu jMenuAdministracion;
+    private javax.swing.JMenuItem jMenuItemAntecedente;
     private javax.swing.JMenuItem jMenuItemEstado;
     private javax.swing.JMenuItem jMenuItemMotivoVisita;
     private javax.swing.JMenuItem jMenuItemPersonaNueva;
