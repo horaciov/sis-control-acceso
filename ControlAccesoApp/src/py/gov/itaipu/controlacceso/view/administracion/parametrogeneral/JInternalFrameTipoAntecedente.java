@@ -7,7 +7,7 @@ package py.gov.itaipu.controlacceso.view.administracion.parametrogeneral;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import org.jdesktop.observablecollections.ObservableCollections;
-import py.gov.itaipu.controlacceso.action.administracion.parametrogeneral.CRUDAction;
+import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.model.TipoAntecedente;
 
 /**

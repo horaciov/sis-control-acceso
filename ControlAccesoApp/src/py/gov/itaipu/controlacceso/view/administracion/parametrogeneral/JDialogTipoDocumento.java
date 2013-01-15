@@ -5,7 +5,7 @@
 package py.gov.itaipu.controlacceso.view.administracion.parametrogeneral;
 
 import javax.swing.JOptionPane;
-import py.gov.itaipu.controlacceso.action.administracion.parametrogeneral.CRUDAction;
+import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.model.TipoDocumento;
 
 /**

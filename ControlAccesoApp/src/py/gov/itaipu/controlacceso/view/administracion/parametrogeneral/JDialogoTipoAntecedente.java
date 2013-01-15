@@ -6,7 +6,7 @@ package py.gov.itaipu.controlacceso.view.administracion.parametrogeneral;
 
 import javax.swing.JOptionPane;
 import javax.xml.soap.Text;
-import py.gov.itaipu.controlacceso.action.administracion.parametrogeneral.CRUDAction;
+import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.model.TipoAntecedente;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 
