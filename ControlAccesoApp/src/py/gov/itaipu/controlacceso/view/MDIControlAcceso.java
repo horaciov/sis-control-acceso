@@ -14,6 +14,7 @@ import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInterna
 import py.gov.itaipu.controlacceso.view.administracion.organizacion.JInternalFrameOrganizacionInterna;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameTipoAntecedente;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameTipoDocumento;
+import py.gov.itaipu.controlacceso.view.visita.JInternalFrameRegistroVisita;
 
 /**
  *
@@ -42,6 +43,8 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         menuBar = new javax.swing.JMenuBar();
         jMenuPersona = new javax.swing.JMenu();
         jMenuItemRegistro = new javax.swing.JMenuItem();
+        jMenuVisita = new javax.swing.JMenu();
+        jMenuItemRegistroVisita = new javax.swing.JMenuItem();
         jMenuAdministracion = new javax.swing.JMenu();
         jMenuParametroGeneral = new javax.swing.JMenu();
         jMenuItemMotivoVisita = new javax.swing.JMenuItem();
@@ -77,6 +80,20 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         jMenuPersona.add(jMenuItemRegistro);
 
         menuBar.add(jMenuPersona);
+
+        jMenuVisita.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/icon-clock.png"))); // NOI18N
+        jMenuVisita.setText("Visita");
+
+        jMenuItemRegistroVisita.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/icon-clock.png"))); // NOI18N
+        jMenuItemRegistroVisita.setText("Registro visita");
+        jMenuItemRegistroVisita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemRegistroVisitaActionPerformed(evt);
+            }
+        });
+        jMenuVisita.add(jMenuItemRegistroVisita);
+
+        menuBar.add(jMenuVisita);
 
         jMenuAdministracion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/manage_icon.png"))); // NOI18N
         jMenuAdministracion.setText("Administración");
@@ -244,6 +261,13 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         this.desktopPane.add(organizacionExternaFrame);
     }//GEN-LAST:event_jMenuItemOrganizacionExternaActionPerformed
 
+    private void jMenuItemRegistroVisitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRegistroVisitaActionPerformed
+        // TODO add your handling code here:
+        JInternalFrameRegistroVisita registroVisitaFrame = new JInternalFrameRegistroVisita();
+        registroVisitaFrame.setVisible(true);
+        this.desktopPane.add(registroVisitaFrame);
+    }//GEN-LAST:event_jMenuItemRegistroVisitaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -291,10 +315,12 @@ public class MDIControlAcceso extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemOrganizacionExterna;
     private javax.swing.JMenuItem jMenuItemOrganizacionInterna;
     private javax.swing.JMenuItem jMenuItemRegistro;
+    private javax.swing.JMenuItem jMenuItemRegistroVisita;
     private javax.swing.JMenuItem jMenuItemTipoDocumento;
     private javax.swing.JMenu jMenuOrganizacion;
     private javax.swing.JMenu jMenuParametroGeneral;
     private javax.swing.JMenu jMenuPersona;
+    private javax.swing.JMenu jMenuVisita;
     private javax.swing.JMenuBar menuBar;
     // End of variables declaration//GEN-END:variables
 }

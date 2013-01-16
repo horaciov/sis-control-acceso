@@ -69,6 +69,7 @@ public class Visita implements Serializable {
         this.personaVisitada = personaVisitada;
     }
 
+    @ManyToOne
     public Motivo getMotivo() {
         return motivo;
     }
