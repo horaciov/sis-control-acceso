@@ -25,6 +25,8 @@ public class Visita implements Serializable {
     private Long id;
     private Persona persona;
     private Persona personaVisitada;
+    private Organizacion organizacionInterna;
+    private Organizacion organizacionVisita;
     private Motivo motivo;
     private Date fechaIngreso;
     private Date fechaSalida;
@@ -70,6 +72,26 @@ public class Visita implements Serializable {
     }
 
     @ManyToOne
+    public Organizacion getOrganizacionInterna() {
+        return organizacionInterna;
+    }
+
+    public void setOrganizacionInterna(Organizacion organizacionInterna) {
+        this.organizacionInterna = organizacionInterna;
+    }
+
+    @ManyToOne
+    public Organizacion getOrganizacionVisita() {
+        return organizacionVisita;
+    }
+
+    public void setOrganizacionVisita(Organizacion organizacionVisita) {
+        this.organizacionVisita = organizacionVisita;
+    }
+    
+    
+
+    @ManyToOne
     public Motivo getMotivo() {
         return motivo;
     }
@@ -78,7 +100,7 @@ public class Visita implements Serializable {
         this.motivo = motivo;
     }
 
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     public Date getFechaIngreso() {
         return fechaIngreso;
     }
@@ -87,7 +109,7 @@ public class Visita implements Serializable {
         this.fechaIngreso = fechaIngreso;
     }
 
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     public Date getFechaSalida() {
         return fechaSalida;
     }

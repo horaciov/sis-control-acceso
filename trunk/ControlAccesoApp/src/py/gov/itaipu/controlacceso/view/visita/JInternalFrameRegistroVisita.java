@@ -4,6 +4,9 @@
  */
 package py.gov.itaipu.controlacceso.view.visita;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Formatter;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.*;
 import java.util.List;
 import java.util.logging.Level;
@@ -52,32 +55,40 @@ public class JInternalFrameRegistroVisita extends javax.swing.JInternalFrame {
 
         listVisitas = ObservableCollections.observableList(visitaAction.findVisitasPendientes());
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableMotivos = new javax.swing.JTable();
+        jTableVisitas = new javax.swing.JTable();
         jButtonNuevo = new javax.swing.JButton();
         jButtonEditar = new javax.swing.JButton();
         jButtonCerrar = new javax.swing.JButton();
         jButtonEliminar = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
         jButtonVer = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        jPanel1 = new javax.swing.JPanel();
+        jButtonRegistroSalida = new javax.swing.JButton();
 
         setTitle("Gestión de visitas");
 
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listVisitas, jTableMotivos);
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listVisitas, jTableVisitas);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${persona.nombre} ${persona.apellido}"));
         columnBinding.setColumnName("Persona");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${organizacionVisita.nombre}"));
+        columnBinding.setColumnName("Organización");
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${fechaIngreso}"));
         columnBinding.setColumnName("Fecha Ingreso");
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${motivo.nombre}"));
         columnBinding.setColumnName("Motivo");
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${personaVisitada.nombre} ${personaVisitada.apellido}"));
         columnBinding.setColumnName("Persona Visitada");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${organizacionInterna.nombre}"));
+        columnBinding.setColumnName("Area Visitada");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${observacion}"));
+        columnBinding.setColumnName("Observacion");
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
-        jScrollPane1.setViewportView(jTableMotivos);
-        jTableMotivos.getColumnModel().getColumn(0).setMinWidth(200);
-        jTableMotivos.getColumnModel().getColumn(0).setPreferredWidth(200);
-        jTableMotivos.getColumnModel().getColumn(0).setMaxWidth(200);
+        jScrollPane1.setViewportView(jTableVisitas);
+        jTableVisitas.getColumnModel().getColumn(0).setMinWidth(200);
+        jTableVisitas.getColumnModel().getColumn(0).setPreferredWidth(200);
+        jTableVisitas.getColumnModel().getColumn(0).setMaxWidth(200);
 
         jButtonNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/new.jpg"))); // NOI18N
         jButtonNuevo.setText("Nuevo");
@@ -134,42 +145,67 @@ public class JInternalFrameRegistroVisita extends javax.swing.JInternalFrame {
             }
         });
 
+        jButtonRegistroSalida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/salida.jpeg"))); // NOI18N
+        jButtonRegistroSalida.setToolTipText("Registro de salida");
+        jButtonRegistroSalida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRegistroSalidaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jButtonRegistroSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonRegistroSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1196, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jButtonVer, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1))
-                        .addGap(20, 20, 20))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 672, Short.MAX_VALUE)
+                        .addComponent(jButtonVer, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jSeparator1))
+                .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(7, 7, 7)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 541, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -187,8 +223,8 @@ public class JInternalFrameRegistroVisita extends javax.swing.JInternalFrame {
 
     private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
         // TODO add your handling code here:    
-        JDialogMotivo dialogMotivo = new JDialogMotivo(null, closable);
-        dialogMotivo.setMotivo(new Motivo());
+        JDialogVisita dialogMotivo = new JDialogVisita(null, closable);
+        dialogMotivo.setVisita(new Visita());
         dialogMotivo.setVisible(true);
         listVisitas.clear();
         listVisitas.addAll(visitaAction.findVisitasPendientes());
@@ -197,11 +233,11 @@ public class JInternalFrameRegistroVisita extends javax.swing.JInternalFrame {
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         // TODO add your handling code here:
-        if(jTableMotivos.getSelectedRow()<0){
+        if(jTableVisitas.getSelectedRow()<0){
             JOptionPane.showMessageDialog(this, "Debe seleccionar un motivo","Error",0);
             return;
         }
-        Motivo m=(Motivo) listVisitas.get(jTableMotivos.getSelectedRow());
+        Motivo m=(Motivo) listVisitas.get(jTableVisitas.getSelectedRow());
         JDialogMotivo dialogMotivo = new JDialogMotivo(null, closable);
         dialogMotivo.setMotivo(m);
         dialogMotivo.setVisible(true);
@@ -211,13 +247,13 @@ public class JInternalFrameRegistroVisita extends javax.swing.JInternalFrame {
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
         // TODO add your handling code here:
-         if(jTableMotivos.getSelectedRow()<0){
+         if(jTableVisitas.getSelectedRow()<0){
             JOptionPane.showMessageDialog(this, "Debe seleccionar un motivo","Error",0);
             return;
         }
         if(JOptionPane.showConfirmDialog(this,"Está seguro que desea eliminar?","Eliminar Motivo",0)!=0)
             return;       
-        Visita v=(Visita) listVisitas.get(jTableMotivos.getSelectedRow());
+        Visita v=(Visita) listVisitas.get(jTableVisitas.getSelectedRow());
         visitaAction.setVisita(v);
         visitaAction.eliminar();
         listVisitas.clear();
@@ -232,16 +268,43 @@ public class JInternalFrameRegistroVisita extends javax.swing.JInternalFrame {
 
     private void jButtonVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerActionPerformed
         // TODO add your handling code here:
-         if(jTableMotivos.getSelectedRow()<0){
+         if(jTableVisitas.getSelectedRow()<0){
             JOptionPane.showMessageDialog(this, "Debe seleccionar un motivo","Error",0);
             return;
         }
-        Motivo m=(Motivo) listVisitas.get(jTableMotivos.getSelectedRow());
-        JDialogMotivo dialogMotivo = new JDialogMotivo(null, closable);
-        dialogMotivo.setMotivo(m);
-        dialogMotivo.setReadOnly(true);
-        dialogMotivo.setVisible(true);
+        Visita v=(Visita) listVisitas.get(jTableVisitas.getSelectedRow());
+//        JDialogMotivo dialogMotivo = new JDialogMotivo(null, closable);
+//        dialogMotivo.setMotivo(v);
+//        dialogMotivo.setReadOnly(true);
+//        dialogMotivo.setVisible(true);
     }//GEN-LAST:event_jButtonVerActionPerformed
+
+    private void jButtonRegistroSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistroSalidaActionPerformed
+        // TODO add your handling code here:
+        if(jTableVisitas.getSelectedRow()<0){
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una visita","Error",0);
+            return;
+        }
+        Calendar c= Calendar.getInstance();
+        SimpleDateFormat sdf=new SimpleDateFormat("dd/mm/yyyy HH:mm");
+        
+        Visita v=(Visita) listVisitas.get(jTableVisitas.getSelectedRow());
+        if(JOptionPane.showConfirmDialog(this,"Está seguro que desea marcar la salida de " 
+                +v.getPersona().getNombre()+
+                " "+v.getPersona().getApellido()+
+                ", a las: "+sdf.format(c.getTime())
+                +
+                "?","Registro de salida",0)!=0)
+            return;   
+        
+        v.setFechaSalida(c.getTime());
+        visitaAction.setVisita(v);
+        visitaAction.guardar();
+        listVisitas.clear();
+        listVisitas.addAll(visitaAction.findVisitasPendientes());
+        
+        JOptionPane.showMessageDialog(this, "Se ha registrado la salida correctamente","Info",1);
+    }//GEN-LAST:event_jButtonRegistroSalidaActionPerformed
     
     
     
@@ -250,11 +313,13 @@ public class JInternalFrameRegistroVisita extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonEliminar;
     private javax.swing.JButton jButtonNuevo;
+    private javax.swing.JButton jButtonRegistroSalida;
     private javax.swing.JButton jButtonVer;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTableMotivos;
+    private javax.swing.JTable jTableVisitas;
     private java.util.List listVisitas;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables

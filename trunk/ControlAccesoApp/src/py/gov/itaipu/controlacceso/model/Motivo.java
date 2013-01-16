@@ -84,7 +84,7 @@ public class Motivo implements Serializable{
 
     @Override
     public String toString() {
-        return "Motivo{" + "id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + '}';
+        return getNombre();
     }
 
    
