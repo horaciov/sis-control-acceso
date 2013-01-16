@@ -108,7 +108,7 @@ public class Organizacion implements Serializable{
 
     @Override
     public String toString() {
-        return "Organizacion{" + "id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", tipoOrganizacion=" + tipoOrganizacion + '}';
+        return getNombre();
     }
 
   

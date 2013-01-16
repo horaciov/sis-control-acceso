@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.action.visita.VisitaAction;
 import py.gov.itaipu.controlacceso.model.Motivo;
+import py.gov.itaipu.controlacceso.model.Organizacion;
 import py.gov.itaipu.controlacceso.model.Visita;
 
 /**
@@ -20,6 +21,7 @@ public class JDialogVisita extends javax.swing.JDialog {
     private Visita visita;
     private Boolean readOnly;
     private CRUDAction<Motivo> motivoAction;
+    private CRUDAction<Organizacion> organizacionAction;
     
     /**
      * Creates new form JDialogMotivo
@@ -28,6 +30,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         super(parent, modal);
         readOnly=false;
         motivoAction=new CRUDAction<Motivo>(new Motivo());
+        organizacionAction=new CRUDAction<Organizacion>(new Organizacion());
         initComponents();        
     }
 
@@ -62,6 +65,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         listMotivos = motivoAction.findAll();
+        listOrganizacionInterna = organizacionAction.findByNamedQuery("Organizacion.findAllInterna");
         jTextFieldPersona = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaObservacion = new javax.swing.JTextArea();
@@ -77,8 +81,8 @@ public class JDialogVisita extends javax.swing.JDialog {
         jLabel6 = new javax.swing.JLabel();
         jTextFieldPersona2 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jTextFieldPersona3 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
+        jComboBoxOrganizacionInternta = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registro de visita");
@@ -125,6 +129,9 @@ public class JDialogVisita extends javax.swing.JDialog {
 
         jLabel8.setText("Area Visitada:");
 
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listOrganizacionInterna, jComboBoxOrganizacionInternta);
+        bindingGroup.addBinding(jComboBoxBinding);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -158,7 +165,7 @@ public class JDialogVisita extends javax.swing.JDialog {
                                     .addComponent(jTextFieldPersona1, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
                                     .addComponent(jComboBoxMotivo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jTextFieldPersona2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
-                                    .addComponent(jTextFieldPersona3, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE))))))
+                                    .addComponent(jComboBoxOrganizacionInternta, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                 .addGap(63, 63, 63))
         );
         layout.setVerticalGroup(
@@ -183,8 +190,8 @@ public class JDialogVisita extends javax.swing.JDialog {
                             .addComponent(jLabel5))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldPersona3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
+                    .addComponent(jLabel8)
+                    .addComponent(jComboBoxOrganizacionInternta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBoxMotivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -289,6 +296,7 @@ public class JDialogVisita extends javax.swing.JDialog {
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonGuardar;
     private javax.swing.JComboBox jComboBoxMotivo;
+    private javax.swing.JComboBox jComboBoxOrganizacionInternta;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -302,8 +310,8 @@ public class JDialogVisita extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldPersona;
     private javax.swing.JTextField jTextFieldPersona1;
     private javax.swing.JTextField jTextFieldPersona2;
-    private javax.swing.JTextField jTextFieldPersona3;
     private java.util.List listMotivos;
+    private java.util.List listOrganizacionInterna;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
