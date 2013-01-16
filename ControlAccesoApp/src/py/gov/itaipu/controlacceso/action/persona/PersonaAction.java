@@ -6,6 +6,7 @@ package py.gov.itaipu.controlacceso.action.persona;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import py.gov.itaipu.controlacceso.model.Nacionalidad;
 import py.gov.itaipu.controlacceso.model.Persona;
@@ -19,12 +20,26 @@ import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 public class PersonaAction {
 
     private EntityManager em;
+    private Persona persona;
 
-    public PersonaAction() {
-        EntityManagerCA.iniciarContexto();
+    public PersonaAction() {        
         this.em = EntityManagerCA.getEntityManger();
     }
 
+    public PersonaAction(Persona persona) {
+        this.persona = persona;
+        this.em = EntityManagerCA.getEntityManger();
+    }
+
+    public Persona getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Persona persona) {
+        this.persona = persona;
+    }
+    
+    
     public List<Persona> findByNumeroDocumento(String numeroDocumento, TipoDocumento tipoDocumento) {
         Query query = em.createQuery(" from Persona p where numeroDocumento = :numeroDoc and tipoDocumento.id = :tipoDoc");
         query.setParameter("numeroDoc", numeroDocumento).setParameter("tipoDoc", tipoDocumento.getId());
@@ -101,8 +116,30 @@ public class PersonaAction {
         
              return query.getResultList();
     }
+    
+    public void crear() {
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
+        em.persist(persona);
+        tx.commit();
+    }
+
+    public void guardar() {
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
+        em.merge(persona);
+        tx.commit();
+    }
+
+    public void eliminar() {
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
+        em.remove(persona);
+        tx.commit();
+    }
 
     public static void main(String arg[]) {
+        EntityManagerCA.iniciarContexto();
         PersonaAction p = new PersonaAction();
         TipoDocumento tipoDocumento = new TipoDocumento();
         tipoDocumento.setId(13L);
