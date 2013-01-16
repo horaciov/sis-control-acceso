@@ -4,12 +4,16 @@
  */
 package py.gov.itaipu.controlacceso.view.visita;
 
+import java.util.Calendar;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.*;
 import javax.swing.JOptionPane;
+import org.jdesktop.observablecollections.ObservableCollections;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
+import py.gov.itaipu.controlacceso.action.persona.PersonaAction;
 import py.gov.itaipu.controlacceso.action.visita.VisitaAction;
 import py.gov.itaipu.controlacceso.model.Motivo;
 import py.gov.itaipu.controlacceso.model.Organizacion;
+import py.gov.itaipu.controlacceso.model.Persona;
 import py.gov.itaipu.controlacceso.model.Visita;
 
 /**
@@ -22,6 +26,9 @@ public class JDialogVisita extends javax.swing.JDialog {
     private Boolean readOnly;
     private CRUDAction<Motivo> motivoAction;
     private CRUDAction<Organizacion> organizacionAction;
+    private Persona persona;
+    private Persona personaVisitada;
+    private PersonaAction personaAction;
     
     /**
      * Creates new form JDialogMotivo
@@ -29,9 +36,14 @@ public class JDialogVisita extends javax.swing.JDialog {
     public JDialogVisita(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         readOnly=false;
-        motivoAction=new CRUDAction<Motivo>(new Motivo());
+        motivoAction=new CRUDAction<Motivo>(new Motivo());        
         organizacionAction=new CRUDAction<Organizacion>(new Organizacion());
+        personaAction=new PersonaAction();
         initComponents();        
+        Organizacion o=new Organizacion();
+        o.setNombre("NINGUNA");
+        listOrganizacionInterna.add(0, o);
+        jComboBoxOrganizacionInternta.setSelectedItem(o);
     }
 
     public Visita getVisita() {
@@ -42,7 +54,21 @@ public class JDialogVisita extends javax.swing.JDialog {
         this.visita = visita;
     }
 
-    
+    public Persona getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Persona persona) {
+        this.persona = persona;
+    }
+
+    public Persona getPersonaVisitada() {
+        return personaVisitada;
+    }
+
+    public void setPersonaVisitada(Persona personaVisitada) {
+        this.personaVisitada = personaVisitada;
+    }
 
     public Boolean getReadOnly() {
         return readOnly;
@@ -64,8 +90,8 @@ public class JDialogVisita extends javax.swing.JDialog {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        listMotivos = motivoAction.findAll();
-        listOrganizacionInterna = organizacionAction.findByNamedQuery("Organizacion.findAllInterna");
+        listMotivos = ObservableCollections.observableList(motivoAction.findAll());
+        listOrganizacionInterna = ObservableCollections.observableList(organizacionAction.findByNamedQuery("Organizacion.findAllInterna"));
         jTextFieldPersona = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaObservacion = new javax.swing.JTextArea();
@@ -79,10 +105,10 @@ public class JDialogVisita extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         jComboBoxMotivo = new javax.swing.JComboBox();
         jLabel6 = new javax.swing.JLabel();
-        jTextFieldPersona2 = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jComboBoxOrganizacionInternta = new javax.swing.JComboBox();
+        jButtonBuscarPersona = new javax.swing.JButton();
+        jButtonBuscarPersona1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registro de visita");
@@ -125,86 +151,95 @@ public class JDialogVisita extends javax.swing.JDialog {
 
         jLabel6.setText("Motivo:");
 
-        jLabel7.setText("Organización:");
-
         jLabel8.setText("Area Visitada:");
 
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listOrganizacionInterna, jComboBoxOrganizacionInternta);
         bindingGroup.addBinding(jComboBoxBinding);
+
+        jButtonBuscarPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/view.png"))); // NOI18N
+        jButtonBuscarPersona.setToolTipText("Buscar Persona");
+
+        jButtonBuscarPersona1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/view.png"))); // NOI18N
+        jButtonBuscarPersona1.setToolTipText("Buscar Persona");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(46, 46, 46)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButtonGuardar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonCancelar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel4)
+                        .addContainerGap(436, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jSeparator1)
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jButtonGuardar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonCancelar))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel5)
                                     .addComponent(jLabel6)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel8))
-                                .addGap(32, 32, 32)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
-                                    .addComponent(jTextFieldPersona)
-                                    .addComponent(jTextFieldPersona1, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
-                                    .addComponent(jComboBoxMotivo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jTextFieldPersona2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
-                                    .addComponent(jComboBoxOrganizacionInternta, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
-                .addGap(63, 63, 63))
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jTextFieldPersona, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
+                                            .addComponent(jTextFieldPersona1))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jButtonBuscarPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jButtonBuscarPersona1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                                    .addComponent(jComboBoxMotivo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jComboBoxOrganizacionInternta, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))))
+                        .addGap(66, 66, 66))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel4)
-                .addGap(5, 5, 5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(9, 9, 9)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jButtonBuscarPersona, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextFieldPersona)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldPersona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextFieldPersona2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextFieldPersona1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))))
+                        .addComponent(jLabel5)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jButtonBuscarPersona1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextFieldPersona1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(jComboBoxOrganizacionInternta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxOrganizacionInternta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBoxMotivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel6)
+                    .addComponent(jComboBoxMotivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonGuardar)
-                    .addComponent(jButtonCancelar))
-                .addGap(27, 27, 27))
+                    .addComponent(jLabel3)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonCancelar)
+                            .addComponent(jButtonGuardar))))
+                .addGap(21, 21, 21))
         );
 
         bindingGroup.bind();
@@ -217,25 +252,55 @@ public class JDialogVisita extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
+    
+    private boolean validar() {
+        return true;
+    }
+    
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
         if(visita==null)
             return;
         VisitaAction action=new VisitaAction(visita);
-        if(jTextFieldPersona.getText()==null || jTextFieldPersona.getText().equals("")){
-            JOptionPane.showMessageDialog(this, "El motivo es obligatorio","Error",0);
-            return;
+        
+        if(!validar()){
+            return;//Implementar el método con las validaciones
         }
-//        motivo.setNombre(jTextFieldPersona.getText());
- //       motivo.setDescripcion(jTextAreaObservacion.getText());
-//        if(motivo.getId()==null) {
-//            action.crear();
-//            JOptionPane.showMessageDialog(this, "Se ha creado con éxito","Info",1);
-//        }
+        
+        //Prueba hasta que se encuentre implementado el buscador
+        persona= new Persona();
+        persona.setNumeroDocumento("2846147");
+        persona=personaAction.findByParameters(persona).get(0);
+        
+        //Prueba hasta que se encuentre implementado el buscador
+        personaVisitada=new Persona();
+        personaVisitada.setNumeroDocumento("3501729");
+        personaVisitada=personaAction.findByParameters(personaVisitada).get(0);
+        
+        visita.setPersona(persona);
+        visita.setPersonaVisitada(personaVisitada);
+        
+        visita.setFechaIngreso(Calendar.getInstance().getTime());
+        
+        Organizacion o=(Organizacion)jComboBoxOrganizacionInternta.getSelectedItem();
+        if(o.getId()!=null){
+            visita.setOrganizacionInterna(o);
+        }else{
+            visita.setOrganizacionInterna(null);
+        }
+        
+        visita.setMotivo((Motivo)jComboBoxMotivo.getSelectedItem());
+        visita.setObservacion(jTextAreaObservacion.getText());
+        
+        if(visita.getId()==null) {
+            action.crear();
+            JOptionPane.showMessageDialog(this, "Se ha creado con éxito","Info",1);
+        }
         else {
             action.guardar();
             JOptionPane.showMessageDialog(this, "Se ha actualizado correctamente","Info",1);
         }              
+        
         this.dispose();
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
@@ -293,6 +358,8 @@ public class JDialogVisita extends javax.swing.JDialog {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonBuscarPersona;
+    private javax.swing.JButton jButtonBuscarPersona1;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonGuardar;
     private javax.swing.JComboBox jComboBoxMotivo;
@@ -302,16 +369,15 @@ public class JDialogVisita extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextArea jTextAreaObservacion;
     private javax.swing.JTextField jTextFieldPersona;
     private javax.swing.JTextField jTextFieldPersona1;
-    private javax.swing.JTextField jTextFieldPersona2;
     private java.util.List listMotivos;
     private java.util.List listOrganizacionInterna;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
+
 }

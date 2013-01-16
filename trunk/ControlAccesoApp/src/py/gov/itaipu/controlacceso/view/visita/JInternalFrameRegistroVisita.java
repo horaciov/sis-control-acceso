@@ -13,7 +13,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.swingbinding.JTableBinding;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
@@ -21,6 +24,7 @@ import py.gov.itaipu.controlacceso.action.visita.VisitaAction;
 import py.gov.itaipu.controlacceso.model.Motivo;
 import py.gov.itaipu.controlacceso.model.Visita;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
+import py.gov.itaipu.controlacceso.view.TimeRenderer;
 
 
 /**
@@ -31,6 +35,8 @@ public class JInternalFrameRegistroVisita extends javax.swing.JInternalFrame {
    
     
     private VisitaAction visitaAction;
+    private TableCellRenderer rendererTime;
+    
     
     /**
      * Creates new form JInternalFrameMotivo
@@ -38,7 +44,8 @@ public class JInternalFrameRegistroVisita extends javax.swing.JInternalFrame {
     public JInternalFrameRegistroVisita() {
         setClosable(true);
         visitaAction=new VisitaAction();
-        visitaAction.setVisita(new Visita());
+        visitaAction.setVisita(new Visita());       
+        rendererTime=new TimeRenderer();
         initComponents();      
         
     }
@@ -89,6 +96,7 @@ public class JInternalFrameRegistroVisita extends javax.swing.JInternalFrame {
         jTableVisitas.getColumnModel().getColumn(0).setMinWidth(200);
         jTableVisitas.getColumnModel().getColumn(0).setPreferredWidth(200);
         jTableVisitas.getColumnModel().getColumn(0).setMaxWidth(200);
+        jTableVisitas.getColumnModel().getColumn(2).setCellRenderer(rendererTime);
 
         jButtonNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/new.jpg"))); // NOI18N
         jButtonNuevo.setText("Nuevo");
@@ -202,7 +210,7 @@ public class JInternalFrameRegistroVisita extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 541, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -286,7 +294,7 @@ public class JInternalFrameRegistroVisita extends javax.swing.JInternalFrame {
             return;
         }
         Calendar c= Calendar.getInstance();
-        SimpleDateFormat sdf=new SimpleDateFormat("dd/mm/yyyy HH:mm");
+        SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy HH:mm");
         
         Visita v=(Visita) listVisitas.get(jTableVisitas.getSelectedRow());
         if(JOptionPane.showConfirmDialog(this,"Está seguro que desea marcar la salida de " 
