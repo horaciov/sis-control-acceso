@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package py.gov.itaipu.controlacceso.view.administracion.parametrogeneral;
+package py.gov.itaipu.controlacceso.view.administracion.organizacion;
 
 import javax.swing.JOptionPane;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
@@ -64,7 +64,7 @@ public class JDialogOrganizacionInterna extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Motivo de visita");
+        setTitle("Organización Interna");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
@@ -75,7 +75,7 @@ public class JDialogOrganizacionInterna extends javax.swing.JDialog {
         jTextAreaDescripcion.setRows(5);
         jScrollPane1.setViewportView(jTextAreaDescripcion);
 
-        jLabel2.setText("Motivo:");
+        jLabel2.setText("Nombre:");
 
         jLabel3.setText("Descripción:");
 
@@ -95,7 +95,7 @@ public class JDialogOrganizacionInterna extends javax.swing.JDialog {
             }
         });
 
-        jLabel4.setText("Motivo");
+        jLabel4.setText("Organización");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
