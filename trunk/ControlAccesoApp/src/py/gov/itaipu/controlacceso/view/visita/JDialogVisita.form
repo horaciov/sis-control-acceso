@@ -10,6 +10,7 @@
     <Component class="java.util.List" name="listOrganizacionInterna">
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="ObservableCollections.observableList(organizacionAction.findByNamedQuery(&quot;Organizacion.findAllInterna&quot;))"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="Organizacion o=new Organizacion();&#xa;o.setNombre(&quot;NINGUNA&quot;);&#xa;listOrganizacionInterna.add(0, o);"/>
       </AuxValues>
     </Component>
   </NonVisualComponents>
