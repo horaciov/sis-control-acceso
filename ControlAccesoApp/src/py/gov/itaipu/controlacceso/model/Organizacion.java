@@ -110,9 +110,5 @@ public class Organizacion implements Serializable{
     public String toString() {
         return getNombre();
     }
-
-  
-
-   
     
 }
