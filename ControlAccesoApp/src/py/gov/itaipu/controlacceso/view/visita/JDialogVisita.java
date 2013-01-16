@@ -40,10 +40,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         organizacionAction=new CRUDAction<Organizacion>(new Organizacion());
         personaAction=new PersonaAction();
         initComponents();        
-        Organizacion o=new Organizacion();
-        o.setNombre("NINGUNA");
-        listOrganizacionInterna.add(0, o);
-        jComboBoxOrganizacionInternta.setSelectedItem(o);
+       
     }
 
     public Visita getVisita() {
@@ -92,6 +89,9 @@ public class JDialogVisita extends javax.swing.JDialog {
 
         listMotivos = ObservableCollections.observableList(motivoAction.findAll());
         listOrganizacionInterna = ObservableCollections.observableList(organizacionAction.findByNamedQuery("Organizacion.findAllInterna"));
+        Organizacion o=new Organizacion();
+        o.setNombre("NINGUNA");
+        listOrganizacionInterna.add(0, o);
         jTextFieldPersona = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaObservacion = new javax.swing.JTextArea();
