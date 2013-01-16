@@ -8,8 +8,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
-import org.jdesktop.observablecollections.ObservableCollections;
-import org.jdesktop.observablecollections.ObservableList;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 
 /**
@@ -35,7 +33,16 @@ public class CRUDAction<E> {
         query = em.createQuery("from "+entity.getClass().getSimpleName());        
         return query.getResultList();
     }
+
+    public List<E> findAllProjection(String[] attributes){
+        String query="select ";
+        for(String a:attributes)
+            query+=a+",";
+        query=query.substring(0,query.length()-1)+" from "+entity.getClass().getSimpleName();
+        return em.createQuery(query).getResultList();
+    }
     
+
     public List<E> findByNamedQuery(String queryNam){
         Query query;
         query = em.createNamedQuery(queryNam);        
