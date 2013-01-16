@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package py.gov.itaipu.controlacceso.view.administracion.parametrogeneral;
+package py.gov.itaipu.controlacceso.view.administracion.organizacion;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -21,7 +21,7 @@ import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
  *
  * @author vimartih
  */
-public class JInternalFrameOrganizacionInterna extends javax.swing.JInternalFrame {
+public class JInternalFrameOrganizacionExterna extends javax.swing.JInternalFrame {
    
     
     private CRUDAction<Organizacion> organizacionAction;
@@ -29,7 +29,7 @@ public class JInternalFrameOrganizacionInterna extends javax.swing.JInternalFram
     /**
      * Creates new form JInternalFrameOrganizacion
      */
-    public JInternalFrameOrganizacionInterna() {
+    public JInternalFrameOrganizacionExterna() {
         setClosable(true);
         organizacionAction=new CRUDAction<Organizacion>();
         organizacionAction.setEntity(new Organizacion());
@@ -58,11 +58,11 @@ public class JInternalFrameOrganizacionInterna extends javax.swing.JInternalFram
         jLabel1 = new javax.swing.JLabel();
         jButtonVer = new javax.swing.JButton();
 
-        setTitle("Gestión de motivos");
+        setTitle("Gestión de organizaciones externas");
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listOrganizaciones, jTableOrganizaciones);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nombre}"));
-        columnBinding.setColumnName("Motivo");
+        columnBinding.setColumnName("Organización");
         columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${descripcion}"));
         columnBinding.setColumnName("Descripcion");
@@ -119,7 +119,7 @@ public class JInternalFrameOrganizacionInterna extends javax.swing.JInternalFram
             }
         });
 
-        jLabel1.setText("Motivos");
+        jLabel1.setText("Organizaciones");
 
         jButtonVer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/view.png"))); // NOI18N
         jButtonVer.setText("Ver");
@@ -147,17 +147,18 @@ public class JInternalFrameOrganizacionInterna extends javax.swing.JInternalFram
                             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 595, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButtonVer, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 595, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButtonVer, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButtonNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButtonCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(20, 20, 20))))
         );
         layout.setVerticalGroup(
@@ -176,7 +177,7 @@ public class JInternalFrameOrganizacionInterna extends javax.swing.JInternalFram
                     .addComponent(jButtonCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonVer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -197,7 +198,7 @@ public class JInternalFrameOrganizacionInterna extends javax.swing.JInternalFram
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         // TODO add your handling code here:
         if(jTableOrganizaciones.getSelectedRow()<0){
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un motivo","Error",0);
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una organización","Error",0);
             return;
         }
         Organizacion m=(Organizacion) listOrganizaciones.get(jTableOrganizaciones.getSelectedRow());
@@ -211,10 +212,10 @@ public class JInternalFrameOrganizacionInterna extends javax.swing.JInternalFram
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
         // TODO add your handling code here:
          if(jTableOrganizaciones.getSelectedRow()<0){
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un motivo","Error",0);
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una organización","Error",0);
             return;
         }
-        if(JOptionPane.showConfirmDialog(this,"Está seguro que desea eliminar?","Eliminar Organizacion",0)!=0)
+        if(JOptionPane.showConfirmDialog(this,"Está seguro que desea eliminar?","Eliminar Organización",0)!=0)
             return;       
         Organizacion m=(Organizacion) listOrganizaciones.get(jTableOrganizaciones.getSelectedRow());
         organizacionAction.setEntity(m);
@@ -232,7 +233,7 @@ public class JInternalFrameOrganizacionInterna extends javax.swing.JInternalFram
     private void jButtonVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerActionPerformed
         // TODO add your handling code here:
          if(jTableOrganizaciones.getSelectedRow()<0){
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un motivo","Error",0);
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una organización","Error",0);
             return;
         }
         Organizacion m=(Organizacion) listOrganizaciones.get(jTableOrganizaciones.getSelectedRow());

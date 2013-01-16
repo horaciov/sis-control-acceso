@@ -4,14 +4,14 @@
  */
 package py.gov.itaipu.controlacceso.view;
 
-
 import py.gov.itaipu.controlacceso.view.persona.JInternalFramePersona;
 import javax.persistence.EntityManager;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
+import py.gov.itaipu.controlacceso.view.administracion.organizacion.JInternalFrameOrganizacionExterna;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameEstado;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameMotivo;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameNacionalidad;
-import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameOrganizacionInterna;
+import py.gov.itaipu.controlacceso.view.administracion.organizacion.JInternalFrameOrganizacionInterna;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameTipoAntecedente;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameTipoDocumento;
 
@@ -24,8 +24,6 @@ public class MDIControlAcceso extends javax.swing.JFrame {
     /**
      * Creates new form MDIControlAcceso
      */
-    
-    
     public MDIControlAcceso() {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
@@ -144,6 +142,11 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         jMenuOrganizacion.add(jMenuItemOrganizacionInterna);
 
         jMenuItemOrganizacionExterna.setText("Organizacion Externa");
+        jMenuItemOrganizacionExterna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemOrganizacionExternaActionPerformed(evt);
+            }
+        });
         jMenuOrganizacion.add(jMenuItemOrganizacionExterna);
 
         jMenuAdministracion.add(jMenuOrganizacion);
@@ -182,7 +185,7 @@ public class MDIControlAcceso extends javax.swing.JFrame {
 
     private void jMenuItemMotivoVisitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMotivoVisitaActionPerformed
         // TODO add your handling code here:
-        JInternalFrameMotivo motivoFrame=new JInternalFrameMotivo();
+        JInternalFrameMotivo motivoFrame = new JInternalFrameMotivo();
         motivoFrame.setVisible(true);
         this.desktopPane.add(motivoFrame);
     }//GEN-LAST:event_jMenuItemMotivoVisitaActionPerformed
@@ -194,45 +197,52 @@ public class MDIControlAcceso extends javax.swing.JFrame {
 
     private void jMenuItemEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEstadoActionPerformed
         // TODO add your handling code here:
-        JInternalFrameEstado estadoFrame=new JInternalFrameEstado();
+        JInternalFrameEstado estadoFrame = new JInternalFrameEstado();
         estadoFrame.setVisible(true);
         this.desktopPane.add(estadoFrame);
     }//GEN-LAST:event_jMenuItemEstadoActionPerformed
 
     private void jMenuItemAntecedenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAntecedenteActionPerformed
         // TODO add your handling code here:
-        JInternalFrameTipoAntecedente tipoAntecedenteFrame=new JInternalFrameTipoAntecedente();
+        JInternalFrameTipoAntecedente tipoAntecedenteFrame = new JInternalFrameTipoAntecedente();
         tipoAntecedenteFrame.setVisible(true);
         this.desktopPane.add(tipoAntecedenteFrame);
     }//GEN-LAST:event_jMenuItemAntecedenteActionPerformed
 
     private void jMenuItemTipoDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemTipoDocumentoActionPerformed
         // TODO add your handling code here:
-        JInternalFrameTipoDocumento tipoDocumentoFrame=new JInternalFrameTipoDocumento();
+        JInternalFrameTipoDocumento tipoDocumentoFrame = new JInternalFrameTipoDocumento();
         tipoDocumentoFrame.setVisible(true);
         this.desktopPane.add(tipoDocumentoFrame);
     }//GEN-LAST:event_jMenuItemTipoDocumentoActionPerformed
 
     private void jMenuItemNacionalidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemNacionalidadActionPerformed
         // TODO add your handling code here:
-        JInternalFrameNacionalidad nacionalidadFrame=new JInternalFrameNacionalidad();
+        JInternalFrameNacionalidad nacionalidadFrame = new JInternalFrameNacionalidad();
         nacionalidadFrame.setVisible(true);
         this.desktopPane.add(nacionalidadFrame);
     }//GEN-LAST:event_jMenuItemNacionalidadActionPerformed
 
     private void jMenuItemRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRegistroActionPerformed
         // TODO add your handling code here:
-        JInternalFramePersona personaFrame=new JInternalFramePersona();
+        JInternalFramePersona personaFrame = new JInternalFramePersona();
         personaFrame.setVisible(true);
         this.desktopPane.add(personaFrame);
     }//GEN-LAST:event_jMenuItemRegistroActionPerformed
 
     private void jMenuItemOrganizacionInternaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemOrganizacionInternaActionPerformed
         // TODO add your handling code here:
-        JInternalFrameOrganizacionInterna organizacionInternaFrame=new JInternalFrameOrganizacionInterna();
+        JInternalFrameOrganizacionInterna organizacionInternaFrame = new JInternalFrameOrganizacionInterna();
         organizacionInternaFrame.setVisible(true);
         this.desktopPane.add(organizacionInternaFrame);
     }//GEN-LAST:event_jMenuItemOrganizacionInternaActionPerformed
+
+    private void jMenuItemOrganizacionExternaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemOrganizacionExternaActionPerformed
+        // TODO add your handling code here:
+        JInternalFrameOrganizacionExterna organizacionExternaFrame = new JInternalFrameOrganizacionExterna();
+        organizacionExternaFrame.setVisible(true);
+        this.desktopPane.add(organizacionExternaFrame);
+    }//GEN-LAST:event_jMenuItemOrganizacionExternaActionPerformed
 
     /**
      * @param args the command line arguments
