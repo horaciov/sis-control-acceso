@@ -80,7 +80,7 @@ public class Nacionalidad implements Serializable {
 
     @Override
     public String toString() {
-        return "Nacionalidad{" + "id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + '}';
+        return nombre;
     }
 
    

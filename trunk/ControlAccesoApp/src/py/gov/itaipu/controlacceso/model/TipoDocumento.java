@@ -91,7 +91,7 @@ public class TipoDocumento implements Serializable {
 
     @Override
     public String toString() {
-        return "Tipo Documento:{" + "id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + '}';
+        return nombre;
     }
     
 }

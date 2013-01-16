@@ -6,21 +6,51 @@ package py.gov.itaipu.controlacceso.view.persona;
 
 import java.awt.Dimension;
 
+import java.util.List;
+import javax.swing.JComboBox;
+import javax.swing.table.TableCellRenderer;
+import py.gov.itaipu.controlacceso.action.CRUDAction;
+import py.gov.itaipu.controlacceso.action.persona.PersonaAction;
+import py.gov.itaipu.controlacceso.model.Nacionalidad;
+import py.gov.itaipu.controlacceso.model.Persona;
+import py.gov.itaipu.controlacceso.model.TipoDocumento;
+import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
+import org.jdesktop.observablecollections.ObservableCollections;
+import py.gov.itaipu.controlacceso.view.TimeRenderer;
+
 /**
  *
  * @author vimartih
  */
 public class JInternalFramePersona extends javax.swing.JInternalFrame {
-
+    
+    private PersonaAction personaAction;
+    private Persona personaFiltro;
+    private CRUDAction<Nacionalidad> nacionalidadAction;
+    private CRUDAction<TipoDocumento> tipoDocAction;
+    private TableCellRenderer rendererTime;
     /**
      * Creates new form JInternalFramePersona
      */
     public JInternalFramePersona() {
+        personaAction = new PersonaAction(new Persona());
+        nacionalidadAction = new CRUDAction(new Nacionalidad());
+        tipoDocAction = new CRUDAction(new TipoDocumento());
+        personaFiltro = new Persona();
+        rendererTime = new TimeRenderer("dd/MM/yyyy");
         initComponents();
         setResizable(true);
         setClosable(true);
         setMaximizable(true);
+             
     }
+    
+    private void inicialComboBox(){
+        
+    }
+  
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -30,31 +60,341 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
+        listNacionalidades = nacionalidadAction.findAll();
+        Nacionalidad nac = new Nacionalidad();
+        nac.setNombre("TODAS");
+        listNacionalidades.add(0,nac);
+        listTipoDocumento = tipoDocAction.findAll();
+        TipoDocumento tD = new TipoDocumento();
+        tD.setNombre("TODOS");
+        listTipoDocumento.add(0,tD);
+        listPersonas = ObservableCollections.observableList(personaAction.findByParameters(personaFiltro));
         jLabel1 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel2 = new javax.swing.JLabel();
+        jTextFieldNombreFiltro = new javax.swing.JTextField();
+        jTextFieldApellidoFiltro = new javax.swing.JTextField();
+        jLabelNombre = new javax.swing.JLabel();
+        jLabelApellido = new javax.swing.JLabel();
+        jComboBoxEstadoCivil = new javax.swing.JComboBox();
+        jLabelEstCivil = new javax.swing.JLabel();
+        jLabelEstNacionalidad = new javax.swing.JLabel();
+        jPanelFechaNac = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jFormattedTextFechDesde = new javax.swing.JFormattedTextField();
+        jFormattedTextFechHasta = new javax.swing.JFormattedTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jComboBoxTipoDoc = new javax.swing.JComboBox();
+        jTextFieldNroDoc = new javax.swing.JTextField();
+        jSeparator2 = new javax.swing.JSeparator();
+        jComboBoxNacionalidad = new javax.swing.JComboBox();
+        jButtonBuscar = new javax.swing.JButton();
+        jButtonLimpiar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTablePersonas = new javax.swing.JTable();
 
-        jLabel1.setText("Persona");
+        setTitle("Registro de personas");
+
+        jLabel1.setText("Lista de Personas");
+
+        jLabel2.setText("Filtrado");
+
+        jLabelNombre.setText("Nombre");
+
+        jLabelApellido.setText("Apellido");
+
+        jComboBoxEstadoCivil.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "TODOS", "SOLTERO", "CASADO", "DIVORCIADO", "VIUDO" }));
+
+        jLabelEstCivil.setText("Estado Civil");
+
+        jLabelEstNacionalidad.setText("Nacionalidad");
+
+        jPanelFechaNac.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel3.setText("Fecha Nacimiento");
+
+        jFormattedTextFechDesde.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.MEDIUM))));
+
+        jFormattedTextFechHasta.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+
+        jLabel4.setText("De:");
+
+        jLabel5.setText("A:");
+
+        jLabel6.setText("Documento");
+
+        jLabel7.setText("Nro:");
+
+        jLabel8.setText("Tipo:");
+
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listTipoDocumento, jComboBoxTipoDoc);
+        bindingGroup.addBinding(jComboBoxBinding);
+
+        javax.swing.GroupLayout jPanelFechaNacLayout = new javax.swing.GroupLayout(jPanelFechaNac);
+        jPanelFechaNac.setLayout(jPanelFechaNacLayout);
+        jPanelFechaNacLayout.setHorizontalGroup(
+            jPanelFechaNacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelFechaNacLayout.createSequentialGroup()
+                .addGroup(jPanelFechaNacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel6))
+                .addGap(13, 13, 13)
+                .addGroup(jPanelFechaNacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelFechaNacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jFormattedTextFechDesde)
+                    .addComponent(jComboBoxTipoDoc, 0, 142, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelFechaNacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelFechaNacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextFieldNroDoc, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+                    .addComponent(jFormattedTextFechHasta)))
+        );
+        jPanelFechaNacLayout.setVerticalGroup(
+            jPanelFechaNacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelFechaNacLayout.createSequentialGroup()
+                .addGroup(jPanelFechaNacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jFormattedTextFechDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jFormattedTextFechHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanelFechaNacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxTipoDoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldNroDoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listNacionalidades, jComboBoxNacionalidad);
+        bindingGroup.addBinding(jComboBoxBinding);
+
+        jButtonBuscar.setText("BUSCAR");
+        jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscarActionPerformed(evt);
+            }
+        });
+
+        jButtonLimpiar.setText("LIMPIAR");
+        jButtonLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLimpiarActionPerformed(evt);
+            }
+        });
+
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listPersonas, jTablePersonas);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${apellido}"));
+        columnBinding.setColumnName("Apellido");
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nombre}"));
+        columnBinding.setColumnName("Nombre");
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tipoDocumento.nombre}"));
+        columnBinding.setColumnName("Tipo Doc");
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${numeroDocumento}"));
+        columnBinding.setColumnName("Nro Documento");
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nacionalidad.nombre}"));
+        columnBinding.setColumnName("Nacionalidad");
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${fechaNacimiento}"));
+        columnBinding.setColumnName("Fecha Nac");
+        columnBinding.setEditable(false);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
+        jScrollPane1.setViewportView(jTablePersonas);
+        jTablePersonas.getColumnModel().getColumn(5).setCellRenderer(rendererTime
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(212, 212, 212)
-                .addComponent(jLabel1)
-                .addContainerGap(268, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 1037, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(22, 22, 22)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLabelApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jLabelNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jTextFieldNombreFiltro, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                                                    .addComponent(jTextFieldApellidoFiltro)))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jButtonBuscar)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jButtonLimpiar)
+                                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addGap(42, 42, 42)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelEstCivil, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabelEstNacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(38, 38, 38)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jComboBoxNacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jComboBoxEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(jPanelFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator1)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(45, 45, 45)
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextFieldNombreFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelNombre)
+                            .addComponent(jComboBoxEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelEstCivil))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelApellido)
+                            .addComponent(jTextFieldApellidoFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelEstNacionalidad)
+                            .addComponent(jComboBoxNacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jPanelFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonBuscar)
+                    .addComponent(jButtonLimpiar))
+                .addGap(13, 13, 13)
                 .addComponent(jLabel1)
-                .addContainerGap(341, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
+
+        bindingGroup.bind();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
+        // TODO add your handling code here:
+        if (jTextFieldNombreFiltro.getText()!=null && !jTextFieldNombreFiltro.getText().equals("")) {
+            personaFiltro.setNombre(jTextFieldNombreFiltro.getText().toUpperCase());
+        }
+        
+        if (jTextFieldApellidoFiltro.getText()!=null && !jTextFieldApellidoFiltro.getText().equals("")) {
+            personaFiltro.setApellido(jTextFieldApellidoFiltro.getText().toUpperCase());
+        }
+        
+        if (jTextFieldNroDoc.getText()!=null && !jTextFieldNroDoc.getText().equals("")) {
+            personaFiltro.setNumeroDocumento(jTextFieldNroDoc.getText().toUpperCase());
+        }
+        
+        
+        Nacionalidad nac = (Nacionalidad) jComboBoxNacionalidad.getSelectedItem();
+        if (nac.getId() != null) {
+            personaFiltro.setNacionalidad((Nacionalidad) jComboBoxNacionalidad.getSelectedItem());
+        }else{
+            personaFiltro.setNacionalidad(null);
+        }
+        
+        TipoDocumento tD = (TipoDocumento) jComboBoxTipoDoc.getSelectedItem();
+        if (tD.getId()!=null) {
+            personaFiltro.setTipoDocumento(tD);
+        }else{
+            personaFiltro.setTipoDocumento(null);
+        }
+        
+        
+        if (!jComboBoxEstadoCivil.getSelectedItem().toString().equals("TODOS")) {
+            personaFiltro.setEstadoCivil(jComboBoxEstadoCivil.getSelectedItem().toString());
+        }else{
+            personaFiltro.setEstadoCivil(null);
+        }
+              
+        listPersonas.clear();
+        listPersonas.addAll(personaAction.findByParameters(personaFiltro));
+        
+        
+      
+    }//GEN-LAST:event_jButtonBuscarActionPerformed
+
+    private void jButtonLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarActionPerformed
+        // TODO add your handling code here:
+        jTextFieldNombreFiltro.setText(null);
+        jTextFieldApellidoFiltro.setText(null);
+        jTextFieldNroDoc.setText(null);
+        jComboBoxEstadoCivil.setSelectedIndex(0);
+        jComboBoxTipoDoc.setSelectedIndex(0);
+        jComboBoxNacionalidad.setSelectedIndex(0);
+        
+        personaFiltro = new Persona();
+        listPersonas.clear();
+        listPersonas.addAll(personaAction.findByParameters(personaFiltro));
+        
+    }//GEN-LAST:event_jButtonLimpiarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonBuscar;
+    private javax.swing.JButton jButtonLimpiar;
+    private javax.swing.JComboBox jComboBoxEstadoCivil;
+    private javax.swing.JComboBox jComboBoxNacionalidad;
+    private javax.swing.JComboBox jComboBoxTipoDoc;
+    private javax.swing.JFormattedTextField jFormattedTextFechDesde;
+    private javax.swing.JFormattedTextField jFormattedTextFechHasta;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabelApellido;
+    private javax.swing.JLabel jLabelEstCivil;
+    private javax.swing.JLabel jLabelEstNacionalidad;
+    private javax.swing.JLabel jLabelNombre;
+    private javax.swing.JPanel jPanelFechaNac;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JTable jTablePersonas;
+    private javax.swing.JTextField jTextFieldApellidoFiltro;
+    private javax.swing.JTextField jTextFieldNombreFiltro;
+    private javax.swing.JTextField jTextFieldNroDoc;
+    private java.util.List listNacionalidades;
+    private java.util.List listPersonas;
+    private java.util.List listTipoDocumento;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
