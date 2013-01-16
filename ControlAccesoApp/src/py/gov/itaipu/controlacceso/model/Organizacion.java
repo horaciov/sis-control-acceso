@@ -82,8 +82,7 @@ public class Organizacion implements Serializable{
 
     public void setPersonas(List<Persona> personas) {
         this.personas = personas;
-    }
-   
+    }   
     
     @Override
     public int hashCode() {
