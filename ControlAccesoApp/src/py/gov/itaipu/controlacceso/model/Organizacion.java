@@ -21,7 +21,10 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Organizacion.findAll", query = "SELECT o FROM Organizacion o")})
+    @NamedQuery(name = "Organizacion.findAll", query = "SELECT o FROM Organizacion o"),
+    @NamedQuery(name = "Organizacion.findAllInterna", query = "SELECT o FROM Organizacion o where o.tipoOrganizacion='INTERNA'"),
+    @NamedQuery(name = "Organizacion.findAllExterna", query = "SELECT o FROM Organizacion o where o.tipoOrganizacion='EXTERNA'")
+    })
 public class Organizacion implements Serializable{
     private static final long serialVersionUID = 1L;
     
