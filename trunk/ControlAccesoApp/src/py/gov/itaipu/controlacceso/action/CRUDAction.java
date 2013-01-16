@@ -36,6 +36,12 @@ public class CRUDAction<E> {
         return query.getResultList();
     }
     
+    public List<E> findByNamedQuery(String queryNam){
+        Query query;
+        query = em.createNamedQuery(queryNam);        
+        return query.getResultList();
+    }
+    
     public E getEntity() {
         return entity;
     }

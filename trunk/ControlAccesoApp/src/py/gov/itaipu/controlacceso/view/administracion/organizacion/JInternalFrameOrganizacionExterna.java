@@ -47,7 +47,7 @@ public class JInternalFrameOrganizacionExterna extends javax.swing.JInternalFram
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        listOrganizaciones = ObservableCollections.observableList(organizacionAction.findAll());
+        listOrganizaciones = ObservableCollections.observableList(organizacionAction.findByNamedQuery("Organizacion.findAllExterna"));
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableOrganizaciones = new javax.swing.JTable();
         jButtonNuevo = new javax.swing.JButton();
@@ -177,7 +177,7 @@ public class JInternalFrameOrganizacionExterna extends javax.swing.JInternalFram
                     .addComponent(jButtonCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonVer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -187,11 +187,11 @@ public class JInternalFrameOrganizacionExterna extends javax.swing.JInternalFram
 
     private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
         // TODO add your handling code here:    
-        JDialogOrganizacionInterna dialogOrganizacion = new JDialogOrganizacionInterna(null, closable);
+        JDialogOrganizacionExterna dialogOrganizacion = new JDialogOrganizacionExterna(null, closable);
         dialogOrganizacion.setOrganizacion(new Organizacion());
         dialogOrganizacion.setVisible(true);
         listOrganizaciones.clear();
-        listOrganizaciones.addAll(organizacionAction.findAll());
+        listOrganizaciones.addAll(organizacionAction.findByNamedQuery("Organizacion.findAllExterna"));
 
     }//GEN-LAST:event_jButtonNuevoActionPerformed
 
@@ -202,11 +202,11 @@ public class JInternalFrameOrganizacionExterna extends javax.swing.JInternalFram
             return;
         }
         Organizacion m=(Organizacion) listOrganizaciones.get(jTableOrganizaciones.getSelectedRow());
-        JDialogOrganizacionInterna dialogOrganizacion = new JDialogOrganizacionInterna(null, closable);
+        JDialogOrganizacionExterna dialogOrganizacion = new JDialogOrganizacionExterna(null, closable);
         dialogOrganizacion.setOrganizacion(m);
         dialogOrganizacion.setVisible(true);
         listOrganizaciones.clear();
-        listOrganizaciones.addAll(organizacionAction.findAll());
+        listOrganizaciones.addAll(organizacionAction.findByNamedQuery("Organizacion.findAllExterna"));
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
@@ -221,7 +221,7 @@ public class JInternalFrameOrganizacionExterna extends javax.swing.JInternalFram
         organizacionAction.setEntity(m);
         organizacionAction.eliminar();
         listOrganizaciones.clear();
-        listOrganizaciones.addAll(organizacionAction.findAll());
+        listOrganizaciones.addAll(organizacionAction.findByNamedQuery("Organizacion.findAllExterna"));
         JOptionPane.showMessageDialog(this, "Se ha eliminado correctamente","Info",1);
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
@@ -237,7 +237,7 @@ public class JInternalFrameOrganizacionExterna extends javax.swing.JInternalFram
             return;
         }
         Organizacion m=(Organizacion) listOrganizaciones.get(jTableOrganizaciones.getSelectedRow());
-        JDialogOrganizacionInterna dialogOrganizacion = new JDialogOrganizacionInterna(null, closable);
+        JDialogOrganizacionExterna dialogOrganizacion = new JDialogOrganizacionExterna(null, closable);
         dialogOrganizacion.setOrganizacion(m);
         dialogOrganizacion.setReadOnly(true);
         dialogOrganizacion.setVisible(true);
