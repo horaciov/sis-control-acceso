@@ -46,7 +46,7 @@ public class PersonaAction {
         return query.getResultList();
     }
 
-    public List<Persona> findByParameters(Persona persona) {
+    public List<Persona> findByParameters(Persona persona, Persona personaHasta) {
         String sQuery = " from Persona p where 1=1";
         if (persona.getNumeroDocumento()!=null) {
             sQuery = sQuery + " and p.numeroDocumento = :numeroDocumento ";
@@ -79,6 +79,17 @@ public class PersonaAction {
          if (persona.getEstadoCivil()!=null) {
             sQuery = sQuery + " and p.estadoCivil = :estadoCivil " ;
         }
+         
+        if (persona.getFechaNacimiento()!=null) {
+            if (personaHasta.getFechaNacimiento()!=null) {
+                sQuery = sQuery + " and ( p.fechaNacimiento >= :fechaNacimientoDesde and p.fechaNacimiento <= :fechaNacimientoHasta ) " ;
+            }else{
+                sQuery = sQuery + " and p.fechaNacimiento >= :fechaNacimientoDesde" ;
+            }
+        }else if (personaHasta.getFechaNacimiento()!=null){
+            sQuery = sQuery + " and p.fechaNacimiento <= :fechaNacimientoHasta" ;
+        }
+         
         
         Query query = em.createQuery(sQuery);
         
@@ -113,7 +124,15 @@ public class PersonaAction {
          if (persona.getEstadoCivil()!=null) {
             query.setParameter("estadoCivil", persona.getEstadoCivil());;
         }
-        
+        if (persona.getFechaNacimiento()!=null) {
+                query.setParameter("fechaNacimientoDesde", persona.getFechaNacimiento());;
+        }
+        if (personaHasta.getFechaNacimiento()!=null) {
+                query.setParameter("fechaNacimientoHasta", personaHasta.getFechaNacimiento());;
+        }
+         
+         
+         
              return query.getResultList();
     }
     
@@ -154,7 +173,7 @@ public class PersonaAction {
 //        per.setNombre("HoR");
 //        per.setApellido("vIL");
 //        per.setEstadoCivil("SOLTERO");
-        List<Persona> ps = p.findByParameters(per);
+        List<Persona> ps = p.findByParameters(per, new Persona());
 
     }
 }

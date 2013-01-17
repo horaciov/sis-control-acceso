@@ -270,12 +270,14 @@ public class JDialogVisita extends javax.swing.JDialog {
         //Prueba hasta que se encuentre implementado el buscador
         persona= new Persona();
         persona.setNumeroDocumento("2846147");
-        persona=personaAction.findByParameters(persona).get(0);
+//        persona=personaAction.findByParameters(persona).get(0);
+        persona=personaAction.findByParameters(persona, new Persona()).get(0);
         
         //Prueba hasta que se encuentre implementado el buscador
         personaVisitada=new Persona();
         personaVisitada.setNumeroDocumento("3501729");
-        personaVisitada=personaAction.findByParameters(personaVisitada).get(0);
+//        personaVisitada=personaAction.findByParameters(personaVisitada).get(0);
+        personaVisitada=personaAction.findByParameters(personaVisitada, new Persona()).get(0);
         
         visita.setPersona(persona);
         visita.setPersonaVisitada(personaVisitada);
