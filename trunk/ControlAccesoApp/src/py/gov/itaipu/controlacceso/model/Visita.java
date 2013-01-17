@@ -112,7 +112,7 @@ public class Visita implements Serializable {
     }
 
     public void setObservacion(String observacion) {
-        this.observacion = observacion;
+        this.observacion = observacion.toUpperCase();
     }
 
     public String getRecibido() {
