@@ -126,7 +126,7 @@ public class JDialogoTipoAntecedente extends javax.swing.JDialog {
             tipoAntecedente.setNombre(jTextFieldNombre.getText());     
         if (tipoAntecedente.getNombre().equals("")) 
         {
-             JOptionPane.showConfirmDialog(null, "Nombre es Obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
+             JOptionPane.showMessageDialog(null, "Nombre es Obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
         }else{
        if (tipoAntecedente.getId()==null) {
                 em.crear();
