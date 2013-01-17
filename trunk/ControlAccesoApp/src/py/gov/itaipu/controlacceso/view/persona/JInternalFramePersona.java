@@ -4,7 +4,6 @@
  */
 package py.gov.itaipu.controlacceso.view.persona;
 
-import com.toedter.calendar.JCalendar;
 import java.awt.Dimension;
 import java.util.Date;
 import java.util.List;
@@ -32,7 +31,6 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
     private CRUDAction<Nacionalidad> nacionalidadAction;
     private CRUDAction<TipoDocumento> tipoDocAction;
     private TableCellRenderer rendererTime;
-    private JCalendar calendario;
     /**
      * Creates new form JInternalFramePersona
      */
@@ -43,7 +41,6 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
         personaFiltro = new Persona();
         personaFiltro2 = new Persona();
         rendererTime = new TimeRenderer("dd/MM/yyyy");
-        calendario = new JCalendar();
         initComponents();
         setResizable(true);
         setClosable(true);
