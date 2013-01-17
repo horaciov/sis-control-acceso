@@ -140,7 +140,7 @@
               <Subbinding sourcePath="${persona.nombre} ${persona.apellido}">
                 <BindingParameter name="NAME" value="Persona"/>
               </Subbinding>
-              <Subbinding sourcePath="${organizacionVisita.nombre}">
+              <Subbinding sourcePath="${persona.organizacion.nombre}">
                 <BindingParameter name="NAME" value="Organizaci&#xf3;n"/>
               </Subbinding>
               <Subbinding sourcePath="${fechaIngreso}">

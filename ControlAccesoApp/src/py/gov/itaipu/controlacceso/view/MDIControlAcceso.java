@@ -14,6 +14,7 @@ import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInterna
 import py.gov.itaipu.controlacceso.view.administracion.organizacion.JInternalFrameOrganizacionInterna;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameTipoAntecedente;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameTipoDocumento;
+import py.gov.itaipu.controlacceso.view.visita.JInternalFrameConsultaVisita;
 import py.gov.itaipu.controlacceso.view.visita.JInternalFrameRegistroVisita;
 
 /**
@@ -45,6 +46,7 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         jMenuItemRegistro = new javax.swing.JMenuItem();
         jMenuVisita = new javax.swing.JMenu();
         jMenuItemRegistroVisita = new javax.swing.JMenuItem();
+        jMenuItemConsultaVisita = new javax.swing.JMenuItem();
         jMenuAdministracion = new javax.swing.JMenu();
         jMenuParametroGeneral = new javax.swing.JMenu();
         jMenuItemMotivoVisita = new javax.swing.JMenuItem();
@@ -85,13 +87,22 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         jMenuVisita.setText("Visita");
 
         jMenuItemRegistroVisita.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/icon-clock.png"))); // NOI18N
-        jMenuItemRegistroVisita.setText("Registro visita");
+        jMenuItemRegistroVisita.setText("Registro de visitas");
         jMenuItemRegistroVisita.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItemRegistroVisitaActionPerformed(evt);
             }
         });
         jMenuVisita.add(jMenuItemRegistroVisita);
+
+        jMenuItemConsultaVisita.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/view.png"))); // NOI18N
+        jMenuItemConsultaVisita.setText("Consulta de visitas");
+        jMenuItemConsultaVisita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemConsultaVisitaActionPerformed(evt);
+            }
+        });
+        jMenuVisita.add(jMenuItemConsultaVisita);
 
         menuBar.add(jMenuVisita);
 
@@ -268,6 +279,13 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         this.desktopPane.add(registroVisitaFrame);
     }//GEN-LAST:event_jMenuItemRegistroVisitaActionPerformed
 
+    private void jMenuItemConsultaVisitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConsultaVisitaActionPerformed
+        // TODO add your handling code here:
+        JInternalFrameConsultaVisita consultaVisitaFrame = new JInternalFrameConsultaVisita();
+        consultaVisitaFrame.setVisible(true);
+        this.desktopPane.add(consultaVisitaFrame);
+    }//GEN-LAST:event_jMenuItemConsultaVisitaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -309,6 +327,7 @@ public class MDIControlAcceso extends javax.swing.JFrame {
     private javax.swing.JMenu helpMenu;
     private javax.swing.JMenu jMenuAdministracion;
     private javax.swing.JMenuItem jMenuItemAntecedente;
+    private javax.swing.JMenuItem jMenuItemConsultaVisita;
     private javax.swing.JMenuItem jMenuItemEstado;
     private javax.swing.JMenuItem jMenuItemMotivoVisita;
     private javax.swing.JMenuItem jMenuItemNacionalidad;

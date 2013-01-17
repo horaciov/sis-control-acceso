@@ -78,7 +78,7 @@ public class JInternalFrameRegistroVisita extends javax.swing.JInternalFrame {
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listVisitas, jTableVisitas);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${persona.nombre} ${persona.apellido}"));
         columnBinding.setColumnName("Persona");
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${organizacionVisita.nombre}"));
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${persona.organizacion.nombre}"));
         columnBinding.setColumnName("Organización");
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${fechaIngreso}"));
         columnBinding.setColumnName("Fecha Ingreso");
