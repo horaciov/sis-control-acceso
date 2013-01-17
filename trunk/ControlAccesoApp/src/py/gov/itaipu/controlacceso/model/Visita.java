@@ -26,7 +26,6 @@ public class Visita implements Serializable {
     private Persona persona;
     private Persona personaVisitada;
     private Organizacion organizacionInterna;
-    private Organizacion organizacionVisita;
     private Motivo motivo;
     private Date fechaIngreso;
     private Date fechaSalida;
@@ -79,17 +78,6 @@ public class Visita implements Serializable {
     public void setOrganizacionInterna(Organizacion organizacionInterna) {
         this.organizacionInterna = organizacionInterna;
     }
-
-    @ManyToOne
-    public Organizacion getOrganizacionVisita() {
-        return organizacionVisita;
-    }
-
-    public void setOrganizacionVisita(Organizacion organizacionVisita) {
-        this.organizacionVisita = organizacionVisita;
-    }
-    
-    
 
     @ManyToOne
     public Motivo getMotivo() {
