@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.table.TableCellRenderer;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.action.persona.PersonaAction;
@@ -17,6 +18,7 @@ import py.gov.itaipu.controlacceso.model.TipoDocumento;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 import org.jdesktop.observablecollections.ObservableCollections;
 import py.gov.itaipu.controlacceso.view.TimeRenderer;
+import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JDialogTipoDocumento;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JDialogoNacionalidad;
 
 /**
@@ -35,6 +37,7 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
      * Creates new form JInternalFramePersona
      */
     public JInternalFramePersona() {
+        
         personaAction = new PersonaAction(new Persona());
         nacionalidadAction = new CRUDAction(new Nacionalidad());
         tipoDocAction = new CRUDAction(new TipoDocumento());
@@ -98,9 +101,10 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTablePersonas = new javax.swing.JTable();
         jButtonNuevo = new javax.swing.JButton();
-        jButtonNuevo1 = new javax.swing.JButton();
-        jButtonNuevo2 = new javax.swing.JButton();
+        jButtonModificar = new javax.swing.JButton();
+        jButtonEliminar = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JSeparator();
+        jButtonVer = new javax.swing.JButton();
 
         setTitle("Registro de personas");
 
@@ -233,21 +237,30 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
             }
         });
 
-        jButtonNuevo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/edit.png"))); // NOI18N
-        jButtonNuevo1.setText("MODIFICAR");
-        jButtonNuevo1.setPreferredSize(new java.awt.Dimension(110, 25));
-        jButtonNuevo1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/edit.png"))); // NOI18N
+        jButtonModificar.setText("MODIFICAR");
+        jButtonModificar.setPreferredSize(new java.awt.Dimension(110, 25));
+        jButtonModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonNuevo1ActionPerformed(evt);
+                jButtonModificarActionPerformed(evt);
             }
         });
 
-        jButtonNuevo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/delete.png"))); // NOI18N
-        jButtonNuevo2.setText("ELIMINAR");
-        jButtonNuevo2.setPreferredSize(new java.awt.Dimension(110, 25));
-        jButtonNuevo2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/delete.png"))); // NOI18N
+        jButtonEliminar.setText("ELIMINAR");
+        jButtonEliminar.setPreferredSize(new java.awt.Dimension(110, 25));
+        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonNuevo2ActionPerformed(evt);
+                jButtonEliminarActionPerformed(evt);
+            }
+        });
+
+        jButtonVer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/view.png"))); // NOI18N
+        jButtonVer.setText("VER");
+        jButtonVer.setPreferredSize(new java.awt.Dimension(110, 25));
+        jButtonVer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVerActionPerformed(evt);
             }
         });
 
@@ -293,13 +306,16 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(13, 13, 13)
+                                .addComponent(jButtonVer, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButtonNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(16, 16, 16)
-                                .addComponent(jButtonNuevo1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(26, 26, 26)
-                                .addComponent(jButtonNuevo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButtonModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -339,9 +355,10 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonNuevo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonNuevo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonVer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -421,24 +438,72 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
 
     private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
         // TODO add your handling code here:
-         JDialogPersona dialogoNuevo = new JDialogPersona(null, closable);
-         dialogoNuevo.setVisible(true);
+//         JDialogPersona dialogoNuevo = new JDialogPersona(null, closable);
+//         dialogoNuevo.setVisible(true);
+         Persona p= new Persona();
+         JDialogPersona dialogPersona = new JDialogPersona(null, closable);
+         dialogPersona.setPersona(p);
+         dialogPersona.setVisible(true);
+         listPersonas.clear();
+         listPersonas.addAll(personaAction.findByParameters(personaFiltro,personaFiltro2));
+         
     }//GEN-LAST:event_jButtonNuevoActionPerformed
 
-    private void jButtonNuevo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevo1ActionPerformed
+    private void jButtonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonNuevo1ActionPerformed
+        if(jTablePersonas.getSelectedRow()<0){
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una Persona","Error",0);
+            return;
+        }
+        
+        Persona p=(Persona) listPersonas.get(jTablePersonas.getSelectedRow());
+        JDialogPersona dialogPersona = new JDialogPersona(null, closable);
+        dialogPersona.setPersona(p);
+        dialogPersona.cargarDatospersona();
+        dialogPersona.setVisible(true);
+        listPersonas.clear();
+        listPersonas.addAll(personaAction.findByParameters(personaFiltro,personaFiltro2));
+        
+    }//GEN-LAST:event_jButtonModificarActionPerformed
 
-    private void jButtonNuevo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevo2ActionPerformed
+    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonNuevo2ActionPerformed
+         if(jTablePersonas.getSelectedRow()<0){
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una Persona","Error",0);
+            return;
+        }
+        if(JOptionPane.showConfirmDialog(this,"Está seguro que desea eliminar?","Eliminar Persona",0)!=0)
+            return;
+        Persona p=(Persona) listPersonas.get(jTablePersonas.getSelectedRow());
+        personaAction.setPersona(p);
+        personaAction.eliminar();
+        listPersonas.clear();
+        listPersonas.addAll(personaAction.findByParameters(personaFiltro,personaFiltro2));
+    }//GEN-LAST:event_jButtonEliminarActionPerformed
+
+    private void jButtonVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerActionPerformed
+        // TODO add your handling code here:
+         if(jTablePersonas.getSelectedRow()<0){
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una Persona","Error",0);
+            return;
+        }
+        
+        Persona p=(Persona) listPersonas.get(jTablePersonas.getSelectedRow());
+        JDialogPersona dialogPersona = new JDialogPersona(null, closable);
+        dialogPersona.setPersona(p);
+        dialogPersona.setReadOnly(true);
+        dialogPersona.cargarDatospersona();
+        dialogPersona.setVisible(true);
+        
+    }//GEN-LAST:event_jButtonVerActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBuscar;
+    private javax.swing.JButton jButtonEliminar;
     private javax.swing.JButton jButtonLimpiar;
+    private javax.swing.JButton jButtonModificar;
     private javax.swing.JButton jButtonNuevo;
-    private javax.swing.JButton jButtonNuevo1;
-    private javax.swing.JButton jButtonNuevo2;
+    private javax.swing.JButton jButtonVer;
     private javax.swing.JComboBox jComboBoxEstadoCivil;
     private javax.swing.JComboBox jComboBoxNacionalidad;
     private javax.swing.JComboBox jComboBoxTipoDoc;
