@@ -4,6 +4,7 @@
  */
 package py.gov.itaipu.controlacceso.view.visita;
 
+import java.beans.PropertyVetoException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,7 +30,9 @@ import py.gov.itaipu.controlacceso.model.Organizacion;
 import py.gov.itaipu.controlacceso.model.Persona;
 import py.gov.itaipu.controlacceso.model.Visita;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
+import py.gov.itaipu.controlacceso.view.JDialogBuscador;
 import py.gov.itaipu.controlacceso.view.TimeRenderer;
+import py.gov.itaipu.controlacceso.view.administracion.organizacion.JInternalFrameOrganizacionExterna;
 
 /**
  *
@@ -103,7 +106,7 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         jTextFieldOrganizacionExterna = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jButtonBuscarPersona2 = new javax.swing.JButton();
+        jButtonBuscarOrganizacionExterna = new javax.swing.JButton();
         jButtonLimpiar = new javax.swing.JButton();
         jFormattedTextFieldDesde = new javax.swing.JFormattedTextField();
         jFormattedTextFieldHasta = new javax.swing.JFormattedTextField();
@@ -192,8 +195,13 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
 
         jLabel9.setText("Organización:");
 
-        jButtonBuscarPersona2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/view.png"))); // NOI18N
-        jButtonBuscarPersona2.setToolTipText("Buscar Persona");
+        jButtonBuscarOrganizacionExterna.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/view.png"))); // NOI18N
+        jButtonBuscarOrganizacionExterna.setToolTipText("Buscar Persona");
+        jButtonBuscarOrganizacionExterna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscarOrganizacionExternaActionPerformed(evt);
+            }
+        });
 
         jButtonLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/clear.jpeg"))); // NOI18N
         jButtonLimpiar.setText("Limpiar");
@@ -230,7 +238,7 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jFormattedTextFieldHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonBuscarPersona2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonBuscarOrganizacionExterna, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
@@ -289,7 +297,7 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
                             .addComponent(jLabel6)
                             .addComponent(jComboBoxMotivo, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextFieldOrganizacionExterna, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButtonBuscarPersona2)))
+                            .addComponent(jButtonBuscarOrganizacionExterna)))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -355,7 +363,7 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
         if (organizacionInterna.getId() != null) {
             v.setOrganizacionInterna(organizacionInterna);
         }
-    
+       
         if (jFormattedTextFieldDesde.getText()!=null && !jFormattedTextFieldDesde.getText().equals("")) {
             v.setFechaIngreso(((Date)jFormattedTextFieldDesde.getValue()));
         }
@@ -371,7 +379,7 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
         }
         
         listVisitas.clear();
-        listVisitas.addAll(visitaAction.findByParameters(v, hasta, null));
+        listVisitas.addAll(visitaAction.findByParameters(v, hasta, organizacionExterna));
     }//GEN-LAST:event_jButtonBuscarActionPerformed
     
     private void jButtonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarActionPerformed
@@ -399,11 +407,31 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
         
         listVisitas.clear();
     }//GEN-LAST:event_jButtonLimpiarActionPerformed
+
+    private void jButtonBuscarOrganizacionExternaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarOrganizacionExternaActionPerformed
+
+            // TODO add your handling code here:
+            JInternalFrameOrganizacionExterna jFrameOrganizacionExterna = new JInternalFrameOrganizacionExterna();
+            jFrameOrganizacionExterna.setModoBuscador(true);
+            jFrameOrganizacionExterna.setVisible(true);            
+            JDialogBuscador buscador=new JDialogBuscador(null, closable);        
+            jFrameOrganizacionExterna.setSize(buscador.getSize());
+            jFrameOrganizacionExterna.setClosable(false);
+            jFrameOrganizacionExterna.setResizable(false);
+            jFrameOrganizacionExterna.setTitle("Buscador de organización externa");
+            buscador.getjDesktopPaneBuscador().add(jFrameOrganizacionExterna);
+            buscador.setVisible(true);        
+            organizacionExterna=jFrameOrganizacionExterna.getOrganizacionSeleccionada();
+            if(organizacionExterna!=null)
+                jTextFieldOrganizacionExterna.setText(organizacionExterna.getNombre());
+       
+    }//GEN-LAST:event_jButtonBuscarOrganizacionExternaActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBuscar;
+    private javax.swing.JButton jButtonBuscarOrganizacionExterna;
     private javax.swing.JButton jButtonBuscarPersona;
     private javax.swing.JButton jButtonBuscarPersona1;
-    private javax.swing.JButton jButtonBuscarPersona2;
     private javax.swing.JButton jButtonCerrar;
     private javax.swing.JButton jButtonLimpiar;
     private javax.swing.JComboBox jComboBoxMotivo;

@@ -25,18 +25,39 @@ public class JInternalFrameOrganizacionExterna extends javax.swing.JInternalFram
    
     
     private CRUDAction<Organizacion> organizacionAction;
+    private Organizacion organizacionSeleccionada;
+    private Boolean modoBuscador;
     
     /**
      * Creates new form JInternalFrameOrganizacion
      */
     public JInternalFrameOrganizacionExterna() {
         setClosable(true);
+        modoBuscador=false;             
         organizacionAction=new CRUDAction<Organizacion>();
         organizacionAction.setEntity(new Organizacion());
         initComponents();      
         
     }
 
+    public Boolean getModoBuscador() {
+        return modoBuscador;
+    }
+
+    public void setModoBuscador(Boolean modoBuscador) {
+        this.modoBuscador = modoBuscador;
+    }
+
+    public Organizacion getOrganizacionSeleccionada() {
+        return organizacionSeleccionada;
+    }
+
+    public void setOrganizacionSeleccionada(Organizacion organizacionSeleccionada) {
+        this.organizacionSeleccionada = organizacionSeleccionada;
+    }
+
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -59,16 +80,40 @@ public class JInternalFrameOrganizacionExterna extends javax.swing.JInternalFram
         jButtonVer = new javax.swing.JButton();
 
         setTitle("Gestión de organizaciones externas");
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
+            }
+        });
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listOrganizaciones, jTableOrganizaciones);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nombre}"));
         columnBinding.setColumnName("Organización");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${descripcion}"));
         columnBinding.setColumnName("Descripcion");
         columnBinding.setColumnClass(String.class);
+        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
+        jTableOrganizaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableOrganizacionesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableOrganizaciones);
         jTableOrganizaciones.getColumnModel().getColumn(0).setMinWidth(200);
         jTableOrganizaciones.getColumnModel().getColumn(0).setPreferredWidth(200);
@@ -177,7 +222,7 @@ public class JInternalFrameOrganizacionExterna extends javax.swing.JInternalFram
                     .addComponent(jButtonCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonVer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(85, Short.MAX_VALUE))
+                .addContainerGap(93, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -242,6 +287,28 @@ public class JInternalFrameOrganizacionExterna extends javax.swing.JInternalFram
         dialogOrganizacion.setReadOnly(true);
         dialogOrganizacion.setVisible(true);
     }//GEN-LAST:event_jButtonVerActionPerformed
+
+    private void jTableOrganizacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableOrganizacionesMouseClicked
+        // TODO add your handling code here:
+        if(evt.getClickCount()==2 && modoBuscador){      
+            int row=jTableOrganizaciones.getSelectedRow();
+            if(row>-1){
+                organizacionSeleccionada=(Organizacion)listOrganizaciones.get(row);
+            }
+            this.dispose();
+        }
+            
+    }//GEN-LAST:event_jTableOrganizacionesMouseClicked
+
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+        // TODO add your handling code here:
+        if(modoBuscador){
+            jButtonEditar.setVisible(false);
+            jButtonEliminar.setVisible(false);
+            jButtonNuevo.setVisible(false);
+            jButtonVer.setVisible(false);
+        }
+    }//GEN-LAST:event_formInternalFrameOpened
     
     
     
