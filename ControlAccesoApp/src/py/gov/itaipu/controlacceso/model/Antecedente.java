@@ -69,7 +69,7 @@ public class Antecedente implements Serializable {
     }
 
     public void setObservacion(String observacion) {
-        this.observacion = observacion;
+        this.observacion = observacion.toUpperCase();
     }
     
     

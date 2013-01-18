@@ -43,7 +43,7 @@ public class Nacionalidad implements Serializable {
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombre = nombre.toUpperCase();
     }
 
     public String getDescripcion() {
