@@ -237,7 +237,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jButtonBuscarPersona" min="-2" pref="31" max="-2" attributes="0"/>
-                      <Component id="jButtonBuscarPersona1" min="-2" pref="31" max="-2" attributes="0"/>
+                      <Component id="jButtonBuscarPersonaVisitada" min="-2" pref="31" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -288,7 +288,7 @@
                                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jButtonBuscarPersona1" max="32767" attributes="0"/>
+                              <Component id="jButtonBuscarPersonaVisitada" max="32767" attributes="0"/>
                               <Component id="jTextFieldPersonaVisitada" alignment="0" max="32767" attributes="0"/>
                               <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                               <Component id="jComboBoxMotivo" min="-2" pref="25" max="-2" attributes="0"/>
@@ -315,6 +315,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldPersona">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonBuscarPersona">
           <Properties>
@@ -323,16 +326,25 @@
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Buscar Persona"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonBuscarPersonaActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldPersonaVisitada">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButtonBuscarPersona1">
+        <Component class="javax.swing.JButton" name="jButtonBuscarPersonaVisitada">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/resource/img/view.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Buscar Persona"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonBuscarPersonaVisitadaActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
@@ -410,6 +422,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldOrganizacionExterna">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel9">
           <Properties>

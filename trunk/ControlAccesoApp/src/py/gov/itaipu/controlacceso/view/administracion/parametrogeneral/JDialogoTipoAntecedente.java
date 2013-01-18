@@ -144,8 +144,8 @@ public class JDialogoTipoAntecedente extends javax.swing.JDialog {
             jTextAreaDescripcion.setText(tipoAntecedente.getDescripcion());
             jTextFieldNombre.setText(tipoAntecedente.getNombre());
             if (readOnly) {
-                this.jTextAreaDescripcion.setEnabled(false);
-                this.jTextFieldNombre.setEnabled(false);
+                this.jTextAreaDescripcion.setEditable(false);
+                this.jTextFieldNombre.setEditable(false);
                 this.jButtonGuardar.setVisible(false);
             }
             

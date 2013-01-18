@@ -185,8 +185,8 @@ public class JDialogTipoDocumento extends javax.swing.JDialog {
         jTextAreaDescripcion.setText(tipoDocumento.getDescripcion());
         
         if(readOnly){
-            jTextFieldTipoDocumento.setEnabled(false);
-            jTextAreaDescripcion.setEnabled(false);
+            jTextFieldTipoDocumento.setEditable(false);
+            jTextAreaDescripcion.setEditable(false);
             jButtonGuardar.setVisible(false);
         }
     }//GEN-LAST:event_formWindowActivated
