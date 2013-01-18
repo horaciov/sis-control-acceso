@@ -44,7 +44,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="436" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
@@ -68,18 +68,26 @@
                                   <Group type="102" alignment="1" attributes="0">
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="jTextFieldPersona" pref="272" max="32767" attributes="0"/>
+                                          <Component id="jTextFieldPersona" pref="248" max="32767" attributes="0"/>
                                           <Component id="jTextFieldPersonaVisitada" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="jButtonBuscarPersona" min="-2" pref="30" max="-2" attributes="0"/>
-                                          <Component id="jButtonBuscarPersonaVisitada" pref="0" max="32767" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Component id="jButtonBuscarPersona" min="-2" pref="30" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jButtonLimpiarPersona" min="-2" pref="30" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Component id="jButtonBuscarPersonaVisitada" min="-2" pref="30" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                                              <Component id="jButtonLimpiarPersonaVisitada" min="-2" pref="30" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
                                   </Group>
                                   <Component id="jComboBoxMotivo" alignment="0" max="32767" attributes="0"/>
                                   <Component id="jComboBoxOrganizacionInternta" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane1" alignment="0" pref="332" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -101,6 +109,7 @@
                   <Component id="jButtonBuscarPersona" max="32767" attributes="0"/>
                   <Component id="jTextFieldPersona" alignment="1" max="32767" attributes="0"/>
                   <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonLimpiarPersona" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -110,6 +119,7 @@
                   </Group>
                   <Component id="jButtonBuscarPersonaVisitada" max="32767" attributes="0"/>
                   <Component id="jTextFieldPersonaVisitada" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jButtonLimpiarPersonaVisitada" alignment="1" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -242,6 +252,28 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonBuscarPersonaVisitadaActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonLimpiarPersonaVisitada">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/resource/img/clear.jpeg"/>
+        </Property>
+        <Property name="toolTipText" type="java.lang.String" value="Buscar Persona"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLimpiarPersonaVisitadaActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonLimpiarPersona">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/resource/img/clear.jpeg"/>
+        </Property>
+        <Property name="toolTipText" type="java.lang.String" value="Buscar Persona"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLimpiarPersonaActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

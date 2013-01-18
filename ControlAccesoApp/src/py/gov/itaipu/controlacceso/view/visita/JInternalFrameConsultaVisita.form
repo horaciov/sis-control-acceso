@@ -210,34 +210,44 @@
                       <Group type="102" attributes="0">
                           <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jTextFieldOrganizacionExterna" min="-2" pref="182" max="-2" attributes="0"/>
+                          <Component id="jTextFieldOrganizacionExterna" min="-2" pref="153" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="jButtonBuscarOrganizacionExterna" min="-2" pref="31" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jFormattedTextFieldDesde" min="-2" pref="66" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                           <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jFormattedTextFieldHasta" min="-2" pref="66" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="jButtonLimpiarOrganizacion" min="-2" pref="30" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jButtonBuscarOrganizacionExterna" min="-2" pref="31" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="jTextFieldPersona" pref="171" max="32767" attributes="0"/>
                       <Component id="jTextFieldPersonaVisitada" max="32767" attributes="0"/>
-                      <Component id="jTextFieldPersona" min="-2" pref="200" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jButtonBuscarPersona" min="-2" pref="31" max="-2" attributes="0"/>
-                      <Component id="jButtonBuscarPersonaVisitada" min="-2" pref="31" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="jButtonBuscarPersona" min="-2" pref="31" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Component id="jButtonLimpiarPersona" min="-2" pref="30" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="jButtonBuscarPersonaVisitada" min="-2" pref="31" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="jButtonLimpiarPersonaVisitada" min="-2" pref="30" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -281,8 +291,9 @@
                               <Component id="jComboBoxOrganizacionInternta" min="-2" pref="25" max="-2" attributes="0"/>
                               <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                              <Component id="jButtonLimpiarPersona" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -294,6 +305,8 @@
                               <Component id="jComboBoxMotivo" min="-2" pref="25" max="-2" attributes="0"/>
                               <Component id="jTextFieldOrganizacionExterna" alignment="1" max="32767" attributes="0"/>
                               <Component id="jButtonBuscarOrganizacionExterna" min="-2" max="-2" attributes="0"/>
+                              <Component id="jButtonLimpiarPersonaVisitada" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jButtonLimpiarOrganizacion" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Component id="jScrollPane2" pref="0" max="32767" attributes="0"/>
@@ -475,6 +488,39 @@
               <Format subtype="0" type="1"/>
             </Property>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButtonLimpiarPersona">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/resource/img/clear.jpeg"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Buscar Persona"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLimpiarPersonaActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButtonLimpiarPersonaVisitada">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/resource/img/clear.jpeg"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Buscar Persona"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLimpiarPersonaVisitadaActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButtonLimpiarOrganizacion">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/resource/img/clear.jpeg"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Buscar Persona"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLimpiarOrganizacionActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
