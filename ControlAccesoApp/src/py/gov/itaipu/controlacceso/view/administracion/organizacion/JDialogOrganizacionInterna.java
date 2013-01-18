@@ -184,8 +184,8 @@ public class JDialogOrganizacionInterna extends javax.swing.JDialog {
         jTextAreaDescripcion.setText(organizacion.getDescripcion());
         
         if(readOnly){
-            jTextFieldOrganizacion.setEnabled(false);
-            jTextAreaDescripcion.setEnabled(false);
+            jTextFieldOrganizacion.setEditable(false);
+            jTextAreaDescripcion.setEditable(false);
             jButtonGuardar.setVisible(false);
         }
     }//GEN-LAST:event_formWindowActivated

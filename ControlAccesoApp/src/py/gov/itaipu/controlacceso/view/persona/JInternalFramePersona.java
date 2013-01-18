@@ -17,6 +17,7 @@ import py.gov.itaipu.controlacceso.model.Persona;
 import py.gov.itaipu.controlacceso.model.TipoDocumento;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 import org.jdesktop.observablecollections.ObservableCollections;
+import py.gov.itaipu.controlacceso.model.Organizacion;
 import py.gov.itaipu.controlacceso.view.TimeRenderer;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JDialogTipoDocumento;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JDialogoNacionalidad;
@@ -26,33 +27,50 @@ import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JDialogo
  * @author vimartih
  */
 public class JInternalFramePersona extends javax.swing.JInternalFrame {
-    
+
     private PersonaAction personaAction;
     private Persona personaFiltro;
     private Persona personaFiltro2;
     private CRUDAction<Nacionalidad> nacionalidadAction;
     private CRUDAction<TipoDocumento> tipoDocAction;
     private TableCellRenderer rendererTime;
+    private Boolean modoBuscador;
+    private Persona personaSeleccionada;
+
     /**
      * Creates new form JInternalFramePersona
      */
     public JInternalFramePersona() {
-        
+
         personaAction = new PersonaAction(new Persona());
         nacionalidadAction = new CRUDAction(new Nacionalidad());
         tipoDocAction = new CRUDAction(new TipoDocumento());
         personaFiltro = new Persona();
         personaFiltro2 = new Persona();
         rendererTime = new TimeRenderer("dd/MM/yyyy");
+        modoBuscador = false;
         initComponents();
         setResizable(true);
         setClosable(true);
         setMaximizable(true);
-             
+
     }
-  
-  
-    
+
+    public Boolean getModoBuscador() {
+        return modoBuscador;
+    }
+
+    public void setModoBuscador(Boolean modoBuscador) {
+        this.modoBuscador = modoBuscador;
+    }
+
+    public Persona getPersonaSeleccionada() {
+        return personaSeleccionada;
+    }
+
+    public void setPersonaSeleccionada(Persona personaSeleccionada) {
+        this.personaSeleccionada = personaSeleccionada;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -107,6 +125,23 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
         jButtonVer = new javax.swing.JButton();
 
         setTitle("Registro de personas");
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
+            }
+        });
 
         jLabel1.setText("Lista de Personas");
 
@@ -224,6 +259,11 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
         columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
+        jTablePersonas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTablePersonasMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTablePersonas);
         jTablePersonas.getColumnModel().getColumn(5).setCellRenderer(rendererTime
         );
@@ -347,7 +387,7 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
                     .addComponent(jButtonLimpiar))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -359,7 +399,7 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
                     .addComponent(jButtonModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonVer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -369,53 +409,53 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
 
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
         // TODO add your handling code here:
-        if (jTextFieldNombreFiltro.getText()!=null && !jTextFieldNombreFiltro.getText().equals("")) {
+        if (jTextFieldNombreFiltro.getText() != null && !jTextFieldNombreFiltro.getText().equals("")) {
             personaFiltro.setNombre(jTextFieldNombreFiltro.getText().toUpperCase());
         }
-        
-        if (jTextFieldApellidoFiltro.getText()!=null && !jTextFieldApellidoFiltro.getText().equals("")) {
+
+        if (jTextFieldApellidoFiltro.getText() != null && !jTextFieldApellidoFiltro.getText().equals("")) {
             personaFiltro.setApellido(jTextFieldApellidoFiltro.getText().toUpperCase());
         }
-        
-        if (jTextFieldNroDoc.getText()!=null && !jTextFieldNroDoc.getText().equals("")) {
+
+        if (jTextFieldNroDoc.getText() != null && !jTextFieldNroDoc.getText().equals("")) {
             personaFiltro.setNumeroDocumento(jTextFieldNroDoc.getText().toUpperCase());
         }
-        
-        if (jFormattedTextFechDesde.getText()!=null && !jFormattedTextFechDesde.getText().equals("")) {
-            personaFiltro.setFechaNacimiento(((Date)jFormattedTextFechDesde.getValue()));
+
+        if (jFormattedTextFechDesde.getText() != null && !jFormattedTextFechDesde.getText().equals("")) {
+            personaFiltro.setFechaNacimiento(((Date) jFormattedTextFechDesde.getValue()));
         }
-        
-        if (jFormattedTextFechHasta.getText()!=null && !jFormattedTextFechHasta.getText().equals("")) {
-            personaFiltro2.setFechaNacimiento(((Date)jFormattedTextFechHasta.getValue()));
+
+        if (jFormattedTextFechHasta.getText() != null && !jFormattedTextFechHasta.getText().equals("")) {
+            personaFiltro2.setFechaNacimiento(((Date) jFormattedTextFechHasta.getValue()));
         }
-        
-        
+
+
         Nacionalidad nac = (Nacionalidad) jComboBoxNacionalidad.getSelectedItem();
         if (nac.getId() != null) {
             personaFiltro.setNacionalidad((Nacionalidad) jComboBoxNacionalidad.getSelectedItem());
-        }else{
+        } else {
             personaFiltro.setNacionalidad(null);
         }
-        
+
         TipoDocumento tD = (TipoDocumento) jComboBoxTipoDoc.getSelectedItem();
-        if (tD.getId()!=null) {
+        if (tD.getId() != null) {
             personaFiltro.setTipoDocumento(tD);
-        }else{
+        } else {
             personaFiltro.setTipoDocumento(null);
         }
-        
-        
+
+
         if (!jComboBoxEstadoCivil.getSelectedItem().toString().equals("TODOS")) {
             personaFiltro.setEstadoCivil(jComboBoxEstadoCivil.getSelectedItem().toString());
-        }else{
+        } else {
             personaFiltro.setEstadoCivil(null);
         }
-              
+
         listPersonas.clear();
-        listPersonas.addAll(personaAction.findByParameters(personaFiltro,personaFiltro2));
-        
-        
-      
+        listPersonas.addAll(personaAction.findByParameters(personaFiltro, personaFiltro2));
+
+
+
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
     private void jButtonLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarActionPerformed
@@ -428,74 +468,96 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
         jComboBoxNacionalidad.setSelectedIndex(0);
         jFormattedTextFechDesde.setText(null);
         jFormattedTextFechHasta.setText(null);
-        
+
         personaFiltro = new Persona();
         personaFiltro2 = new Persona();
         listPersonas.clear();
-        listPersonas.addAll(personaAction.findByParameters(personaFiltro,personaFiltro2));
-        
+        listPersonas.addAll(personaAction.findByParameters(personaFiltro, personaFiltro2));
+
     }//GEN-LAST:event_jButtonLimpiarActionPerformed
 
     private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
         // TODO add your handling code here:
 //         JDialogPersona dialogoNuevo = new JDialogPersona(null, closable);
 //         dialogoNuevo.setVisible(true);
-         Persona p= new Persona();
-         JDialogPersona dialogPersona = new JDialogPersona(null, closable);
-         dialogPersona.setPersona(p);
-         dialogPersona.setVisible(true);
-         listPersonas.clear();
-         listPersonas.addAll(personaAction.findByParameters(personaFiltro,personaFiltro2));
-         
+        Persona p = new Persona();
+        JDialogPersona dialogPersona = new JDialogPersona(null, closable);
+        dialogPersona.setPersona(p);
+        dialogPersona.setVisible(true);
+        listPersonas.clear();
+        listPersonas.addAll(personaAction.findByParameters(personaFiltro, personaFiltro2));
+
     }//GEN-LAST:event_jButtonNuevoActionPerformed
 
     private void jButtonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarActionPerformed
         // TODO add your handling code here:
-        if(jTablePersonas.getSelectedRow()<0){
-            JOptionPane.showMessageDialog(this, "Debe seleccionar una Persona","Error",0);
+        if (jTablePersonas.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una Persona", "Error", 0);
             return;
         }
-        
-        Persona p=(Persona) listPersonas.get(jTablePersonas.getSelectedRow());
+
+        Persona p = (Persona) listPersonas.get(jTablePersonas.getSelectedRow());
         JDialogPersona dialogPersona = new JDialogPersona(null, closable);
         dialogPersona.setPersona(p);
         dialogPersona.cargarDatospersona();
         dialogPersona.setVisible(true);
         listPersonas.clear();
-        listPersonas.addAll(personaAction.findByParameters(personaFiltro,personaFiltro2));
-        
+        listPersonas.addAll(personaAction.findByParameters(personaFiltro, personaFiltro2));
+
     }//GEN-LAST:event_jButtonModificarActionPerformed
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
         // TODO add your handling code here:
-         if(jTablePersonas.getSelectedRow()<0){
-            JOptionPane.showMessageDialog(this, "Debe seleccionar una Persona","Error",0);
+        if (jTablePersonas.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una Persona", "Error", 0);
             return;
         }
-        if(JOptionPane.showConfirmDialog(this,"Está seguro que desea eliminar?","Eliminar Persona",0)!=0)
+        if (JOptionPane.showConfirmDialog(this, "Está seguro que desea eliminar?", "Eliminar Persona", 0) != 0) {
             return;
-        Persona p=(Persona) listPersonas.get(jTablePersonas.getSelectedRow());
+        }
+        Persona p = (Persona) listPersonas.get(jTablePersonas.getSelectedRow());
         personaAction.setPersona(p);
         personaAction.eliminar();
         listPersonas.clear();
-        listPersonas.addAll(personaAction.findByParameters(personaFiltro,personaFiltro2));
+        listPersonas.addAll(personaAction.findByParameters(personaFiltro, personaFiltro2));
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jButtonVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerActionPerformed
         // TODO add your handling code here:
-         if(jTablePersonas.getSelectedRow()<0){
-            JOptionPane.showMessageDialog(this, "Debe seleccionar una Persona","Error",0);
+        if (jTablePersonas.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una Persona", "Error", 0);
             return;
         }
-        
-        Persona p=(Persona) listPersonas.get(jTablePersonas.getSelectedRow());
+
+        Persona p = (Persona) listPersonas.get(jTablePersonas.getSelectedRow());
         JDialogPersona dialogPersona = new JDialogPersona(null, closable);
         dialogPersona.setPersona(p);
         dialogPersona.setReadOnly(true);
         dialogPersona.cargarDatospersona();
         dialogPersona.setVisible(true);
-        
+
     }//GEN-LAST:event_jButtonVerActionPerformed
+
+    private void jTablePersonasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePersonasMouseClicked
+        // TODO add your handling code here:
+        if(evt.getClickCount()==2 && modoBuscador){      
+            int row=jTablePersonas.getSelectedRow();
+            if(row>-1){
+                personaSeleccionada=(Persona)listPersonas.get(row);
+            }
+            this.dispose();
+        }
+    }//GEN-LAST:event_jTablePersonasMouseClicked
+
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+        // TODO add your handling code here:
+         if(modoBuscador){
+            jButtonModificar.setVisible(false);
+            jButtonEliminar.setVisible(false);
+            jButtonNuevo.setVisible(false);
+            jButtonVer.setVisible(false);
+        }
+    }//GEN-LAST:event_formInternalFrameOpened
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBuscar;

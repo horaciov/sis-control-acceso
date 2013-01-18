@@ -183,8 +183,8 @@ public class JDialogMotivo extends javax.swing.JDialog {
         jTextAreaDescripcion.setText(motivo.getDescripcion());
         
         if(readOnly){
-            jTextFieldMotivo.setEnabled(false);
-            jTextAreaDescripcion.setEnabled(false);
+            jTextFieldMotivo.setEditable(false);
+            jTextAreaDescripcion.setEditable(false);
             jButtonGuardar.setVisible(false);
         }
     }//GEN-LAST:event_formWindowActivated

@@ -184,8 +184,8 @@ public class JDialogEstado extends javax.swing.JDialog {
         jTextAreaDescripcion.setText(estado.getDescripcion());
         
         if(readOnly){
-            jTextFieldEstado.setEnabled(false);
-            jTextAreaDescripcion.setEnabled(false);
+            jTextFieldEstado.setEditable(false);
+            jTextAreaDescripcion.setEditable(false);
             jButtonGuardar.setVisible(false);
         }
     }//GEN-LAST:event_formWindowActivated
