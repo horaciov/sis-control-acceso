@@ -27,9 +27,9 @@ public class ImageFrame extends JFrame {
      * compatible with <code>javax.swing.ImageIcon</code>.
      */
     public ImageFrame(String title, String imageFileName) {
-        setTitle(title);
-        ImageIcon icon = new javax.swing.ImageIcon(getClass().getResource("actor.jpg"));
-        Container pane = getContentPane();
+        this.setTitle(title);
+        ImageIcon icon = new javax.swing.ImageIcon(getClass().getResource(imageFileName));
+        Container pane =   this.getContentPane();
         JLabel label = new JLabel(icon);
         pane.add(label);// adds to center region of default BorderLayout of pane
     }

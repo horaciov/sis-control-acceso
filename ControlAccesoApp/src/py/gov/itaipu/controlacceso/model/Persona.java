@@ -33,9 +33,11 @@ public class Persona implements Serializable{
     private String sexo;
     private String estadoCivil;
     private Organizacion organizacion;
+    private byte[] fotografia;
     private List<Antecedente> antecedentes;
     private List<Visita> visitasRealizadas;
     private List<Visita> visitasRecibidas;
+    
 
     public Persona() {
         
@@ -169,7 +171,14 @@ public class Persona implements Serializable{
     public void setOrganizacion(Organizacion organizacion) {
         this.organizacion = organizacion;
     }
-    
+
+    public byte[] getFotografia() {
+        return fotografia;
+    }
+
+    public void setFotografia(byte[] fotografia) {
+        this.fotografia = fotografia;
+    }
         
     @Override
     public int hashCode() {

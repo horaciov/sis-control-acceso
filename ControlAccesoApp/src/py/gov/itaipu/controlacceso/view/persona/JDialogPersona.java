@@ -5,10 +5,32 @@
 package py.gov.itaipu.controlacceso.view.persona;
 
 import java.awt.Container;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Panel;
+import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageInputStreamImpl;
+import javax.imageio.stream.ImageOutputStreamImpl;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
@@ -20,6 +42,8 @@ import py.gov.itaipu.controlacceso.action.persona.PersonaAction;
 import py.gov.itaipu.controlacceso.model.Antecedente;
 import py.gov.itaipu.controlacceso.model.Organizacion;
 import py.gov.itaipu.controlacceso.model.Persona;
+import py.gov.itaipu.controlacceso.test.ImageFrame;
+import py.gov.itaipu.controlacceso.test.ShowImage;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JDialogoNacionalidad;
 
 /**
@@ -29,13 +53,15 @@ import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JDialogo
 public class JDialogPersona extends javax.swing.JDialog {
 
     private CRUDAction<Nacionalidad> nacionalidadAction;
-    private CRUDAction<TipoDocumento> tipoDocAction;    
-    private CRUDAction<Organizacion> organizacionAction;   
-    private CRUDAction<Antecedente> antecedenteAction;   
+    private CRUDAction<TipoDocumento> tipoDocAction;
+    private CRUDAction<Organizacion> organizacionAction;
+    private CRUDAction<Antecedente> antecedenteAction;
     private PersonaAction personaAction;
     private Persona persona;
     private Boolean readOnly;
-    
+    private BufferedImage imagePersona;
+    private ImageIcon iconoFoto;
+
     /**
      * Creates new form JDialogPersona
      */
@@ -52,9 +78,6 @@ public class JDialogPersona extends javax.swing.JDialog {
         initComponents();
     }
 
-    
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -88,7 +111,10 @@ public class JDialogPersona extends javax.swing.JDialog {
         jButtonNuevoNacionalidad = new javax.swing.JButton();
         jLabelFechaNac = new javax.swing.JLabel();
         jFormattedTextFieldFechaNac = new javax.swing.JFormattedTextField();
-        jPanelFotografia = new javax.swing.JPanel();
+        jPanelFotografia = new javax.swing.JPanel()
+        ;
+        jLabel3 = new javax.swing.JLabel();
+        jButtonCargarFoto = new javax.swing.JButton();
         jPanelOrganizacion = new javax.swing.JPanel();
         jComboBoxOrganizacion = new javax.swing.JComboBox();
         jLabelOrganizacion = new javax.swing.JLabel();
@@ -183,7 +209,7 @@ public class JDialogPersona extends javax.swing.JDialog {
                             .addComponent(jLabelNAcion)
                             .addComponent(jLabelTipDoc)
                             .addComponent(jLabelFechaNac))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 209, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 263, Short.MAX_VALUE)
                         .addGroup(jPanelDatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jComboBoxTipoDocumento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBoxNacionalidad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -241,15 +267,38 @@ public class JDialogPersona extends javax.swing.JDialog {
 
         jTabbedPanePersona.addTab("Datos Personales", jPanelDatosPersonales);
 
+        iconoFoto = new javax.swing.ImageIcon(getClass().getResource("/resource/img/sin_foto.jpg"));
+        jLabel3.setIcon(iconoFoto);
+
+        jButtonCargarFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/Boss.gif"))); // NOI18N
+        jButtonCargarFoto.setText("Cargar Fotografia");
+        jButtonCargarFoto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCargarFotoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelFotografiaLayout = new javax.swing.GroupLayout(jPanelFotografia);
         jPanelFotografia.setLayout(jPanelFotografiaLayout);
         jPanelFotografiaLayout.setHorizontalGroup(
             jPanelFotografiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 818, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFotografiaLayout.createSequentialGroup()
+                .addContainerGap(207, Short.MAX_VALUE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(186, 186, 186))
+            .addGroup(jPanelFotografiaLayout.createSequentialGroup()
+                .addGap(360, 360, 360)
+                .addComponent(jButtonCargarFoto)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelFotografiaLayout.setVerticalGroup(
             jPanelFotografiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 363, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFotografiaLayout.createSequentialGroup()
+                .addContainerGap(34, Short.MAX_VALUE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonCargarFoto)
+                .addContainerGap())
         );
 
         jTabbedPanePersona.addTab("Fotografia", jPanelFotografia);
@@ -336,7 +385,7 @@ public class JDialogPersona extends javax.swing.JDialog {
                         .addComponent(jComboBoxOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabelOrganizacion1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(225, Short.MAX_VALUE))
+                .addContainerGap(279, Short.MAX_VALUE))
         );
         jPanelOrganizacionLayout.setVerticalGroup(
             jPanelOrganizacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -374,7 +423,7 @@ public class JDialogPersona extends javax.swing.JDialog {
                 .addGroup(jPanelAntecedentesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 707, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(115, Short.MAX_VALUE))
         );
         jPanelAntecedentesLayout.setVerticalGroup(
             jPanelAntecedentesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -454,7 +503,7 @@ public class JDialogPersona extends javax.swing.JDialog {
         listTipoDocumento.addAll(tipoDocAction.findAll());
     }//GEN-LAST:event_jButtonNuevoTipoDocActionPerformed
 
-    public void cargarDatospersona(){
+    public void cargarDatospersona() {
         jTextFieldApellido.setText(persona.getApellido().toUpperCase());
         jTextFieldNombre.setText(persona.getNombre().toUpperCase());
         jTextFieldNroDoc.setText(persona.getNumeroDocumento().toUpperCase());
@@ -464,14 +513,28 @@ public class JDialogPersona extends javax.swing.JDialog {
         jComboBoxOrganizacion.setSelectedItem(persona.getOrganizacion());
         jComboBoxTipoDocumento.setSelectedItem(persona.getTipoDocumento());
 
-        listAntecedentes.clear();
-        if (persona.getAntecedentes()!=null) {
-            listAntecedentes.addAll(persona.getAntecedentes());
+        //Cargar Fotografia
+        if (persona.getFotografia() != null) {
+            ByteArrayInputStream bis = new ByteArrayInputStream(persona.getFotografia());
+            BufferedImage image;
+            try {
+                image = ImageIO.read(bis);
+                iconoFoto = new javax.swing.ImageIcon(image);
+                jLabel3.setIcon(iconoFoto);
+            } catch (IOException ex) {
+                Logger.getLogger(JDialogPersona.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            listAntecedentes.clear();
+            if (persona.getAntecedentes() != null) {
+                listAntecedentes.addAll(persona.getAntecedentes());
+            }
         }
-            
-        
+
+
+
     }
-    
+
     public Persona getPersona() {
         return persona;
     }
@@ -488,7 +551,6 @@ public class JDialogPersona extends javax.swing.JDialog {
         this.readOnly = readOnly;
     }
 
-    
     private void jButtonNuevoNacionalidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoNacionalidadActionPerformed
         // TODO add your handling code here:
 //        JDialogoNacionalidad dialogTipoDocumento = new JDialogTipoDocumento(null, rootPaneCheckingEnabled);
@@ -505,44 +567,42 @@ public class JDialogPersona extends javax.swing.JDialog {
             persona.setApellido(jTextFieldApellido.getText());
             persona.setNombre(jTextFieldNombre.getText());
             persona.setNumeroDocumento(jTextFieldNroDoc.getText());
-            persona.setFechaNacimiento((Date)jFormattedTextFieldFechaNac.getValue());
+            persona.setFechaNacimiento((Date) jFormattedTextFieldFechaNac.getValue());
             persona.setEstadoCivil(jComboBoxEstadoCivil.getSelectedItem().toString());
-            persona.setNacionalidad((Nacionalidad)listNacionalidades.get(jComboBoxNacionalidad.getSelectedIndex()));
-            persona.setOrganizacion((Organizacion)listOrganizaciones.get(jComboBoxOrganizacion.getSelectedIndex()));
-            persona.setTipoDocumento((TipoDocumento)listTipoDocumento.get(jComboBoxTipoDocumento.getSelectedIndex()));
-            
-            if (persona.getId()!=null) {
+            persona.setNacionalidad((Nacionalidad) listNacionalidades.get(jComboBoxNacionalidad.getSelectedIndex()));
+            persona.setOrganizacion((Organizacion) listOrganizaciones.get(jComboBoxOrganizacion.getSelectedIndex()));
+            persona.setTipoDocumento((TipoDocumento) listTipoDocumento.get(jComboBoxTipoDocumento.getSelectedIndex()));
+
+            if (persona.getId() != null) {
                 personaAction.guardar();
-                 JOptionPane.showMessageDialog(this, "Se ha guardado con exito los nuevos Datos de Persona","Info",1);
-            }else{
+                JOptionPane.showMessageDialog(this, "Se ha guardado con exito los nuevos Datos de Persona", "Info", 1);
+            } else {
                 personaAction.crear();
-                JOptionPane.showMessageDialog(this, "Se ha creado con exito nueva Persona","Info",1);
-            }  
+                JOptionPane.showMessageDialog(this, "Se ha creado con exito nueva Persona", "Info", 1);
+            }
             this.dispose();
         }
-                
+
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
-    private boolean validacionesNuevaPersona(){
+    private boolean validacionesNuevaPersona() {
         boolean resultado = true;
-        if (jTextFieldApellido.getText()==null || jTextFieldApellido.getText().equals("") )
-        {
+        if (jTextFieldApellido.getText() == null || jTextFieldApellido.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Campo Apellido es Obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
             resultado = false;
-        }else if(jTextFieldNombre.getText()==null || jTextFieldNombre.getText().equals(""))
-        {
+        } else if (jTextFieldNombre.getText() == null || jTextFieldNombre.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Campo Nombre es Obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
             resultado = false;
-        }else if(jTextFieldNroDoc.getText()==null || jTextFieldNroDoc.getText().equals("")){
+        } else if (jTextFieldNroDoc.getText() == null || jTextFieldNroDoc.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Campo Nro Documento es Obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
             resultado = false;
-        }else if(jComboBoxTipoDocumento.getSelectedItem()==null){
+        } else if (jComboBoxTipoDocumento.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(null, "Seleccionar el Tipo de Documento", "Error", JOptionPane.ERROR_MESSAGE);
             resultado = false;
         }
         return resultado;
-        }
-    
+    }
+
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
         // TODO add your handling code here:
         this.dispose();
@@ -560,14 +620,46 @@ public class JDialogPersona extends javax.swing.JDialog {
             jComboBoxOrganizacion.setEnabled(false);
             jComboBoxTipoDocumento.setEnabled(false);
             jButtonGuardar.setVisible(false);
+            jButtonCargarFoto.setVisible(false);
         }
-        if (persona.getId()==null) {
+        if (persona.getId() == null) {
             jPanelAntecedentes.setEnabled(false);
         }
-        
-    
+
+
     }//GEN-LAST:event_windowActivated
 
+    private void jButtonCargarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCargarFotoActionPerformed
+        // TODO add your handling code here:
+        File input;
+        JFileChooser chooser = new JFileChooser();
+        int returnVal = chooser.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            RandomAccessFile f;
+            byte[] fotografiaByte = null;
+
+            try {
+                f = new RandomAccessFile(chooser.getSelectedFile(), "r");
+                fotografiaByte = new byte[(int) f.length()];
+                f.read(fotografiaByte);
+                persona.setFotografia(fotografiaByte);
+
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(JDialogPersona.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(JDialogPersona.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            try {
+                BufferedImage image = ImageIO.read(chooser.getSelectedFile());
+                iconoFoto = new javax.swing.ImageIcon(image);
+                jLabel3.setIcon(iconoFoto);
+            } catch (IOException ex) {
+                Logger.getLogger(JDialogPersona.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+    }//GEN-LAST:event_jButtonCargarFotoActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -611,6 +703,7 @@ public class JDialogPersona extends javax.swing.JDialog {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancelar;
+    private javax.swing.JButton jButtonCargarFoto;
     private javax.swing.JButton jButtonGuardar;
     private javax.swing.JButton jButtonNuevoNacionalidad;
     private javax.swing.JButton jButtonNuevoTipoDoc;
@@ -621,6 +714,7 @@ public class JDialogPersona extends javax.swing.JDialog {
     private javax.swing.JFormattedTextField jFormattedTextFieldFechaNac;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelApe;
     private javax.swing.JLabel jLabelEstCiv;
     private javax.swing.JLabel jLabelFechaNac;
