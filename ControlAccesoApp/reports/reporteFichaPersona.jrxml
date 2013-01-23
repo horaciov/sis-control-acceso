@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportFichaPersona" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3c414966-9a1d-4bee-956e-23b59f293f83">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="71"/>
+	<parameter name="personaId" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     persona."id" AS persona_id,
+     persona."apellido" AS persona_apellido,
+     persona."estadocivil" AS persona_estadocivil,
+     persona."fechanacimiento" AS persona_fechanacimiento,
+     persona."nombre" AS persona_nombre,
+     persona."numerodocumento" AS persona_numerodocumento,
+     persona."sexo" AS persona_sexo,
+     persona."fotografia" AS persona_fotografia,
+     nacionalidad."nombre" AS nacionalidad_nombre,
+     tipodocumento."nombre" AS tipodocumento_nombre,
+     organizacion."nombre" AS organizacion_nombre,
+     organizacion."descripcion" AS organizacion_descripcion,
+     organizacion."tipoorganizacion" AS organizacion_tipoorganizacion
+FROM
+     "controlacceso"."organizacion" organizacion INNER JOIN "controlacceso"."persona" persona ON organizacion."id" = persona."organizacion_id"
+     INNER JOIN "controlacceso"."tipodocumento" tipodocumento ON persona."tipodocumento_id" = tipodocumento."id"
+     INNER JOIN "controlacceso"."nacionalidad" nacionalidad ON persona."nacionalidad_id" = nacionalidad."id"
+WHERE persona."id" = $P{personaId}]]>
+	</queryString>
+	<field name="persona_id" class="java.lang.Long"/>
+	<field name="persona_apellido" class="java.lang.String"/>
+	<field name="persona_estadocivil" class="java.lang.String"/>
+	<field name="persona_fechanacimiento" class="java.sql.Date"/>
+	<field name="persona_nombre" class="java.lang.String"/>
+	<field name="persona_numerodocumento" class="java.lang.String"/>
+	<field name="persona_sexo" class="java.lang.String"/>
+	<field name="persona_fotografia" class="java.io.InputStream"/>
+	<field name="nacionalidad_nombre" class="java.lang.String"/>
+	<field name="tipodocumento_nombre" class="java.lang.String"/>
+	<field name="organizacion_nombre" class="java.lang.String"/>
+	<field name="organizacion_descripcion" class="java.lang.String"/>
+	<field name="organizacion_tipoorganizacion" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="33" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="52" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="bc42086d-7b2d-47b4-8ab7-2d6765a8e213" x="0" y="16" width="572" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FICHA PERSONAL]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="6d3cfe13-8888-4f83-89f2-979ee10554ee" x="0" y="43" width="572" height="1"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="451" splitType="Stretch">
+			<textField>
+				<reportElement uuid="9fbba2d3-a8d3-4675-b269-9df6526277ca" x="134" y="43" width="186" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{persona_apellido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2a01c21c-2fbb-4b36-87a8-d15b869bb2f2" x="134" y="112" width="186" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{persona_estadocivil}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="329d3b3e-4635-4406-bd98-619f6e1da96d" x="425" y="180" width="108" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{persona_fechanacimiento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="aba9bdc1-7a1b-4030-aaf9-ccdc664cb8f0" x="134" y="11" width="186" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{persona_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3cdaae1d-d040-426d-bc0b-78897e930526" x="425" y="146" width="108" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{persona_numerodocumento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="de27ffd1-72e6-4f9c-9033-35f47ee066be" x="134" y="75" width="186" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{persona_sexo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="046e3386-fed3-4462-b110-81ca22bed992" x="137" y="180" width="183" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nacionalidad_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="daac70cf-bf17-4663-b63f-b276c5386a38" x="134" y="146" width="186" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipodocumento_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="bfd3e8cf-0f3a-4f55-8cd4-0256c5a32464" x="137" y="259" width="396" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{organizacion_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="69f5c3d3-7a5f-498d-a12b-12b8480c36da" x="137" y="293" width="396" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{organizacion_descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1dc0b91c-26c8-4510-9dfc-525761b1e82a" x="137" y="327" width="396" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{organizacion_tipoorganizacion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a33b390b-d17b-4bdc-81e0-d8c0bd49e026" mode="Opaque" x="10" y="11" width="110" height="20" forecolor="#000000" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[APELLIDO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="029d6ff3-303e-4384-9074-153a39b536e5" mode="Opaque" x="10" y="43" width="110" height="20" forecolor="#000000" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cdc0db4b-2b73-4352-b027-9e759f1e53c1" mode="Opaque" x="10" y="75" width="110" height="20" forecolor="#000000" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SEXO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8833ddd3-546b-417e-bda6-b13f3235555b" mode="Opaque" x="10" y="112" width="110" height="20" forecolor="#000000" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESTADO CIVIL:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a65d718f-d990-423b-ab11-bba5392c4852" mode="Opaque" x="10" y="146" width="110" height="20" forecolor="#000000" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TIPO DOC:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="522e74de-7d30-47e2-bab5-93ff684cb6a9" mode="Opaque" x="333" y="146" width="35" height="20" forecolor="#000000" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NRO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="384efc6c-85e9-4695-9a8b-a010ad317d1d" mode="Opaque" x="333" y="180" width="78" height="20" forecolor="#000000" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA NAC:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5330803a-ff1c-4ea7-b479-a10b5b809899" mode="Opaque" x="10" y="180" width="110" height="20" forecolor="#000000" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NACIONALIDAD:]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="06ee60ed-4ebe-4c87-b63e-660572edcab0" x="0" y="242" width="572" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="3b2eca3d-2b72-4edf-b2ee-1cd1e87121cc" mode="Opaque" x="10" y="259" width="100" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ORGANIZACION:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="44da1d0f-1fb4-4a3f-96ac-5d1816fddfcd" mode="Opaque" x="10" y="293" width="100" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESCRIPCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c71abc44-d318-4083-941c-563f343063e2" mode="Opaque" x="10" y="327" width="100" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TIPO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="516bbc4a-79c9-4468-bdd0-415f153d0be7" mode="Transparent" x="0" y="222" width="572" height="20" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ORGANIZACION:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement uuid="7a01b287-54a1-43ee-82c5-ceb5ebf3adbd" x="330" y="9" width="203" height="123"/>
+			</rectangle>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement uuid="28da7409-ac05-476c-836f-4cb7a9eb6deb" x="338" y="18" width="189" height="107"/>
+				<imageExpression><![CDATA[$F{persona_fotografia}]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="7" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="5" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="4" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -46,7 +46,7 @@ public class PersonaAction {
         return query.getResultList();
     }
 
-    public List<Persona> findByParameters(Persona persona, Persona personaHasta) {
+    public List<Persona> findByParameters(Persona persona, Persona personaHasta, String tipoOrganizacion) {
         String sQuery = " from Persona p where 1=1";
         if (persona.getNumeroDocumento()!=null) {
             sQuery = sQuery + " and p.numeroDocumento = :numeroDocumento ";
@@ -68,6 +68,10 @@ public class PersonaAction {
             sQuery = sQuery + " and p.nacionalidad.id = :nacionalidad " ;
         }
         
+        if (persona.getOrganizacion()!=null && persona.getOrganizacion().getId()!=null) {
+            sQuery = sQuery + " and p.organizacion.id = :organizacion " ;
+        }
+        
         if (persona.getSexo()!=null) {
             sQuery = sQuery + " and p.sexo = :sexo " ;
         }
@@ -78,6 +82,14 @@ public class PersonaAction {
         
          if (persona.getEstadoCivil()!=null) {
             sQuery = sQuery + " and p.estadoCivil = :estadoCivil " ;
+        }
+         
+         if (tipoOrganizacion!=null && !tipoOrganizacion.equals("")) {
+             if (tipoOrganizacion.equals("INTERNA")) {
+                 sQuery = sQuery + " and p.organizacion.tipoOrganizacion = 'INTERNA' ";
+             }else if(tipoOrganizacion.equals("EXTERNA")){
+                sQuery = sQuery + " and p.organizacion.tipoOrganizacion = 'EXTERNA'  " ;
+             }
         }
          
         if (persona.getFechaNacimiento()!=null) {
@@ -111,6 +123,10 @@ public class PersonaAction {
         
         if (persona.getNacionalidad()!=null && persona.getNacionalidad().getId()!=null) {
             query.setParameter("nacionalidad", persona.getNacionalidad().getId());
+        }
+        
+        if (persona.getOrganizacion()!=null && persona.getOrganizacion().getId()!=null) {
+            query.setParameter("organizacion", persona.getOrganizacion().getId());
         }
         
         if (persona.getSexo()!=null) {
@@ -173,7 +189,7 @@ public class PersonaAction {
 //        per.setNombre("HoR");
 //        per.setApellido("vIL");
 //        per.setEstadoCivil("SOLTERO");
-        List<Persona> ps = p.findByParameters(per, new Persona());
+        List<Persona> ps = p.findByParameters(per, new Persona(),null);
 
     }
 }

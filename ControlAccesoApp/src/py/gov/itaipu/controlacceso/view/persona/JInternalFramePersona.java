@@ -4,12 +4,29 @@
  */
 package py.gov.itaipu.controlacceso.view.persona;
 
+import java.awt.Dialog;
 import java.awt.Dimension;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableCellRenderer;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporter;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.action.persona.PersonaAction;
 import py.gov.itaipu.controlacceso.model.Nacionalidad;
@@ -18,7 +35,10 @@ import py.gov.itaipu.controlacceso.model.TipoDocumento;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 import org.jdesktop.observablecollections.ObservableCollections;
 import py.gov.itaipu.controlacceso.model.Organizacion;
+import py.gov.itaipu.controlacceso.view.JDialogBuscador;
 import py.gov.itaipu.controlacceso.view.TimeRenderer;
+import py.gov.itaipu.controlacceso.view.administracion.organizacion.JInternalFrameOrganizacion;
+import py.gov.itaipu.controlacceso.view.administracion.organizacion.JInternalFrameOrganizacionExterna;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JDialogTipoDocumento;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JDialogoNacionalidad;
 
@@ -36,6 +56,7 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
     private TableCellRenderer rendererTime;
     private Boolean modoBuscador;
     private Persona personaSeleccionada;
+    private String tipoOrganizacionPersona;
 
     /**
      * Creates new form JInternalFramePersona
@@ -72,6 +93,15 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
         this.personaSeleccionada = personaSeleccionada;
     }
 
+    public String getTipoOrganizacionPersona() {
+        return tipoOrganizacionPersona;
+    }
+
+    public void setTipoOrganizacionPersona(String tipoOrganizacionPersona) {
+        this.tipoOrganizacionPersona = tipoOrganizacionPersona;
+    }
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -90,7 +120,8 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
         TipoDocumento tD = new TipoDocumento();
         tD.setNombre("TODOS");
         listTipoDocumento.add(0,tD);
-        listPersonas = ObservableCollections.observableList(personaAction.findByParameters(personaFiltro,personaFiltro2));
+        listPersonas = ObservableCollections.observableList(personaAction.findByParameters(personaFiltro,personaFiltro2,tipoOrganizacionPersona));
+        buttonGroupTipoPersona = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
@@ -123,6 +154,14 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
         jButtonEliminar = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JSeparator();
         jButtonVer = new javax.swing.JButton();
+        jLabelOrganizacion = new javax.swing.JLabel();
+        jTextFieldOrganizacionFiltro = new javax.swing.JTextField();
+        jButtonBuscarOrganizacion = new javax.swing.JButton();
+        jRadioButtonInterna = new javax.swing.JRadioButton();
+        jRadioButtonExterna = new javax.swing.JRadioButton();
+        jRadioButtonAmbos = new javax.swing.JRadioButton();
+        jButtonImprimirFicha = new javax.swing.JButton();
+        jButtonImprimirListado = new javax.swing.JButton();
 
         setTitle("Registro de personas");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
@@ -224,6 +263,7 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listNacionalidades, jComboBoxNacionalidad);
         bindingGroup.addBinding(jComboBoxBinding);
 
+        jButtonBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/view.png"))); // NOI18N
         jButtonBuscar.setText("BUSCAR");
         jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -231,6 +271,7 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
             }
         });
 
+        jButtonLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/clear.jpeg"))); // NOI18N
         jButtonLimpiar.setText("LIMPIAR");
         jButtonLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -257,6 +298,8 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${fechaNacimiento}"));
         columnBinding.setColumnName("Fecha Nac");
         columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${organizacion.nombre}"));
+        columnBinding.setColumnName("Organizacion");
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         jTablePersonas.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -304,60 +347,126 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabelOrganizacion.setText("Organizacion");
+
+        jTextFieldOrganizacionFiltro.setEditable(false);
+
+        jButtonBuscarOrganizacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/view.png"))); // NOI18N
+        jButtonBuscarOrganizacion.setToolTipText("Buscar Organizacion");
+        jButtonBuscarOrganizacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscarOrganizacionActionPerformed(evt);
+            }
+        });
+
+        buttonGroupTipoPersona.add(jRadioButtonInterna);
+        jRadioButtonInterna.setText("Interna");
+        jRadioButtonInterna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonInternaActionPerformed(evt);
+            }
+        });
+
+        buttonGroupTipoPersona.add(jRadioButtonExterna);
+        jRadioButtonExterna.setText("Externa");
+
+        buttonGroupTipoPersona.add(jRadioButtonAmbos);
+        jRadioButtonAmbos.setSelected(true);
+        jRadioButtonAmbos.setText("Ambos");
+
+        jButtonImprimirFicha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/ficha.png"))); // NOI18N
+        jButtonImprimirFicha.setText("IMPRIMIR");
+        jButtonImprimirFicha.setPreferredSize(new java.awt.Dimension(110, 25));
+        jButtonImprimirFicha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonImprimirFichaActionPerformed(evt);
+            }
+        });
+
+        jButtonImprimirListado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/printer.png"))); // NOI18N
+        jButtonImprimirListado.setText("LISTADO");
+        jButtonImprimirListado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonImprimirListadoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator2)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator2)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(44, 44, 44)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButtonBuscar)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButtonLimpiar))
-                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                .addGap(44, 44, 44)
+                                                .addComponent(jButtonBuscar)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jButtonLimpiar)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(jButtonImprimirListado))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(jLabelApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addComponent(jLabelNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addGap(2, 2, 2)))
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(jTextFieldApellidoFiltro, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
+                                                    .addComponent(jTextFieldNombreFiltro)
+                                                    .addComponent(jTextFieldOrganizacionFiltro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE))))
+                                        .addGap(8, 8, 8)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabelApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabelNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jTextFieldApellidoFiltro, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
-                                            .addComponent(jTextFieldNombreFiltro))))
+                                            .addComponent(jLabelEstCivil, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabelEstNacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jButtonBuscarOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(38, 38, 38)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jComboBoxNacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jComboBoxEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jPanelFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jRadioButtonInterna)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jRadioButtonExterna)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jRadioButtonAmbos)))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelEstCivil, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabelEstNacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(38, 38, 38)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBoxNacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jComboBoxEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addComponent(jPanelFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jSeparator3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 1, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1)
+                                .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 13, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(0, 1114, Short.MAX_VALUE))
+                            .addComponent(jSeparator3)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(13, 13, 13)
+                                .addContainerGap()
+                                .addComponent(jLabelOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
                                 .addComponent(jButtonVer, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButtonNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButtonModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10)
-                                .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButtonImprimirFicha, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -382,24 +491,36 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
                             .addComponent(jComboBoxNacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jPanelFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabelOrganizacion)
+                        .addComponent(jTextFieldOrganizacionFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonBuscarOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jRadioButtonInterna)
+                        .addComponent(jRadioButtonExterna)
+                        .addComponent(jRadioButtonAmbos)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonBuscar)
-                    .addComponent(jButtonLimpiar))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonLimpiar)
+                    .addComponent(jButtonImprimirListado))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonVer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(13, Short.MAX_VALUE))
+                    .addComponent(jButtonVer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonImprimirFicha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         bindingGroup.bind();
@@ -450,9 +571,18 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
         } else {
             personaFiltro.setEstadoCivil(null);
         }
-
+        
+        String tipoPersona = null;
+            if (!jRadioButtonAmbos.isSelected()){
+                if (jRadioButtonInterna.isSelected()) {
+                    tipoPersona="INTERNA";
+                }else if(jRadioButtonExterna.isSelected()){
+                    tipoPersona="EXTERNA";
+                }
+            }
+        
         listPersonas.clear();
-        listPersonas.addAll(personaAction.findByParameters(personaFiltro, personaFiltro2));
+        listPersonas.addAll(personaAction.findByParameters(personaFiltro, personaFiltro2,tipoPersona));
 
 
 
@@ -463,16 +593,19 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
         jTextFieldNombreFiltro.setText(null);
         jTextFieldApellidoFiltro.setText(null);
         jTextFieldNroDoc.setText(null);
+        jTextFieldOrganizacionFiltro.setText(null);
         jComboBoxEstadoCivil.setSelectedIndex(0);
         jComboBoxTipoDoc.setSelectedIndex(0);
         jComboBoxNacionalidad.setSelectedIndex(0);
         jFormattedTextFechDesde.setText(null);
         jFormattedTextFechHasta.setText(null);
+        if (!modoBuscador) {jRadioButtonAmbos.setSelected(true);}
+        
 
         personaFiltro = new Persona();
         personaFiltro2 = new Persona();
         listPersonas.clear();
-        listPersonas.addAll(personaAction.findByParameters(personaFiltro, personaFiltro2));
+        listPersonas.addAll(personaAction.findByParameters(personaFiltro, personaFiltro2,tipoOrganizacionPersona));
 
     }//GEN-LAST:event_jButtonLimpiarActionPerformed
 
@@ -485,7 +618,7 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
         dialogPersona.setPersona(p);
         dialogPersona.setVisible(true);
         listPersonas.clear();
-        listPersonas.addAll(personaAction.findByParameters(personaFiltro, personaFiltro2));
+        listPersonas.addAll(personaAction.findByParameters(personaFiltro, personaFiltro2,null));
 
     }//GEN-LAST:event_jButtonNuevoActionPerformed
 
@@ -502,7 +635,7 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
         dialogPersona.cargarDatospersona();
         dialogPersona.setVisible(true);
         listPersonas.clear();
-        listPersonas.addAll(personaAction.findByParameters(personaFiltro, personaFiltro2));
+        listPersonas.addAll(personaAction.findByParameters(personaFiltro, personaFiltro2,null));
 
     }//GEN-LAST:event_jButtonModificarActionPerformed
 
@@ -519,7 +652,7 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
         personaAction.setPersona(p);
         personaAction.eliminar();
         listPersonas.clear();
-        listPersonas.addAll(personaAction.findByParameters(personaFiltro, personaFiltro2));
+        listPersonas.addAll(personaAction.findByParameters(personaFiltro, personaFiltro2,null));
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jButtonVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerActionPerformed
@@ -556,12 +689,118 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
             jButtonEliminar.setVisible(false);
             jButtonNuevo.setVisible(false);
             jButtonVer.setVisible(false);
-        }
+            // TIPO DE PERSONA A BUSCAR, INTERNA O EXTERNA 
+            if (tipoOrganizacionPersona!=null && !tipoOrganizacionPersona.equals("")) {
+                 if (tipoOrganizacionPersona.equals("INTERNA")) {
+                     jRadioButtonInterna.setSelected(true);
+                }else if(tipoOrganizacionPersona.equals("EXTERNA")){
+                    jRadioButtonExterna.setSelected(true);
+                }
+                jRadioButtonAmbos.setEnabled(false);
+                jRadioButtonInterna.setEnabled(false);
+                jRadioButtonExterna.setEnabled(false);
+                listPersonas.clear();
+                listPersonas.addAll(personaAction.findByParameters(personaFiltro, personaFiltro2,tipoOrganizacionPersona));
+                
+             }
+         }
     }//GEN-LAST:event_formInternalFrameOpened
 
+    private void jButtonBuscarOrganizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarOrganizacionActionPerformed
+        // TODO add your handling code here:
+            JInternalFrameOrganizacion  jFrameOrganizacion = new JInternalFrameOrganizacion();
+            jFrameOrganizacion.setModoBuscador(true);
+            jFrameOrganizacion.setVisible(true);            
+            JDialogBuscador buscador=new JDialogBuscador(null, closable);        
+            buscador.setSize(jFrameOrganizacion.getSize());
+            jFrameOrganizacion.setClosable(false);
+            jFrameOrganizacion.setResizable(false);
+            jFrameOrganizacion.setTitle("Buscador de organizaciones");
+            buscador.getjDesktopPaneBuscador().add(jFrameOrganizacion);
+            buscador.setVisible(true);
+            if(jFrameOrganizacion.getOrganizacionSeleccionada()!=null)
+                personaFiltro.setOrganizacion(jFrameOrganizacion.getOrganizacionSeleccionada());
+                jTextFieldOrganizacionFiltro.setText(personaFiltro.getOrganizacion().getNombre());
+    }//GEN-LAST:event_jButtonBuscarOrganizacionActionPerformed
+
+    private void jRadioButtonInternaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonInternaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButtonInternaActionPerformed
+
+    private void jButtonImprimirFichaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImprimirFichaActionPerformed
+        // TODO add your handling code here:
+         if (jTablePersonas.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una Persona", "Error", 0);
+            return;
+        }
+        Persona p = (Persona) listPersonas.get(jTablePersonas.getSelectedRow());
+        try {
+            
+            Class.forName("org.postgresql.Driver");
+            Connection conexion = EntityManagerCA.getConexion();
+            JasperReport reporte = (JasperReport) JRLoader.loadObject("reports/reporteFichaPersona.jasper");
+            //Parametros
+                Map<String, Object> parametros = new HashMap<String, Object> ();
+                parametros.put("personaId",(Object)p.getId().intValue());
+                JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, conexion);
+
+//            Muestra el Reporte en Pantalla
+            JasperViewer jviewer = new JasperViewer(jasperPrint, false);
+            jviewer.setModalExclusionType(Dialog.ModalExclusionType.NO_EXCLUDE);
+            jviewer.viewReport(jasperPrint,false);
+       
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(JInternalFramePersona.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(JInternalFramePersona.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JRException ex) {
+            Logger.getLogger(JInternalFramePersona.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jButtonImprimirFichaActionPerformed
+
+    private void jButtonImprimirListadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImprimirListadoActionPerformed
+        // TODO add your handling code here:
+                // TODO add your handling code here:
+        try {
+            
+            Class.forName("org.postgresql.Driver");
+            Connection conexion = EntityManagerCA.getConexion();
+            JasperReport reporte = (JasperReport) JRLoader.loadObject("reports/reporteListadoPersonas.jasper");
+            //Parametros
+                Map<String, Object> parametros = new HashMap<String, Object> ();
+                ///Parametros
+                if (jTextFieldNombreFiltro.getText()!=null && !jTextFieldNombreFiltro.getText().equals("")) {
+                    parametros.put("pNombre",(Object)jTextFieldNombreFiltro.getText().toUpperCase());
+                }
+                
+                if (jTextFieldApellidoFiltro.getText()!=null && !jTextFieldApellidoFiltro.getText().equals("")) {
+                    parametros.put("pApellido",(Object)jTextFieldApellidoFiltro.getText().toUpperCase());
+                }
+                
+                JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, conexion);
+
+//            Muestra el Reporte en Pantalla
+            JasperViewer jviewer = new JasperViewer(jasperPrint, false);
+            jviewer.setModalExclusionType(Dialog.ModalExclusionType.NO_EXCLUDE);
+            jviewer.viewReport(jasperPrint,false);
+       
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(JInternalFramePersona.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(JInternalFramePersona.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JRException ex) {
+            Logger.getLogger(JInternalFramePersona.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonImprimirListadoActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroupTipoPersona;
     private javax.swing.JButton jButtonBuscar;
+    private javax.swing.JButton jButtonBuscarOrganizacion;
     private javax.swing.JButton jButtonEliminar;
+    private javax.swing.JButton jButtonImprimirFicha;
+    private javax.swing.JButton jButtonImprimirListado;
     private javax.swing.JButton jButtonLimpiar;
     private javax.swing.JButton jButtonModificar;
     private javax.swing.JButton jButtonNuevo;
@@ -583,7 +822,11 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabelEstCivil;
     private javax.swing.JLabel jLabelEstNacionalidad;
     private javax.swing.JLabel jLabelNombre;
+    private javax.swing.JLabel jLabelOrganizacion;
     private javax.swing.JPanel jPanelFechaNac;
+    private javax.swing.JRadioButton jRadioButtonAmbos;
+    private javax.swing.JRadioButton jRadioButtonExterna;
+    private javax.swing.JRadioButton jRadioButtonInterna;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
@@ -592,6 +835,7 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextFieldApellidoFiltro;
     private javax.swing.JTextField jTextFieldNombreFiltro;
     private javax.swing.JTextField jTextFieldNroDoc;
+    private javax.swing.JTextField jTextFieldOrganizacionFiltro;
     private java.util.List listNacionalidades;
     private java.util.List listPersonas;
     private java.util.List listTipoDocumento;

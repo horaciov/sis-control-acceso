@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteListadoPersonas" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b743ccb2-210d-4bc5-bcc6-edc6dc656304">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="pApellido" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pNombre" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pEstadoCivil" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pSexo" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pNacionalidadId" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pNacionalidadText" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["---"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pOrganizacion" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pOrganizacionText" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["---"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pTipoDoc" class="java.lang.Integer" isForPrompting="false">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pTipoDocText" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["---"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pNroDoc" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     persona."apellido"||', '||persona."nombre" AS persona_apellido_nombre,
+     persona."apellido" AS persona_apellido,
+     persona."estadocivil" AS persona_estadocivil,
+     persona."fechanacimiento" AS persona_fechanacimiento,
+     persona."nombre" AS persona_nombre,
+     persona."numerodocumento" AS persona_numerodocumento,
+     persona."sexo" AS persona_sexo,
+     organizacion."nombre" AS organizacion_nombre,
+     estado."nombre" AS estado_nombre,
+     nacionalidad."nombre" AS nacionalidad_nombre,
+     tipodocumento."nombre" AS tipodocumento_nombre,
+     nacionalidad."id" AS nacionalidad_id,
+     organizacion."id" AS organizacion_id,
+     tipodocumento."id" AS tipodocumento_id
+FROM
+     "controlacceso"."nacionalidad" nacionalidad FULL JOIN "controlacceso"."persona" persona ON nacionalidad."id" = persona."nacionalidad_id"
+     FULL JOIN "controlacceso"."organizacion" organizacion ON persona."organizacion_id" = organizacion."id"
+     FULL JOIN "controlacceso"."estado" estado ON persona."estado_id" = estado."id"
+     FULL JOIN "controlacceso"."tipodocumento" tipodocumento ON persona."tipodocumento_id" = tipodocumento."id"
+WHERE
+     persona."apellido" LIKE '%'||$P{pApellido}||'%' and
+     persona."nombre" LIKE '%'||$P{pNombre}||'%' and
+    ( $P{pNroDoc} = '' or persona."numerodocumento" LIKE $P{pNroDoc} ) and
+    ( $P{pSexo} = '' or persona."sexo" LIKE $P{pSexo} ) and
+    ( $P{pEstadoCivil} = '' or persona."estadocivil" LIKE $P{pEstadoCivil} ) and
+    ( $P{pNacionalidadId} is null or nacionalidad."id" = $P{pNacionalidadId} ) and
+    ( $P{pOrganizacion} is null or organizacion."id" = $P{pOrganizacion} ) and
+    ( $P{pTipoDoc} is null or tipodocumento."id" = $P{pTipoDoc} )]]>
+	</queryString>
+	<field name="persona_apellido_nombre" class="java.lang.String"/>
+	<field name="persona_apellido" class="java.lang.String"/>
+	<field name="persona_estadocivil" class="java.lang.String"/>
+	<field name="persona_fechanacimiento" class="java.sql.Date"/>
+	<field name="persona_nombre" class="java.lang.String"/>
+	<field name="persona_numerodocumento" class="java.lang.String"/>
+	<field name="persona_sexo" class="java.lang.String"/>
+	<field name="organizacion_nombre" class="java.lang.String"/>
+	<field name="estado_nombre" class="java.lang.String"/>
+	<field name="nacionalidad_nombre" class="java.lang.String"/>
+	<field name="tipodocumento_nombre" class="java.lang.String"/>
+	<field name="nacionalidad_id" class="java.lang.Long"/>
+	<field name="organizacion_id" class="java.lang.Long"/>
+	<field name="tipodocumento_id" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="55" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="11afded8-f82e-4f7e-a5b9-df69d698c7ca" x="0" y="16" width="802" height="32"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LISTADO DE PERSONAS]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="8647dfbd-29cb-46a3-8415-02d32d47df5b" x="0" y="48" width="802" height="1"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="116" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="0b54b4d3-41be-498b-bda1-95f38759ce67" x="1" y="12" width="801" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PARAMETROS REPORTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d9063b13-4289-4e18-97a2-b447d11d0743" mode="Opaque" x="27" y="43" width="100" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font isBold="false" isItalic="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[NOMBRE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b44080e5-9a7f-4383-8bae-13e70b704d33" mode="Opaque" x="27" y="65" width="100" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font isBold="false" isItalic="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[APELLIDO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cdab702d-f001-491c-96af-13dfb9bbd913" mode="Opaque" x="27" y="87" width="100" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font isBold="false" isItalic="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[ORGANIZACION:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2c23e03d-c184-4ff8-b653-4eb27944f04b" mode="Opaque" x="287" y="89" width="100" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font isBold="false" isItalic="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[DOC NRO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e87f2459-f124-4ca4-aa0e-7e95bec6a8ba" mode="Opaque" x="287" y="43" width="100" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font isBold="false" isItalic="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[NACIONALIDAD:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="67d47ccf-7553-444d-9c99-825db2b9ce09" mode="Opaque" x="287" y="66" width="100" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font isBold="false" isItalic="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[TIPO DOC:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="79510f95-e58d-4aa4-99e6-5ef73f7a0fc8" mode="Opaque" x="532" y="64" width="100" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font isBold="false" isItalic="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[FECHA NAC DESDE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="97a36981-535a-412c-876a-d72bd4a1da37" mode="Opaque" x="532" y="42" width="100" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font isBold="false" isItalic="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[EST CIVIL:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6608489c-a968-482b-8247-67d10cddc67e" mode="Opaque" x="532" y="87" width="100" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font isBold="false" isItalic="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[FECHA NAC HASTA:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="05f41ee8-7f7b-4468-a875-b199b445bea6" x="137" y="46" width="133" height="17"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{pNombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6eaea741-aba0-4548-8386-a4a0f33343f3" x="137" y="67" width="133" height="18"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{pApellido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6ef1c9a4-8566-4837-a937-b787161cc755" x="644" y="42" width="144" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{pEstadoCivil}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="98dc1927-e819-4281-bf15-07bcf4c65dfe" x="400" y="67" width="110" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{pTipoDocText}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2f492fbe-8df6-45df-adbb-fc2506846cfd" x="137" y="87" width="133" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{pOrganizacionText}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="079cfd8d-2cfa-4a52-9caa-0b10193c3d66" x="400" y="47" width="110" height="16"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{pNacionalidadText}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a3e45fa0-d181-4ce1-a8e8-2ca9d1bf1c0a" x="400" y="89" width="110" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{pNroDoc}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="e0bcd6d3-218f-4cd3-adbe-b373bdca5c33" x="0" y="0" width="802" height="20" backcolor="#CCCCCC"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="3cac9c36-66b8-4f31-ba07-f969d45abdd2" x="1" y="0" width="192" height="20"/>
+				<textElement/>
+				<text><![CDATA[NOMBRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d75fb3f8-e1b7-425b-ae61-1cd35a0ea93f" x="200" y="0" width="70" height="20"/>
+				<textElement/>
+				<text><![CDATA[TIPO DOC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8eb729f3-63b9-4122-a878-0a6488f6a395" x="298" y="0" width="61" height="20"/>
+				<textElement/>
+				<text><![CDATA[NRO DOC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9ca1172c-79fb-4d7f-9a6f-96866189a07a" x="370" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[NACIONALIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cae8c2dc-9f1e-427d-ba0c-9e963da9781d" x="481" y="0" width="66" height="20"/>
+				<textElement/>
+				<text><![CDATA[SEXO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b35ba60b-b179-4c11-aa7a-a4ced2a32010" x="557" y="0" width="60" height="20"/>
+				<textElement/>
+				<text><![CDATA[EST CIVIL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8ce80e5b-c288-43f2-b70b-d67d76a1d1db" x="644" y="1" width="158" height="20"/>
+				<textElement/>
+				<text><![CDATA[ORGANIZACION]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="37924526-99fc-4576-a9b1-aaffc4276cb3" x="200" y="0" width="87" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{tipodocumento_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="beee1ddd-9198-4a7f-8970-1bba72306b83" x="298" y="0" width="61" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{persona_numerodocumento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ce89365f-e9ab-43d7-bfd9-2ee1ab9bbda7" x="481" y="0" width="66" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[( $F{persona_sexo} == null ? "---" : $F{persona_sexo} )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3ee6fd7e-16ef-4bd1-a478-1a5d838194e6" x="557" y="0" width="75" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{persona_estadocivil}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d3a0acc5-4f85-4ef2-9354-92cfd996c976" x="370" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{nacionalidad_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="63676639-f43d-4a6b-849d-e3673ed41d92" x="0" y="0" width="192" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{persona_apellido_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8fdd114c-fc7b-4f9e-819d-f4d96678a559" x="644" y="0" width="158" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{organizacion_nombre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
