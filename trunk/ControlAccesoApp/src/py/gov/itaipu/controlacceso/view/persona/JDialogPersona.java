@@ -44,6 +44,9 @@ import py.gov.itaipu.controlacceso.model.Organizacion;
 import py.gov.itaipu.controlacceso.model.Persona;
 import py.gov.itaipu.controlacceso.test.ImageFrame;
 import py.gov.itaipu.controlacceso.test.ShowImage;
+import py.gov.itaipu.controlacceso.view.JDialogBuscador;
+import py.gov.itaipu.controlacceso.view.administracion.organizacion.JInternalFrameOrganizacion;
+import py.gov.itaipu.controlacceso.view.administracion.organizacion.JInternalFrameOrganizacionExterna;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JDialogoNacionalidad;
 
 /**
@@ -116,7 +119,6 @@ public class JDialogPersona extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jButtonCargarFoto = new javax.swing.JButton();
         jPanelOrganizacion = new javax.swing.JPanel();
-        jComboBoxOrganizacion = new javax.swing.JComboBox();
         jLabelOrganizacion = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabelOrgDes = new javax.swing.JLabel();
@@ -128,6 +130,8 @@ public class JDialogPersona extends javax.swing.JDialog {
         jTextFieldOrgDir = new javax.swing.JTextField();
         jTextFieldOrgContac = new javax.swing.JTextField();
         jLabelOrganizacion1 = new javax.swing.JLabel();
+        jTextFieldOrganizacion = new javax.swing.JTextField();
+        jButtonBuscarOrganizacion = new javax.swing.JButton();
         jPanelAntecedentes = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -303,9 +307,6 @@ public class JDialogPersona extends javax.swing.JDialog {
 
         jTabbedPanePersona.addTab("Fotografia", jPanelFotografia);
 
-        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listOrganizaciones, jComboBoxOrganizacion);
-        bindingGroup.addBinding(jComboBoxBinding);
-
         jLabelOrganizacion.setText("Organizacion");
 
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 153, 255), 1, true));
@@ -372,29 +373,43 @@ public class JDialogPersona extends javax.swing.JDialog {
 
         jLabelOrganizacion1.setText("Datos Organizacion Externa");
 
+        jTextFieldOrganizacion.setEditable(false);
+
+        jButtonBuscarOrganizacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/view.png"))); // NOI18N
+        jButtonBuscarOrganizacion.setToolTipText("Buscar Organizacion");
+        jButtonBuscarOrganizacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscarOrganizacionActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelOrganizacionLayout = new javax.swing.GroupLayout(jPanelOrganizacion);
         jPanelOrganizacion.setLayout(jPanelOrganizacionLayout);
         jPanelOrganizacionLayout.setHorizontalGroup(
             jPanelOrganizacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelOrganizacionLayout.createSequentialGroup()
                 .addGap(107, 107, 107)
-                .addGroup(jPanelOrganizacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanelOrganizacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelOrganizacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabelOrganizacion1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanelOrganizacionLayout.createSequentialGroup()
                         .addComponent(jLabelOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
-                        .addComponent(jComboBoxOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabelOrganizacion1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(279, Short.MAX_VALUE))
+                        .addComponent(jTextFieldOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonBuscarOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(250, Short.MAX_VALUE))
         );
         jPanelOrganizacionLayout.setVerticalGroup(
             jPanelOrganizacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelOrganizacionLayout.createSequentialGroup()
-                .addGap(66, 66, 66)
-                .addGroup(jPanelOrganizacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(69, 69, 69)
+                .addGroup(jPanelOrganizacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelOrganizacion)
-                    .addComponent(jComboBoxOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47)
+                    .addComponent(jTextFieldOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonBuscarOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(44, 44, 44)
                 .addComponent(jLabelOrganizacion1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -507,10 +522,10 @@ public class JDialogPersona extends javax.swing.JDialog {
         jTextFieldApellido.setText(persona.getApellido().toUpperCase());
         jTextFieldNombre.setText(persona.getNombre().toUpperCase());
         jTextFieldNroDoc.setText(persona.getNumeroDocumento().toUpperCase());
+        jTextFieldOrganizacion.setText((persona.getOrganizacion().getNombre()));
         jFormattedTextFieldFechaNac.setValue(persona.getFechaNacimiento());
         jComboBoxEstadoCivil.setSelectedItem(persona.getEstadoCivil().toUpperCase());
         jComboBoxNacionalidad.setSelectedItem(persona.getNacionalidad());
-        jComboBoxOrganizacion.setSelectedItem(persona.getOrganizacion());
         jComboBoxTipoDocumento.setSelectedItem(persona.getTipoDocumento());
 
         //Cargar Fotografia
@@ -570,7 +585,6 @@ public class JDialogPersona extends javax.swing.JDialog {
             persona.setFechaNacimiento((Date) jFormattedTextFieldFechaNac.getValue());
             persona.setEstadoCivil(jComboBoxEstadoCivil.getSelectedItem().toString());
             persona.setNacionalidad((Nacionalidad) listNacionalidades.get(jComboBoxNacionalidad.getSelectedIndex()));
-            persona.setOrganizacion((Organizacion) listOrganizaciones.get(jComboBoxOrganizacion.getSelectedIndex()));
             persona.setTipoDocumento((TipoDocumento) listTipoDocumento.get(jComboBoxTipoDocumento.getSelectedIndex()));
 
             if (persona.getId() != null) {
@@ -599,6 +613,9 @@ public class JDialogPersona extends javax.swing.JDialog {
         } else if (jComboBoxTipoDocumento.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(null, "Seleccionar el Tipo de Documento", "Error", JOptionPane.ERROR_MESSAGE);
             resultado = false;
+        } else if (persona.getOrganizacion()==null || persona.getOrganizacion().getId()==null){
+            JOptionPane.showMessageDialog(null, "Seleccionar la Organizacion de la Persona", "Error", JOptionPane.ERROR_MESSAGE);
+            resultado = false;
         }
         return resultado;
     }
@@ -617,7 +634,7 @@ public class JDialogPersona extends javax.swing.JDialog {
             jFormattedTextFieldFechaNac.setEditable(false);
             jComboBoxEstadoCivil.setEnabled(false);
             jComboBoxNacionalidad.setEnabled(false);
-            jComboBoxOrganizacion.setEnabled(false);
+            jButtonBuscarOrganizacion.setVisible(false);
             jComboBoxTipoDocumento.setEnabled(false);
             jButtonGuardar.setVisible(false);
             jButtonCargarFoto.setVisible(false);
@@ -660,6 +677,23 @@ public class JDialogPersona extends javax.swing.JDialog {
         }
 
     }//GEN-LAST:event_jButtonCargarFotoActionPerformed
+
+    private void jButtonBuscarOrganizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarOrganizacionActionPerformed
+        // TODO add your handling code here:
+        JInternalFrameOrganizacion jFrameOrganizacion = new JInternalFrameOrganizacion();
+        jFrameOrganizacion.setModoBuscador(true);
+        jFrameOrganizacion.setVisible(true);
+        JDialogBuscador buscador=new JDialogBuscador(null, rootPaneCheckingEnabled);
+        buscador.setSize(jFrameOrganizacion.getSize());
+        jFrameOrganizacion.setClosable(false);
+        jFrameOrganizacion.setResizable(false);
+        jFrameOrganizacion.setTitle("Buscador de organizaciones");
+        buscador.getjDesktopPaneBuscador().add(jFrameOrganizacion);
+        buscador.setVisible(true);
+        if(jFrameOrganizacion.getOrganizacionSeleccionada()!=null){
+        persona.setOrganizacion(jFrameOrganizacion.getOrganizacionSeleccionada());
+        jTextFieldOrganizacion.setText(persona.getOrganizacion().getNombre());}
+    }//GEN-LAST:event_jButtonBuscarOrganizacionActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -702,6 +736,7 @@ public class JDialogPersona extends javax.swing.JDialog {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonBuscarOrganizacion;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonCargarFoto;
     private javax.swing.JButton jButtonGuardar;
@@ -709,7 +744,6 @@ public class JDialogPersona extends javax.swing.JDialog {
     private javax.swing.JButton jButtonNuevoTipoDoc;
     private javax.swing.JComboBox jComboBoxEstadoCivil;
     private javax.swing.JComboBox jComboBoxNacionalidad;
-    private javax.swing.JComboBox jComboBoxOrganizacion;
     private javax.swing.JComboBox jComboBoxTipoDocumento;
     private javax.swing.JFormattedTextField jFormattedTextFieldFechaNac;
     private javax.swing.JLabel jLabel1;
@@ -744,6 +778,7 @@ public class JDialogPersona extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldOrgDesc;
     private javax.swing.JTextField jTextFieldOrgDir;
     private javax.swing.JTextField jTextFieldOrgTelef;
+    private javax.swing.JTextField jTextFieldOrganizacion;
     private java.util.List listAntecedentes;
     private java.util.List listNacionalidades;
     private java.util.List listOrganizaciones;
