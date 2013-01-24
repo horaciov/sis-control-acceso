@@ -4,9 +4,21 @@
  */
 package py.gov.itaipu.controlacceso.view.visita;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.*;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import org.jdesktop.observablecollections.ObservableCollections;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.action.persona.PersonaAction;
@@ -15,6 +27,7 @@ import py.gov.itaipu.controlacceso.model.Motivo;
 import py.gov.itaipu.controlacceso.model.Organizacion;
 import py.gov.itaipu.controlacceso.model.Persona;
 import py.gov.itaipu.controlacceso.model.Visita;
+import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 import py.gov.itaipu.controlacceso.view.JDialogBuscador;
 import py.gov.itaipu.controlacceso.view.persona.JInternalFramePersona;
 
@@ -108,11 +121,13 @@ public class JDialogVisita extends javax.swing.JDialog {
         jComboBoxMotivo = new javax.swing.JComboBox();
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jComboBoxOrganizacionInternta = new javax.swing.JComboBox();
+        jComboBoxOrganizacionesInternas = new javax.swing.JComboBox();
         jButtonBuscarPersona = new javax.swing.JButton();
         jButtonBuscarPersonaVisitada = new javax.swing.JButton();
         jButtonLimpiarPersonaVisitada = new javax.swing.JButton();
         jButtonLimpiarPersona = new javax.swing.JButton();
+        jTextFieldOrganizacion = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registro de visita");
@@ -157,7 +172,7 @@ public class JDialogVisita extends javax.swing.JDialog {
 
         jLabel8.setText("Area Visitada:");
 
-        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listOrganizacionInterna, jComboBoxOrganizacionInternta);
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listOrganizacionInterna, jComboBoxOrganizacionesInternas);
         bindingGroup.addBinding(jComboBoxBinding);
 
         jButtonBuscarPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/view.png"))); // NOI18N
@@ -192,11 +207,15 @@ public class JDialogVisita extends javax.swing.JDialog {
             }
         });
 
+        jTextFieldOrganizacion.setEditable(false);
+
+        jLabel7.setText("Organizacion:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -206,37 +225,44 @@ public class JDialogVisita extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel7))
+                                .addGap(21, 21, 21)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jComboBoxMotivo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(jTextFieldOrganizacion)
+                                            .addComponent(jTextFieldPersona, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButtonBuscarPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButtonLimpiarPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel8))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jComboBoxOrganizacionesInternas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jTextFieldPersonaVisitada)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButtonBuscarPersonaVisitada, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButtonLimpiarPersonaVisitada, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jButtonGuardar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButtonCancelar))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel2))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jTextFieldPersona, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
-                                            .addComponent(jTextFieldPersonaVisitada))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jButtonBuscarPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jButtonLimpiarPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jButtonBuscarPersonaVisitada, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jButtonLimpiarPersonaVisitada, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addComponent(jComboBoxMotivo, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jComboBoxOrganizacionInternta, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE))))
+                                .addComponent(jLabel3)
+                                .addGap(21, 21, 21)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE)))
                         .addGap(66, 66, 66))))
         );
         layout.setVerticalGroup(
@@ -249,22 +275,25 @@ public class JDialogVisita extends javax.swing.JDialog {
                 .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jButtonBuscarPersona, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextFieldPersona)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonLimpiarPersona, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jButtonBuscarPersonaVisitada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextFieldPersonaVisitada)
-                    .addComponent(jButtonLimpiarPersonaVisitada, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jButtonLimpiarPersona, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextFieldPersona, javax.swing.GroupLayout.Alignment.LEADING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBoxOrganizacionInternta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jTextFieldOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jButtonBuscarPersonaVisitada, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel5)
+                        .addComponent(jTextFieldPersonaVisitada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonLimpiarPersonaVisitada, javax.swing.GroupLayout.Alignment.LEADING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jComboBoxOrganizacionesInternas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jComboBoxMotivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -273,11 +302,11 @@ public class JDialogVisita extends javax.swing.JDialog {
                     .addComponent(jLabel3)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButtonCancelar)
                             .addComponent(jButtonGuardar))))
-                .addGap(21, 21, 21))
+                .addContainerGap())
         );
 
         bindingGroup.bind();
@@ -297,7 +326,7 @@ public class JDialogVisita extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "La persona es obligatorio","Error",0);
             resultado=false;
         }
-        Organizacion o=(Organizacion)jComboBoxOrganizacionInternta.getSelectedItem();
+        Organizacion o=(Organizacion)jComboBoxOrganizacionesInternas.getSelectedItem();
         if((personaVisitada==null || persona.getId()==null) && o.getId()==null){
             JOptionPane.showMessageDialog(this, "Debe visitar una persona o area","Error",0);
             resultado=false;
@@ -320,7 +349,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         
         visita.setFechaIngreso(Calendar.getInstance().getTime());
         
-        Organizacion o=(Organizacion)jComboBoxOrganizacionInternta.getSelectedItem();
+        Organizacion o=(Organizacion)jComboBoxOrganizacionesInternas.getSelectedItem();
         if(o.getId()!=null){
             visita.setOrganizacionInterna(o);
         }else{
@@ -333,6 +362,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         if(visita.getId()==null) {
             action.crear();
             JOptionPane.showMessageDialog(this, "Se ha creado con éxito","Info",1);
+            imprimirTicket();
         }
         else {
             action.guardar();
@@ -342,6 +372,40 @@ public class JDialogVisita extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
+     private void imprimirTicket(){
+         try {
+            
+            Class.forName("org.postgresql.Driver");
+            Connection conexion = EntityManagerCA.getConexion();
+            JasperReport reporte = (JasperReport) JRLoader.loadObject("reports/reporteTicketVisitas.jasper");
+            //Parametros
+                Map<String, Object> parametros = new HashMap<String, Object> ();
+                parametros.put("idVis",(Object)visita.getId());
+//                //Fotografia
+//                ByteArrayInputStream bis = new ByteArrayInputStream(visita.getPersona().getFotografia());
+//                InputStream iS = bis;
+//                parametros.put("fotografia",(Object)iS);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, conexion);
+
+//            Muestra el Reporte en Pantalla
+            JasperViewer jviewer = new JasperViewer(jasperPrint, false);
+            jviewer.setModalExclusionType(ModalExclusionType.NO_EXCLUDE);
+            jviewer.viewReport(jasperPrint,false);
+        
+            //     Genera el Reporte en PDF            
+//            JRExporter exporter = new JRPdfExporter();
+//            exporter.setParameter(JRExporterParameter.JASPER_PRINT,jasperPrint); 
+//            exporter.setParameter(JRExporterParameter.OUTPUT_FILE,new java.io.File("reportePDF.pdf"));
+//            exporter.exportReport();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(JInternalFramePersona.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(JInternalFramePersona.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JRException ex) {
+            Logger.getLogger(JInternalFramePersona.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       }
+    
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
 //        jTextFieldPersona.setText(motivo.getNombre());
@@ -358,46 +422,54 @@ public class JDialogVisita extends javax.swing.JDialog {
         // TODO add your handling code here:
         JInternalFramePersona jFramePersona = new JInternalFramePersona();
             jFramePersona.setModoBuscador(true);
+            jFramePersona.setTipoOrganizacionPersona("EXTERNA");
+            jFramePersona.setTitle("Buscador de Personas Externas");
             jFramePersona.setVisible(true);            
             JDialogBuscador buscador=new JDialogBuscador(null, true);        
             buscador.setSize(jFramePersona.getSize());
             //jFramePersona.setClosable(false);
             jFramePersona.setResizable(false);
-            jFramePersona.setTitle("Buscador de persona");
             buscador.getjDesktopPaneBuscador().add(jFramePersona);
             buscador.setVisible(true);        
             persona=jFramePersona.getPersonaSeleccionada();
             if(persona!=null)
                 jTextFieldPersona.setText(persona.getNombre()+", "+persona.getApellido());
+                jTextFieldOrganizacion.setText(persona.getOrganizacion().getNombre());
     }//GEN-LAST:event_jButtonBuscarPersonaActionPerformed
 
     private void jButtonBuscarPersonaVisitadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarPersonaVisitadaActionPerformed
         // TODO add your handling code here:
         JInternalFramePersona jFramePersona = new JInternalFramePersona();
             jFramePersona.setModoBuscador(true);
+            jFramePersona.setTitle("Buscador de Personas Internas");
+            jFramePersona.setTipoOrganizacionPersona("INTERNA");
             jFramePersona.setVisible(true);            
             JDialogBuscador buscador=new JDialogBuscador(null, true);        
             buscador.setSize(jFramePersona.getSize());
             //jFramePersona.setClosable(false);
             jFramePersona.setResizable(false);
-            jFramePersona.setTitle("Buscador de persona");
             buscador.getjDesktopPaneBuscador().add(jFramePersona);
             buscador.setVisible(true);        
             personaVisitada=jFramePersona.getPersonaSeleccionada();
             if(personaVisitada!=null)
                 jTextFieldPersonaVisitada.setText(personaVisitada.getNombre()+", "+personaVisitada.getApellido());
+                jComboBoxOrganizacionesInternas.setSelectedItem(personaVisitada.getOrganizacion());
     }//GEN-LAST:event_jButtonBuscarPersonaVisitadaActionPerformed
 
     private void jButtonLimpiarPersonaVisitadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarPersonaVisitadaActionPerformed
         // TODO add your handling code here:
         personaVisitada=null;
         jTextFieldPersonaVisitada.setText(null);
+        jComboBoxOrganizacionesInternas.setSelectedIndex(0);
     }//GEN-LAST:event_jButtonLimpiarPersonaVisitadaActionPerformed
 
     private void jButtonLimpiarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarPersonaActionPerformed
         // TODO add your handling code here:
         persona=null;
         jTextFieldPersona.setText(null);
+        jTextFieldOrganizacion.setText("");
+        
+        
     }//GEN-LAST:event_jButtonLimpiarPersonaActionPerformed
 
     /**
@@ -449,16 +521,18 @@ public class JDialogVisita extends javax.swing.JDialog {
     private javax.swing.JButton jButtonLimpiarPersona;
     private javax.swing.JButton jButtonLimpiarPersonaVisitada;
     private javax.swing.JComboBox jComboBoxMotivo;
-    private javax.swing.JComboBox jComboBoxOrganizacionInternta;
+    private javax.swing.JComboBox jComboBoxOrganizacionesInternas;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextArea jTextAreaObservacion;
+    private javax.swing.JTextField jTextFieldOrganizacion;
     private javax.swing.JTextField jTextFieldPersona;
     private javax.swing.JTextField jTextFieldPersonaVisitada;
     private java.util.List listMotivos;
