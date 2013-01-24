@@ -491,12 +491,13 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
          JInternalFramePersona jFramePersona = new JInternalFramePersona();
             jFramePersona.setModoBuscador(true);
+            jFramePersona.setTitle("Buscador de Personas Externas");
+            jFramePersona.setTipoOrganizacionPersona("EXTERNA");
             jFramePersona.setVisible(true);            
             JDialogBuscador buscador=new JDialogBuscador(null, closable);        
             buscador.setSize(jFramePersona.getSize());
             //jFramePersona.setClosable(false);
             jFramePersona.setResizable(false);
-            jFramePersona.setTitle("Buscador de persona");
             buscador.getjDesktopPaneBuscador().add(jFramePersona);
             buscador.setVisible(true);        
             persona=jFramePersona.getPersonaSeleccionada();
@@ -508,12 +509,13 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
             JInternalFramePersona jFramePersona = new JInternalFramePersona();
             jFramePersona.setModoBuscador(true);
+            jFramePersona.setTitle("Buscador de Personas Internas");
+            jFramePersona.setTipoOrganizacionPersona("INTERNA");
             jFramePersona.setVisible(true);            
             JDialogBuscador buscador=new JDialogBuscador(null, closable);        
             buscador.setSize(jFramePersona.getSize());
             //jFramePersona.setClosable(false);
             jFramePersona.setResizable(false);
-            jFramePersona.setTitle("Buscador de persona");
             buscador.getjDesktopPaneBuscador().add(jFramePersona);
             buscador.setVisible(true);        
             personaVisitada=jFramePersona.getPersonaSeleccionada();
