@@ -9,6 +9,7 @@ import java.awt.Dimension;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -162,6 +163,9 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
         jRadioButtonAmbos = new javax.swing.JRadioButton();
         jButtonImprimirFicha = new javax.swing.JButton();
         jButtonImprimirListado = new javax.swing.JButton();
+        jLabelSexo = new javax.swing.JLabel();
+        jComboBoxSexo = new javax.swing.JComboBox();
+        jLabel9 = new javax.swing.JLabel();
 
         setTitle("Registro de personas");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
@@ -225,10 +229,10 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
                 .addGroup(jPanelFechaNacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(jLabel6))
-                .addGap(13, 13, 13)
-                .addGroup(jPanelFechaNacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelFechaNacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelFechaNacLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jFormattedTextFechDesde)
@@ -391,29 +395,39 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabelSexo.setText("Sexo:");
+
+        jComboBoxSexo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "TODOS", "MASCULINO", "FEMENINO" }));
+
+        jLabel9.setText("Tipo Persona");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator2)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator2)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                .addGap(44, 44, 44)
-                                                .addComponent(jButtonBuscar)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jButtonLimpiar)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(jButtonImprimirListado))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jButtonVer, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButtonNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButtonModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(10, 10, 10)
+                                        .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButtonImprimirFicha, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                                     .addComponent(jLabelApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                     .addGroup(layout.createSequentialGroup()
@@ -422,49 +436,45 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                                     .addComponent(jTextFieldApellidoFiltro, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
                                                     .addComponent(jTextFieldNombreFiltro)
-                                                    .addComponent(jTextFieldOrganizacionFiltro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE))))
-                                        .addGap(8, 8, 8)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabelEstCivil, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabelEstNacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jButtonBuscarOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(38, 38, 38)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
+                                                    .addComponent(jTextFieldOrganizacionFiltro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE))
+                                                .addGap(8, 8, 8)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jComboBoxNacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(jComboBoxEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGap(18, 18, 18)
-                                                .addComponent(jPanelFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jRadioButtonInterna)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jRadioButtonExterna)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jRadioButtonAmbos)))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 13, Short.MAX_VALUE))
-                            .addComponent(jScrollPane1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(0, 1114, Short.MAX_VALUE))
-                            .addComponent(jSeparator3)))
+                                                    .addComponent(jLabelEstCivil, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jLabelEstNacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addComponent(jButtonBuscarOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(jLabelSexo))))
+                                            .addComponent(jLabelOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(38, 38, 38)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jComboBoxNacionalidad, javax.swing.GroupLayout.Alignment.TRAILING, 0, 172, Short.MAX_VALUE)
+                                            .addComponent(jComboBoxEstadoCivil, javax.swing.GroupLayout.Alignment.TRAILING, 0, 172, Short.MAX_VALUE)
+                                            .addComponent(jComboBoxSexo, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGap(38, 38, 38)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(49, 49, 49)
+                                        .addComponent(jRadioButtonInterna)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jRadioButtonExterna)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jRadioButtonAmbos))
+                                    .addComponent(jPanelFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1)
+                    .addComponent(jSeparator3)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
                             .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabelOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(jButtonVer, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButtonBuscar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonLimpiar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButtonNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButtonModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButtonImprimirFicha, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jButtonImprimirListado)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -496,16 +506,19 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
                         .addComponent(jLabelOrganizacion)
                         .addComponent(jTextFieldOrganizacionFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jButtonBuscarOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jRadioButtonInterna)
+                    .addComponent(jRadioButtonAmbos)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jRadioButtonInterna)
-                        .addComponent(jRadioButtonExterna)
-                        .addComponent(jRadioButtonAmbos)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                        .addComponent(jLabelSexo)
+                        .addComponent(jComboBoxSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jRadioButtonExterna))
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonBuscar)
                     .addComponent(jButtonLimpiar)
                     .addComponent(jButtonImprimirListado))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -572,6 +585,12 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
             personaFiltro.setEstadoCivil(null);
         }
         
+        if (!jComboBoxSexo.getSelectedItem().toString().equals("TODOS")) {
+            personaFiltro.setSexo(jComboBoxSexo.getSelectedItem().toString());
+        } else {
+            personaFiltro.setSexo(null);
+        }
+        
         String tipoPersona = null;
             if (!jRadioButtonAmbos.isSelected()){
                 if (jRadioButtonInterna.isSelected()) {
@@ -581,6 +600,34 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
                 }
             }
         
+        Date fec1 = null;
+        Date fec2 = null;
+        if (jFormattedTextFechDesde.getText()!=null && !jFormattedTextFechDesde.getText().equals("")) {
+            
+            fec1=(Date)jFormattedTextFechDesde.getValue();
+            Calendar cal = Calendar.getInstance(); // creates calendar
+            cal.setTime(fec1); // sets calendar time/date
+            cal.add(Calendar.HOUR_OF_DAY, 23);
+            cal.add(Calendar.MINUTE, 59);
+            cal.add(Calendar.SECOND, 59);
+            fec1=cal.getTime(); 
+            personaFiltro.setFechaNacimiento(fec1);
+        }
+        
+        if (jFormattedTextFechHasta.getText()!=null && !jFormattedTextFechHasta.getText().equals("")) {
+            
+            fec2=(Date)jFormattedTextFechHasta.getValue();
+            Calendar cal = Calendar.getInstance(); // creates calendar
+            cal.setTime(fec2); // sets calendar time/date
+            cal.add(Calendar.HOUR_OF_DAY, 23);
+            cal.add(Calendar.MINUTE, 59);
+            cal.add(Calendar.SECOND, 59);
+            fec2=cal.getTime(); 
+            personaFiltro2.setFechaNacimiento(fec2);
+        }
+                      
+            
+            
         listPersonas.clear();
         listPersonas.addAll(personaAction.findByParameters(personaFiltro, personaFiltro2,tipoPersona));
 
@@ -595,6 +642,7 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
         jTextFieldNroDoc.setText(null);
         jTextFieldOrganizacionFiltro.setText(null);
         jComboBoxEstadoCivil.setSelectedIndex(0);
+        jComboBoxSexo.setSelectedIndex(0);
         jComboBoxTipoDoc.setSelectedIndex(0);
         jComboBoxNacionalidad.setSelectedIndex(0);
         jFormattedTextFechDesde.setText(null);
@@ -777,6 +825,52 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
                 if (jTextFieldApellidoFiltro.getText()!=null && !jTextFieldApellidoFiltro.getText().equals("")) {
                     parametros.put("pApellido",(Object)jTextFieldApellidoFiltro.getText().toUpperCase());
                 }
+                if (personaFiltro.getOrganizacion() != null && personaFiltro.getOrganizacion().getId()!=null) {
+                   parametros.put("pOrganizacionText",(Object)personaFiltro.getOrganizacion().getNombre().toUpperCase());
+                   parametros.put("pOrganizacion",(Object)personaFiltro.getOrganizacion().getId().intValue());
+                }
+                
+                if (jComboBoxNacionalidad.getSelectedIndex()!=0) {
+                    Nacionalidad nac = (Nacionalidad)jComboBoxNacionalidad.getSelectedItem();
+                    parametros.put("pNacionalidadText",(Object)nac.getNombre().toUpperCase());
+                    parametros.put("pNacionalidadId",(Object)nac.getId().intValue());
+                }
+                if (jComboBoxTipoDoc.getSelectedIndex()!=0) {
+                    TipoDocumento tD = (TipoDocumento)jComboBoxTipoDoc.getSelectedItem();
+                    parametros.put("pTipoDocText",(Object)tD.getNombre().toUpperCase());
+                    parametros.put("pTipoDoc",(Object)tD.getId().intValue());
+                }
+                if (jTextFieldNroDoc.getText()!=null && !jTextFieldNroDoc.getText().equals("")) {
+                    parametros.put("pNroDoc",(Object)jTextFieldNroDoc.getText().toUpperCase());
+                }
+                if (jComboBoxEstadoCivil.getSelectedIndex()!=0) {
+                    parametros.put("pEstadoCivil",(Object)jComboBoxEstadoCivil.getSelectedItem().toString());
+                }
+                
+                if (jComboBoxSexo.getSelectedIndex()!=0) {
+                    parametros.put("pSexo",(Object)jComboBoxSexo.getSelectedItem().toString());
+                }
+                if (!jRadioButtonAmbos.isSelected()) {
+                    if (jRadioButtonInterna.isSelected()) {
+                        parametros.put("pTipoOrg",(Object)"INTERNA");
+                    }else if(jRadioButtonExterna.isSelected()){
+                        parametros.put("pTipoOrg",(Object)"EXTERNA");
+                    }
+                }
+                
+                if (jFormattedTextFechDesde!=null && !jFormattedTextFechDesde.getText().equals("")) {
+                    String vFecha = jFormattedTextFechDesde.getText().substring(6,10)+jFormattedTextFechDesde.getText().substring(3,5)+jFormattedTextFechDesde.getText().substring(0,2);
+                    parametros.put("pFechaDesde",(Object)vFecha.toUpperCase());
+                    vFecha = vFecha.substring(6,8)+"/"+vFecha.substring(4,6)+"/"+vFecha.substring(0,4);
+                    parametros.put("pFechaDesdeText",(Object)vFecha.toUpperCase());
+                }
+                
+                if (jFormattedTextFechHasta!=null && !jFormattedTextFechHasta.getText().equals("")) {
+                    String vFecha2 = jFormattedTextFechHasta.getText().substring(6,10)+jFormattedTextFechHasta.getText().substring(3,5)+jFormattedTextFechHasta.getText().substring(0,2);
+                    parametros.put("pFechaHasta",(Object)vFecha2.toUpperCase());
+                    vFecha2 = vFecha2.substring(6,8)+"/"+vFecha2.substring(4,6)+"/"+vFecha2.substring(0,4);
+                    parametros.put("pFechaHastaText",(Object)vFecha2.toUpperCase());
+                }
                 
                 JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, conexion);
 
@@ -807,6 +901,7 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButtonVer;
     private javax.swing.JComboBox jComboBoxEstadoCivil;
     private javax.swing.JComboBox jComboBoxNacionalidad;
+    private javax.swing.JComboBox jComboBoxSexo;
     private javax.swing.JComboBox jComboBoxTipoDoc;
     private javax.swing.JFormattedTextField jFormattedTextFechDesde;
     private javax.swing.JFormattedTextField jFormattedTextFechHasta;
@@ -818,11 +913,13 @@ public class JInternalFramePersona extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelApellido;
     private javax.swing.JLabel jLabelEstCivil;
     private javax.swing.JLabel jLabelEstNacionalidad;
     private javax.swing.JLabel jLabelNombre;
     private javax.swing.JLabel jLabelOrganizacion;
+    private javax.swing.JLabel jLabelSexo;
     private javax.swing.JPanel jPanelFechaNac;
     private javax.swing.JRadioButton jRadioButtonAmbos;
     private javax.swing.JRadioButton jRadioButtonExterna;
