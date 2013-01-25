@@ -38,8 +38,8 @@ WHERE
 	<field name="persona_visitada_nombre" class="java.lang.String"/>
 	<field name="persona_nombre" class="java.lang.String"/>
 	<field name="visita_id" class="java.lang.Long"/>
-	<field name="visita_fechaingreso" class="java.sql.Date"/>
-	<field name="visita_fechasalida" class="java.sql.Date"/>
+	<field name="visita_fechaingreso" class="java.sql.Timestamp"/>
+	<field name="visita_fechasalida" class="java.sql.Timestamp"/>
 	<field name="visita_observacion" class="java.lang.String"/>
 	<field name="motivo_nombre" class="java.lang.String"/>
 	<field name="tipodocumento_nombre" class="java.lang.String"/>
@@ -71,37 +71,37 @@ WHERE
 				<textFieldExpression><![CDATA[( $F{persona_visitada_nombre} == null ? "---" : $F{persona_visitada_nombre}  )]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="32c14093-0d04-4703-8a31-8e2cd3e111fc" x="17" y="208" width="70" height="20"/>
+				<reportElement uuid="32c14093-0d04-4703-8a31-8e2cd3e111fc" x="17" y="213" width="70" height="15"/>
 				<textElement/>
 				<text><![CDATA[Observación:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="c0a3ae3d-13de-4752-bb1a-8665de813688" x="102" y="100" width="155" height="20"/>
+				<reportElement uuid="c0a3ae3d-13de-4752-bb1a-8665de813688" x="102" y="91" width="155" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{tipodocumento_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="b691f8e7-fb37-4698-849b-9276b62eb39e" x="102" y="140" width="155" height="20"/>
+				<reportElement uuid="b691f8e7-fb37-4698-849b-9276b62eb39e" x="102" y="131" width="155" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{nacionalidad_nombre}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="4521ae16-5e7e-4ae8-a450-9658a903250d" x="17" y="120" width="70" height="20"/>
+				<reportElement uuid="4521ae16-5e7e-4ae8-a450-9658a903250d" x="17" y="111" width="70" height="20"/>
 				<textElement/>
 				<text><![CDATA[Nro Doc:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="0577ef57-ef98-4985-b546-22bb23d50ef1" x="102" y="120" width="155" height="20"/>
+				<reportElement uuid="0577ef57-ef98-4985-b546-22bb23d50ef1" x="102" y="111" width="155" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{persona_numerodocumento}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement uuid="ae0a7ce9-fb46-47bf-9c80-079790fb6600" x="102" y="180" width="155" height="20"/>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement uuid="ae0a7ce9-fb46-47bf-9c80-079790fb6600" x="102" y="171" width="155" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{visita_fechaingreso}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="22a21970-948f-4211-b1a5-ca43601f00c6" x="17" y="160" width="70" height="20"/>
+				<reportElement uuid="22a21970-948f-4211-b1a5-ca43601f00c6" x="17" y="151" width="70" height="20"/>
 				<textElement/>
 				<text><![CDATA[Organizacion:]]></text>
 			</staticText>
@@ -111,17 +111,17 @@ WHERE
 				<textFieldExpression><![CDATA[$F{visita_observacion}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="b784b62f-6cdc-41f9-93a4-dcc852a86db6" x="17" y="140" width="70" height="20"/>
+				<reportElement uuid="b784b62f-6cdc-41f9-93a4-dcc852a86db6" x="17" y="131" width="70" height="20"/>
 				<textElement/>
 				<text><![CDATA[Nacionalidad:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="14caeabc-8def-479b-9327-6bc34c05dae9" x="17" y="80" width="70" height="20"/>
+				<reportElement uuid="14caeabc-8def-479b-9327-6bc34c05dae9" x="17" y="71" width="70" height="20"/>
 				<textElement/>
 				<text><![CDATA[Visitante:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="a03e5ef0-dda6-48d0-99c0-408650cf06f3" x="17" y="100" width="70" height="20"/>
+				<reportElement uuid="a03e5ef0-dda6-48d0-99c0-408650cf06f3" x="17" y="91" width="70" height="20"/>
 				<textElement/>
 				<text><![CDATA[Tipo Doc:]]></text>
 			</staticText>
@@ -131,7 +131,7 @@ WHERE
 				<text><![CDATA[Persona Visitada:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="618f107c-390c-4cae-ae93-83725163fec3" x="102" y="80" width="155" height="20"/>
+				<reportElement uuid="618f107c-390c-4cae-ae93-83725163fec3" x="102" y="71" width="155" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{persona_nombre}]]></textFieldExpression>
 			</textField>
@@ -143,12 +143,12 @@ WHERE
 				<text><![CDATA[Ticket de Visita]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="cab54242-8431-434a-9c95-02ba434c5f91" x="17" y="180" width="70" height="20"/>
+				<reportElement uuid="cab54242-8431-434a-9c95-02ba434c5f91" x="17" y="171" width="70" height="20"/>
 				<textElement/>
-				<text><![CDATA[Fecha:]]></text>
+				<text><![CDATA[Fecha Ingreso:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="fe5170d8-e375-43cb-8d5e-3c212088653e" x="102" y="160" width="155" height="20"/>
+				<reportElement uuid="fe5170d8-e375-43cb-8d5e-3c212088653e" x="102" y="151" width="155" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{organizacion_a_nombre}]]></textFieldExpression>
 			</textField>
@@ -174,7 +174,7 @@ WHERE
 				<text><![CDATA[Ticket de Visita]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="25224785-119b-4bf6-a658-fda936b33786" x="283" y="160" width="70" height="20"/>
+				<reportElement uuid="25224785-119b-4bf6-a658-fda936b33786" x="283" y="151" width="70" height="20"/>
 				<textElement/>
 				<text><![CDATA[Organizacion:]]></text>
 			</staticText>
@@ -189,32 +189,32 @@ WHERE
 				<text><![CDATA[Persona Visitada:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="be002ba0-09dc-4252-b041-04988d9ecf98" x="283" y="120" width="70" height="20"/>
+				<reportElement uuid="be002ba0-09dc-4252-b041-04988d9ecf98" x="283" y="111" width="70" height="20"/>
 				<textElement/>
 				<text><![CDATA[Nro Doc:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="851fe361-a8b2-441f-9f0e-12b694d4aeb6" x="283" y="140" width="70" height="20"/>
+				<reportElement uuid="851fe361-a8b2-441f-9f0e-12b694d4aeb6" x="283" y="131" width="70" height="20"/>
 				<textElement/>
 				<text><![CDATA[Nacionalidad:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="2891295d-5255-45c3-af78-f63dce14bf13" x="283" y="80" width="70" height="20"/>
+				<reportElement uuid="2891295d-5255-45c3-af78-f63dce14bf13" x="283" y="71" width="70" height="20"/>
 				<textElement/>
 				<text><![CDATA[Visitante:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="40d79fcf-039a-4d59-b3e0-33b65c271656" x="283" y="100" width="70" height="20"/>
+				<reportElement uuid="40d79fcf-039a-4d59-b3e0-33b65c271656" x="283" y="91" width="70" height="20"/>
 				<textElement/>
 				<text><![CDATA[Tipo Doc:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="eecec098-b47a-4409-ada4-17f326950f26" x="283" y="180" width="70" height="20"/>
+				<reportElement uuid="eecec098-b47a-4409-ada4-17f326950f26" x="283" y="171" width="70" height="20"/>
 				<textElement/>
-				<text><![CDATA[Fecha:]]></text>
+				<text><![CDATA[Fecha Ingreso:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="645b8a12-fe38-4d0a-891b-ba1c8c916ef0" x="387" y="160" width="155" height="20"/>
+				<reportElement uuid="645b8a12-fe38-4d0a-891b-ba1c8c916ef0" x="387" y="151" width="155" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{organizacion_a_nombre}]]></textFieldExpression>
 			</textField>
@@ -223,23 +223,23 @@ WHERE
 				<textElement/>
 				<textFieldExpression><![CDATA[( $F{persona_visitada_nombre} == null ? "---" : $F{persona_visitada_nombre}  )]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement uuid="7aae8a9c-f330-44bc-b0e8-ba538b88ef3e" x="387" y="180" width="155" height="20"/>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement uuid="7aae8a9c-f330-44bc-b0e8-ba538b88ef3e" x="387" y="171" width="155" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{visita_fechaingreso}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="1fb78923-6714-4e75-be28-503baafe7c9c" x="387" y="100" width="155" height="20"/>
+				<reportElement uuid="1fb78923-6714-4e75-be28-503baafe7c9c" x="387" y="91" width="155" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{tipodocumento_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="a3e3fe59-1487-4246-a05e-74055313e50b" x="387" y="140" width="155" height="20"/>
+				<reportElement uuid="a3e3fe59-1487-4246-a05e-74055313e50b" x="387" y="131" width="155" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{nacionalidad_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="fbc3f9da-c27d-4a58-a497-6851cda089b8" x="387" y="120" width="155" height="20"/>
+				<reportElement uuid="fbc3f9da-c27d-4a58-a497-6851cda089b8" x="387" y="111" width="155" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{persona_numerodocumento}]]></textFieldExpression>
 			</textField>
@@ -249,7 +249,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{organizacion_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6bcc74ea-c902-4bea-b95a-9f68a84d95e2" x="387" y="80" width="155" height="20"/>
+				<reportElement uuid="6bcc74ea-c902-4bea-b95a-9f68a84d95e2" x="387" y="71" width="155" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{persona_nombre}]]></textFieldExpression>
 			</textField>
@@ -259,7 +259,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{visita_observacion}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="91b5ad3c-424b-4657-bb9d-2ee1b25863d5" x="283" y="209" width="70" height="20"/>
+				<reportElement uuid="91b5ad3c-424b-4657-bb9d-2ee1b25863d5" x="283" y="214" width="70" height="15"/>
 				<textElement/>
 				<text><![CDATA[Observación:]]></text>
 			</staticText>
@@ -280,6 +280,26 @@ WHERE
 				<reportElement uuid="5b4b3e11-9aee-476a-a80d-b6d8fc78e179" x="283" y="302" width="259" height="98"/>
 				<imageExpression><![CDATA[$F{persona_fotografiada}]]></imageExpression>
 			</image>
+			<staticText>
+				<reportElement uuid="901c6b13-b30c-4faf-bc2f-3b5fd4e1665a" x="283" y="193" width="70" height="20"/>
+				<textElement/>
+				<text><![CDATA[Fecha Salida:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ea1e2e8c-57af-4d60-b82c-8c3a693eaa81" x="17" y="193" width="70" height="20"/>
+				<textElement/>
+				<text><![CDATA[Fecha Salida:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement uuid="5e3b6625-060d-4211-8630-148a19dc54cd" x="102" y="194" width="155" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[( $F{visita_fechasalida} == null ? "---" : $F{visita_fechasalida} )]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy HH.mm.ss">
+				<reportElement uuid="a55c6d1f-0ac6-4806-8edf-aaed46b4bf45" x="387" y="194" width="155" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[( $F{visita_fechasalida} == null ? "---" : $F{visita_fechasalida} )]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>

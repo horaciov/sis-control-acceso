@@ -73,6 +73,7 @@
      INNER JOIN "controlacceso"."tipodocumento" tipodocumento ON persona."tipodocumento_id" = tipodocumento."id"
      INNER JOIN "controlacceso"."organizacion" organizacion ON persona."organizacion_id" = organizacion."id"
    WHERE
+    ( visita."anulado" = 'N' ) and
     ( $P{pPersonaId} is null or visita."persona_id" = $P{pPersonaId} ) and
     ( $P{pPersonaVisitadaId} is null or visita."personavisitada_id" = $P{pPersonaVisitadaId} ) and
     ( $P{pOrganizacionId} is null or organizacion."id" = $P{pOrganizacionId} ) and
@@ -82,8 +83,7 @@
     ( $P{pFechaDesde} = '' or visita."fechaingreso" >= to_timestamp($P{pFechaDesde}||' 00:00:01','YYYYMMDD HH24:MI:SS') ) and
     ( $P{pFechaHasta} = '' or visita."fechaingreso" <= to_timestamp($P{pFechaHasta}||' 23:59:59','YYYYMMDD HH24:MI:SS') )
 
- ORDER BY visita."fechaingreso", visita."fechasalida", persona."apellido" ||', '||persona."nombre"
-]]>
+ ORDER BY visita."fechaingreso", visita."fechasalida", persona."apellido" ||', '||persona."nombre"]]>
 	</queryString>
 	<field name="persona" class="java.lang.String"/>
 	<field name="persona_organizacion_id" class="java.lang.Long"/>
@@ -293,7 +293,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="43" splitType="Stretch">
+		<band height="42" splitType="Stretch">
 			<textField>
 				<reportElement uuid="29d22414-4e48-46f4-acad-0111752494ab" x="126" y="1" width="172" height="20"/>
 				<textElement/>
@@ -359,9 +359,20 @@
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="2" splitType="Stretch"/>
+		<band height="25" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement uuid="91023d80-4828-4ba5-b779-7c16b9f1613e" x="762" y="5" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e66347bf-0523-4d7f-aaf3-cf6967c0e232" x="621" y="5" width="141" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 	<summary>
-		<band height="2" splitType="Stretch"/>
+		<band height="4" splitType="Stretch"/>
 	</summary>
 </jasperReport>

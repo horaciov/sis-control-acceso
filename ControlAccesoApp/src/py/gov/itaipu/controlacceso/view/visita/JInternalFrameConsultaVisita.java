@@ -464,7 +464,7 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
         }
         
         listVisitas.clear();
-        listVisitas.addAll(visitaAction.findByParameters(v, hasta, organizacionExterna));
+        listVisitas.addAll(visitaAction.findByParameters(v, hasta, organizacionExterna, "N"));
     }//GEN-LAST:event_jButtonBuscarActionPerformed
     
     private void jButtonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarActionPerformed

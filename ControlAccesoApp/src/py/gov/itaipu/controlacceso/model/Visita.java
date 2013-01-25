@@ -32,6 +32,7 @@ public class Visita implements Serializable {
     private Date fechaSalida;
     private String observacion;
     private String recibido;
+    private String anulado;
     
     public Visita() {
     }
@@ -125,9 +126,15 @@ public class Visita implements Serializable {
     public void setRecibido(String recibido) {
         this.recibido = recibido;
     }
+    @Length(max=1)
+    public String getAnulado() {
+        return anulado;
+    }
 
-    
-    
+    public void setAnulado(String anulado) {
+        this.anulado = anulado.toUpperCase();
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
