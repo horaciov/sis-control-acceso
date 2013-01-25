@@ -655,7 +655,7 @@ public class JDialogPersona extends javax.swing.JDialog {
             jButtonCargarFoto.setVisible(false);
         }
         if (persona.getId() == null) {
-            jPanelAntecedentes.setEnabled(false);
+            jPanelAntecedentes.setVisible(false);
         }
 
 
