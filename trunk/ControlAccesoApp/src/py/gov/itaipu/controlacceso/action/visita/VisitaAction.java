@@ -41,13 +41,18 @@ public class VisitaAction {
 
     public List<Visita> findVisitasPendientes() {
         Query query;
-        query = em.createQuery(" from Visita v where v.fechaSalida is null)");
+        query = em.createQuery(" from Visita v where v.fechaSalida is null and v.anulado = 'N' )");
         return query.getResultList();
     }
 
-    public List<Visita> findByParameters(Visita visita, Date fechaHasta, Organizacion organizacionExterna) {
-        String sQuery = " from Visita v where 1=1";
+    public List<Visita> findByParameters(Visita visita, Date fechaHasta, Organizacion organizacionExterna, String incluyeAnulados) {
 
+        String sQuery = " from Visita v where 1=1";
+        
+        if (incluyeAnulados.equals("N")) {
+            sQuery = sQuery + " and v.anulado = 'N' ";
+        }
+        
         if (visita.getPersona() != null && visita.getPersona().getId() != null) {
             sQuery = sQuery + " and v.persona.id = :persona ";
         }
@@ -119,6 +124,12 @@ public class VisitaAction {
         return query.getResultList();
     }
 
+    public void anular(){
+        visita.setAnulado("S");
+        guardar();
+    }
+    
+    
     public void crear() {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
