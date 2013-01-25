@@ -114,6 +114,8 @@ public class JDialogPersona extends javax.swing.JDialog {
         jButtonNuevoNacionalidad = new javax.swing.JButton();
         jLabelFechaNac = new javax.swing.JLabel();
         jFormattedTextFieldFechaNac = new javax.swing.JFormattedTextField();
+        jLabelEstCiv1 = new javax.swing.JLabel();
+        jComboBoxSexo = new javax.swing.JComboBox();
         jPanelFotografia = new javax.swing.JPanel()
         ;
         jLabel3 = new javax.swing.JLabel();
@@ -188,6 +190,10 @@ public class JDialogPersona extends javax.swing.JDialog {
 
         jFormattedTextFieldFechaNac.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
 
+        jLabelEstCiv1.setText("Sexo");
+
+        jComboBoxSexo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "MASCULINO", "FEMENINO" }));
+
         javax.swing.GroupLayout jPanelDatosPersonalesLayout = new javax.swing.GroupLayout(jPanelDatosPersonales);
         jPanelDatosPersonales.setLayout(jPanelDatosPersonalesLayout);
         jPanelDatosPersonalesLayout.setHorizontalGroup(
@@ -205,20 +211,22 @@ public class JDialogPersona extends javax.swing.JDialog {
                             .addComponent(jTextFieldApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanelDatosPersonalesLayout.createSequentialGroup()
                         .addComponent(jLabelNroD)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 288, Short.MAX_VALUE)
                         .addComponent(jTextFieldNroDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDatosPersonalesLayout.createSequentialGroup()
                         .addGroup(jPanelDatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelEstCiv)
                             .addComponent(jLabelNAcion)
                             .addComponent(jLabelTipDoc)
-                            .addComponent(jLabelFechaNac))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 263, Short.MAX_VALUE)
-                        .addGroup(jPanelDatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBoxTipoDocumento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBoxNacionalidad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBoxEstadoCivil, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jFormattedTextFieldFechaNac, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabelFechaNac)
+                            .addComponent(jLabelEstCiv1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanelDatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jComboBoxSexo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBoxTipoDocumento, 0, 198, Short.MAX_VALUE)
+                            .addComponent(jComboBoxNacionalidad, 0, 198, Short.MAX_VALUE)
+                            .addComponent(jComboBoxEstadoCivil, 0, 198, Short.MAX_VALUE)
+                            .addComponent(jFormattedTextFieldFechaNac, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE))))
                 .addGap(1, 1, 1)
                 .addGroup(jPanelDatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButtonNuevoTipoDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -258,7 +266,11 @@ public class JDialogPersona extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDatosPersonalesLayout.createSequentialGroup()
                         .addGap(123, 123, 123)
                         .addComponent(jButtonNuevoNacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
+                .addGroup(jPanelDatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelEstCiv1)
+                    .addComponent(jComboBoxSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanelDatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBoxEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelEstCiv))
@@ -266,7 +278,7 @@ public class JDialogPersona extends javax.swing.JDialog {
                 .addGroup(jPanelDatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jFormattedTextFieldFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelFechaNac))
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         jTabbedPanePersona.addTab("Datos Personales", jPanelDatosPersonales);
@@ -525,6 +537,7 @@ public class JDialogPersona extends javax.swing.JDialog {
         jTextFieldOrganizacion.setText((persona.getOrganizacion().getNombre()));
         jFormattedTextFieldFechaNac.setValue(persona.getFechaNacimiento());
         jComboBoxEstadoCivil.setSelectedItem(persona.getEstadoCivil().toUpperCase());
+        jComboBoxSexo.setSelectedItem(persona.getSexo().toUpperCase());
         jComboBoxNacionalidad.setSelectedItem(persona.getNacionalidad());
         jComboBoxTipoDocumento.setSelectedItem(persona.getTipoDocumento());
 
@@ -584,6 +597,7 @@ public class JDialogPersona extends javax.swing.JDialog {
             persona.setNumeroDocumento(jTextFieldNroDoc.getText());
             persona.setFechaNacimiento((Date) jFormattedTextFieldFechaNac.getValue());
             persona.setEstadoCivil(jComboBoxEstadoCivil.getSelectedItem().toString());
+            persona.setSexo(jComboBoxSexo.getSelectedItem().toString());
             persona.setNacionalidad((Nacionalidad) listNacionalidades.get(jComboBoxNacionalidad.getSelectedIndex()));
             persona.setTipoDocumento((TipoDocumento) listTipoDocumento.get(jComboBoxTipoDocumento.getSelectedIndex()));
 
@@ -634,6 +648,7 @@ public class JDialogPersona extends javax.swing.JDialog {
             jFormattedTextFieldFechaNac.setEditable(false);
             jComboBoxEstadoCivil.setEnabled(false);
             jComboBoxNacionalidad.setEnabled(false);
+            jComboBoxSexo.setEnabled(false);
             jButtonBuscarOrganizacion.setVisible(false);
             jComboBoxTipoDocumento.setEnabled(false);
             jButtonGuardar.setVisible(false);
@@ -744,6 +759,7 @@ public class JDialogPersona extends javax.swing.JDialog {
     private javax.swing.JButton jButtonNuevoTipoDoc;
     private javax.swing.JComboBox jComboBoxEstadoCivil;
     private javax.swing.JComboBox jComboBoxNacionalidad;
+    private javax.swing.JComboBox jComboBoxSexo;
     private javax.swing.JComboBox jComboBoxTipoDocumento;
     private javax.swing.JFormattedTextField jFormattedTextFieldFechaNac;
     private javax.swing.JLabel jLabel1;
@@ -751,6 +767,7 @@ public class JDialogPersona extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelApe;
     private javax.swing.JLabel jLabelEstCiv;
+    private javax.swing.JLabel jLabelEstCiv1;
     private javax.swing.JLabel jLabelFechaNac;
     private javax.swing.JLabel jLabelNAcion;
     private javax.swing.JLabel jLabelNomb;

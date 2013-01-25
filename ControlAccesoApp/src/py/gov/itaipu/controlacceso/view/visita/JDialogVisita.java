@@ -44,18 +44,18 @@ public class JDialogVisita extends javax.swing.JDialog {
     private Persona persona;
     private Persona personaVisitada;
     private PersonaAction personaAction;
-    
+
     /**
      * Creates new form JDialogMotivo
      */
     public JDialogVisita(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        readOnly=false;
-        motivoAction=new CRUDAction<Motivo>(new Motivo());        
-        organizacionAction=new CRUDAction<Organizacion>(new Organizacion());
-        personaAction=new PersonaAction();
-        initComponents();        
-       
+        readOnly = false;
+        motivoAction = new CRUDAction<Motivo>(new Motivo());
+        organizacionAction = new CRUDAction<Organizacion>(new Organizacion());
+        personaAction = new PersonaAction();
+        initComponents();
+
     }
 
     public Visita getVisita() {
@@ -90,8 +90,6 @@ public class JDialogVisita extends javax.swing.JDialog {
         this.readOnly = readOnly;
     }
 
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -319,68 +317,67 @@ public class JDialogVisita extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
-    
     private boolean validar() {
-        boolean resultado=true;
-        if(persona==null || persona.getId()==null){
-            JOptionPane.showMessageDialog(this, "La persona es obligatorio","Error",0);
-            resultado=false;
+        boolean resultado = true;
+        if (persona == null || persona.getId() == null) {
+            JOptionPane.showMessageDialog(this, "La persona es obligatorio", "Error", 0);
+            resultado = false;
         }
-        Organizacion o=(Organizacion)jComboBoxOrganizacionesInternas.getSelectedItem();
-        if((personaVisitada==null || persona.getId()==null) && o.getId()==null){
-            JOptionPane.showMessageDialog(this, "Debe visitar una persona o area","Error",0);
-            resultado=false;
+        Organizacion o = (Organizacion) jComboBoxOrganizacionesInternas.getSelectedItem();
+        if ((personaVisitada == null || persona.getId() == null) && o.getId() == null) {
+            JOptionPane.showMessageDialog(this, "Debe visitar una persona o area", "Error", 0);
+            resultado = false;
         }
         return resultado;
     }
-    
+
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
-        if(visita==null)
+        if (visita == null) {
             return;
-        VisitaAction action=new VisitaAction(visita);
-        
-        if(!validar()){
+        }
+        VisitaAction action = new VisitaAction(visita);
+
+        if (!validar()) {
             return;//Implementar el método con las validaciones
         }
-        
+
         visita.setPersona(persona);
         visita.setPersonaVisitada(personaVisitada);
-        
+
         visita.setFechaIngreso(Calendar.getInstance().getTime());
-        
-        Organizacion o=(Organizacion)jComboBoxOrganizacionesInternas.getSelectedItem();
-        if(o.getId()!=null){
+
+        Organizacion o = (Organizacion) jComboBoxOrganizacionesInternas.getSelectedItem();
+        if (o.getId() != null) {
             visita.setOrganizacionInterna(o);
-        }else{
+        } else {
             visita.setOrganizacionInterna(null);
         }
-        
-        visita.setMotivo((Motivo)jComboBoxMotivo.getSelectedItem());
+
+        visita.setMotivo((Motivo) jComboBoxMotivo.getSelectedItem());
         visita.setObservacion(jTextAreaObservacion.getText());
-        
-        if(visita.getId()==null) {
+
+        if (visita.getId() == null) {
             action.crear();
-            JOptionPane.showMessageDialog(this, "Se ha creado con éxito","Info",1);
+            JOptionPane.showMessageDialog(this, "Se ha creado con éxito", "Info", 1);
             imprimirTicket();
-        }
-        else {
+        } else {
             action.guardar();
-            JOptionPane.showMessageDialog(this, "Se ha actualizado correctamente","Info",1);
-        }              
-        
+            JOptionPane.showMessageDialog(this, "Se ha actualizado correctamente", "Info", 1);
+        }
+
         this.dispose();
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
-     private void imprimirTicket(){
-         try {
-            
+    private void imprimirTicket() {
+        try {
+
             Class.forName("org.postgresql.Driver");
             Connection conexion = EntityManagerCA.getConexion();
             JasperReport reporte = (JasperReport) JRLoader.loadObject("reports/reporteTicketVisitas.jasper");
             //Parametros
-                Map<String, Object> parametros = new HashMap<String, Object> ();
-                parametros.put("idVis",(Object)visita.getId());
+            Map<String, Object> parametros = new HashMap<String, Object>();
+            parametros.put("idVis", (Object) visita.getId());
 //                //Fotografia
 //                ByteArrayInputStream bis = new ByteArrayInputStream(visita.getPersona().getFotografia());
 //                InputStream iS = bis;
@@ -390,8 +387,8 @@ public class JDialogVisita extends javax.swing.JDialog {
 //            Muestra el Reporte en Pantalla
             JasperViewer jviewer = new JasperViewer(jasperPrint, false);
             jviewer.setModalExclusionType(ModalExclusionType.NO_EXCLUDE);
-            jviewer.viewReport(jasperPrint,false);
-        
+            jviewer.viewReport(jasperPrint, false);
+
             //     Genera el Reporte en PDF            
 //            JRExporter exporter = new JRPdfExporter();
 //            exporter.setParameter(JRExporterParameter.JASPER_PRINT,jasperPrint); 
@@ -404,14 +401,14 @@ public class JDialogVisita extends javax.swing.JDialog {
         } catch (JRException ex) {
             Logger.getLogger(JInternalFramePersona.class.getName()).log(Level.SEVERE, null, ex);
         }
-       }
-    
+    }
+
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
 //        jTextFieldPersona.setText(motivo.getNombre());
 //        jTextAreaObservacion.setText(motivo.getDescripcion());
-        
-        if(readOnly){
+
+        if (readOnly) {
             jTextFieldPersona.setEditable(false);
             jTextAreaObservacion.setEditable(false);
             jButtonGuardar.setVisible(false);
@@ -421,55 +418,64 @@ public class JDialogVisita extends javax.swing.JDialog {
     private void jButtonBuscarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarPersonaActionPerformed
         // TODO add your handling code here:
         JInternalFramePersona jFramePersona = new JInternalFramePersona();
-            jFramePersona.setModoBuscador(true);
-            jFramePersona.setTipoOrganizacionPersona("EXTERNA");
-            jFramePersona.setTitle("Buscador de Personas Externas");
-            jFramePersona.setVisible(true);            
-            JDialogBuscador buscador=new JDialogBuscador(null, true);        
-            buscador.setSize(jFramePersona.getSize());
-            //jFramePersona.setClosable(false);
-            jFramePersona.setResizable(false);
-            buscador.getjDesktopPaneBuscador().add(jFramePersona);
-            buscador.setVisible(true);        
-            persona=jFramePersona.getPersonaSeleccionada();
-            if(persona!=null)
-                jTextFieldPersona.setText(persona.getNombre()+", "+persona.getApellido());
-                jTextFieldOrganizacion.setText(persona.getOrganizacion().getNombre());
+        jFramePersona.setModoBuscador(true);
+        jFramePersona.setTipoOrganizacionPersona("EXTERNA");
+        jFramePersona.setTitle("Buscador de Personas Externas");
+        jFramePersona.setVisible(true);
+        JDialogBuscador buscador = new JDialogBuscador(null, true);
+        buscador.setSize(jFramePersona.getSize());
+        //jFramePersona.setClosable(false);
+        jFramePersona.setResizable(false);
+        buscador.getjDesktopPaneBuscador().add(jFramePersona);
+        buscador.setVisible(true);
+        if (jFramePersona.getPersonaSeleccionada() != null) {
+            persona = jFramePersona.getPersonaSeleccionada();
+            if (persona != null) {
+                jTextFieldPersona.setText(persona.getNombre() + ", " + persona.getApellido());
+            }
+            jTextFieldOrganizacion.setText(persona.getOrganizacion().getNombre());
+
+        }
+
     }//GEN-LAST:event_jButtonBuscarPersonaActionPerformed
 
     private void jButtonBuscarPersonaVisitadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarPersonaVisitadaActionPerformed
         // TODO add your handling code here:
         JInternalFramePersona jFramePersona = new JInternalFramePersona();
-            jFramePersona.setModoBuscador(true);
-            jFramePersona.setTitle("Buscador de Personas Internas");
-            jFramePersona.setTipoOrganizacionPersona("INTERNA");
-            jFramePersona.setVisible(true);            
-            JDialogBuscador buscador=new JDialogBuscador(null, true);        
-            buscador.setSize(jFramePersona.getSize());
-            //jFramePersona.setClosable(false);
-            jFramePersona.setResizable(false);
-            buscador.getjDesktopPaneBuscador().add(jFramePersona);
-            buscador.setVisible(true);        
-            personaVisitada=jFramePersona.getPersonaSeleccionada();
-            if(personaVisitada!=null)
-                jTextFieldPersonaVisitada.setText(personaVisitada.getNombre()+", "+personaVisitada.getApellido());
-                jComboBoxOrganizacionesInternas.setSelectedItem(personaVisitada.getOrganizacion());
+        jFramePersona.setModoBuscador(true);
+        jFramePersona.setTitle("Buscador de Personas Internas");
+        jFramePersona.setTipoOrganizacionPersona("INTERNA");
+        jFramePersona.setVisible(true);
+        JDialogBuscador buscador = new JDialogBuscador(null, true);
+        buscador.setSize(jFramePersona.getSize());
+        //jFramePersona.setClosable(false);
+        jFramePersona.setResizable(false);
+        buscador.getjDesktopPaneBuscador().add(jFramePersona);
+        buscador.setVisible(true);
+        if (jFramePersona.getPersonaSeleccionada() != null) {
+            personaVisitada = jFramePersona.getPersonaSeleccionada();
+            if (personaVisitada != null) {
+                jTextFieldPersonaVisitada.setText(personaVisitada.getNombre() + ", " + personaVisitada.getApellido());
+            }
+            jComboBoxOrganizacionesInternas.setSelectedItem(personaVisitada.getOrganizacion());
+        }
+
     }//GEN-LAST:event_jButtonBuscarPersonaVisitadaActionPerformed
 
     private void jButtonLimpiarPersonaVisitadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarPersonaVisitadaActionPerformed
         // TODO add your handling code here:
-        personaVisitada=null;
+        personaVisitada = null;
         jTextFieldPersonaVisitada.setText(null);
         jComboBoxOrganizacionesInternas.setSelectedIndex(0);
     }//GEN-LAST:event_jButtonLimpiarPersonaVisitadaActionPerformed
 
     private void jButtonLimpiarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarPersonaActionPerformed
         // TODO add your handling code here:
-        persona=null;
+        persona = null;
         jTextFieldPersona.setText(null);
         jTextFieldOrganizacion.setText("");
-        
-        
+
+
     }//GEN-LAST:event_jButtonLimpiarPersonaActionPerformed
 
     /**
@@ -539,5 +545,4 @@ public class JDialogVisita extends javax.swing.JDialog {
     private java.util.List listOrganizacionInterna;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
-
 }

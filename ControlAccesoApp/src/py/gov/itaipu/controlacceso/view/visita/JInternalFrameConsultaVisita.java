@@ -4,15 +4,20 @@
  */
 package py.gov.itaipu.controlacceso.view.visita;
 
+import java.awt.Dialog;
 import java.beans.PropertyVetoException;
 import java.io.BufferedInputStream;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Formatter;
+import java.util.HashMap;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.*;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.stream.MemoryCacheImageInputStream;
@@ -22,6 +27,12 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.swingbinding.JTableBinding;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
@@ -30,6 +41,7 @@ import py.gov.itaipu.controlacceso.model.Motivo;
 import py.gov.itaipu.controlacceso.model.Nacionalidad;
 import py.gov.itaipu.controlacceso.model.Organizacion;
 import py.gov.itaipu.controlacceso.model.Persona;
+import py.gov.itaipu.controlacceso.model.TipoDocumento;
 import py.gov.itaipu.controlacceso.model.Visita;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 import py.gov.itaipu.controlacceso.view.JDialogBuscador;
@@ -116,6 +128,7 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
         jButtonLimpiarPersona = new javax.swing.JButton();
         jButtonLimpiarPersonaVisitada = new javax.swing.JButton();
         jButtonLimpiarOrganizacion = new javax.swing.JButton();
+        jButtonImprimirListado = new javax.swing.JButton();
 
         setTitle("Consulta de visitas");
 
@@ -264,6 +277,14 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
             }
         });
 
+        jButtonImprimirListado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/printer.png"))); // NOI18N
+        jButtonImprimirListado.setText("LISTADO");
+        jButtonImprimirListado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonImprimirListadoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -321,6 +342,8 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
                 .addComponent(jButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonImprimirListado)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -359,7 +382,8 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonImprimirListado))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -436,6 +460,7 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
             cal.add(Calendar.MINUTE, 59);
             cal.add(Calendar.SECOND, 59);
             hasta=cal.getTime(); 
+            
         }
         
         listVisitas.clear();
@@ -542,12 +567,82 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_jButtonLimpiarOrganizacionActionPerformed
 
+    private void jButtonImprimirListadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImprimirListadoActionPerformed
+        // TODO add your handling code here:
+        try {
+            
+            Class.forName("org.postgresql.Driver");
+            Connection conexion = EntityManagerCA.getConexion();
+            JasperReport reporte = (JasperReport) JRLoader.loadObject("reports/reporteListadoVisitas.jasper");
+            //Parametros
+                Map<String, Object> parametros = new HashMap<String, Object> ();
+                ///Parametros
+                if (persona!=null && persona.getId()!=null) {
+                    parametros.put("pPersonaText",(Object)(persona.getApellido()+", "+persona.getNombre()));
+                    parametros.put("pPersonaId",(Object)persona.getId().intValue());
+                }
+                if (personaVisitada!=null && personaVisitada.getId()!=null) {
+                    parametros.put("pPersonaVisitadaText",(Object)(personaVisitada.getApellido()+", "+personaVisitada.getNombre()));
+                    parametros.put("pPersonaVisitadaId",(Object)personaVisitada.getId().intValue());
+                }
+                
+                if ( organizacionExterna!=null &&  organizacionExterna.getId()!=null) {
+                    parametros.put("pOrganizacionText",(Object)organizacionExterna.getNombre());
+                    parametros.put("pOrganizacionId",(Object)organizacionExterna.getId().intValue());
+                }
+                
+                Organizacion organizacionInterna = (Organizacion) jComboBoxOrganizacionInternta.getSelectedItem();
+                if (organizacionInterna.getId() != null) {
+                    parametros.put("pOrganizacionVisitadaText",(Object)organizacionInterna.getNombre());
+                    parametros.put("pOrganizacionVisitadaId",(Object)organizacionInterna.getId().intValue());
+                }
+                 Motivo motivo = (Motivo) jComboBoxMotivo.getSelectedItem();
+                if (motivo.getId() != null) {
+                    parametros.put("pMotivoText",(Object)motivo.getNombre());
+                    parametros.put("pMotivoId",(Object)motivo.getId().intValue());
+                }
+                if (jTextAreaObservacion.getText()!=null && !jTextAreaObservacion.getText().equals("")) {
+                    parametros.put("pObservacion",(Object)jTextAreaObservacion.getText().toUpperCase());
+                }
+                
+                if (jFormattedTextFieldDesde!=null && !jFormattedTextFieldDesde.getText().equals("")) {
+                    String vFecha = jFormattedTextFieldDesde.getText().substring(6,10)+jFormattedTextFieldDesde.getText().substring(3,5)+jFormattedTextFieldDesde.getText().substring(0,2);
+                    parametros.put("pFechaDesde",(Object)vFecha.toUpperCase());
+                    vFecha = vFecha.substring(6,8)+"/"+vFecha.substring(4,6)+"/"+vFecha.substring(0,4);
+                    parametros.put("pFechaDesdeText",(Object)vFecha.toUpperCase());
+                }
+              if (jFormattedTextFieldHasta!=null && !jFormattedTextFieldHasta.getText().equals("")) {
+                    String vFechaH = jFormattedTextFieldHasta.getText().substring(6,10)+jFormattedTextFieldHasta.getText().substring(3,5)+jFormattedTextFieldHasta.getText().substring(0,2);
+                    parametros.put("pFechaHasta",(Object)vFechaH.toUpperCase());
+                    vFechaH = vFechaH.substring(6,8)+"/"+vFechaH.substring(4,6)+"/"+vFechaH.substring(0,4);
+                    parametros.put("pFechaHastaText",(Object)vFechaH.toUpperCase());
+                }  
+                 
+                
+                JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, conexion);
+
+//            Muestra el Reporte en Pantalla
+            JasperViewer jviewer = new JasperViewer(jasperPrint, false);
+            jviewer.setModalExclusionType(Dialog.ModalExclusionType.NO_EXCLUDE);
+            jviewer.viewReport(jasperPrint,false);
+       
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(JInternalFramePersona.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(JInternalFramePersona.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JRException ex) {
+            Logger.getLogger(JInternalFramePersona.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jButtonImprimirListadoActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonBuscarOrganizacionExterna;
     private javax.swing.JButton jButtonBuscarPersona;
     private javax.swing.JButton jButtonBuscarPersonaVisitada;
     private javax.swing.JButton jButtonCerrar;
+    private javax.swing.JButton jButtonImprimirListado;
     private javax.swing.JButton jButtonLimpiar;
     private javax.swing.JButton jButtonLimpiarOrganizacion;
     private javax.swing.JButton jButtonLimpiarPersona;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteListadoPersonas" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b743ccb2-210d-4bc5-bcc6-edc6dc656304">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="42"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="pApellido" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
@@ -10,6 +10,9 @@
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<parameter name="pEstadoCivil" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pTipoOrg" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
 	<parameter name="pSexo" class="java.lang.String" isForPrompting="false">
@@ -36,6 +39,18 @@
 	<parameter name="pNroDoc" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
+	<parameter name="pFechaDesde" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pFechaHasta" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pFechaDesdeText" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["---"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pFechaHastaText" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["---"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
      persona."apellido"||', '||persona."nombre" AS persona_apellido_nombre,
@@ -51,6 +66,7 @@
      tipodocumento."nombre" AS tipodocumento_nombre,
      nacionalidad."id" AS nacionalidad_id,
      organizacion."id" AS organizacion_id,
+     organizacion."tipoorganizacion" AS organizacion_tipo,
      tipodocumento."id" AS tipodocumento_id
 FROM
      "controlacceso"."nacionalidad" nacionalidad FULL JOIN "controlacceso"."persona" persona ON nacionalidad."id" = persona."nacionalidad_id"
@@ -62,10 +78,13 @@ WHERE
      persona."nombre" LIKE '%'||$P{pNombre}||'%' and
     ( $P{pNroDoc} = '' or persona."numerodocumento" LIKE $P{pNroDoc} ) and
     ( $P{pSexo} = '' or persona."sexo" LIKE $P{pSexo} ) and
+    ( $P{pTipoOrg} = '' or organizacion."tipoorganizacion" LIKE $P{pTipoOrg} ) and
     ( $P{pEstadoCivil} = '' or persona."estadocivil" LIKE $P{pEstadoCivil} ) and
     ( $P{pNacionalidadId} is null or nacionalidad."id" = $P{pNacionalidadId} ) and
     ( $P{pOrganizacion} is null or organizacion."id" = $P{pOrganizacion} ) and
-    ( $P{pTipoDoc} is null or tipodocumento."id" = $P{pTipoDoc} )]]>
+    ( $P{pTipoDoc} is null or tipodocumento."id" = $P{pTipoDoc} ) and
+    ( $P{pFechaDesde} = '' or persona."fechanacimiento" >= to_date($P{pFechaDesde}, 'YYYYMMDD') ) and
+    ( $P{pFechaHasta} = '' or persona."fechanacimiento" <= to_date($P{pFechaHasta}, 'YYYYMMDD') )]]>
 	</queryString>
 	<field name="persona_apellido_nombre" class="java.lang.String"/>
 	<field name="persona_apellido" class="java.lang.String"/>
@@ -81,6 +100,7 @@ WHERE
 	<field name="nacionalidad_id" class="java.lang.Long"/>
 	<field name="organizacion_id" class="java.lang.Long"/>
 	<field name="tipodocumento_id" class="java.lang.Long"/>
+	<field name="organizacion_tipo" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -99,7 +119,7 @@ WHERE
 		</band>
 	</title>
 	<pageHeader>
-		<band height="116" splitType="Stretch">
+		<band height="135" splitType="Stretch">
 			<staticText>
 				<reportElement uuid="0b54b4d3-41be-498b-bda1-95f38759ce67" x="1" y="12" width="801" height="20"/>
 				<textElement verticalAlignment="Middle">
@@ -171,19 +191,19 @@ WHERE
 				<text><![CDATA[FECHA NAC HASTA:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="05f41ee8-7f7b-4468-a875-b199b445bea6" x="137" y="46" width="133" height="17"/>
+				<reportElement uuid="05f41ee8-7f7b-4468-a875-b199b445bea6" x="140" y="46" width="133" height="17"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$P{pNombre}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[( $P{pNombre} == "" ? "---" : $P{pNombre} )]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6eaea741-aba0-4548-8386-a4a0f33343f3" x="137" y="67" width="133" height="18"/>
+				<reportElement uuid="6eaea741-aba0-4548-8386-a4a0f33343f3" x="140" y="67" width="133" height="18"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$P{pApellido}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[( $P{pApellido} == "" ? "---" : $P{pApellido} )]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="6ef1c9a4-8566-4837-a937-b787161cc755" x="644" y="42" width="144" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$P{pEstadoCivil}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[( $P{pEstadoCivil} == "" ? "---" : $P{pEstadoCivil} )]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="98dc1927-e819-4281-bf15-07bcf4c65dfe" x="400" y="67" width="110" height="20"/>
@@ -191,7 +211,7 @@ WHERE
 				<textFieldExpression><![CDATA[$P{pTipoDocText}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="2f492fbe-8df6-45df-adbb-fc2506846cfd" x="137" y="87" width="133" height="20"/>
+				<reportElement uuid="2f492fbe-8df6-45df-adbb-fc2506846cfd" x="140" y="87" width="133" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$P{pOrganizacionText}]]></textFieldExpression>
 			</textField>
@@ -203,7 +223,41 @@ WHERE
 			<textField>
 				<reportElement uuid="a3e45fa0-d181-4ce1-a8e8-2ca9d1bf1c0a" x="400" y="89" width="110" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$P{pNroDoc}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[( $P{pNroDoc} == "" ? "---" : $P{pNroDoc} )]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="b996b37a-6b05-421a-8b5b-aa2cff048729" x="645" y="65" width="143" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{pFechaDesdeText}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="d6c9656d-1ece-40e9-93d9-fff5a9565f33" x="645" y="89" width="143" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{pFechaHastaText}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="c2115a8b-c3f5-486e-a45c-41f1dd868d37" mode="Opaque" x="28" y="111" width="100" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font isBold="false" isItalic="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[SEXO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="9c6ebee2-db7c-411a-adf3-3bd6c20a2cfd" x="140" y="111" width="133" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[( $P{pSexo} == "" ? "---" : $P{pSexo} )]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="8ce09895-a0e1-4868-b410-8156f85b1ce9" mode="Opaque" x="287" y="111" width="100" height="20" backcolor="#CCCCCC"/>
+				<textElement>
+					<font isBold="false" isItalic="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[TIPO ORG:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="9994ea74-d9a8-4411-91de-179260db01a3" x="400" y="111" width="110" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[( $P{pTipoOrg} == "" ? "---" : $P{pTipoOrg} )]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
@@ -223,56 +277,61 @@ WHERE
 				<text><![CDATA[TIPO DOC]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="8eb729f3-63b9-4122-a878-0a6488f6a395" x="298" y="0" width="61" height="20"/>
+				<reportElement uuid="8eb729f3-63b9-4122-a878-0a6488f6a395" x="275" y="0" width="61" height="20"/>
 				<textElement/>
 				<text><![CDATA[NRO DOC]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="9ca1172c-79fb-4d7f-9a6f-96866189a07a" x="370" y="0" width="100" height="20"/>
+				<reportElement uuid="9ca1172c-79fb-4d7f-9a6f-96866189a07a" x="340" y="0" width="82" height="20"/>
 				<textElement/>
 				<text><![CDATA[NACIONALIDAD]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="cae8c2dc-9f1e-427d-ba0c-9e963da9781d" x="481" y="0" width="66" height="20"/>
+				<reportElement uuid="cae8c2dc-9f1e-427d-ba0c-9e963da9781d" x="439" y="0" width="66" height="20"/>
 				<textElement/>
 				<text><![CDATA[SEXO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="b35ba60b-b179-4c11-aa7a-a4ced2a32010" x="557" y="0" width="60" height="20"/>
+				<reportElement uuid="b35ba60b-b179-4c11-aa7a-a4ced2a32010" x="510" y="0" width="60" height="20"/>
 				<textElement/>
 				<text><![CDATA[EST CIVIL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="8ce80e5b-c288-43f2-b70b-d67d76a1d1db" x="644" y="1" width="158" height="20"/>
+				<reportElement uuid="8ce80e5b-c288-43f2-b70b-d67d76a1d1db" x="662" y="1" width="140" height="20"/>
 				<textElement/>
 				<text><![CDATA[ORGANIZACION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="63cf0470-9467-4e1d-99d1-57bd564fff7f" x="587" y="1" width="58" height="20"/>
+				<textElement/>
+				<text><![CDATA[FECHA NAC]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement uuid="37924526-99fc-4576-a9b1-aaffc4276cb3" x="200" y="0" width="87" height="20"/>
+				<reportElement uuid="37924526-99fc-4576-a9b1-aaffc4276cb3" x="200" y="0" width="70" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{tipodocumento_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="beee1ddd-9198-4a7f-8970-1bba72306b83" x="298" y="0" width="61" height="20"/>
+				<reportElement uuid="beee1ddd-9198-4a7f-8970-1bba72306b83" x="275" y="0" width="61" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{persona_numerodocumento}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="ce89365f-e9ab-43d7-bfd9-2ee1ab9bbda7" x="481" y="0" width="66" height="20"/>
+				<reportElement uuid="ce89365f-e9ab-43d7-bfd9-2ee1ab9bbda7" x="439" y="0" width="66" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[( $F{persona_sexo} == null ? "---" : $F{persona_sexo} )]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="3ee6fd7e-16ef-4bd1-a478-1a5d838194e6" x="557" y="0" width="75" height="20"/>
+				<reportElement uuid="3ee6fd7e-16ef-4bd1-a478-1a5d838194e6" x="511" y="0" width="75" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{persona_estadocivil}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="d3a0acc5-4f85-4ef2-9354-92cfd996c976" x="370" y="0" width="100" height="20"/>
+				<reportElement uuid="d3a0acc5-4f85-4ef2-9354-92cfd996c976" x="340" y="0" width="95" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{nacionalidad_nombre}]]></textFieldExpression>
 			</textField>
@@ -282,9 +341,14 @@ WHERE
 				<textFieldExpression><![CDATA[$F{persona_apellido_nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="8fdd114c-fc7b-4f9e-819d-f4d96678a559" x="644" y="0" width="158" height="20"/>
+				<reportElement uuid="8fdd114c-fc7b-4f9e-819d-f4d96678a559" x="662" y="0" width="140" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{organizacion_nombre}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="37cc355d-33e3-4ca4-9d16-02e9447746cd" x="587" y="0" width="71" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{persona_fechanacimiento}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

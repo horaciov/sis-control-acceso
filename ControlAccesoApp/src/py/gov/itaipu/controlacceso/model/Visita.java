@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import org.hibernate.validator.constraints.Length;
 
 /**
@@ -88,7 +89,8 @@ public class Visita implements Serializable {
         this.motivo = motivo;
     }
 
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    //@Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)
     public Date getFechaIngreso() {
         return fechaIngreso;
     }
@@ -97,7 +99,8 @@ public class Visita implements Serializable {
         this.fechaIngreso = fechaIngreso;
     }
 
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+//    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)
     public Date getFechaSalida() {
         return fechaSalida;
     }
