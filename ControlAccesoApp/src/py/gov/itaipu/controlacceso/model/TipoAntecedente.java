@@ -43,7 +43,7 @@ public class TipoAntecedente implements Serializable {
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre.toString();
+        this.nombre = nombre.toString().toUpperCase();
     }
 
     public String getDescripcion() {
