@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -44,6 +45,7 @@ import py.gov.itaipu.controlacceso.model.Organizacion;
 import py.gov.itaipu.controlacceso.model.Persona;
 import py.gov.itaipu.controlacceso.test.ImageFrame;
 import py.gov.itaipu.controlacceso.test.ShowImage;
+import py.gov.itaipu.controlacceso.view.FileFilterExtension;
 import py.gov.itaipu.controlacceso.view.JDialogBuscador;
 import py.gov.itaipu.controlacceso.view.administracion.organizacion.JInternalFrameOrganizacion;
 import py.gov.itaipu.controlacceso.view.administracion.organizacion.JInternalFrameOrganizacionExterna;
@@ -286,7 +288,7 @@ public class JDialogPersona extends javax.swing.JDialog {
         iconoFoto = new javax.swing.ImageIcon(getClass().getResource("/resource/img/sin_foto.jpg"));
         jLabel3.setIcon(iconoFoto);
 
-        jButtonCargarFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/Boss.gif"))); // NOI18N
+        jButtonCargarFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/CAMARA.png"))); // NOI18N
         jButtonCargarFoto.setText("Cargar Fotografia");
         jButtonCargarFoto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -664,7 +666,14 @@ public class JDialogPersona extends javax.swing.JDialog {
     private void jButtonCargarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCargarFotoActionPerformed
         // TODO add your handling code here:
         File input;
+        //Selector de Archivos
         JFileChooser chooser = new JFileChooser();
+        //Filtro De Extensiones
+        FileFilterExtension filtroExtension = new FileFilterExtension("JPG, JPEG, PNG", new String[] { "JPG", "JPEG", "PNG" });
+        chooser.setFileFilter(filtroExtension);
+        //Desaparece la opcion TODOS LOS ARCHIVOS
+        chooser.setAcceptAllFileFilterUsed(false);
+        
         int returnVal = chooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             RandomAccessFile f;
@@ -750,6 +759,7 @@ public class JDialogPersona extends javax.swing.JDialog {
             }
         });
     }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBuscarOrganizacion;
     private javax.swing.JButton jButtonCancelar;
