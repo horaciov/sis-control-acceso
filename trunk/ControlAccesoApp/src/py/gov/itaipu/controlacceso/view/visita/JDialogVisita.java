@@ -4,6 +4,10 @@
  */
 package py.gov.itaipu.controlacceso.view.visita;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Calendar;
@@ -11,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.*;
 import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRException;
@@ -28,7 +33,9 @@ import py.gov.itaipu.controlacceso.model.Organizacion;
 import py.gov.itaipu.controlacceso.model.Persona;
 import py.gov.itaipu.controlacceso.model.Visita;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
+import py.gov.itaipu.controlacceso.view.FileFilterExtension;
 import py.gov.itaipu.controlacceso.view.JDialogBuscador;
+import py.gov.itaipu.controlacceso.view.persona.JDialogPersona;
 import py.gov.itaipu.controlacceso.view.persona.JInternalFramePersona;
 
 /**
@@ -125,6 +132,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         jButtonLimpiarPersona = new javax.swing.JButton();
         jTextFieldOrganizacion = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
+        jButtonActualizarFotografia = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registro de visita");
@@ -208,6 +216,14 @@ public class JDialogVisita extends javax.swing.JDialog {
 
         jLabel7.setText("Organizacion:");
 
+        jButtonActualizarFotografia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/CAMARA.png"))); // NOI18N
+        jButtonActualizarFotografia.setToolTipText("Actualizar Fotografia");
+        jButtonActualizarFotografia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonActualizarFotografiaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -256,7 +272,9 @@ public class JDialogVisita extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButtonCancelar))
                             .addComponent(jSeparator1))
-                        .addGap(66, 66, 66))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonActualizarFotografia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30))))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jComboBoxOrganizacionesInternas, jTextFieldOrganizacion, jTextFieldPersona, jTextFieldPersonaVisitada});
@@ -273,7 +291,8 @@ public class JDialogVisita extends javax.swing.JDialog {
                     .addComponent(jButtonBuscarPersona, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonLimpiarPersona, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextFieldPersona, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(jTextFieldPersona, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonActualizarFotografia, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -496,6 +515,46 @@ public class JDialogVisita extends javax.swing.JDialog {
 
     }//GEN-LAST:event_jButtonLimpiarPersonaActionPerformed
 
+    private void jButtonActualizarFotografiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarFotografiaActionPerformed
+                // TODO add your handling code here:
+        
+        if (persona==null || persona.getId()==null) {
+            JOptionPane.showMessageDialog(this, "Debe Elegir una Persona", "Error", 0);
+            return;
+        }
+        File input;
+        JFileChooser chooser = new JFileChooser();
+        //Filtro De Extensiones
+        FileFilterExtension filtroExtension = new FileFilterExtension("JPG, JPEG, PNG", new String[] { "JPG", "JPEG", "PNG" });
+        chooser.setFileFilter(filtroExtension);
+        //Desaparece la opcion TODOS LOS ARCHIVOS
+        chooser.setAcceptAllFileFilterUsed(false);
+        
+        int returnVal = chooser.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            RandomAccessFile f;
+            byte[] fotografiaByte = null;
+
+            try {
+                    if(JOptionPane.showConfirmDialog(this,"Desea Actualizar la Fotografia?","Actualizar Fotografia",0)!=0)
+                    return; 
+                    f = new RandomAccessFile(chooser.getSelectedFile(), "r");
+                    fotografiaByte = new byte[(int) f.length()];
+                    f.read(fotografiaByte);
+                    persona.setFotografia(fotografiaByte);
+                    PersonaAction pAction = new PersonaAction();
+                    pAction.setPersona(persona);
+                    pAction.guardar();
+                    JOptionPane.showMessageDialog(this, "Se ha guardado con exito los nuevos Datos de Persona", "Info", 1);
+
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(JDialogPersona.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(JDialogPersona.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jButtonActualizarFotografiaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -538,6 +597,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonActualizarFotografia;
     private javax.swing.JButton jButtonBuscarPersona;
     private javax.swing.JButton jButtonBuscarPersonaVisitada;
     private javax.swing.JButton jButtonCancelar;

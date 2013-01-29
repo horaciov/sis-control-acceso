@@ -129,6 +129,7 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
         jButtonLimpiarPersonaVisitada = new javax.swing.JButton();
         jButtonLimpiarOrganizacion = new javax.swing.JButton();
         jButtonImprimirListado = new javax.swing.JButton();
+        jButtonImprimirVisita = new javax.swing.JButton();
 
         setTitle("Consulta de visitas");
 
@@ -387,6 +388,15 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jButtonImprimirVisita.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/ficha.png"))); // NOI18N
+        jButtonImprimirVisita.setText("IMPRIMIR");
+        jButtonImprimirVisita.setPreferredSize(new java.awt.Dimension(110, 25));
+        jButtonImprimirVisita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonImprimirVisitaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -401,6 +411,8 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonImprimirVisita, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING))
                 .addGap(20, 20, 20))
@@ -417,7 +429,9 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButtonCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonImprimirVisita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23))
         );
 
@@ -636,6 +650,46 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_jButtonImprimirListadoActionPerformed
 
+    private void jButtonImprimirVisitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImprimirVisitaActionPerformed
+        // TODO add your handling code here:
+        if (jTableVisitas.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una visita", "Error", 0);
+            return;
+        }
+        Visita v = (Visita) listVisitas.get(jTableVisitas.getSelectedRow());
+        try {
+
+            Class.forName("org.postgresql.Driver");
+            Connection conexion = EntityManagerCA.getConexion();
+            JasperReport reporte = (JasperReport) JRLoader.loadObject("reports/reporteTicketVisitas.jasper");
+            //Parametros
+            Map<String, Object> parametros = new HashMap<String, Object>();
+            parametros.put("idVis", (Object) v.getId());
+            //                //Fotografia
+            //                ByteArrayInputStream bis = new ByteArrayInputStream(visita.getPersona().getFotografia());
+            //                InputStream iS = bis;
+            //                parametros.put("fotografia",(Object)iS);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, conexion);
+
+            //            Muestra el Reporte en Pantalla
+            JasperViewer jviewer = new JasperViewer(jasperPrint, false);
+            jviewer.setModalExclusionType(Dialog.ModalExclusionType.NO_EXCLUDE);
+            jviewer.viewReport(jasperPrint, false);
+
+            //     Genera el Reporte en PDF
+            //            JRExporter exporter = new JRPdfExporter();
+            //            exporter.setParameter(JRExporterParameter.JASPER_PRINT,jasperPrint);
+            //            exporter.setParameter(JRExporterParameter.OUTPUT_FILE,new java.io.File("reportePDF.pdf"));
+            //            exporter.exportReport();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(JInternalFramePersona.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(JInternalFramePersona.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JRException ex) {
+            Logger.getLogger(JInternalFramePersona.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonImprimirVisitaActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonBuscarOrganizacionExterna;
@@ -643,6 +697,7 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButtonBuscarPersonaVisitada;
     private javax.swing.JButton jButtonCerrar;
     private javax.swing.JButton jButtonImprimirListado;
+    private javax.swing.JButton jButtonImprimirVisita;
     private javax.swing.JButton jButtonLimpiar;
     private javax.swing.JButton jButtonLimpiarOrganizacion;
     private javax.swing.JButton jButtonLimpiarPersona;

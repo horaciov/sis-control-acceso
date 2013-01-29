@@ -272,7 +272,7 @@ public class JInternalFrameRegistroVisita extends javax.swing.JInternalFrame {
             return;
         }
         
-        if(JOptionPane.showConfirmDialog(this,"Está seguro que desea Anular?","Eliminar Motivo",0)!=0)
+        if(JOptionPane.showConfirmDialog(this,"Está seguro que desea Anular?","Anular Visita",0)!=0)
             return;       
         Visita v = (Visita) listVisitas.get(jTableVisitas.getSelectedRow());
         visitaAction.setVisita(v);
