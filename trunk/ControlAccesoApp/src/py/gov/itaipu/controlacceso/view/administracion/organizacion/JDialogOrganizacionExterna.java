@@ -5,6 +5,7 @@
 package py.gov.itaipu.controlacceso.view.administracion.organizacion;
 
 import javax.swing.JOptionPane;
+import org.jdesktop.observablecollections.ObservableCollections;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.model.Organizacion;
 
@@ -16,6 +17,7 @@ public class JDialogOrganizacionExterna extends javax.swing.JDialog {
 
     private Organizacion organizacion;
     private Boolean readOnly;
+    
     
     /**
      * Creates new form JDialogOrganizacionExterna
@@ -118,9 +120,9 @@ public class JDialogOrganizacionExterna extends javax.swing.JDialog {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
                                     .addComponent(jLabel3))
-                                .addGap(32, 32, 32)
+                                .addGap(71, 71, 71)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
                                     .addComponent(jTextFieldOrganizacion)))
                             .addComponent(jSeparator1))))
                 .addGap(63, 63, 63))
@@ -138,13 +140,13 @@ public class JDialogOrganizacionExterna extends javax.swing.JDialog {
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(26, 26, 26)
+                    .addComponent(jLabel3)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonGuardar)
                     .addComponent(jButtonCancelar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();

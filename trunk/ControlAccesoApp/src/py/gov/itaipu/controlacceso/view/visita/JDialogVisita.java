@@ -4,20 +4,26 @@
  */
 package py.gov.itaipu.controlacceso.view.visita;
 
+import com.lowagie.text.pdf.ArabicLigaturizer;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.*;
 import javax.swing.JOptionPane;
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -33,6 +39,8 @@ import py.gov.itaipu.controlacceso.model.Organizacion;
 import py.gov.itaipu.controlacceso.model.Persona;
 import py.gov.itaipu.controlacceso.model.Visita;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
+import py.gov.itaipu.controlacceso.utils.tree.CustomIconRenderer;
+import py.gov.itaipu.controlacceso.utils.tree.UtilesArbol;
 import py.gov.itaipu.controlacceso.view.FileFilterExtension;
 import py.gov.itaipu.controlacceso.view.JDialogBuscador;
 import py.gov.itaipu.controlacceso.view.persona.JDialogPersona;
@@ -48,8 +56,12 @@ public class JDialogVisita extends javax.swing.JDialog {
     private Boolean readOnly;
     private CRUDAction<Motivo> motivoAction;
     private CRUDAction<Organizacion> organizacionAction;
+    private PersonaAction personaAction;
     private Persona persona;
     private Persona personaVisitada;    
+    private DefaultMutableTreeNode root;
+    DefaultTreeCellRenderer renderer;
+    
 
     /**
      * Creates new form JDialogMotivo
@@ -59,11 +71,13 @@ public class JDialogVisita extends javax.swing.JDialog {
         readOnly = false;
         motivoAction = new CRUDAction<Motivo>(new Motivo());
         organizacionAction = new CRUDAction<Organizacion>(new Organizacion());
-        
+        personaAction = new PersonaAction(new Persona());
+
         initComponents();
 
     }
-
+    
+    
     public Visita getVisita() {
         return visita;
     }
@@ -96,6 +110,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         this.readOnly = readOnly;
     }
 
+  
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -133,6 +148,11 @@ public class JDialogVisita extends javax.swing.JDialog {
         jTextFieldOrganizacion = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jButtonActualizarFotografia = new javax.swing.JButton();
+        jScrollPanePersonasVisitadas = new javax.swing.JScrollPane();
+        jTreePersonaVisitada = new javax.swing.JTree();
+        jLabelPersonaVisitada = new javax.swing.JLabel();
+        jLabelDocNro = new javax.swing.JLabel();
+        jTextFieldPersona1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registro de visita");
@@ -166,7 +186,10 @@ public class JDialogVisita extends javax.swing.JDialog {
             }
         });
 
-        jLabel4.setText("Visita");
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setText("Nueva Visita");
+
+        jTextFieldPersonaVisitada.setEditable(false);
 
         jLabel5.setText("Persona Visitada:");
 
@@ -224,103 +247,147 @@ public class JDialogVisita extends javax.swing.JDialog {
             }
         });
 
+        root = UtilesArbol.crearArbol("ORGANIGRAMA", true);
+        jTreePersonaVisitada = new JTree(root);
+        jTreePersonaVisitada.setCellRenderer(new CustomIconRenderer());
+        jTreePersonaVisitada.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+            public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+                jTreePersonaVisitadaValueChanged(evt);
+            }
+        });
+        jScrollPanePersonasVisitadas.setViewportView(jTreePersonaVisitada);
+
+        jLabelPersonaVisitada.setText("Persona Visitada:");
+
+        jLabelDocNro.setFont(new java.awt.Font("Bookman Old Style", 0, 48)); // NOI18N
+        jLabelDocNro.setText("Nro Doc:");
+
+        jTextFieldPersona1.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        jTextFieldPersona1.setForeground(new java.awt.Color(204, 0, 0));
+        jTextFieldPersona1.setToolTipText("Nro de Documento");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(46, 46, 46)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel8))
-                                .addGap(18, 18, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jComboBoxOrganizacionesInternas, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jTextFieldPersonaVisitada, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jTextFieldOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jTextFieldPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addComponent(jButtonBuscarPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jButtonLimpiarPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addComponent(jButtonBuscarPersonaVisitada, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jButtonLimpiarPersonaVisitada, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addComponent(jComboBoxMotivo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(21, 21, 21)
-                                .addComponent(jScrollPane1))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                            .addComponent(jLabelPersonaVisitada)
+                            .addComponent(jScrollPanePersonasVisitadas, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButtonGuardar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButtonCancelar))
-                            .addComponent(jSeparator1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonActualizarFotografia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30))))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 652, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel3)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(108, 108, 108)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(jComboBoxMotivo, 0, 318, Short.MAX_VALUE)
+                                                    .addComponent(jComboBoxOrganizacionesInternas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                .addComponent(jLabel5)
+                                                .addGap(25, 25, 25)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                        .addComponent(jTextFieldOrganizacion, javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jTextFieldPersona, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addComponent(jTextFieldPersonaVisitada, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE))))
+                                        .addGap(29, 29, 29)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jButtonBuscarPersonaVisitada, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(jButtonLimpiarPersonaVisitada, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jButtonBuscarPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jButtonLimpiarPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jButtonActualizarFotografia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabelDocNro)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel7)
+                                            .addComponent(jLabel2))
+                                        .addGap(123, 123, 123)))
+                                .addComponent(jTextFieldPersona1, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(26, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 1011, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jComboBoxOrganizacionesInternas, jTextFieldOrganizacion, jTextFieldPersona, jTextFieldPersonaVisitada});
-
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(14, 14, 14)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(9, 9, 9)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jButtonBuscarPersona, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonLimpiarPersona, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextFieldPersona, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonActualizarFotografia, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
                 .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jButtonBuscarPersonaVisitada, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel5)
-                        .addComponent(jTextFieldPersonaVisitada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButtonLimpiarPersonaVisitada, javax.swing.GroupLayout.Alignment.LEADING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(jComboBoxOrganizacionesInternas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jComboBoxMotivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabelPersonaVisitada)
+                .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldPersona1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelDocNro, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(32, 32, 32)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel7)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jTextFieldPersona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel2))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jButtonBuscarPersona, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButtonLimpiarPersona, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButtonActualizarFotografia, javax.swing.GroupLayout.Alignment.LEADING)))
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextFieldOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonBuscarPersonaVisitada)
+                            .addComponent(jButtonLimpiarPersonaVisitada)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel5)
+                                .addComponent(jTextFieldPersonaVisitada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButtonCancelar)
-                            .addComponent(jButtonGuardar))))
+                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jComboBoxOrganizacionesInternas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(15, 15, 15)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(jComboBoxMotivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3)
+                        .addGap(1, 1, 1)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPanePersonasVisitadas))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonCancelar)
+                    .addComponent(jButtonGuardar))
                 .addContainerGap())
         );
 
@@ -476,29 +543,6 @@ public class JDialogVisita extends javax.swing.JDialog {
 
     }//GEN-LAST:event_jButtonBuscarPersonaActionPerformed
 
-    private void jButtonBuscarPersonaVisitadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarPersonaVisitadaActionPerformed
-        // TODO add your handling code here:
-        JInternalFramePersona jFramePersona = new JInternalFramePersona();
-        jFramePersona.setModoBuscador(true);
-        jFramePersona.setTitle("Buscador de Personas Internas");
-        jFramePersona.setTipoOrganizacionPersona("INTERNA");
-        jFramePersona.setVisible(true);
-        JDialogBuscador buscador = new JDialogBuscador(null, true);
-        buscador.setSize(jFramePersona.getSize());
-        //jFramePersona.setClosable(false);
-        jFramePersona.setResizable(false);
-        buscador.getjDesktopPaneBuscador().add(jFramePersona);
-        buscador.setVisible(true);
-        if (jFramePersona.getPersonaSeleccionada() != null) {
-            personaVisitada = jFramePersona.getPersonaSeleccionada();
-            if (personaVisitada != null) {
-                jTextFieldPersonaVisitada.setText(personaVisitada.getNombre() + ", " + personaVisitada.getApellido());
-            }
-            jComboBoxOrganizacionesInternas.setSelectedItem(personaVisitada.getOrganizacion());
-        }
-
-    }//GEN-LAST:event_jButtonBuscarPersonaVisitadaActionPerformed
-
     private void jButtonLimpiarPersonaVisitadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarPersonaVisitadaActionPerformed
         // TODO add your handling code here:
         personaVisitada = null;
@@ -554,6 +598,53 @@ public class JDialogVisita extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event_jButtonActualizarFotografiaActionPerformed
+
+    private void jTreePersonaVisitadaValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_jTreePersonaVisitadaValueChanged
+        // TODO add your handling code here:
+        if (jTreePersonaVisitada.getLastSelectedPathComponent()!=null) {
+                DefaultMutableTreeNode nodoSeleccionado = (DefaultMutableTreeNode)jTreePersonaVisitada.getLastSelectedPathComponent();
+                Object objSel = nodoSeleccionado.getUserObject();
+                if (objSel.getClass().getSimpleName().equals("Persona")) {
+                    personaVisitada = (Persona)objSel;
+                    jComboBoxOrganizacionesInternas.setSelectedItem(personaVisitada.getOrganizacion());
+                    jTextFieldPersonaVisitada.setText(jTreePersonaVisitada.getLastSelectedPathComponent().toString());
+                }else if(objSel.getClass().getSimpleName().equals("Organizacion")){
+                    personaVisitada = null;
+                    jComboBoxOrganizacionesInternas.setSelectedItem((Organizacion)objSel);
+                    jTextFieldPersonaVisitada.setText("");
+                }else{
+                    personaVisitada = null;
+                    jTextFieldPersonaVisitada.setText("");
+                    jComboBoxOrganizacionesInternas.setSelectedIndex(0);
+                }
+                
+        }
+        
+        
+        
+    }//GEN-LAST:event_jTreePersonaVisitadaValueChanged
+
+    private void jButtonBuscarPersonaVisitadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarPersonaVisitadaActionPerformed
+        // TODO add your handling code here:
+        JInternalFramePersona jFramePersona = new JInternalFramePersona();
+        jFramePersona.setModoBuscador(true);
+        jFramePersona.setTitle("Buscador de Personas Internas");
+        jFramePersona.setTipoOrganizacionPersona("INTERNA");
+        jFramePersona.setVisible(true);
+        JDialogBuscador buscador = new JDialogBuscador(null, true);
+        buscador.setSize(jFramePersona.getSize());
+        //jFramePersona.setClosable(false);
+        jFramePersona.setResizable(false);
+        buscador.getjDesktopPaneBuscador().add(jFramePersona);
+        buscador.setVisible(true);
+        if (jFramePersona.getPersonaSeleccionada() != null) {
+            personaVisitada = jFramePersona.getPersonaSeleccionada();
+            if (personaVisitada != null) {
+                jTextFieldPersonaVisitada.setText(personaVisitada.getNombre() + ", " + personaVisitada.getApellido());
+            }
+            jComboBoxOrganizacionesInternas.setSelectedItem(personaVisitada.getOrganizacion());
+        }
+    }//GEN-LAST:event_jButtonBuscarPersonaVisitadaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -613,12 +704,17 @@ public class JDialogVisita extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabelDocNro;
+    private javax.swing.JLabel jLabelPersonaVisitada;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPanePersonasVisitadas;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextArea jTextAreaObservacion;
     private javax.swing.JTextField jTextFieldOrganizacion;
     private javax.swing.JTextField jTextFieldPersona;
+    private javax.swing.JTextField jTextFieldPersona1;
     private javax.swing.JTextField jTextFieldPersonaVisitada;
+    private javax.swing.JTree jTreePersonaVisitada;
     private java.util.List listMotivos;
     private java.util.List listOrganizacionInterna;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
