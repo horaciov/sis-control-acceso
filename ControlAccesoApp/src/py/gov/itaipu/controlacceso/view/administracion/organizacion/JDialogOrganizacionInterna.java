@@ -4,7 +4,10 @@
  */
 package py.gov.itaipu.controlacceso.view.administracion.organizacion;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
+import org.jdesktop.observablecollections.ObservableCollections;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.model.Organizacion;
 
@@ -16,6 +19,7 @@ public class JDialogOrganizacionInterna extends javax.swing.JDialog {
 
     private Organizacion organizacion;
     private Boolean readOnly;
+     private CRUDAction<Organizacion> organizacionAction;
     
     /**
      * Creates new form JDialogOrganizacionInterna
@@ -23,6 +27,7 @@ public class JDialogOrganizacionInterna extends javax.swing.JDialog {
     public JDialogOrganizacionInterna(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         readOnly=false;
+        organizacionAction = new CRUDAction<Organizacion>(new Organizacion());
         initComponents();        
     }
 
@@ -52,7 +57,9 @@ public class JDialogOrganizacionInterna extends javax.swing.JDialog {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
+        listaOrganizacionesInternas = ObservableCollections.observableList(organizacionAction.findByNamedQuery("Organizacion.findAllInterna"));
         jTextFieldOrganizacion = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaDescripcion = new javax.swing.JTextArea();
@@ -62,6 +69,12 @@ public class JDialogOrganizacionInterna extends javax.swing.JDialog {
         jButtonCancelar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
+        jLabelOrgPadre = new javax.swing.JLabel();
+        jComboBoxOrganizaciones = new javax.swing.JComboBox();
+
+        Organizacion o=new Organizacion();
+        o.setNombre("NINGUNA");
+        listaOrganizacionesInternas.add(0, o);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Organización Interna");
@@ -97,6 +110,11 @@ public class JDialogOrganizacionInterna extends javax.swing.JDialog {
 
         jLabel4.setText("Organización");
 
+        jLabelOrgPadre.setText("Organizacion Padre:");
+
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listaOrganizacionesInternas, jComboBoxOrganizaciones);
+        bindingGroup.addBinding(jComboBoxBinding);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -114,15 +132,18 @@ public class JDialogOrganizacionInterna extends javax.swing.JDialog {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3))
-                                .addGap(32, 32, 32)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
-                                    .addComponent(jTextFieldOrganizacion)))
-                            .addComponent(jSeparator1))))
+                            .addComponent(jSeparator1)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabelOrgPadre))
+                        .addGap(14, 14, 14)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBoxOrganizaciones, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                            .addComponent(jTextFieldOrganizacion))))
                 .addGap(63, 63, 63))
         );
         layout.setVerticalGroup(
@@ -140,12 +161,18 @@ public class JDialogOrganizacionInterna extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelOrgPadre)
+                    .addComponent(jComboBoxOrganizaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonGuardar)
                     .addComponent(jButtonCancelar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        bindingGroup.bind();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -161,12 +188,32 @@ public class JDialogOrganizacionInterna extends javax.swing.JDialog {
             return;
         CRUDAction<Organizacion> action=new CRUDAction<Organizacion>(organizacion);
         if(jTextFieldOrganizacion.getText()==null || jTextFieldOrganizacion.getText().equals("")){
-            JOptionPane.showMessageDialog(this, "El organizacion es obligatorio","Error",0);
+            JOptionPane.showMessageDialog(this, "El nombre de organizacion es obligatorio","Error",0);
             return;
         }
+        
+        
+        Organizacion o = (Organizacion) jComboBoxOrganizaciones.getSelectedItem();
+        if (o.getId()==null) {
+            //EN EL CASO DE NO TENER PADRE, SE VERIFICA QUE NO EXISTE YA ORGANIZACION PADRE
+            List<Organizacion> oPadre = organizacionAction.findByNamedQuery("Organizacion.findOrganizacionPadre");
+            if (oPadre.size()>0) {
+                //Ya Existe La organizacion Padre
+                JOptionPane.showMessageDialog(this, "Debe Seleccionar la Organizacion Padre","Error",0);
+            return;
+            }else{
+              organizacion.setNivelOrganigrama(1L);
+            }
+         }else{
+            organizacion.setOrganizacionPadre(o);
+            organizacion.setNivelOrganigrama(o.getNivelOrganigrama()+1);
+        }
+        
         organizacion.setNombre(jTextFieldOrganizacion.getText());
         organizacion.setDescripcion(jTextAreaDescripcion.getText());
         organizacion.setTipoOrganizacion("INTERNA");
+        
+        
         if(organizacion.getId()==null) {
             action.crear();
             JOptionPane.showMessageDialog(this, "Se ha creado con éxito","Info",1);
@@ -182,10 +229,14 @@ public class JDialogOrganizacionInterna extends javax.swing.JDialog {
         // TODO add your handling code here:
         jTextFieldOrganizacion.setText(organizacion.getNombre());
         jTextAreaDescripcion.setText(organizacion.getDescripcion());
+        if (organizacion.getOrganizacionPadre()!=null && organizacion.getOrganizacionPadre().getId()!=null) {
+            jComboBoxOrganizaciones.setSelectedItem(organizacion.getOrganizacionPadre());
+        }
         
         if(readOnly){
             jTextFieldOrganizacion.setEditable(false);
             jTextAreaDescripcion.setEditable(false);
+            jComboBoxOrganizaciones.setEnabled(false);
             jButtonGuardar.setVisible(false);
         }
     }//GEN-LAST:event_formWindowActivated
@@ -234,12 +285,16 @@ public class JDialogOrganizacionInterna extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonGuardar;
+    private javax.swing.JComboBox jComboBoxOrganizaciones;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabelOrgPadre;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextArea jTextAreaDescripcion;
     private javax.swing.JTextField jTextFieldOrganizacion;
+    private java.util.List listaOrganizacionesInternas;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
