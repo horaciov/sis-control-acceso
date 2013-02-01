@@ -59,8 +59,6 @@ public class JDialogVisita extends javax.swing.JDialog {
     private PersonaAction personaAction;
     private Persona persona;
     private Persona personaVisitada;    
-    private DefaultMutableTreeNode root;
-    DefaultTreeCellRenderer renderer;
     
 
     /**
@@ -247,7 +245,7 @@ public class JDialogVisita extends javax.swing.JDialog {
             }
         });
 
-        root = UtilesArbol.crearArbol("ORGANIGRAMA", true);
+        DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", true);
         jTreePersonaVisitada = new JTree(root);
         jTreePersonaVisitada.setCellRenderer(new CustomIconRenderer());
         jTreePersonaVisitada.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
