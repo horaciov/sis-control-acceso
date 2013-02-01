@@ -369,7 +369,7 @@
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTree()"/>
-            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="root = UtilesArbol.crearArbol(&quot;ORGANIGRAMA&quot;, true);&#xa;jTreePersonaVisitada = new JTree(root);&#xa;jTreePersonaVisitada.setCellRenderer(new CustomIconRenderer());"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="DefaultMutableTreeNode root = UtilesArbol.crearArbol(&quot;ORGANIGRAMA&quot;, true);&#xa;jTreePersonaVisitada = new JTree(root);&#xa;jTreePersonaVisitada.setCellRenderer(new CustomIconRenderer());"/>
           </AuxValues>
         </Component>
       </SubComponents>
