@@ -46,6 +46,12 @@ public class PersonaAction {
         return query.getResultList();
     }
 
+    public List<Persona> findByNumeroDocumento(String numeroDocumento) {
+        Query query = em.createQuery(" from Persona p where numeroDocumento = :numeroDoc ");
+        query.setParameter("numeroDoc", numeroDocumento.toUpperCase().toString());
+        return query.getResultList();
+    }
+    
     public List<Persona> findByParameters(Persona persona, Persona personaHasta, String tipoOrganizacion) {
         String sQuery = " from Persona p where 1=1";
         if (persona.getNumeroDocumento()!=null) {
