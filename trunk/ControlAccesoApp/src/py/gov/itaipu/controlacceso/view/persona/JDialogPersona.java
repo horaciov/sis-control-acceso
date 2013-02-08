@@ -6,6 +6,7 @@ package py.gov.itaipu.controlacceso.view.persona;
 
 import java.awt.Container;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Panel;
 import java.awt.image.BufferedImage;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,6 +52,7 @@ import py.gov.itaipu.controlacceso.view.JDialogBuscador;
 import py.gov.itaipu.controlacceso.view.administracion.organizacion.JInternalFrameOrganizacion;
 import py.gov.itaipu.controlacceso.view.administracion.organizacion.JInternalFrameOrganizacionExterna;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JDialogoNacionalidad;
+import py.gov.itaipu.controlacceso.view.visita.JDialogFotografia;
 
 /**
  *
@@ -66,6 +69,8 @@ public class JDialogPersona extends javax.swing.JDialog {
     private Boolean readOnly;
     private BufferedImage imagePersona;
     private ImageIcon iconoFoto;
+    private Image imgFotoPersona;
+    private File imgFotoPersonaFile;
 
     /**
      * Creates new form JDialogPersona
@@ -120,8 +125,9 @@ public class JDialogPersona extends javax.swing.JDialog {
         jComboBoxSexo = new javax.swing.JComboBox();
         jPanelFotografia = new javax.swing.JPanel()
         ;
-        jLabel3 = new javax.swing.JLabel();
         jButtonCargarFoto = new javax.swing.JButton();
+        jButtonTomarFoto = new javax.swing.JButton();
+        jLabelFoto = new javax.swing.JLabel();
         jPanelOrganizacion = new javax.swing.JPanel();
         jLabelOrganizacion = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -280,15 +286,12 @@ public class JDialogPersona extends javax.swing.JDialog {
                 .addGroup(jPanelDatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jFormattedTextFieldFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelFechaNac))
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
 
         jTabbedPanePersona.addTab("Datos Personales", jPanelDatosPersonales);
 
-        iconoFoto = new javax.swing.ImageIcon(getClass().getResource("/resource/img/sin_foto.jpg"));
-        jLabel3.setIcon(iconoFoto);
-
-        jButtonCargarFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/CAMARA.png"))); // NOI18N
+        jButtonCargarFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/carpeta_abierta.jpg"))); // NOI18N
         jButtonCargarFoto.setText("Cargar Fotografia");
         jButtonCargarFoto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -296,26 +299,41 @@ public class JDialogPersona extends javax.swing.JDialog {
             }
         });
 
+        jButtonTomarFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/CAMARA.png"))); // NOI18N
+        jButtonTomarFoto.setText("Tomar Fotografia");
+        jButtonTomarFoto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonTomarFotoActionPerformed(evt);
+            }
+        });
+
+        jLabelFoto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/sin_foto.jpg"))); // NOI18N
+
         javax.swing.GroupLayout jPanelFotografiaLayout = new javax.swing.GroupLayout(jPanelFotografia);
         jPanelFotografia.setLayout(jPanelFotografiaLayout);
         jPanelFotografiaLayout.setHorizontalGroup(
             jPanelFotografiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFotografiaLayout.createSequentialGroup()
-                .addContainerGap(207, Short.MAX_VALUE)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(186, 186, 186))
             .addGroup(jPanelFotografiaLayout.createSequentialGroup()
-                .addGap(360, 360, 360)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonTomarFoto)
+                .addGap(40, 40, 40)
                 .addComponent(jButtonCargarFoto)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(275, 275, 275))
+            .addGroup(jPanelFotografiaLayout.createSequentialGroup()
+                .addGap(240, 240, 240)
+                .addComponent(jLabelFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(216, Short.MAX_VALUE))
         );
         jPanelFotografiaLayout.setVerticalGroup(
             jPanelFotografiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFotografiaLayout.createSequentialGroup()
-                .addContainerGap(34, Short.MAX_VALUE)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButtonCargarFoto)
+                .addContainerGap()
+                .addComponent(jLabelFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 333, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelFotografiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonTomarFoto)
+                    .addComponent(jButtonCargarFoto))
                 .addContainerGap())
         );
 
@@ -427,7 +445,7 @@ public class JDialogPersona extends javax.swing.JDialog {
                 .addComponent(jLabelOrganizacion1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
 
         jTabbedPanePersona.addTab("Organizacion", jPanelOrganizacion);
@@ -461,7 +479,7 @@ public class JDialogPersona extends javax.swing.JDialog {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
 
         jTabbedPanePersona.addTab("Antecedentes", jPanelAntecedentes);
@@ -510,8 +528,8 @@ public class JDialogPersona extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPanePersona, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addComponent(jTabbedPanePersona)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonGuardar)
                     .addComponent(jButtonCancelar))
@@ -542,24 +560,38 @@ public class JDialogPersona extends javax.swing.JDialog {
         jComboBoxSexo.setSelectedItem(persona.getSexo().toUpperCase());
         jComboBoxNacionalidad.setSelectedItem(persona.getNacionalidad());
         jComboBoxTipoDocumento.setSelectedItem(persona.getTipoDocumento());
-
+        listAntecedentes.clear();
+        if (persona.getAntecedentes() != null) {
+                listAntecedentes.addAll(persona.getAntecedentes());
+        }
         //Cargar Fotografia
-        if (persona.getFotografia() != null) {
-            ByteArrayInputStream bis = new ByteArrayInputStream(persona.getFotografia());
+        if (persona.getFotografiaPath()!=null) {
             BufferedImage image;
-            try {
-                image = ImageIO.read(bis);
-                iconoFoto = new javax.swing.ImageIcon(image);
-                jLabel3.setIcon(iconoFoto);
+             try {
+                String rutaImagen = persona.getFotografiaPath();
+                File fileImagen = new File(rutaImagen) ;
+                image = ImageIO.read(fileImagen);
+                ImageIcon iconoFoto = new javax.swing.ImageIcon(image);
+                jLabelFoto.setIcon(iconoFoto);
             } catch (IOException ex) {
                 Logger.getLogger(JDialogPersona.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-            listAntecedentes.clear();
-            if (persona.getAntecedentes() != null) {
-                listAntecedentes.addAll(persona.getAntecedentes());
-            }
         }
+        
+        
+//        if (persona.getFotografia() != null) {
+//            ByteArrayInputStream bis = new ByteArrayInputStream(persona.getFotografia());
+//            BufferedImage image;
+//            try {
+//                image = ImageIO.read(bis);
+//                iconoFoto = new javax.swing.ImageIcon(image);
+//                jLabelFoto.setIcon(iconoFoto);
+//            } catch (IOException ex) {
+//                Logger.getLogger(JDialogPersona.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//
+//            
+//        }
 
 
 
@@ -593,6 +625,7 @@ public class JDialogPersona extends javax.swing.JDialog {
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
         if (validacionesNuevaPersona()) {
+            
             personaAction.setPersona(persona);
             persona.setApellido(jTextFieldApellido.getText());
             persona.setNombre(jTextFieldNombre.getText());
@@ -602,7 +635,9 @@ public class JDialogPersona extends javax.swing.JDialog {
             persona.setSexo(jComboBoxSexo.getSelectedItem().toString());
             persona.setNacionalidad((Nacionalidad) listNacionalidades.get(jComboBoxNacionalidad.getSelectedIndex()));
             persona.setTipoDocumento((TipoDocumento) listTipoDocumento.get(jComboBoxTipoDocumento.getSelectedIndex()));
-
+            guardarImagen(imgFotoPersona, imgFotoPersonaFile);
+            
+            
             if (persona.getId() != null) {
                 personaAction.guardar();
                 JOptionPane.showMessageDialog(this, "Se ha guardado con exito los nuevos Datos de Persona", "Info", 1);
@@ -615,7 +650,6 @@ public class JDialogPersona extends javax.swing.JDialog {
             or.getPersonas().add(persona);
             organizacionAction.setEntity(or);
             organizacionAction.guardar();
-            
             
             this.dispose();
         }
@@ -639,7 +673,7 @@ public class JDialogPersona extends javax.swing.JDialog {
         } else if (persona.getOrganizacion()==null || persona.getOrganizacion().getId()==null){
             JOptionPane.showMessageDialog(null, "Seleccionar la Organizacion de la Persona", "Error", JOptionPane.ERROR_MESSAGE);
             resultado = false;
-        }
+        } 
         return resultado;
     }
 
@@ -662,6 +696,7 @@ public class JDialogPersona extends javax.swing.JDialog {
             jComboBoxTipoDocumento.setEnabled(false);
             jButtonGuardar.setVisible(false);
             jButtonCargarFoto.setVisible(false);
+            jButtonTomarFoto.setVisible(false);
         }
         if (persona.getId() == null) {
             jPanelAntecedentes.setVisible(false);
@@ -683,25 +718,22 @@ public class JDialogPersona extends javax.swing.JDialog {
         
         int returnVal = chooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            RandomAccessFile f;
-            byte[] fotografiaByte = null;
+                imgFotoPersonaFile = chooser.getSelectedFile();
+                
+            ////LA FOTOGRAFIA YA NO SE GUARDA EN LA BD. SE GUARDA EL ARCHIVO Y EL PATH EN EL PROYECTO
+            //            RandomAccessFile f;
+            // byte[] fotografiaByte = null;
+            // f = new RandomAccessFile(chooser.getSelectedFile(), "r");
+//                fotografiaByte = new byte[(int) f.length()];
+//                f.read(fotografiaByte);
+//                persona.setFotografia(fotografiaByte);
 
-            try {
-                f = new RandomAccessFile(chooser.getSelectedFile(), "r");
-                fotografiaByte = new byte[(int) f.length()];
-                f.read(fotografiaByte);
-                persona.setFotografia(fotografiaByte);
-
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(JDialogPersona.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(JDialogPersona.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            
 
             try {
                 BufferedImage image = ImageIO.read(chooser.getSelectedFile());
                 iconoFoto = new javax.swing.ImageIcon(image);
-                jLabel3.setIcon(iconoFoto);
+                jLabelFoto.setIcon(iconoFoto);
             } catch (IOException ex) {
                 Logger.getLogger(JDialogPersona.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -725,7 +757,63 @@ public class JDialogPersona extends javax.swing.JDialog {
         persona.setOrganizacion(jFrameOrganizacion.getOrganizacionSeleccionada());
         jTextFieldOrganizacion.setText(persona.getOrganizacion().getNombre());}
     }//GEN-LAST:event_jButtonBuscarOrganizacionActionPerformed
+
+    private void jButtonTomarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTomarFotoActionPerformed
+        // TODO add your handling code here:
+         JDialogFotografia dialogFotografia = new JDialogFotografia(null, rootPaneCheckingEnabled, "CAPTURAR");
+         dialogFotografia.setPersona(persona);
+         dialogFotografia.setVisible(true);        // TODO add your handling code here:
+         if (dialogFotografia.isCapturado()) {
+             imgFotoPersona = dialogFotografia.getImg();
+             mostrarFotoPersona();
+        }
+    }//GEN-LAST:event_jButtonTomarFotoActionPerformed
+    
+    private void mostrarFotoPersona(){
+         
+                //REGULAR TAMAÑO    
+                Image imageScale =  imgFotoPersona.getScaledInstance(530, 310, imgFotoPersona.SCALE_FAST);
+//                ImageIcon iconoFoto = new javax.swing.ImageIcon(imageScale);
+                ImageIcon iconoFoto = new javax.swing.ImageIcon(imgFotoPersona);
+                jLabelFoto.setIcon(iconoFoto);
+                           
+    }
+    
+     private void guardarImagen(Image img, File file) {
+         String string = "src/resource/fotografias/"+persona.getNumeroDocumento()+".jpg";
+         if (img!=null) {
+            try {
+                    int w = img.getWidth(null);
+                    int h = img.getHeight(null);
+                    BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+                    Graphics2D g2 = bi.createGraphics();
+                    g2.drawImage(img, 0, 0, null);
+                    g2.dispose();
+                    String fileType = string.substring(string.indexOf('.') + 1);
+                    ImageIO.write(bi, fileType, new File(string));
+                    persona.setFotografiaPath(string);
+
+            } catch (Exception e) {
+                       
+            }
+       }else if(imgFotoPersonaFile!=null){
+             try {
+                 BufferedImage bi = ImageIO.read(imgFotoPersonaFile);
+                 String fileType = string.substring(string.indexOf('.') + 1);
+                 ImageIO.write(bi, fileType, new File(string));
+                 persona.setFotografiaPath(string);
+                 
+             } catch (IOException ex) {
+                 Logger.getLogger(JDialogPersona.class.getName()).log(Level.SEVERE, null, ex);
+             }
+       }
+         
+         
+         
+         
+    }
     /**
+     * 
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -774,6 +862,7 @@ public class JDialogPersona extends javax.swing.JDialog {
     private javax.swing.JButton jButtonGuardar;
     private javax.swing.JButton jButtonNuevoNacionalidad;
     private javax.swing.JButton jButtonNuevoTipoDoc;
+    private javax.swing.JButton jButtonTomarFoto;
     private javax.swing.JComboBox jComboBoxEstadoCivil;
     private javax.swing.JComboBox jComboBoxNacionalidad;
     private javax.swing.JComboBox jComboBoxSexo;
@@ -781,11 +870,11 @@ public class JDialogPersona extends javax.swing.JDialog {
     private javax.swing.JFormattedTextField jFormattedTextFieldFechaNac;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelApe;
     private javax.swing.JLabel jLabelEstCiv;
     private javax.swing.JLabel jLabelEstCiv1;
     private javax.swing.JLabel jLabelFechaNac;
+    private javax.swing.JLabel jLabelFoto;
     private javax.swing.JLabel jLabelNAcion;
     private javax.swing.JLabel jLabelNomb;
     private javax.swing.JLabel jLabelNroD;

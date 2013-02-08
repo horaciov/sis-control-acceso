@@ -46,6 +46,7 @@ public class JDialogFotografia extends javax.swing.JDialog {
     Player player;
     Component videoScreen;
     Persona persona;
+    Image img;
     
     
     
@@ -150,22 +151,37 @@ public class JDialogFotografia extends javax.swing.JDialog {
 
     private void jButtonCapturarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCapturarActionPerformed
         // TODO add your handling code here:
-        try {
-            FrameGrabbingControl fgc = (FrameGrabbingControl) player.getControl("javax.media.control.FrameGrabbingControl");
-            Buffer buf = fgc.grabFrame();//grab the current frame on video screen
-            BufferToImage btoi = new BufferToImage((VideoFormat) buf.getFormat());
-            Image img = btoi.createImage(buf);
-            String pathFoto = "src/resource/fotografias/"+persona.getNumeroDocumento()+".jpg";
-            saveImagetoFile(img, pathFoto);
-            actualizarFotoPersona(pathFoto);
+        
+        
+        
+            try {
+                FrameGrabbingControl fgc = (FrameGrabbingControl) player.getControl("javax.media.control.FrameGrabbingControl");
+                Buffer buf = fgc.grabFrame();//grab the current frame on video screen
+                BufferToImage btoi = new BufferToImage((VideoFormat) buf.getFormat());
+                img = btoi.createImage(buf);
+                if (persona.getId()!=null) {
+                    // SI ES UNA ACTUALIZACION DE LA FOTO DE LA PERSONA
+                    String pathFoto = "src/resource/fotografias/"+persona.getNumeroDocumento()+".jpg";
+                    saveImagetoFile(img, pathFoto);
+                    actualizarFotoPersona(pathFoto);
+                    
+                }else{
+                    // SI ES LA CREACION DE UNA PERSONA NUEVA  SOLO SETEAMOS LA FOTO en la variable img.
+                }    
+            } catch (Exception e) {
+            
+            }
+            
             capturado = true;
             player.close();
             this.dispose();
-        } catch (Exception e) {
-        }
          
 
     }//GEN-LAST:event_jButtonCapturarActionPerformed
+
+    public Image getImg() {
+        return img;
+    }
 
     private void actualizarFotoPersona(String pathFoto){
             persona.setFotografiaPath(pathFoto);
@@ -227,6 +243,7 @@ public class JDialogFotografia extends javax.swing.JDialog {
             g2.dispose();
             String fileType = string.substring(string.indexOf('.') + 1);
             ImageIO.write(bi, fileType, new File(string));
+            
         } catch (Exception e) {
         }
     }
