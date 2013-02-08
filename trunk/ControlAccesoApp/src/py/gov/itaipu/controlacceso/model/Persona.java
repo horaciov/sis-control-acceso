@@ -17,7 +17,7 @@ import javax.persistence.Temporal;
 
 /**
  *
- * @author vimartih
+ * @author fboy
  */
 @Entity
 public class Persona implements Serializable{
