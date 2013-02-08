@@ -665,6 +665,10 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
             //Parametros
             Map<String, Object> parametros = new HashMap<String, Object>();
             parametros.put("idVis", (Object) v.getId());
+            //Paso el full path del proyecto al reporte para obtener las imagenes.
+            java.io.File file = new java.io.File("");   
+            String abspath=file.getAbsolutePath()+"/";
+            parametros.put("pathImagen", (Object) abspath);
             //                //Fotografia
             //                ByteArrayInputStream bis = new ByteArrayInputStream(visita.getPersona().getFotografia());
             //                InputStream iS = bis;

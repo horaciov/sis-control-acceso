@@ -45,7 +45,7 @@ public class UtilesArbol {
                     ///SE AGREGAN LAS PERSONAS DEPENDIENTES DE CADA DEPARTAMENTO
                     List<Persona> listaPersonasDepto = new ArrayList<Persona>();
                     listaPersonasDepto = organizacion.getPersonas();
-                    if (listaPersonasDepto.size()>0) {
+                    if (listaPersonasDepto!=null && listaPersonasDepto.size()>0) {
                         for (int j = 0; j < listaPersonasDepto.size(); j++) {
                             Persona persona1 = listaPersonasDepto.get(j);
                             node = new DefaultMutableTreeNode(persona1,false);
