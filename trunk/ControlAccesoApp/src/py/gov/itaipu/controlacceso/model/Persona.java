@@ -33,6 +33,7 @@ public class Persona implements Serializable{
     private String sexo;
     private String estadoCivil;
     private Organizacion organizacion;
+    private String fotografiaPath;
     private byte[] fotografia;
     private List<Antecedente> antecedentes;
     private List<Visita> visitasRealizadas;
@@ -135,6 +136,16 @@ public class Persona implements Serializable{
     public void setEstadoCivil(String estadoCivil) {
         this.estadoCivil = estadoCivil;
     }
+
+    public String getFotografiaPath() {
+        return fotografiaPath;
+    }
+
+    public void setFotografiaPath(String fotografiaPath) {
+        this.fotografiaPath = fotografiaPath;
+    }
+    
+    
 
     @OneToMany(cascade= CascadeType.ALL,mappedBy="persona")
     public List<Antecedente> getAntecedentes() {

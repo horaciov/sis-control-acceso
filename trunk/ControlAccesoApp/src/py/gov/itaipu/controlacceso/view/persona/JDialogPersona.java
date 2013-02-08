@@ -610,6 +610,13 @@ public class JDialogPersona extends javax.swing.JDialog {
                 personaAction.crear();
                 JOptionPane.showMessageDialog(this, "Se ha creado con exito nueva Persona", "Info", 1);
             }
+            //ACTUALIZO LA PERSONA AGREGADA EN LA LISTA DE LA ORGANIZACION, PARA REFLEJAR EN EN EL ARBOL DE VISITAS
+            Organizacion or = persona.getOrganizacion();
+            or.getPersonas().add(persona);
+            organizacionAction.setEntity(or);
+            organizacionAction.guardar();
+            
+            
             this.dispose();
         }
 

@@ -80,8 +80,8 @@ public class JDialogVisita extends javax.swing.JDialog {
         organizacionAction = new CRUDAction<Organizacion>(new Organizacion());
         personaAction = new PersonaAction(new Persona());
         areaVisitada = new Organizacion();
-
         initComponents();
+        jButtonActualizarFotografia.setVisible(false);
 
     }
     
@@ -164,6 +164,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         jLabel9 = new javax.swing.JLabel();
         jTextFieldAreaVisitada = new javax.swing.JTextField();
         jLabelPersonaVisitada1 = new javax.swing.JLabel();
+        jButtonTomarFotografia = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registro de visita");
@@ -298,6 +299,11 @@ public class JDialogVisita extends javax.swing.JDialog {
         jLabelFotografia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/sin_foto_small.jpg"))); // NOI18N
         jLabelFotografia.setToolTipText("Fotografia");
         jLabelFotografia.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jLabelFotografia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelFotografiaMouseClicked(evt);
+            }
+        });
 
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("Fotografia");
@@ -307,6 +313,15 @@ public class JDialogVisita extends javax.swing.JDialog {
         jLabelPersonaVisitada1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabelPersonaVisitada1.setForeground(new java.awt.Color(0, 0, 153));
         jLabelPersonaVisitada1.setText("Persona Visitada:");
+
+        jButtonTomarFotografia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/CAMARA.png"))); // NOI18N
+        jButtonTomarFotografia.setToolTipText("Actualizar Fotografia");
+        jButtonTomarFotografia.setEnabled(false);
+        jButtonTomarFotografia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonTomarFotografiaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -325,7 +340,7 @@ public class JDialogVisita extends javax.swing.JDialog {
                             .addComponent(jScrollPanePersonasVisitadas, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
-                                .addComponent(jLabelPersonaVisitada1, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE)))
+                                .addComponent(jLabelPersonaVisitada1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -333,46 +348,46 @@ public class JDialogVisita extends javax.swing.JDialog {
                                     .addComponent(jButtonGuardar)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(jButtonCancelar))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addGap(9, 9, 9)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel6)
-                                            .addComponent(jLabel3)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                        .addComponent(jLabel5)
-                                                        .addGap(25, 25, 25)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                                .addComponent(jTextFieldOrganizacion, javax.swing.GroupLayout.Alignment.LEADING)
-                                                                .addComponent(jTextFieldPersona, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                            .addComponent(jTextFieldPersonaVisitada, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)))
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addGap(108, 108, 108)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                            .addComponent(jComboBoxMotivo, 0, 318, Short.MAX_VALUE)
-                                                            .addComponent(jTextFieldAreaVisitada)))
-                                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING))
-                                                .addGap(29, 29, 29)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(jButtonBuscarPersonaVisitada, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                .addComponent(jButtonLimpiarPersonaVisitada, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                            .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(jButtonBuscarPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addComponent(jButtonLimpiarPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addComponent(jButtonActualizarFotografia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                            .addComponent(jLabelFotografia, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                        .addGap(0, 0, Short.MAX_VALUE))))))
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 652, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(9, 9, 9)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel6)
+                                        .addComponent(jLabel3)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                    .addComponent(jLabel5)
+                                                    .addGap(25, 25, 25)
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                            .addComponent(jTextFieldOrganizacion, javax.swing.GroupLayout.Alignment.LEADING)
+                                                            .addComponent(jTextFieldPersona, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addComponent(jTextFieldPersonaVisitada, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)))
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addGap(108, 108, 108)
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(jComboBoxMotivo, 0, 318, Short.MAX_VALUE)
+                                                        .addComponent(jTextFieldAreaVisitada)))
+                                                .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING))
+                                            .addGap(29, 29, 29)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                            .addComponent(jButtonBuscarPersonaVisitada, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                            .addComponent(jButtonLimpiarPersonaVisitada, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                            .addComponent(jButtonBuscarPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                            .addComponent(jButtonLimpiarPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                            .addComponent(jButtonTomarFotografia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                            .addComponent(jButtonActualizarFotografia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addComponent(jLabelFotografia, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addGap(0, 0, Short.MAX_VALUE))))))
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addGroup(layout.createSequentialGroup()
@@ -384,8 +399,11 @@ public class JDialogVisita extends javax.swing.JDialog {
                                                 .addComponent(jLabel2))
                                             .addGap(123, 123, 123)))
                                     .addComponent(jTextFieldDocumentoPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabelPersonaVisitada, javax.swing.GroupLayout.PREFERRED_SIZE, 653, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(27, Short.MAX_VALUE))))
+                            .addComponent(jLabelPersonaVisitada, javax.swing.GroupLayout.PREFERRED_SIZE, 653, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(97, 97, 97)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 652, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -412,8 +430,9 @@ public class JDialogVisita extends javax.swing.JDialog {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jButtonBuscarPersona, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButtonLimpiarPersona, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButtonActualizarFotografia, javax.swing.GroupLayout.Alignment.LEADING)))
-                        .addGap(4, 4, 4)
+                                .addComponent(jButtonActualizarFotografia, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addComponent(jButtonTomarFotografia))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -421,7 +440,7 @@ public class JDialogVisita extends javax.swing.JDialog {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jTextFieldOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel7)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButtonBuscarPersonaVisitada)
                             .addComponent(jButtonLimpiarPersonaVisitada)
@@ -535,6 +554,12 @@ public class JDialogVisita extends javax.swing.JDialog {
             //Parametros
             Map<String, Object> parametros = new HashMap<String, Object>();
             parametros.put("idVis", (Object) visita.getId());
+            //Paso el full path del proyecto
+            java.io.File file = new java.io.File("");   //Dummy file
+            String abspath=file.getAbsolutePath()+"/";
+            parametros.put("pathImagen", (Object) abspath);
+            
+            
 //                //Fotografia
 //                ByteArrayInputStream bis = new ByteArrayInputStream(visita.getPersona().getFotografia());
 //                InputStream iS = bis;
@@ -598,7 +623,15 @@ public class JDialogVisita extends javax.swing.JDialog {
         if (jFramePersona.getPersonaSeleccionada() != null) {
             persona = jFramePersona.getPersonaSeleccionada();
             if (persona != null) {
+                 jButtonTomarFotografia.setEnabled(true);
+                 //Cargar Fotografia
+                 if (persona.getFotografiaPath() != null && !persona.getFotografiaPath().equals("")) {
+                     mostrarFotoPersona(); 
+                 }else{
+                     jLabelFotografia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/sin_foto_small.jpg")));
+                 }
                 jTextFieldPersona.setText(persona.getNombre() + ", " + persona.getApellido());
+                jTextFieldDocumentoPersona.setText(persona.getNumeroDocumento());
             }
             jTextFieldOrganizacion.setText(persona.getOrganizacion().getNombre());
 
@@ -629,7 +662,7 @@ public class JDialogVisita extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Debe Elegir una Persona", "Error", 0);
             return;
         }
-        File input;
+        
         JFileChooser chooser = new JFileChooser();
         //Filtro De Extensiones
         FileFilterExtension filtroExtension = new FileFilterExtension("JPG, JPEG, PNG", new String[] { "JPG", "JPEG", "PNG" });
@@ -703,35 +736,27 @@ public class JDialogVisita extends javax.swing.JDialog {
                         //CARGAR DATOS DE LA PERSONA ENCONTRADA
                         jTextFieldPersona.setText(persona.getNombre() + ", " + persona.getApellido());
                         jTextFieldOrganizacion.setText(persona.getOrganizacion().getNombre());
+                        jButtonTomarFotografia.setEnabled(true);
                         
                         //Cargar Fotografia
-                        if (persona.getFotografia() != null) {
-                            ByteArrayInputStream bis = new ByteArrayInputStream(persona.getFotografia());
-                            BufferedImage image;
-                            
-                            try {
-                                image = ImageIO.read(bis);
-                                //REGULAR TAMAÑO    
-                                Image imageScale =  image.getScaledInstance(150, 100, image.SCALE_FAST);
-                                ImageIcon iconoFoto = new javax.swing.ImageIcon(imageScale);
-                                
-                                jLabelFotografia.setIcon(iconoFoto);
-                            } catch (IOException ex) {
-                                Logger.getLogger(JDialogPersona.class.getName()).log(Level.SEVERE, null, ex);
-                            }
+                        if (persona.getFotografiaPath() != null && !persona.getFotografiaPath().equals("")) {
+                            mostrarFotoPersona();
                         }
 
                     }else{
                         jTextFieldPersona.setText("");
                         jTextFieldOrganizacion.setText("");
                         jLabelFotografia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/sin_foto_small.jpg")));
+                        jButtonTomarFotografia.setEnabled(false);
                         JOptionPane.showMessageDialog(this, "La persona no existe, debe registrarla.", "INFORMATION", 0);
                     }
                 }else{
                     JOptionPane.showMessageDialog(this, "INGRESE NRO DE DOCUMENTO.", "Error", 0);
                     jTextFieldPersona.setText("");
                     jTextFieldOrganizacion.setText("");
+                    jButtonTomarFotografia.setEnabled(false);
                     jLabelFotografia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/sin_foto_small.jpg")));
+                    
                 }
                 
         }
@@ -762,38 +787,59 @@ public class JDialogVisita extends javax.swing.JDialog {
                         //CARGAR DATOS DE LA PERSONA ENCONTRADA
                         jTextFieldPersona.setText(persona.getNombre() + ", " + persona.getApellido());
                         jTextFieldOrganizacion.setText(persona.getOrganizacion().getNombre());
-                        
+                        jButtonTomarFotografia.setEnabled(true);
                         //Cargar Fotografia
-                        if (persona.getFotografia() != null) {
-                            ByteArrayInputStream bis = new ByteArrayInputStream(persona.getFotografia());
-                            BufferedImage image;
-                            
-                            try {
-                                image = ImageIO.read(bis);
-                                //REGULAR TAMAÑO    
-                                Image imageScale =  image.getScaledInstance(150, 100, image.SCALE_FAST);
-                                ImageIcon iconoFoto = new javax.swing.ImageIcon(imageScale);
-                                
-                                jLabelFotografia.setIcon(iconoFoto);
-                            } catch (IOException ex) {
-                                Logger.getLogger(JDialogPersona.class.getName()).log(Level.SEVERE, null, ex);
-                            }
+                        if (persona.getFotografiaPath() != null && !persona.getFotografiaPath().equals("")) {
+                           mostrarFotoPersona(); 
                         }
 
                     }else{
                         jTextFieldPersona.setText("");
                         jTextFieldOrganizacion.setText("");
                         jLabelFotografia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/sin_foto_small.jpg")));
+                        
+                        jButtonTomarFotografia.setEnabled(false);
                         JOptionPane.showMessageDialog(this, "La persona no existe, debe registrarla.", "INFORMATION", 0);
                     }
                 }else{
                     jTextFieldPersona.setText("");
                     jTextFieldOrganizacion.setText("");
+                    jButtonTomarFotografia.setEnabled(false);
                     jLabelFotografia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/sin_foto_small.jpg")));
                 }
             
     }//GEN-LAST:event_jTextFieldDocumentoPersonaFocusLost
-
+    private void mostrarFotoPersona(){
+         BufferedImage image;
+             try {
+                String rutaImagen = persona.getFotografiaPath();
+                File fileImagen = new File(rutaImagen) ;
+                image = ImageIO.read(fileImagen);
+                //REGULAR TAMAÑO    
+                Image imageScale =  image.getScaledInstance(150, 100, image.SCALE_FAST);
+                ImageIcon iconoFoto = new javax.swing.ImageIcon(imageScale);
+                jLabelFotografia.setIcon(iconoFoto);
+            } catch (IOException ex) {
+                Logger.getLogger(JDialogPersona.class.getName()).log(Level.SEVERE, null, ex);
+            }
+             ///CARGAR FOTO DESDE LA BASE DE DATOS SUPLANTADO POR LECTURA DESDE ARCHIVO DIRECTO
+//                            ByteArrayInputStream bis = new ByteArrayInputStream(persona.getFotografia());
+//                            BufferedImage image;
+//                            
+//                            try {
+//                                image = ImageIO.read(bis);
+//                                //REGULAR TAMAÑO    
+//                                Image imageScale =  image.getScaledInstance(150, 100, image.SCALE_FAST);
+//                                ImageIcon iconoFoto = new javax.swing.ImageIcon(imageScale);
+//                                
+//                                jLabelFotografia.setIcon(iconoFoto);
+//                            } catch (IOException ex) {
+//                                Logger.getLogger(JDialogPersona.class.getName()).log(Level.SEVERE, null, ex);
+//                            }
+//             
+    }
+    
+    
     private void jButtonBuscarPersonaVisitadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarPersonaVisitadaActionPerformed
         // TODO add your handling code here:
         JInternalFramePersona jFramePersona = new JInternalFramePersona();
@@ -815,6 +861,24 @@ public class JDialogVisita extends javax.swing.JDialog {
             jTextFieldAreaVisitada.setText(personaVisitada.getOrganizacion().getNombre());
         }
     }//GEN-LAST:event_jButtonBuscarPersonaVisitadaActionPerformed
+
+    private void jButtonTomarFotografiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTomarFotografiaActionPerformed
+        JDialogFotografia dialogFotografia = new JDialogFotografia(null, rootPaneCheckingEnabled, "CAPTURAR");
+        dialogFotografia.setPersona(persona);
+        dialogFotografia.setVisible(true);        // TODO add your handling code here:
+        if (dialogFotografia.isCapturado()) {
+             mostrarFotoPersona();
+        }
+    }//GEN-LAST:event_jButtonTomarFotografiaActionPerformed
+
+    private void jLabelFotografiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelFotografiaMouseClicked
+        // TODO add your handling code here:
+         if(evt.getClickCount()==2 && persona != null && !persona.getFotografiaPath().equals("")){ 
+             JDialogFotografia dialogFotografia = new JDialogFotografia(null, rootPaneCheckingEnabled, "VER");
+                dialogFotografia.setPersona(persona);
+                dialogFotografia.setVisible(true);
+         }
+    }//GEN-LAST:event_jLabelFotografiaMouseClicked
 
      private BufferedImage resizeImage(BufferedImage originalImage, int width, int height, int type) throws IOException {  
         BufferedImage resizedImage = new BufferedImage(width, height, type);  
@@ -873,6 +937,7 @@ public class JDialogVisita extends javax.swing.JDialog {
     private javax.swing.JButton jButtonGuardar;
     private javax.swing.JButton jButtonLimpiarPersona;
     private javax.swing.JButton jButtonLimpiarPersonaVisitada;
+    private javax.swing.JButton jButtonTomarFotografia;
     private javax.swing.JComboBox jComboBoxMotivo;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
