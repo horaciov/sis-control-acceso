@@ -16,53 +16,47 @@ import py.gov.itaipu.controlacceso.model.Persona;
  * @author fboy
  */
 public class UtilesArbol {
-    
-    
 
     public UtilesArbol() {
-        
     }
-     public static DefaultMutableTreeNode crearArbol (String tituloArbol,boolean incluyePersonas){
-            DefaultMutableTreeNode root = new DefaultMutableTreeNode(tituloArbol);
-            CRUDAction<Organizacion> organizacionAction = new CRUDAction<Organizacion>(new Organizacion());
-            DefaultMutableTreeNode node;
-            
-            List<Organizacion> listaOrganizacionesArbolAux = new ArrayList<Organizacion>();
-            
-            //SE AGREGAN TODAS LAS ORGANIZACIONES AL ARBOL
-            listaOrganizacionesArbolAux = organizacionAction.findByNamedQuery("Organizacion.findOrganizacionPadre");
-            Organizacion orgPadre = listaOrganizacionesArbolAux.get(0);
-            node = new DefaultMutableTreeNode(orgPadre,true);
-            root.add(node);
-            agregarhijos(node,incluyePersonas);
-            return root;
-     }
-     private static void agregarhijos(DefaultMutableTreeNode nodo, boolean incluyePersonas){
-        if(incluyePersonas) {
-                 agregarPersonas(nodo);
+
+    public static DefaultMutableTreeNode crearArbol(String tituloArbol, boolean incluyePersonas) {
+        DefaultMutableTreeNode root = new DefaultMutableTreeNode(tituloArbol);
+        CRUDAction<Organizacion> organizacionAction = new CRUDAction<Organizacion>(new Organizacion());
+        DefaultMutableTreeNode node;
+
+        List<Organizacion> listaOrganizacionesArbolAux = new ArrayList<Organizacion>();
+
+        //SE AGREGAN TODAS LAS ORGANIZACIONES AL ARBOL
+        listaOrganizacionesArbolAux = organizacionAction.findByNamedQuery("Organizacion.findOrganizacionPadre");
+        Organizacion orgPadre = listaOrganizacionesArbolAux.get(0);
+        node = new DefaultMutableTreeNode(orgPadre, true);
+        root.add(node);
+        agregarhijos(node, incluyePersonas);
+        return root;
+    }
+
+    private static void agregarhijos(DefaultMutableTreeNode nodo, boolean incluyePersonas) {
+        if (incluyePersonas) {
+            agregarPersonas(nodo);
         }
         DefaultMutableTreeNode node;
         Organizacion org = (Organizacion) nodo.getUserObject();
         List<Organizacion> hijas = org.getOrganizacionesHijas();
-         for (Organizacion organizacion : hijas) {
-             node = new DefaultMutableTreeNode(organizacion,true);
-             nodo.add(node);
-              agregarhijos(node,incluyePersonas);
-         }
-     }
-     private static void agregarPersonas(DefaultMutableTreeNode nodo){
+        for (Organizacion organizacion : hijas) {
+            node = new DefaultMutableTreeNode(organizacion, true);
+            nodo.add(node);
+            agregarhijos(node, incluyePersonas);
+        }
+    }
+
+    private static void agregarPersonas(DefaultMutableTreeNode nodo) {
         DefaultMutableTreeNode node;
         Organizacion org = (Organizacion) nodo.getUserObject();
         List<Persona> personas = org.getPersonas();
-         for (Persona persona : personas) {
-             node = new DefaultMutableTreeNode(persona,true);
-             nodo.add(node);
-         }
-     }
-    
-    
-    
-    
-    
-    
+        for (Persona persona : personas) {
+            node = new DefaultMutableTreeNode(persona, true);
+            nodo.add(node);
+        }
+    }
 }
