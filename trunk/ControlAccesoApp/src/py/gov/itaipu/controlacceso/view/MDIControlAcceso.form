@@ -7,6 +7,13 @@
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="ObservableCollections.observableList(visitaAction.findVisitasPendientes())"/>
       </AuxValues>
     </Component>
+    <Component class="javax.swing.ButtonGroup" name="buttonGroupExtranjero">
+    </Component>
+    <Component class="java.util.List" name="listTipoDocumento">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="tipoDocAction.findAll()"/>
+      </AuxValues>
+    </Component>
     <Menu class="javax.swing.JMenuBar" name="menuBar">
       <Events>
         <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menuBarMouseEntered"/>
@@ -218,21 +225,9 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
                   <Component id="desktopPane" alignment="0" max="32767" attributes="0"/>
-              </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jPanel2" min="-2" pref="260" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabelVisitasPorEmpleado" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabelPersonaVisitada4" min="-2" pref="271" max="-2" attributes="0"/>
-                          <Component id="jSeparator4" alignment="0" min="-2" pref="237" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -242,19 +237,9 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="10" max="32767" attributes="0"/>
+              <Component id="desktopPane" min="-2" pref="587" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="desktopPane" max="32767" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanel2" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jLabelPersonaVisitada4" min="-2" pref="26" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jSeparator4" min="-2" pref="10" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jLabelVisitasPorEmpleado" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="224" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -269,35 +254,54 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                      <Component id="jSeparator1" max="32767" attributes="0"/>
-                      <Group type="102" attributes="0">
-                          <Component id="jLabelDocNro" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jTextFieldDocumentoPersona" min="-2" pref="439" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="jLabelPersonaVisitada1" min="-2" pref="653" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="61" max="32767" attributes="0"/>
+                          <Component id="jLabelPersonaVisitada2" pref="456" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
-                          <Component id="jLabelDocNro1" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jTextFieldNroTicket" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jSeparator1" alignment="0" min="-2" pref="424" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jLabelDocNro1" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="jTextFieldNroTicket" pref="282" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Component id="jSeparator5" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jLabelPersonaVisitada1" alignment="0" max="32767" attributes="0"/>
+                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jRadioButtonNacional" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="jRadioButtonExtranjero" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="jLabelTipoDeDoc" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="jComboBoxTipoDoc" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabelDocNro" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+                                          <Component id="jTextFieldDocumentoPersona" min="-2" pref="275" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <Component id="jLabelVisitasPorEmpleado" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelPersonaVisitada4" min="-2" pref="271" max="-2" attributes="0"/>
+                              <Component id="jSeparator4" alignment="0" min="-2" pref="237" max="-2" attributes="0"/>
+                              <Component id="jLabelVisitasPorEmpleado1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelVisitasPorEmpleado2" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
-                      <Component id="jSeparator2" max="32767" attributes="0"/>
                   </Group>
-              </Group>
-              <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                      <Component id="jLabelPersonaVisitada2" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="714" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="jLabelPersonaVisitada3" min="-2" pref="271" max="-2" attributes="0"/>
+                      <Component id="jSeparator3" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" alignment="0" pref="907" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -306,34 +310,52 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabelPersonaVisitada1" min="-2" pref="26" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jTextFieldNroTicket" alignment="1" min="-2" pref="58" max="-2" attributes="0"/>
-                              <Component id="jLabelDocNro1" alignment="1" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jTextFieldDocumentoPersona" alignment="1" min="-2" pref="58" max="-2" attributes="0"/>
-                              <Component id="jLabelDocNro" alignment="1" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabelPersonaVisitada2" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                      <Component id="jLabelPersonaVisitada3" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-              </Group>
-              <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                      <Component id="jLabelPersonaVisitada2" min="-2" pref="26" max="-2" attributes="0"/>
-                      <EmptySpace pref="81" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
+                      <Component id="jSeparator3" alignment="0" min="-2" pref="10" max="-2" attributes="0"/>
                   </Group>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jTextFieldDocumentoPersona" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                              <Component id="jLabelDocNro" alignment="3" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jRadioButtonNacional" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jRadioButtonExtranjero" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelTipoDeDoc" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                              <Component id="jComboBoxTipoDoc" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                          <Component id="jLabelPersonaVisitada1" min="-2" pref="26" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jSeparator5" min="-2" pref="10" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabelDocNro1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jTextFieldNroTicket" alignment="0" min="-2" pref="29" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="179" max="-2" attributes="0"/>
+                          <Component id="jLabelPersonaVisitada4" min="-2" pref="26" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jSeparator4" min="-2" pref="10" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jLabelVisitasPorEmpleado2" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jLabelVisitasPorEmpleado" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jLabelVisitasPorEmpleado1" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="jScrollPane1" min="-2" pref="446" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -342,7 +364,7 @@
         <Component class="javax.swing.JLabel" name="jLabelDocNro">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Bookman Old Style" size="48" style="0"/>
+              <Font name="Bookman Old Style" size="24" style="0"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="99" green="0" red="0" type="rgb"/>
@@ -353,7 +375,7 @@
         <Component class="javax.swing.JTextField" name="jTextFieldDocumentoPersona">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="48" style="0"/>
+              <Font name="Tahoma" size="24" style="0"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="0" red="cc" type="rgb"/>
@@ -365,23 +387,47 @@
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextFieldDocumentoPersonaKeyPressed"/>
           </Events>
         </Component>
+        <Component class="javax.swing.JSeparator" name="jSeparator1">
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelPersonaVisitada2">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="18" style="0"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/resource/img/handshake48.jpeg"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Ingreso."/>
+          </Properties>
+        </Component>
         <Component class="javax.swing.JLabel" name="jLabelPersonaVisitada1">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="18" style="0"/>
             </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/resource/img/salida.jpeg"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Salida."/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JSeparator" name="jSeparator5">
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelDocNro1">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Bookman Old Style" size="24" style="0"/>
+            </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="99" green="0" red="0" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Salida"/>
+            <Property name="text" type="java.lang.String" value="Nro Ticket:"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JSeparator" name="jSeparator1">
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldNroTicket">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="48" style="0"/>
+              <Font name="Tahoma" size="24" style="0"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="0" red="cc" type="rgb"/>
@@ -393,73 +439,15 @@
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextFieldNroTicketKeyPressed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabelDocNro1">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Bookman Old Style" size="48" style="0"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="99" green="0" red="0" type="rgb"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Nro Ticket:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JSeparator" name="jSeparator2">
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabelPersonaVisitada2">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="18" style="0"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="99" green="0" red="0" type="rgb"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Visita"/>
-          </Properties>
-        </Component>
-      </SubComponents>
-    </Container>
-    <Container class="javax.swing.JPanel" name="jPanel2">
-
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabelPersonaVisitada3" min="-2" pref="271" max="-2" attributes="0"/>
-                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="jSeparator3" alignment="0" pref="237" max="32767" attributes="0"/>
-                          <Component id="jScrollPane1" alignment="0" pref="0" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <EmptySpace max="32767" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <Component id="jLabelPersonaVisitada3" min="-2" pref="26" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jSeparator3" min="-2" pref="10" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" min="-2" pref="645" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-      </Layout>
-      <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabelPersonaVisitada3">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="18" style="0"/>
             </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="99" green="0" red="0" type="rgb"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/resource/img/ficha.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Visitas"/>
+            <Property name="text" type="java.lang.String" value="Visitas."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JSeparator" name="jSeparator3">
@@ -480,6 +468,38 @@
                       <Editor/>
                       <Renderer/>
                     </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                        <Connection code="rendererTime" type="code"/>
+                      </Renderer>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
                   </TableColumnModel>
                 </Property>
                 <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
@@ -488,37 +508,112 @@
               </Properties>
               <BindingProperties>
                 <BindingProperty name="elements" source="listVisitas" target="jTableVisitas" targetPath="elements" updateStrategy="0" immediately="true">
-                  <Subbinding sourcePath="${id}  ${persona.nombre} ${persona.apellido} ${persona.numeroDocumento}">
-                    <BindingParameter name="NAME" value="Visita"/>
+                  <Subbinding sourcePath="${id}">
+                    <BindingParameter name="NAME" value="Nro. Ticket"/>
                     <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
+                  </Subbinding>
+                  <Subbinding sourcePath="${persona.nombre} ${persona.apellido}">
+                    <BindingParameter name="NAME" value="Persona"/>
+                    <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
+                  </Subbinding>
+                  <Subbinding sourcePath="${persona.numeroDocumento}">
+                    <BindingParameter name="NAME" value="Nro. Doc"/>
+                    <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
+                  </Subbinding>
+                  <Subbinding sourcePath="${motivo.nombre}">
+                    <BindingParameter name="NAME" value="Motivo"/>
+                    <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
+                  </Subbinding>
+                  <Subbinding sourcePath="${fechaIngreso}">
+                    <BindingParameter name="NAME" value="Ingreso"/>
+                    <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
+                  </Subbinding>
+                  <Subbinding sourcePath="${personaVisitada.nombre} ${personaVisitada.apellido}">
+                    <BindingParameter name="NAME" value="Persona Visitada"/>
+                    <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
+                  </Subbinding>
+                  <Subbinding sourcePath="${organizacionInterna.nombre}">
+                    <BindingParameter name="NAME" value="Area Visitada"/>
                   </Subbinding>
                 </BindingProperty>
               </BindingProperties>
             </Component>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JRadioButton" name="jRadioButtonNacional">
+          <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="buttonGroupExtranjero"/>
+            </Property>
+            <Property name="selected" type="boolean" value="true"/>
+            <Property name="text" type="java.lang.String" value="Paraguayo"/>
+          </Properties>
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jRadioButtonNacionalItemStateChanged"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="jRadioButtonExtranjero">
+          <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="buttonGroupExtranjero"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Extranjero"/>
+          </Properties>
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jRadioButtonExtranjeroItemStateChanged"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelTipoDeDoc">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Tipo De doc:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="jComboBoxTipoDoc">
+          <BindingProperties>
+            <BindingProperty name="elements" source="listTipoDocumento" target="jComboBoxTipoDoc" targetPath="elements" updateStrategy="0" immediately="false"/>
+          </BindingProperties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jComboBoxTipoDoc.setSelectedItem(null);"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelPersonaVisitada4">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="18" style="0"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="99" green="0" red="0" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Informes"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JSeparator" name="jSeparator4">
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelVisitasPorEmpleado2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="* General"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabelVisitasPorEmpleado2MouseClicked"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelVisitasPorEmpleado">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="* Visitas Por Empleado"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabelVisitasPorEmpleadoMouseClicked"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelVisitasPorEmpleado1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="* Visitas Por &#xc1;rea"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabelVisitasPorEmpleado1MouseClicked"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JSeparator" name="jSeparator4">
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabelPersonaVisitada4">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="18" style="0"/>
-        </Property>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="99" green="0" red="0" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Informes"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabelVisitasPorEmpleado">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="* Visitas Por Empleado"/>
-      </Properties>
-      <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabelVisitasPorEmpleadoMouseClicked"/>
-      </Events>
-    </Component>
   </SubComponents>
 </Form>

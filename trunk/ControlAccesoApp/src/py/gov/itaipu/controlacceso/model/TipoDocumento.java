@@ -13,17 +13,18 @@ import javax.persistence.NamedQuery;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
-
-
-
 /**
  *
  * @author vimartih
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "TipoDocumento.findAll", query = "SELECT o FROM TipoDocumento o"),
+    @NamedQuery(name = "TipoDocumento.findCI", query = "SELECT o FROM TipoDocumento o where o.nombre = 'CI' ")
+})
 public class TipoDocumento implements Serializable {
+
     private static final long serialVersionUID = 1L;
-   
     private Long id;
     private String nombre;
     private String descripcion;
@@ -51,7 +52,7 @@ public class TipoDocumento implements Serializable {
     }
 
     @NotEmpty
-    @Length(max=200)
+    @Length(max = 200)
     public String getNombre() {
         return nombre;
     }
@@ -60,7 +61,7 @@ public class TipoDocumento implements Serializable {
         this.nombre = nombre.toUpperCase();
     }
 
-    @Length(max=500)
+    @Length(max = 500)
     public String getDescripcion() {
         return descripcion;
     }
@@ -93,5 +94,5 @@ public class TipoDocumento implements Serializable {
     public String toString() {
         return nombre;
     }
-    
+
 }
