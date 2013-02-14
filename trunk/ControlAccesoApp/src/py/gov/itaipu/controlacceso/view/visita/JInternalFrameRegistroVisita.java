@@ -242,9 +242,9 @@ public class JInternalFrameRegistroVisita extends javax.swing.JInternalFrame {
 
     private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
         // TODO add your handling code here:    
-        JDialogVisita dialogMotivo = new JDialogVisita(null, closable);
-        dialogMotivo.setVisita(new Visita());
-        dialogMotivo.setVisible(true);
+        JDialogVisita dialogVisita = new JDialogVisita(null, closable);
+        dialogVisita.setVisita(new Visita());
+        dialogVisita.setVisible(true);
         listVisitas.clear();
         listVisitas.addAll(visitaAction.findVisitasPendientes());
 

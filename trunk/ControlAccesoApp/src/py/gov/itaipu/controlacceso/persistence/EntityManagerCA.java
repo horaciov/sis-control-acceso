@@ -36,7 +36,7 @@ public class EntityManagerCA {
     public static Connection getConexion() throws SQLException {
         if (conexion==null) {
 //            conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/controlaccesodb", "controlacceso", "controlacceso");
-            conexion = DriverManager.getConnection("jdbc:postgresql://172.29.12.39:5432/controlaccesodb", "controlacceso", "controlacceso");
+            conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/controlaccesodb", "controlacceso", "controlacceso");
         }
         return conexion;
     }

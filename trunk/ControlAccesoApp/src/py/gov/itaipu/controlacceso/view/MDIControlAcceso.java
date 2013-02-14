@@ -4,8 +4,10 @@
  */
 package py.gov.itaipu.controlacceso.view;
 
+import java.awt.event.KeyEvent;
 import py.gov.itaipu.controlacceso.view.persona.JInternalFramePersona;
 import javax.persistence.EntityManager;
+import py.gov.itaipu.controlacceso.model.Visita;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 import py.gov.itaipu.controlacceso.view.administracion.organizacion.JInternalFrameOrganizacionExterna;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameEstado;
@@ -14,6 +16,7 @@ import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInterna
 import py.gov.itaipu.controlacceso.view.administracion.organizacion.JInternalFrameOrganizacionInterna;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameTipoAntecedente;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameTipoDocumento;
+import py.gov.itaipu.controlacceso.view.visita.JDialogVisita;
 import py.gov.itaipu.controlacceso.view.visita.JInternalFrameConsultaVisita;
 import py.gov.itaipu.controlacceso.view.visita.JInternalFrameRegistroVisita;
 
@@ -41,6 +44,10 @@ public class MDIControlAcceso extends javax.swing.JFrame {
     private void initComponents() {
 
         desktopPane = new javax.swing.JDesktopPane();
+        jPanel1 = new javax.swing.JPanel();
+        jLabelDocNro = new javax.swing.JLabel();
+        jTextFieldDocumentoPersona = new javax.swing.JTextField();
+        jPanel2 = new javax.swing.JPanel();
         menuBar = new javax.swing.JMenuBar();
         jMenuPersona = new javax.swing.JMenu();
         jMenuItemRegistro = new javax.swing.JMenuItem();
@@ -66,6 +73,70 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
+            }
+        });
+        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                formMouseMoved(evt);
+            }
+        });
+
+        jLabelDocNro.setFont(new java.awt.Font("Bookman Old Style", 0, 48)); // NOI18N
+        jLabelDocNro.setForeground(new java.awt.Color(0, 0, 153));
+        jLabelDocNro.setText("Nro Doc:");
+
+        jTextFieldDocumentoPersona.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        jTextFieldDocumentoPersona.setForeground(new java.awt.Color(204, 0, 0));
+        jTextFieldDocumentoPersona.setToolTipText("Nro de Documento");
+        jTextFieldDocumentoPersona.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldDocumentoPersonaActionPerformed(evt);
+            }
+        });
+        jTextFieldDocumentoPersona.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldDocumentoPersonaKeyPressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelDocNro)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextFieldDocumentoPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextFieldDocumentoPersona, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelDocNro, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 163, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        menuBar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                menuBarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                menuBarMouseExited(evt);
             }
         });
 
@@ -201,11 +272,20 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(desktopPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1274, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -286,6 +366,41 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         this.desktopPane.add(consultaVisitaFrame);
     }//GEN-LAST:event_jMenuItemConsultaVisitaActionPerformed
 
+    private void menuBarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuBarMouseEntered
+        // TODO add your handling code here:
+        this.menuBar.setVisible(true);
+    }//GEN-LAST:event_menuBarMouseEntered
+
+    private void menuBarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuBarMouseExited
+        // TODO add your handling code here:
+        this.menuBar.setVisible(false);
+    }//GEN-LAST:event_menuBarMouseExited
+
+    private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
+        // TODO add your handling code here:
+        if(evt.getPoint().y<50)
+            menuBar.setVisible(true);
+        
+    }//GEN-LAST:event_formMouseMoved
+
+    private void jTextFieldDocumentoPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDocumentoPersonaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldDocumentoPersonaActionPerformed
+
+    private void jTextFieldDocumentoPersonaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldDocumentoPersonaKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            // Enter was pressed. Your code goes here.
+
+            JDialogVisita dialogVisita=new JDialogVisita(this, rootPaneCheckingEnabled);
+            dialogVisita.setVisita(new Visita());
+            dialogVisita.getjTextFieldDocumentoPersona().setText(jTextFieldDocumentoPersona.getText());
+            dialogVisita.actualizarDatos();
+            dialogVisita.setVisible(true);
+
+        }
+    }//GEN-LAST:event_jTextFieldDocumentoPersonaKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -325,6 +440,7 @@ public class MDIControlAcceso extends javax.swing.JFrame {
     private javax.swing.JMenuItem contentMenuItem;
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu helpMenu;
+    private javax.swing.JLabel jLabelDocNro;
     private javax.swing.JMenu jMenuAdministracion;
     private javax.swing.JMenuItem jMenuItemAntecedente;
     private javax.swing.JMenuItem jMenuItemConsultaVisita;
@@ -340,6 +456,9 @@ public class MDIControlAcceso extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuParametroGeneral;
     private javax.swing.JMenu jMenuPersona;
     private javax.swing.JMenu jMenuVisita;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JTextField jTextFieldDocumentoPersona;
     private javax.swing.JMenuBar menuBar;
     // End of variables declaration//GEN-END:variables
 }
