@@ -163,6 +163,7 @@ public class PersonaAction {
         tx.begin();
         em.persist(persona);
         tx.commit();
+        em.clear();
     }
 
     public void guardar() {
