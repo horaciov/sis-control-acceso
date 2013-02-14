@@ -161,7 +161,7 @@ public class JDialogFotografia extends javax.swing.JDialog {
                 img = btoi.createImage(buf);
                 if (persona.getId()!=null) {
                     // SI ES UNA ACTUALIZACION DE LA FOTO DE LA PERSONA
-                    String pathFoto = "src/resource/fotografias/"+persona.getNumeroDocumento()+".jpg";
+                    String pathFoto = "fotografias/"+persona.getNumeroDocumento()+".jpg";
                     saveImagetoFile(img, pathFoto);
                     actualizarFotoPersona(pathFoto);
                     
