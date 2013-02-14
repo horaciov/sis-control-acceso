@@ -50,20 +50,94 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jTabbedPanePersona" alignment="0" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                              <Component id="jLabelNomb" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace pref="41" max="32767" attributes="0"/>
+                              <Component id="jTextFieldNombre" min="-2" pref="293" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="jLabelApe" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="jTextFieldApellido" min="-2" pref="293" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabelNroD" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabelTipDoc" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jComboBoxTipoDocumento" pref="293" max="32767" attributes="0"/>
+                                  <Component id="jTextFieldNroDoc" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="126" max="-2" attributes="0"/>
+                      <Component id="jButtonGuardar" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jButtonCancelar" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="jButtonNuevoTipoDoc" min="-2" pref="19" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
+                      <Component id="jLabelFoto" min="-2" pref="530" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="jButtonTomarFoto" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButtonCargarFoto" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="149" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
           </Group>
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="jButtonGuardar" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="jButtonCancelar" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabelFechaNac" alignment="0" min="-2" pref="87" max="-2" attributes="0"/>
+                          <Component id="jLabelEstCiv" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelEstCiv1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelNAcion" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelOrganizacion" alignment="0" min="-2" pref="91" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="jTextFieldOrganizacion" max="32767" attributes="0"/>
+                              <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="jFormattedTextFieldFechaNac" max="32767" attributes="0"/>
+                          <Component id="jComboBoxEstadoCivil" alignment="0" min="-2" pref="199" max="-2" attributes="0"/>
+                          <Component id="jComboBoxSexo" alignment="0" min="-2" pref="199" max="-2" attributes="0"/>
+                          <Component id="jComboBoxNacionalidad" alignment="1" min="-2" pref="199" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jButtonBuscarOrganizacion" min="-2" pref="19" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jSeparator1" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabel1" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -74,594 +148,80 @@
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jTabbedPanePersona" max="32767" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButtonGuardar" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButtonCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jTextFieldNombre" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabelNomb" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonTomarFoto" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonCargarFoto" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jTextFieldApellido" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelApe" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabelNroD" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="jTextFieldNroDoc" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jComboBoxTipoDocumento" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelTipDoc" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButtonNuevoTipoDoc" min="-2" pref="20" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabelNAcion" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jComboBoxNacionalidad" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabelEstCiv1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jComboBoxSexo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabelEstCiv" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jComboBoxEstadoCivil" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabelFechaNac" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jFormattedTextFieldFechaNac" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabelOrganizacion" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jTextFieldOrganizacion" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="jButtonBuscarOrganizacion" min="-2" pref="20" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jButtonGuardar" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButtonCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Component id="jLabelFoto" min="-2" pref="310" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="20" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JTabbedPane" name="jTabbedPanePersona">
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
-      <SubComponents>
-        <Container class="javax.swing.JPanel" name="jPanelDatosPersonales">
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Datos Personales">
-                <Property name="tabTitle" type="java.lang.String" value="Datos Personales"/>
-              </JTabbedPaneConstraints>
-            </Constraint>
-          </Constraints>
-
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="127" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabelApe" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabelNomb" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jTextFieldNombre" min="-2" pref="198" max="-2" attributes="0"/>
-                                  <Component id="jTextFieldApellido" min="-2" pref="198" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jLabelNroD" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="288" max="32767" attributes="0"/>
-                              <Component id="jTextFieldNroDoc" min="-2" pref="198" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabelEstCiv" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabelNAcion" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabelTipDoc" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabelFechaNac" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabelEstCiv1" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jComboBoxSexo" max="32767" attributes="0"/>
-                                  <Component id="jComboBoxTipoDocumento" alignment="0" pref="198" max="32767" attributes="0"/>
-                                  <Component id="jComboBoxNacionalidad" alignment="0" pref="198" max="32767" attributes="0"/>
-                                  <Component id="jComboBoxEstadoCivil" alignment="0" pref="198" max="32767" attributes="0"/>
-                                  <Component id="jFormattedTextFieldFechaNac" alignment="0" pref="198" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                      </Group>
-                      <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jButtonNuevoTipoDoc" min="-2" pref="19" max="-2" attributes="0"/>
-                          <Component id="jButtonNuevoNacionalidad" pref="0" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="165" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="jLabelTipDoc" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="jTextFieldApellido" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabelApe" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="jTextFieldNombre" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabelNomb" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="jTextFieldNroDoc" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabelNroD" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jButtonNuevoTipoDoc" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
-                                          <Component id="jComboBoxTipoDocumento" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jComboBoxNacionalidad" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabelNAcion" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="-2" pref="123" max="-2" attributes="0"/>
-                              <Component id="jButtonNuevoNacionalidad" min="-2" pref="20" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabelEstCiv1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jComboBoxSexo" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jComboBoxEstadoCivil" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabelEstCiv" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jFormattedTextFieldFechaNac" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabelFechaNac" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace pref="75" max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-          </Layout>
-          <SubComponents>
-            <Component class="javax.swing.JTextField" name="jTextFieldApellido">
-            </Component>
-            <Component class="javax.swing.JTextField" name="jTextFieldNombre">
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabelApe">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Apellido"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabelNomb">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Nombre"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabelNroD">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Nro Documento"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabelTipDoc">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Tipo Documento"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabelNAcion">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Nacionalidad"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabelEstCiv">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Estado Civil"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="jTextFieldNroDoc">
-            </Component>
-            <Component class="javax.swing.JComboBox" name="jComboBoxTipoDocumento">
-              <BindingProperties>
-                <BindingProperty name="elements" source="listTipoDocumento" target="jComboBoxTipoDocumento" targetPath="elements" updateStrategy="0" immediately="false"/>
-              </BindingProperties>
-            </Component>
-            <Component class="javax.swing.JComboBox" name="jComboBoxNacionalidad">
-              <BindingProperties>
-                <BindingProperty name="elements" source="listNacionalidades" target="jComboBoxNacionalidad" targetPath="elements" updateStrategy="0" immediately="false"/>
-              </BindingProperties>
-            </Component>
-            <Component class="javax.swing.JComboBox" name="jComboBoxEstadoCivil">
-              <Properties>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="new javax.swing.DefaultComboBoxModel(new String[] { &quot;SOLTERO&quot;, &quot;CASADO&quot;, &quot;DIVORCIADO&quot;, &quot;VIUDO&quot; })" type="code"/>
-                </Property>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="jButtonNuevoTipoDoc">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/resource/img/new.jpg"/>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonNuevoTipoDocActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="jButtonNuevoNacionalidad">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/resource/img/new.jpg"/>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonNuevoNacionalidadActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabelFechaNac">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Fecha de Nacimiento"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JFormattedTextField" name="jFormattedTextFieldFechaNac">
-              <Properties>
-                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                  <Format subtype="0" type="1"/>
-                </Property>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabelEstCiv1">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Sexo"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JComboBox" name="jComboBoxSexo">
-              <Properties>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="new javax.swing.DefaultComboBoxModel(new String[] { &quot;MASCULINO&quot;, &quot;FEMENINO&quot; })" type="code"/>
-                </Property>
-              </Properties>
-            </Component>
-          </SubComponents>
-        </Container>
-        <Container class="javax.swing.JPanel" name="jPanelFotografia">
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JPanel()&#xa;"/>
-          </AuxValues>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Fotografia">
-                <Property name="tabTitle" type="java.lang.String" value="Fotografia"/>
-              </JTabbedPaneConstraints>
-            </Constraint>
-          </Constraints>
-
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jButtonTomarFoto" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="jButtonCargarFoto" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="275" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="240" max="-2" attributes="0"/>
-                      <Component id="jLabelFoto" min="-2" pref="416" max="-2" attributes="0"/>
-                      <EmptySpace pref="216" max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabelFoto" pref="333" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jButtonTomarFoto" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButtonCargarFoto" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-          </Layout>
-          <SubComponents>
-            <Component class="javax.swing.JButton" name="jButtonCargarFoto">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/resource/img/carpeta_abierta.jpg"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Cargar Fotografia"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonCargarFotoActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="jButtonTomarFoto">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/resource/img/CAMARA.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Tomar Fotografia"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonTomarFotoActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabelFoto">
-              <Properties>
-                <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/resource/img/sin_foto.jpg"/>
-                </Property>
-              </Properties>
-            </Component>
-          </SubComponents>
-        </Container>
-        <Container class="javax.swing.JPanel" name="jPanelOrganizacion">
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Organizacion">
-                <Property name="tabTitle" type="java.lang.String" value="Organizacion"/>
-              </JTabbedPaneConstraints>
-            </Constraint>
-          </Constraints>
-
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="107" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jLabelOrganizacion1" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                              <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jLabelOrganizacion" min="-2" pref="91" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                              <Component id="jTextFieldOrganizacion" min="-2" pref="369" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jButtonBuscarOrganizacion" min="-2" pref="19" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace pref="250" max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabelOrganizacion" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextFieldOrganizacion" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButtonBuscarOrganizacion" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
-                      <Component id="jLabelOrganizacion1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="80" max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-          </Layout>
-          <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabelOrganizacion">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Organizacion"/>
-              </Properties>
-            </Component>
-            <Container class="javax.swing.JPanel" name="jPanel1">
-              <Properties>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                    <LineBorder roundedCorners="true">
-                      <Color PropertyName="color" blue="ff" green="99" red="33" type="rgb"/>
-                    </LineBorder>
-                  </Border>
-                </Property>
-              </Properties>
-
-              <Layout>
-                <DimensionLayout dim="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jLabelOrgDirec" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jLabelOrgCont" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jLabelOrgTelef" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jLabelOrgDes" alignment="0" pref="126" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jTextFieldOrgDesc" pref="264" max="32767" attributes="0"/>
-                              <Component id="jTextFieldOrgTelef" max="32767" attributes="0"/>
-                              <Component id="jTextFieldOrgDir" max="32767" attributes="0"/>
-                              <Component id="jTextFieldOrgContac" alignment="0" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
-                  </Group>
-                </DimensionLayout>
-                <DimensionLayout dim="1">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabelOrgDes" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextFieldOrgDesc" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabelOrgTelef" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextFieldOrgTelef" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabelOrgDirec" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextFieldOrgDir" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabelOrgCont" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextFieldOrgContac" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace pref="25" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
-                </DimensionLayout>
-              </Layout>
-              <SubComponents>
-                <Component class="javax.swing.JLabel" name="jLabelOrgDes">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Descripcion"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JLabel" name="jLabelOrgTelef">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Tel&#xe9;fono"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JLabel" name="jLabelOrgDirec">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Direccion"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JLabel" name="jLabelOrgCont">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Contacto"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JTextField" name="jTextFieldOrgDesc">
-                  <Properties>
-                    <Property name="editable" type="boolean" value="false"/>
-                    <Property name="text" type="java.lang.String" value="Descripcion de Muestra"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JTextField" name="jTextFieldOrgTelef">
-                  <Properties>
-                    <Property name="editable" type="boolean" value="false"/>
-                    <Property name="text" type="java.lang.String" value="Tel&#xe9;fono de Muestra"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JTextField" name="jTextFieldOrgDir">
-                  <Properties>
-                    <Property name="editable" type="boolean" value="false"/>
-                    <Property name="text" type="java.lang.String" value="Direccion de Muestra"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JTextField" name="jTextFieldOrgContac">
-                  <Properties>
-                    <Property name="editable" type="boolean" value="false"/>
-                    <Property name="text" type="java.lang.String" value="Contacto de Muestra"/>
-                  </Properties>
-                </Component>
-              </SubComponents>
-            </Container>
-            <Component class="javax.swing.JLabel" name="jLabelOrganizacion1">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Datos Organizacion Externa"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="jTextFieldOrganizacion">
-              <Properties>
-                <Property name="editable" type="boolean" value="false"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="jButtonBuscarOrganizacion">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/resource/img/view.png"/>
-                </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Buscar Organizacion"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonBuscarOrganizacionActionPerformed"/>
-              </Events>
-            </Component>
-          </SubComponents>
-        </Container>
-        <Container class="javax.swing.JPanel" name="jPanelAntecedentes">
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Antecedentes">
-                <Property name="tabTitle" type="java.lang.String" value="Antecedentes"/>
-              </JTabbedPaneConstraints>
-            </Constraint>
-          </Constraints>
-
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" min="-2" pref="707" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace pref="115" max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" min="-2" pref="269" max="-2" attributes="0"/>
-                      <EmptySpace pref="57" max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-          </Layout>
-          <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabel2">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Tiene Antecedentes?"/>
-              </Properties>
-            </Component>
-            <Container class="javax.swing.JScrollPane" name="jScrollPane1">
-              <AuxValues>
-                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-              </AuxValues>
-
-              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-              <SubComponents>
-                <Component class="javax.swing.JTable" name="jTable1">
-                  <Properties>
-                    <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
-                      <TableColumnModel selectionModel="0">
-                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                          <Title/>
-                          <Editor/>
-                          <Renderer/>
-                        </Column>
-                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                          <Title/>
-                          <Editor/>
-                          <Renderer/>
-                        </Column>
-                      </TableColumnModel>
-                    </Property>
-                    <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
-                      <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
-                    </Property>
-                  </Properties>
-                  <BindingProperties>
-                    <BindingProperty name="elements" source="listAntecedentes" target="jTable1" targetPath="elements" updateStrategy="0" immediately="true">
-                      <Subbinding sourcePath="${tipoAntecedente.nombre}">
-                        <BindingParameter name="NAME" value="Tipo Antecedente"/>
-                      </Subbinding>
-                      <Subbinding sourcePath="${observacion}">
-                        <BindingParameter name="NAME" value="Observacion"/>
-                      </Subbinding>
-                    </BindingProperty>
-                  </BindingProperties>
-                </Component>
-              </SubComponents>
-            </Container>
-          </SubComponents>
-        </Container>
-      </SubComponents>
-    </Container>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Datos Persona"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="14" style="1"/>
+        </Property>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="text" type="java.lang.String" value="DATOS DE LA PERSONA"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator1">
@@ -686,6 +246,148 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonCancelarActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="jComboBoxNacionalidad">
+      <BindingProperties>
+        <BindingProperty name="elements" source="listNacionalidades" target="jComboBoxNacionalidad" targetPath="elements" updateStrategy="0" immediately="false"/>
+      </BindingProperties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="jComboBoxTipoDocumento">
+      <BindingProperties>
+        <BindingProperty name="elements" source="listTipoDocumento" target="jComboBoxTipoDocumento" targetPath="elements" updateStrategy="0" immediately="false"/>
+      </BindingProperties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="jComboBoxEstadoCivil">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="new javax.swing.DefaultComboBoxModel(new String[] { &quot;SOLTERO&quot;, &quot;CASADO&quot;, &quot;DIVORCIADO&quot;, &quot;VIUDO&quot; })" type="code"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabelApe">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Apellido"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonNuevoTipoDoc">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/resource/img/new.jpg"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonNuevoTipoDocActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabelNomb">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Nombre"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jTextFieldApellido">
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabelFechaNac">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Fecha de Nacimiento"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jTextFieldNombre">
+    </Component>
+    <Component class="javax.swing.JFormattedTextField" name="jFormattedTextFieldFechaNac">
+      <Properties>
+        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+          <Format subtype="0" type="1"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabelNAcion">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Nacionalidad"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabelEstCiv1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Sexo"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabelEstCiv">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Estado Civil"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="jComboBoxSexo">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="new javax.swing.DefaultComboBoxModel(new String[] { &quot;MASCULINO&quot;, &quot;FEMENINO&quot; })" type="code"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabelNroD">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Nro Documento"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabelTipDoc">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tipo Documento"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jTextFieldNroDoc">
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabelOrganizacion">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Organizacion"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jTextFieldOrganizacion">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonBuscarOrganizacion">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/resource/img/view.png"/>
+        </Property>
+        <Property name="toolTipText" type="java.lang.String" value="Buscar Organizacion"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonBuscarOrganizacionActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabelFoto">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/resource/img/sin_foto.jpg"/>
+        </Property>
+        <Property name="horizontalTextPosition" type="int" value="0"/>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[459, 419]"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonTomarFoto">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/resource/img/CAMARA.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Tomar Fotografia"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonTomarFotoActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonCargarFoto">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/resource/img/carpeta_abierta.jpg"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Cargar Fotografia"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonCargarFotoActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

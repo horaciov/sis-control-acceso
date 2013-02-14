@@ -17,6 +17,7 @@ import py.gov.itaipu.controlacceso.action.visita.VisitaAction;
 import py.gov.itaipu.controlacceso.model.TipoDocumento;
 import py.gov.itaipu.controlacceso.model.Visita;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
+import py.gov.itaipu.controlacceso.view.administracion.organizacion.JInternalFrameOrganigrama;
 import py.gov.itaipu.controlacceso.view.administracion.organizacion.JInternalFrameOrganizacionExterna;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameEstado;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameMotivo;
@@ -545,7 +546,8 @@ public class MDIControlAcceso extends javax.swing.JFrame {
 
     private void jMenuItemOrganizacionInternaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemOrganizacionInternaActionPerformed
         // TODO add your handling code here:
-        JInternalFrameOrganizacionInterna organizacionInternaFrame = new JInternalFrameOrganizacionInterna();
+//        JInternalFrameOrganizacionInterna organizacionInternaFrame = new JInternalFrameOrganizacionInterna();
+        JInternalFrameOrganigrama organizacionInternaFrame = new JInternalFrameOrganigrama();
         organizacionInternaFrame.setVisible(true);
         this.desktopPane.add(organizacionInternaFrame);
     }//GEN-LAST:event_jMenuItemOrganizacionInternaActionPerformed
