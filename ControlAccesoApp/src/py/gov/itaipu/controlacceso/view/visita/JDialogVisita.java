@@ -29,6 +29,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.*;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
@@ -727,7 +728,12 @@ public class JDialogVisita extends javax.swing.JDialog {
         // TODO add your handling code here:
         if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
                 // Enter was pressed. Your code goes here.
-                
+            actualizarDatos();
+        }
+    }//GEN-LAST:event_jTextFieldDocumentoPersonaKeyPressed
+
+    public void actualizarDatos(){
+             
             if (jTextFieldDocumentoPersona.getText()!= null && !jTextFieldDocumentoPersona.getText().equals("")) {
                     //BUSCAR PERSONA EN BD LOCAL Y POLICIA
                     persona = buscarPersona();
@@ -758,11 +764,13 @@ public class JDialogVisita extends javax.swing.JDialog {
                     jLabelFotografia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/sin_foto_small.jpg")));
                     
                 }
-                
-        }
-    }//GEN-LAST:event_jTextFieldDocumentoPersonaKeyPressed
+                        
+    }
+    
+    public JTextField getjTextFieldDocumentoPersona() {
+        return jTextFieldDocumentoPersona;
+    }
 
-     
     private Persona buscarPersona(){
         Persona personaBuscada = new Persona();
         /// Se busca en la tabla de personas local
@@ -779,34 +787,7 @@ public class JDialogVisita extends javax.swing.JDialog {
 
     private void jTextFieldDocumentoPersonaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldDocumentoPersonaFocusLost
         // TODO add your handling code here:
-            if (jTextFieldDocumentoPersona.getText()!= null && !jTextFieldDocumentoPersona.getText().equals("")) {
-                    //BUSCAR PERSONA EN BD LOCAL Y POLICIA
-                    persona = buscarPersona();
-                    
-                    if (persona!=null && persona.getId()!=null) {
-                        //CARGAR DATOS DE LA PERSONA ENCONTRADA
-                        jTextFieldPersona.setText(persona.getNombre() + ", " + persona.getApellido());
-                        jTextFieldOrganizacion.setText(persona.getOrganizacion().getNombre());
-                        jButtonTomarFotografia.setEnabled(true);
-                        //Cargar Fotografia
-                        if (persona.getFotografiaPath() != null && !persona.getFotografiaPath().equals("")) {
-                           mostrarFotoPersona(); 
-                        }
-
-                    }else{
-                        jTextFieldPersona.setText("");
-                        jTextFieldOrganizacion.setText("");
-                        jLabelFotografia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/sin_foto_small.jpg")));
-                        
-                        jButtonTomarFotografia.setEnabled(false);
-                        JOptionPane.showMessageDialog(this, "La persona no existe, debe registrarla.", "INFORMATION", 0);
-                    }
-                }else{
-                    jTextFieldPersona.setText("");
-                    jTextFieldOrganizacion.setText("");
-                    jButtonTomarFotografia.setEnabled(false);
-                    jLabelFotografia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/sin_foto_small.jpg")));
-                }
+            actualizarDatos();
             
     }//GEN-LAST:event_jTextFieldDocumentoPersonaFocusLost
     private void mostrarFotoPersona(){
