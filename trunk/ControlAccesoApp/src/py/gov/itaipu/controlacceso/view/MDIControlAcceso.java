@@ -5,8 +5,13 @@
 package py.gov.itaipu.controlacceso.view;
 
 import java.awt.event.KeyEvent;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import py.gov.itaipu.controlacceso.view.persona.JInternalFramePersona;
 import javax.persistence.EntityManager;
+import javax.swing.JOptionPane;
+import org.jdesktop.observablecollections.ObservableCollections;
+import py.gov.itaipu.controlacceso.action.visita.VisitaAction;
 import py.gov.itaipu.controlacceso.model.Visita;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 import py.gov.itaipu.controlacceso.view.administracion.organizacion.JInternalFrameOrganizacionExterna;
@@ -26,10 +31,14 @@ import py.gov.itaipu.controlacceso.view.visita.JInternalFrameRegistroVisita;
  */
 public class MDIControlAcceso extends javax.swing.JFrame {
 
+    private VisitaAction visitaAction;
+    
     /**
      * Creates new form MDIControlAcceso
      */
     public MDIControlAcceso() {
+        visitaAction=new VisitaAction();
+        visitaAction.setVisita(new Visita());   
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
     }
@@ -42,12 +51,27 @@ public class MDIControlAcceso extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
+        listVisitas = ObservableCollections.observableList(visitaAction.findVisitasPendientes());
         desktopPane = new javax.swing.JDesktopPane();
         jPanel1 = new javax.swing.JPanel();
         jLabelDocNro = new javax.swing.JLabel();
         jTextFieldDocumentoPersona = new javax.swing.JTextField();
+        jLabelPersonaVisitada1 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jTextFieldNroTicket = new javax.swing.JTextField();
+        jLabelDocNro1 = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        jLabelPersonaVisitada2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        jLabelPersonaVisitada3 = new javax.swing.JLabel();
+        jSeparator3 = new javax.swing.JSeparator();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableVisitas = new javax.swing.JTable();
+        jSeparator4 = new javax.swing.JSeparator();
+        jLabelPersonaVisitada4 = new javax.swing.JLabel();
+        jLabelVisitasPorEmpleado = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         jMenuPersona = new javax.swing.JMenu();
         jMenuItemRegistro = new javax.swing.JMenuItem();
@@ -99,37 +123,133 @@ public class MDIControlAcceso extends javax.swing.JFrame {
             }
         });
 
+        jLabelPersonaVisitada1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabelPersonaVisitada1.setForeground(new java.awt.Color(0, 0, 153));
+        jLabelPersonaVisitada1.setText("Salida");
+
+        jTextFieldNroTicket.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        jTextFieldNroTicket.setForeground(new java.awt.Color(204, 0, 0));
+        jTextFieldNroTicket.setToolTipText("El número de ticket generado para la visita.");
+        jTextFieldNroTicket.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldNroTicketActionPerformed(evt);
+            }
+        });
+        jTextFieldNroTicket.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldNroTicketKeyPressed(evt);
+            }
+        });
+
+        jLabelDocNro1.setFont(new java.awt.Font("Bookman Old Style", 0, 48)); // NOI18N
+        jLabelDocNro1.setForeground(new java.awt.Color(0, 0, 153));
+        jLabelDocNro1.setText("Nro Ticket:");
+
+        jLabelPersonaVisitada2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabelPersonaVisitada2.setForeground(new java.awt.Color(0, 0, 153));
+        jLabelPersonaVisitada2.setText("Visita");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelDocNro)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jSeparator1)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabelDocNro)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldDocumentoPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextFieldDocumentoPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabelPersonaVisitada1, javax.swing.GroupLayout.PREFERRED_SIZE, 653, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 61, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabelDocNro1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldNroTicket))
+                    .addComponent(jSeparator2)))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(20, 20, 20)
+                    .addComponent(jLabelPersonaVisitada2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGap(714, 714, 714)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldDocumentoPersona, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelDocNro, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap(20, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelPersonaVisitada1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldNroTicket, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelDocNro1, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldDocumentoPersona, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelDocNro, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(10, 10, 10)
+                    .addComponent(jLabelPersonaVisitada2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(81, Short.MAX_VALUE)))
         );
+
+        jLabelPersonaVisitada3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabelPersonaVisitada3.setForeground(new java.awt.Color(0, 0, 153));
+        jLabelPersonaVisitada3.setText("Visitas");
+
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listVisitas, jTableVisitas);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}  ${persona.nombre} ${persona.apellido} ${persona.numeroDocumento}"));
+        columnBinding.setColumnName("Visita");
+        columnBinding.setEditable(false);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
+        jScrollPane1.setViewportView(jTableVisitas);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 163, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelPersonaVisitada3, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jLabelPersonaVisitada3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 645, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
+
+        jLabelPersonaVisitada4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabelPersonaVisitada4.setForeground(new java.awt.Color(0, 0, 153));
+        jLabelPersonaVisitada4.setText("Informes");
+
+        jLabelVisitasPorEmpleado.setText("* Visitas Por Empleado");
+        jLabelVisitasPorEmpleado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelVisitasPorEmpleadoMouseClicked(evt);
+            }
+        });
 
         menuBar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -275,18 +395,37 @@ public class MDIControlAcceso extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(desktopPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1274, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(desktopPane, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelVisitasPorEmpleado)
+                            .addComponent(jLabelPersonaVisitada4, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE))
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(desktopPane))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelPersonaVisitada4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabelVisitasPorEmpleado)
+                .addGap(224, 224, 224))
         );
+
+        bindingGroup.bind();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -378,9 +517,10 @@ public class MDIControlAcceso extends javax.swing.JFrame {
 
     private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
         // TODO add your handling code here:
-        if(evt.getPoint().y<50)
+        if (evt.getPoint().y < 50) {
             menuBar.setVisible(true);
-        
+        }
+
     }//GEN-LAST:event_formMouseMoved
 
     private void jTextFieldDocumentoPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDocumentoPersonaActionPerformed
@@ -389,17 +529,56 @@ public class MDIControlAcceso extends javax.swing.JFrame {
 
     private void jTextFieldDocumentoPersonaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldDocumentoPersonaKeyPressed
         // TODO add your handling code here:
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             // Enter was pressed. Your code goes here.
 
-            JDialogVisita dialogVisita=new JDialogVisita(this, rootPaneCheckingEnabled);
+            JDialogVisita dialogVisita = new JDialogVisita(this, rootPaneCheckingEnabled);
             dialogVisita.setVisita(new Visita());
             dialogVisita.getjTextFieldDocumentoPersona().setText(jTextFieldDocumentoPersona.getText());
             dialogVisita.actualizarDatos();
             dialogVisita.setVisible(true);
-
+            listVisitas.clear();
+            listVisitas.addAll(visitaAction.findVisitasPendientes());
         }
     }//GEN-LAST:event_jTextFieldDocumentoPersonaKeyPressed
+
+    private void jTextFieldNroTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNroTicketActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldNroTicketActionPerformed
+
+    private void jTextFieldNroTicketKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldNroTicketKeyPressed
+        // TODO add your handling code here:       
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (jTextFieldNroTicket.getText() != null && !jTextFieldNroTicket.getText().equals("")) {
+                Visita v = visitaAction.findPendienteById(Long.parseLong(jTextFieldNroTicket.getText()));
+                if(v==null){
+                    JOptionPane.showMessageDialog(this, "No existe la visita.", "Error", 0);
+                    return;
+                }
+                Calendar c = Calendar.getInstance();
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                if (JOptionPane.showConfirmDialog(this, "Está seguro que desea marcar la salida de "
+                        + v.getPersona().getNombre()
+                        + " " + v.getPersona().getApellido()
+                        + ", a las: " + sdf.format(c.getTime())
+                        + "?", "Registro de salida", 0) != 0) {
+                    return;
+                }
+
+                v.setFechaSalida(c.getTime());
+                visitaAction.setVisita(v);
+                visitaAction.guardar();
+                listVisitas.clear();
+                listVisitas.addAll(visitaAction.findVisitasPendientes());
+                JOptionPane.showMessageDialog(this, "Se ha registrado la salida correctamente", "Info", 1);
+                jTextFieldNroTicket.setText(null);
+            }
+        }
+    }//GEN-LAST:event_jTextFieldNroTicketKeyPressed
+
+    private void jLabelVisitasPorEmpleadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelVisitasPorEmpleadoMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabelVisitasPorEmpleadoMouseClicked
 
     /**
      * @param args the command line arguments
@@ -441,6 +620,12 @@ public class MDIControlAcceso extends javax.swing.JFrame {
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JLabel jLabelDocNro;
+    private javax.swing.JLabel jLabelDocNro1;
+    private javax.swing.JLabel jLabelPersonaVisitada1;
+    private javax.swing.JLabel jLabelPersonaVisitada2;
+    private javax.swing.JLabel jLabelPersonaVisitada3;
+    private javax.swing.JLabel jLabelPersonaVisitada4;
+    private javax.swing.JLabel jLabelVisitasPorEmpleado;
     private javax.swing.JMenu jMenuAdministracion;
     private javax.swing.JMenuItem jMenuItemAntecedente;
     private javax.swing.JMenuItem jMenuItemConsultaVisita;
@@ -458,7 +643,16 @@ public class MDIControlAcceso extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuVisita;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JTable jTableVisitas;
     private javax.swing.JTextField jTextFieldDocumentoPersona;
+    private javax.swing.JTextField jTextFieldNroTicket;
+    private java.util.List listVisitas;
     private javax.swing.JMenuBar menuBar;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
