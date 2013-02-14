@@ -525,14 +525,13 @@ public class JDialogVisita extends javax.swing.JDialog {
 
         if (visita.getId() == null) {
             action.crear();
-            imprimirTicket();
             JOptionPane.showMessageDialog(this, "Se ha creado con éxito", "Info", 1);
-            
+            imprimirTicket();
         } else {
             action.guardar();
             JOptionPane.showMessageDialog(this, "Se ha actualizado correctamente", "Info", 1);
         }
-
+        
         this.dispose();
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 

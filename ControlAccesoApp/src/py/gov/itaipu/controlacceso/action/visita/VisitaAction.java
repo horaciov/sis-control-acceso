@@ -124,6 +124,17 @@ public class VisitaAction {
         return query.getResultList();
     }
 
+    public Visita findPendienteById(Long id){
+        Query query;
+        query = em.createQuery(" from Visita v where v.fechaSalida is null and v.anulado = 'N' and id=:id )");
+        query.setParameter("id", id);
+        List<Visita> result=query.getResultList();
+        if(result.size()>0)
+            return result.get(0);
+        else
+            return null;
+    }
+    
     public void anular(){
         visita.setAnulado("S");
         guardar();
