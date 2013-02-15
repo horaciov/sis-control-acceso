@@ -62,6 +62,7 @@ public class CRUDAction<E> {
         tx.begin();
         em.persist(entity);
         tx.commit();
+        em.clear();
     }
 
     public void guardar() {

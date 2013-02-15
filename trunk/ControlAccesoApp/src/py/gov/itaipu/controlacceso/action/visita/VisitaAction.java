@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import py.gov.itaipu.controlacceso.model.Organizacion;
+import py.gov.itaipu.controlacceso.model.Persona;
 import py.gov.itaipu.controlacceso.model.Visita;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 
@@ -45,14 +46,21 @@ public class VisitaAction {
         return query.getResultList();
     }
 
+    public List<Visita> findByPersona(Persona persona) {
+        String sQuery = " from Visita v where v.persona.id = :persona and v.anulado = 'N' order by v.fechaIngreso desc ";
+        Query query = em.createQuery(sQuery).setMaxResults(3);
+        query.setParameter("persona", persona.getId());
+        return query.getResultList();
+    }
+
     public List<Visita> findByParameters(Visita visita, Date fechaHasta, Organizacion organizacionExterna, String incluyeAnulados) {
 
         String sQuery = " from Visita v where 1=1";
-        
+
         if (incluyeAnulados.equals("N")) {
             sQuery = sQuery + " and v.anulado = 'N' ";
         }
-        
+
         if (visita.getPersona() != null && visita.getPersona().getId() != null) {
             sQuery = sQuery + " and v.persona.id = :persona ";
         }
@@ -124,23 +132,23 @@ public class VisitaAction {
         return query.getResultList();
     }
 
-    public Visita findPendienteById(Long id){
+    public Visita findPendienteById(Long id) {
         Query query;
         query = em.createQuery(" from Visita v where v.fechaSalida is null and v.anulado = 'N' and id=:id )");
         query.setParameter("id", id);
-        List<Visita> result=query.getResultList();
-        if(result.size()>0)
+        List<Visita> result = query.getResultList();
+        if (result.size() > 0) {
             return result.get(0);
-        else
+        } else {
             return null;
+        }
     }
-    
-    public void anular(){
+
+    public void anular() {
         visita.setAnulado("S");
         guardar();
     }
-    
-    
+
     public void crear() {
         EntityTransaction tx = em.getTransaction();
         tx.begin();

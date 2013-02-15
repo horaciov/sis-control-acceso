@@ -4,7 +4,6 @@
  */
 package py.gov.itaipu.controlacceso.view.administracion.organizacion;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTree;
@@ -21,19 +20,21 @@ import py.gov.itaipu.controlacceso.utils.tree.UtilesArbol;
  *
  * @author fboy
  */
-public class JInternalFrameOrganigrama extends javax.swing.JInternalFrame {
-private CRUDAction<Organizacion> organizacionAction;
-private Persona persona;
-private Organizacion area;
-private Organizacion areaPadre;
-private PersonaAction personaAction;
+public class JDialogOrganigrama extends javax.swing.JDialog {
+
+    private CRUDAction<Organizacion> organizacionAction;
+    private Persona persona;
+    private Organizacion area;
+    private Organizacion areaPadre;
+    private PersonaAction personaAction;
+
     /**
-     * Creates new form JInternalFrameOrganigrama
+     * Creates new form JDialogOrganigrama
      */
-    public JInternalFrameOrganigrama() {
-        setClosable(true);
+    public JDialogOrganigrama(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         personaAction = new PersonaAction(new Persona());
-        organizacionAction=new CRUDAction<Organizacion>();
+        organizacionAction = new CRUDAction<Organizacion>();
         organizacionAction.setEntity(new Organizacion());
         initComponents();
     }
@@ -47,28 +48,36 @@ private PersonaAction personaAction;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPaneOrganigrama = new javax.swing.JScrollPane();
-        jTreeOrganigrama = new javax.swing.JTree();
-        jButtonOrganizacionNuevo = new javax.swing.JButton();
-        jButtonPersonaNuevo = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jTextFieldAreaNombre = new javax.swing.JTextField();
-        jTextFieldAreaPadreNombre = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        jScrollPaneOrganigrama = new javax.swing.JScrollPane();
+        jTreeOrganigrama = new javax.swing.JTree();
         jTextFieldEmpleadoApellido = new javax.swing.JTextField();
+        jButtonPersonaNuevo = new javax.swing.JButton();
         jTextFieldEmpleadoNombre = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jTextFieldEmpleadoNroDoc = new javax.swing.JTextField();
+        jButtonOrganizacionNuevo = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
+        jTextFieldAreaNombre = new javax.swing.JTextField();
         jTextFieldEmpleadoOrganizacion = new javax.swing.JTextField();
+        jTextFieldAreaPadreNombre = new javax.swing.JTextField();
         jButtonGuardarArea = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         jButtonGuardarEmpleado = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
-        setTitle("Organigrama");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("ORGANIGRAMA");
+
+        jLabel6.setText("Apellido:");
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel4.setText("Empleado");
+
+        jLabel5.setText("Nombre:");
 
         DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", true);
         jTreeOrganigrama = new JTree(root);
@@ -80,13 +89,7 @@ private PersonaAction personaAction;
         });
         jScrollPaneOrganigrama.setViewportView(jTreeOrganigrama);
 
-        jButtonOrganizacionNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/organizacion.png"))); // NOI18N
-        jButtonOrganizacionNuevo.setText("Nueva Organizacion");
-        jButtonOrganizacionNuevo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonOrganizacionNuevoActionPerformed(evt);
-            }
-        });
+        jTextFieldEmpleadoApellido.setEditable(false);
 
         jButtonPersonaNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/persona.jpg"))); // NOI18N
         jButtonPersonaNuevo.setText("Nuevo empleado");
@@ -96,12 +99,24 @@ private PersonaAction personaAction;
             }
         });
 
+        jTextFieldEmpleadoNombre.setEditable(false);
+
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Area Interna:");
 
-        jLabel2.setText("Nombre:");
+        jLabel7.setText("Nro Documento:");
 
-        jLabel3.setText("Area Superior:");
+        jTextFieldEmpleadoNroDoc.setEditable(false);
+
+        jButtonOrganizacionNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/organizacion.png"))); // NOI18N
+        jButtonOrganizacionNuevo.setText("Nueva Organizacion");
+        jButtonOrganizacionNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonOrganizacionNuevoActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("Area:");
 
         jTextFieldAreaNombre.setEditable(false);
         jTextFieldAreaNombre.addActionListener(new java.awt.event.ActionListener() {
@@ -110,26 +125,9 @@ private PersonaAction personaAction;
             }
         });
 
-        jTextFieldAreaPadreNombre.setEditable(false);
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel4.setText("Empleado");
-
-        jLabel5.setText("Nombre:");
-
-        jLabel6.setText("Apellido:");
-
-        jTextFieldEmpleadoApellido.setEditable(false);
-
-        jTextFieldEmpleadoNombre.setEditable(false);
-
-        jLabel7.setText("Nro Documento:");
-
-        jTextFieldEmpleadoNroDoc.setEditable(false);
-
-        jLabel8.setText("Area:");
-
         jTextFieldEmpleadoOrganizacion.setEditable(false);
+
+        jTextFieldAreaPadreNombre.setEditable(false);
 
         jButtonGuardarArea.setText("Guardar");
         jButtonGuardarArea.setEnabled(false);
@@ -139,6 +137,8 @@ private PersonaAction personaAction;
             }
         });
 
+        jLabel2.setText("Nombre:");
+
         jButtonGuardarEmpleado.setText("Guardar");
         jButtonGuardarEmpleado.setEnabled(false);
         jButtonGuardarEmpleado.addActionListener(new java.awt.event.ActionListener() {
@@ -146,6 +146,8 @@ private PersonaAction personaAction;
                 jButtonGuardarEmpleadoActionPerformed(evt);
             }
         });
+
+        jLabel3.setText("Area Superior:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -244,7 +246,7 @@ private PersonaAction personaAction;
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonOrganizacionNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonPersonaNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
@@ -252,111 +254,206 @@ private PersonaAction personaAction;
 
     private void jTreeOrganigramaValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_jTreeOrganigramaValueChanged
         // TODO add your handling code here:
-        if (jTreeOrganigrama.getLastSelectedPathComponent()!=null) {
-            DefaultMutableTreeNode nodoSeleccionado = (DefaultMutableTreeNode)jTreeOrganigrama.getLastSelectedPathComponent();
+        if (jTreeOrganigrama.getLastSelectedPathComponent() != null) {
+            DefaultMutableTreeNode nodoSeleccionado = (DefaultMutableTreeNode) jTreeOrganigrama.getLastSelectedPathComponent();
             Object objSel = nodoSeleccionado.getUserObject();
             if (objSel.getClass().getSimpleName().equals("Persona")) {
-                persona = (Persona)objSel;
+                persona = (Persona) objSel;
                 areaPadre = persona.getOrganizacion();
-                
+
                 jTextFieldEmpleadoApellido.setText(persona.getApellido());
                 jTextFieldEmpleadoNombre.setText(persona.getNombre());
                 jTextFieldEmpleadoOrganizacion.setText(persona.getOrganizacion().getNombre());
                 jTextFieldEmpleadoNroDoc.setText(persona.getNumeroDocumento());
                 jTextFieldAreaPadreNombre.setText("");
                 jTextFieldAreaNombre.setText("");
-                
-                
-            }else if(objSel.getClass().getSimpleName().equals("Organizacion")){
+
+            } else if (objSel.getClass().getSimpleName().equals("Organizacion")) {
                 persona = null;
-                area = (Organizacion)objSel;
-                areaPadre = (Organizacion)objSel;
-                
-                    jTextFieldAreaNombre.setText(areaPadre.getNombre());
-                    if (area.getOrganizacionPadre()!=null) {
-                        jTextFieldAreaPadreNombre.setText(areaPadre.getOrganizacionPadre().getNombre());
-                    }
-                    
-                    jTextFieldEmpleadoApellido.setText("");
-                    jTextFieldEmpleadoNombre.setText("");
-                    jTextFieldEmpleadoOrganizacion.setText("");
-                    jTextFieldEmpleadoNroDoc.setText("");
-                
+                area = (Organizacion) objSel;
+                areaPadre = (Organizacion) objSel;
+
+                jTextFieldAreaNombre.setText(areaPadre.getNombre());
+                if (area.getOrganizacionPadre() != null) {
+                    jTextFieldAreaPadreNombre.setText(areaPadre.getOrganizacionPadre().getNombre());
+                }
+
+                jTextFieldEmpleadoApellido.setText("");
+                jTextFieldEmpleadoNombre.setText("");
+                jTextFieldEmpleadoOrganizacion.setText("");
+                jTextFieldEmpleadoNroDoc.setText("");
+
             }
         }
     }//GEN-LAST:event_jTreeOrganigramaValueChanged
 
+    private void jButtonPersonaNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPersonaNuevoActionPerformed
+        // TODO add your handling code here:
+        if (areaPadre == null || !esOrganizacion()) {
+            JOptionPane.showMessageDialog(this, "DEBE SELECCIONAR ORGANIZACION SUPERIOR.", "Error", 0);
+        } else {
+            persona = new Persona();
+            persona.setOrganizacion(areaPadre);
+
+            manejaPersona(true);
+            manejaOrganizacion(false);
+        }
+
+        //            jTextFieldAreaNombre.setText("");
+        //            jTextFieldAreaNombre.setEditable(false);
+        //            jTextFieldAreaPadreNombre.setText("");
+        //
+        //            jTextFieldEmpleadoApellido.setText("");
+        //            jTextFieldEmpleadoApellido.setEditable(true);
+        //            jTextFieldEmpleadoNombre.setText("");
+        //            jTextFieldEmpleadoNombre.setEditable(true);
+        //            jTextFieldEmpleadoOrganizacion.setText(areaPadre.getNombre());
+        //            jTextFieldEmpleadoNroDoc.setText("");
+        //            jTextFieldEmpleadoNroDoc.setEditable(true);
+        //
+        //            jButtonGuardarArea.setEnabled(false);
+        //            jButtonGuardarEmpleado.setEnabled(true);
+
+    }//GEN-LAST:event_jButtonPersonaNuevoActionPerformed
+
+    private void manejaPersona(boolean activa) {
+        if (activa) {
+            jTextFieldEmpleadoApellido.setText("");
+            jTextFieldEmpleadoApellido.setEditable(true);
+            jTextFieldEmpleadoNombre.setText("");
+            jTextFieldEmpleadoNombre.setEditable(true);
+            jTextFieldEmpleadoOrganizacion.setText(areaPadre.getNombre());
+            jTextFieldEmpleadoNroDoc.setText("");
+            jTextFieldEmpleadoNroDoc.setEditable(true);
+            jButtonGuardarEmpleado.setEnabled(true);
+        } else {
+            jTextFieldEmpleadoApellido.setText("");
+            jTextFieldEmpleadoApellido.setEditable(false);
+            jTextFieldEmpleadoNombre.setText("");
+            jTextFieldEmpleadoNombre.setEditable(false);
+            jTextFieldEmpleadoNroDoc.setText("");
+            jTextFieldEmpleadoNroDoc.setEditable(false);
+            jTextFieldEmpleadoOrganizacion.setText("");
+            jButtonGuardarEmpleado.setEnabled(false);
+        }
+    }
+
+    private void manejaOrganizacion(boolean activa) {
+        if (activa) {
+            jTextFieldAreaNombre.setText("");
+            jTextFieldAreaNombre.setEditable(true);
+            jTextFieldAreaPadreNombre.setText(areaPadre.getNombre());
+            jButtonGuardarArea.setEnabled(true);
+        } else {
+            jTextFieldAreaNombre.setText("");
+            jTextFieldAreaNombre.setEditable(false);
+            jTextFieldAreaPadreNombre.setText("");
+            jTextFieldAreaPadreNombre.setText("");
+            jButtonGuardarArea.setEnabled(false);
+
+        }
+    }
+
+    private boolean esOrganizacion() {
+        DefaultMutableTreeNode nodoSeleccionado = (DefaultMutableTreeNode) jTreeOrganigrama.getLastSelectedPathComponent();
+        if (!nodoSeleccionado.getUserObject().getClass().getSimpleName().equals("Organizacion")) {
+            return false;
+        }
+        return true;
+    }
     private void jButtonOrganizacionNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOrganizacionNuevoActionPerformed
         // TODO add your handling code here:
-        
-        if (areaPadre==null || !esOrganizacion()) {
-                List<Organizacion> oPadre = organizacionAction.findByNamedQuery("Organizacion.findOrganizacionPadre");
-                if (oPadre.size()>0) {JOptionPane.showMessageDialog(this, "DEBE SELECCIONAR ORGANIZACION SUPERIOR.", "Error", 0);}
-        }else{
+
+        if (areaPadre == null || !esOrganizacion()) {
+            List<Organizacion> oPadre = organizacionAction.findByNamedQuery("Organizacion.findOrganizacionPadre");
+            if (oPadre.size() > 0) {
+                JOptionPane.showMessageDialog(this, "DEBE SELECCIONAR ORGANIZACION SUPERIOR.", "Error", 0);
+            }
+        } else {
             area = new Organizacion();
             area.setOrganizacionPadre(areaPadre);
             manejaOrganizacion(true);
             manejaPersona(false);
-//            jTextFieldAreaNombre.setText("");
-//            jTextFieldAreaNombre.setEditable(true);
-//            jTextFieldAreaPadreNombre.setText(areaPadre.getNombre());
-//            
-//            jTextFieldEmpleadoApellido.setText("");
-//            jTextFieldEmpleadoApellido.setEditable(false);
-//            jTextFieldEmpleadoNombre.setText("");
-//            jTextFieldEmpleadoNombre.setEditable(false);
-//            jTextFieldEmpleadoOrganizacion.setText("");
-//            jTextFieldEmpleadoNroDoc.setText("");
-//            jTextFieldEmpleadoNroDoc.setEditable(false);
-//            
-//            jButtonGuardarArea.setEnabled(true);
-//            jButtonGuardarEmpleado.setEnabled(false);
-                
-            
+            //            jTextFieldAreaNombre.setText("");
+            //            jTextFieldAreaNombre.setEditable(true);
+            //            jTextFieldAreaPadreNombre.setText(areaPadre.getNombre());
+            //
+            //            jTextFieldEmpleadoApellido.setText("");
+            //            jTextFieldEmpleadoApellido.setEditable(false);
+            //            jTextFieldEmpleadoNombre.setText("");
+            //            jTextFieldEmpleadoNombre.setEditable(false);
+            //            jTextFieldEmpleadoOrganizacion.setText("");
+            //            jTextFieldEmpleadoNroDoc.setText("");
+            //            jTextFieldEmpleadoNroDoc.setEditable(false);
+            //
+            //            jButtonGuardarArea.setEnabled(true);
+            //            jButtonGuardarEmpleado.setEnabled(false);
+
         }
-        
-        
+
     }//GEN-LAST:event_jButtonOrganizacionNuevoActionPerformed
-    private boolean esOrganizacion(){
-       DefaultMutableTreeNode nodoSeleccionado = (DefaultMutableTreeNode)jTreeOrganigrama.getLastSelectedPathComponent();
-        if (!nodoSeleccionado.getUserObject().getClass().getSimpleName().equals("Organizacion")) {
-            return false;
-        }
-     return true;
-    }
 
     private void jTextFieldAreaNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldAreaNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldAreaNombreActionPerformed
 
-    private void jButtonPersonaNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPersonaNuevoActionPerformed
+    private void jButtonGuardarAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarAreaActionPerformed
         // TODO add your handling code here:
-        if (areaPadre==null || !esOrganizacion()) {
-            JOptionPane.showMessageDialog(this, "DEBE SELECCIONAR ORGANIZACION SUPERIOR.", "Error", 0);
-        }else{
-            persona = new Persona();
-            persona.setOrganizacion(areaPadre);
-        
-            manejaPersona(true);
+        if (validarOrganizacion()) {
+            area.setNombre(jTextFieldAreaNombre.getText());
+            area.setTipoOrganizacion("EXTERNA");
+            organizacionAction.setEntity(area);
+            organizacionAction.crear();
+            areaPadre.getOrganizacionesHijas().add(area);
+
+            JOptionPane.showMessageDialog(this, "Se ha guardado con exito el Area Interna", "Info", 1);
             manejaOrganizacion(false);
+            DefaultMutableTreeNode nodoSeleccionado = (DefaultMutableTreeNode) jTreeOrganigrama.getLastSelectedPathComponent();
+            //                DefaultMutableTreeNode nodoNuevo = new DefaultMutableTreeNode(area,true);
+            //                nodoSeleccionado.add(nodoNuevo);
+            //                jTreeOrganigrama.repaint();
+            actualizarArbol();
+            jTreeOrganigrama.setSelectionPath(new TreePath(nodoSeleccionado.getPath()));
+            jTreeOrganigrama.expandPath(new TreePath(nodoSeleccionado.getPath()));
+            area = null;
+            areaPadre = null;
+
         }
-        
-//            jTextFieldAreaNombre.setText("");
-//            jTextFieldAreaNombre.setEditable(false);
-//            jTextFieldAreaPadreNombre.setText("");
-//            
-//            jTextFieldEmpleadoApellido.setText("");
-//            jTextFieldEmpleadoApellido.setEditable(true);
-//            jTextFieldEmpleadoNombre.setText("");
-//            jTextFieldEmpleadoNombre.setEditable(true);
-//            jTextFieldEmpleadoOrganizacion.setText(areaPadre.getNombre());
-//            jTextFieldEmpleadoNroDoc.setText("");
-//            jTextFieldEmpleadoNroDoc.setEditable(true);
-//            
-//            jButtonGuardarArea.setEnabled(false);
-//            jButtonGuardarEmpleado.setEnabled(true);
-       
-    }//GEN-LAST:event_jButtonPersonaNuevoActionPerformed
+    }//GEN-LAST:event_jButtonGuardarAreaActionPerformed
+    private void actualizarArbol() {
+        DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", true);
+        jTreeOrganigrama = new JTree(root);
+        jTreeOrganigrama.setCellRenderer(new CustomIconRenderer());
+        jTreeOrganigrama.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+            public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+                jTreeOrganigramaValueChanged(evt);
+            }
+        });
+        jScrollPaneOrganigrama.setViewportView(jTreeOrganigrama);
+    }
+    private void jButtonGuardarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarEmpleadoActionPerformed
+        // TODO add your handling code here:
+        if (validarPersona()) {
+            persona.setNombre(jTextFieldEmpleadoNombre.getText());
+            persona.setApellido(jTextFieldEmpleadoApellido.getText());
+            persona.setNumeroDocumento(jTextFieldEmpleadoNroDoc.getText());
+            personaAction.setPersona(persona);
+            personaAction.crear();
+
+            JOptionPane.showMessageDialog(this, "Se ha guardado con exito los Datos del Empleado", "Info", 1);
+            manejaPersona(false);
+
+            DefaultMutableTreeNode nodoSeleccionado = (DefaultMutableTreeNode) jTreeOrganigrama.getLastSelectedPathComponent();
+            //                DefaultMutableTreeNode nodoNuevo = new DefaultMutableTreeNode(persona,true);
+            //                nodoSeleccionado.add(nodoNuevo);
+            //                jTreeOrganigrama.repaint();
+            actualizarArbol();
+            jTreeOrganigrama.setSelectionPath(new TreePath(nodoSeleccionado.getPath()));
+            jTreeOrganigrama.expandPath(new TreePath(nodoSeleccionado.getPath()));
+            persona = null;
+
+        }
+    }//GEN-LAST:event_jButtonGuardarEmpleadoActionPerformed
     private boolean validarPersona(){
         if (jTextFieldEmpleadoApellido.getText()==null || jTextFieldEmpleadoApellido.getText().equals("") ) {
             JOptionPane.showMessageDialog(this, "INGRESE APELLIDO.", "Error", 0);
@@ -372,118 +469,57 @@ private PersonaAction personaAction;
         }
     return true;
     }
-    private void manejaPersona(boolean activa){
-        if (activa) {
-            jTextFieldEmpleadoApellido.setText("");
-            jTextFieldEmpleadoApellido.setEditable(true);
-            jTextFieldEmpleadoNombre.setText("");
-            jTextFieldEmpleadoNombre.setEditable(true);
-            jTextFieldEmpleadoOrganizacion.setText(areaPadre.getNombre());
-            jTextFieldEmpleadoNroDoc.setText("");
-            jTextFieldEmpleadoNroDoc.setEditable(true);
-            jButtonGuardarEmpleado.setEnabled(true);
-        }else{
-            jTextFieldEmpleadoApellido.setText("");
-            jTextFieldEmpleadoApellido.setEditable(false);
-            jTextFieldEmpleadoNombre.setText("");
-            jTextFieldEmpleadoNombre.setEditable(false);
-            jTextFieldEmpleadoNroDoc.setText("");
-            jTextFieldEmpleadoNroDoc.setEditable(false);
-            jTextFieldEmpleadoOrganizacion.setText("");
-            jButtonGuardarEmpleado.setEnabled(false);
-        }
-    }
     
-     private void manejaOrganizacion (boolean activa){
-         if (activa) {
-            jTextFieldAreaNombre.setText("");
-            jTextFieldAreaNombre.setEditable(true);
-            jTextFieldAreaPadreNombre.setText(areaPadre.getNombre());
-            jButtonGuardarArea.setEnabled(true);
-         }else{
-            jTextFieldAreaNombre.setText("");
-            jTextFieldAreaNombre.setEditable(false);
-            jTextFieldAreaPadreNombre.setText("");
-            jTextFieldAreaPadreNombre.setText("");
-            jButtonGuardarArea.setEnabled(false);
-            
-         }
-     }
-    
-    
-    private boolean validarOrganizacion(){
-        if (jTextFieldAreaNombre.getText()==null || jTextFieldAreaNombre.getText().equals("")) {
+    private boolean validarOrganizacion() {
+        if (jTextFieldAreaNombre.getText() == null || jTextFieldAreaNombre.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "INGRESE NOMBRE DE AREA.", "Error", 0);
             return false;
-            
+
         }
-    return true;
+        return true;
     }
-    
-    private void jButtonGuardarAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarAreaActionPerformed
-        // TODO add your handling code here:
-        if (validarOrganizacion()) {
-            area.setNombre(jTextFieldAreaNombre.getText());
-            organizacionAction.setEntity(area);
-            organizacionAction.crear();
-                areaPadre.getOrganizacionesHijas().add(area);
-                
-            JOptionPane.showMessageDialog(this, "Se ha guardado con exito el Area Interna", "Info", 1);
-            manejaOrganizacion(false);
-            DefaultMutableTreeNode nodoSeleccionado = (DefaultMutableTreeNode)jTreeOrganigrama.getLastSelectedPathComponent();
-//                DefaultMutableTreeNode nodoNuevo = new DefaultMutableTreeNode(area,true);
-//                nodoSeleccionado.add(nodoNuevo);
-//                jTreeOrganigrama.repaint();
-                actualizarArbol();
-                jTreeOrganigrama.setSelectionPath( new TreePath( nodoSeleccionado.getPath() ) );
-                jTreeOrganigrama.expandPath(new TreePath( nodoSeleccionado.getPath()));
-                area = null;
-                areaPadre = null;
-                
 
-            
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(JDialogOrganigrama.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(JDialogOrganigrama.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(JDialogOrganigrama.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(JDialogOrganigrama.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButtonGuardarAreaActionPerformed
-    private void actualizarArbol(){
-        DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", true);
-            jTreeOrganigrama = new JTree(root);
-            jTreeOrganigrama.setCellRenderer(new CustomIconRenderer());
-            jTreeOrganigrama.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
-        public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
-            jTreeOrganigramaValueChanged(evt);
-        }});
+        //</editor-fold>
 
-        jScrollPaneOrganigrama.setViewportView(jTreeOrganigrama);
+        /* Create and display the dialog */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                JDialogOrganigrama dialog = new JDialogOrganigrama(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            }
+        });
     }
-    private void jButtonGuardarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarEmpleadoActionPerformed
-        // TODO add your handling code here:
-        if (validarPersona()) {
-            persona.setNombre(jTextFieldEmpleadoNombre.getText());
-            persona.setApellido(jTextFieldEmpleadoApellido.getText());
-            persona.setNumeroDocumento(jTextFieldEmpleadoNroDoc.getText());
-            personaAction.setPersona(persona);
-            personaAction.crear();
-            
-            JOptionPane.showMessageDialog(this, "Se ha guardado con exito los Datos del Empleado", "Info", 1);
-            manejaPersona(false);
-                
-                DefaultMutableTreeNode nodoSeleccionado = (DefaultMutableTreeNode)jTreeOrganigrama.getLastSelectedPathComponent();
-//                DefaultMutableTreeNode nodoNuevo = new DefaultMutableTreeNode(persona,true);
-//                nodoSeleccionado.add(nodoNuevo);
-//                jTreeOrganigrama.repaint();
-                actualizarArbol();
-                jTreeOrganigrama.setSelectionPath( new TreePath( nodoSeleccionado.getPath() ) );
-                jTreeOrganigrama.expandPath(new TreePath( nodoSeleccionado.getPath()));
-                persona = null;
-                
-        }
-    }//GEN-LAST:event_jButtonGuardarEmpleadoActionPerformed
-
-   public static void main(String args[]) {
-       JInternalFrameOrganigrama org = new JInternalFrameOrganigrama();
-       org.setVisible(true);
-   }
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonGuardarArea;
     private javax.swing.JButton jButtonGuardarEmpleado;
