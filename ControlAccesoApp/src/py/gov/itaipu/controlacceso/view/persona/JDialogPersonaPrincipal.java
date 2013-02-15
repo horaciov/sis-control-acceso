@@ -63,6 +63,7 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
      */
     public JDialogPersonaPrincipal(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        tipoOrganizacionPersona = "EXTERNA";
         personaAction = new PersonaAction(new Persona());
         nacionalidadAction = new CRUDAction(new Nacionalidad());
         tipoDocAction = new CRUDAction(new TipoDocumento());
@@ -628,6 +629,11 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
             //Parametros
             Map<String, Object> parametros = new HashMap<String, Object> ();
             parametros.put("personaId",(Object)p.getId().intValue());
+            //Paso el full path del proyecto al reporte para obtener las imagenes.
+            java.io.File file = new java.io.File("");
+            String abspath=file.getAbsolutePath()+"/";
+            parametros.put("pathImagen", (Object) abspath);
+                        
             JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, conexion);
 
             //            Muestra el Reporte en Pantalla
@@ -713,14 +719,14 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
             personaFiltro.setSexo(null);
         }
 
-        String tipoPersona = null;
-        if (!jRadioButtonAmbos.isSelected()){
-            if (jRadioButtonInterna.isSelected()) {
-                tipoPersona="INTERNA";
-            }else if(jRadioButtonExterna.isSelected()){
-                tipoPersona="EXTERNA";
-            }
-        }
+        String tipoPersona = "EXTERNA";
+//        if (!jRadioButtonAmbos.isSelected()){
+//            if (jRadioButtonInterna.isSelected()) {
+//                tipoPersona="INTERNA";
+//            }else if(jRadioButtonExterna.isSelected()){
+//                tipoPersona="EXTERNA";
+//            }
+//        }
 
         Date fec1 = null;
         Date fec2 = null;
@@ -762,7 +768,7 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
         dialogPersona.setPersona(p);
         dialogPersona.setVisible(true);
         listPersonas.clear();
-        listPersonas.addAll(personaAction.findByParameters(personaFiltro, personaFiltro2,null));
+        listPersonas.addAll(personaAction.findByParameters(personaFiltro, personaFiltro2,tipoOrganizacionPersona));
     }//GEN-LAST:event_jButtonNuevoActionPerformed
 
     private void jButtonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarActionPerformed
@@ -778,7 +784,7 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
         dialogPersona.cargarDatospersona();
         dialogPersona.setVisible(true);
         listPersonas.clear();
-        listPersonas.addAll(personaAction.findByParameters(personaFiltro, personaFiltro2,null));
+        listPersonas.addAll(personaAction.findByParameters(personaFiltro, personaFiltro2,tipoOrganizacionPersona));
     }//GEN-LAST:event_jButtonModificarActionPerformed
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
@@ -794,7 +800,7 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
         personaAction.setPersona(p);
         personaAction.eliminar();
         listPersonas.clear();
-        listPersonas.addAll(personaAction.findByParameters(personaFiltro, personaFiltro2,null));
+        listPersonas.addAll(personaAction.findByParameters(personaFiltro, personaFiltro2,tipoOrganizacionPersona));
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jTablePersonasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePersonasMouseClicked
