@@ -53,7 +53,7 @@ public class PersonaAction {
     }
     
     public List<Persona> findByParameters(Persona persona, Persona personaHasta, String tipoOrganizacion) {
-        String sQuery = " from Persona p where 1=1";
+        String sQuery = " Select p from Persona p left outer join p.organizacion where 1=1";
         if (persona.getNumeroDocumento()!=null) {
             sQuery = sQuery + " and p.numeroDocumento = :numeroDocumento ";
         }
@@ -94,7 +94,7 @@ public class PersonaAction {
              if (tipoOrganizacion.equals("INTERNA")) {
                  sQuery = sQuery + " and p.organizacion.tipoOrganizacion = 'INTERNA' ";
              }else if(tipoOrganizacion.equals("EXTERNA")){
-                sQuery = sQuery + " and p.organizacion.tipoOrganizacion = 'EXTERNA'  " ;
+                sQuery = sQuery + " and ( p.organizacion is null or p.organizacion.tipoOrganizacion = 'EXTERNA' ) " ;
              }
         }
          
@@ -152,10 +152,7 @@ public class PersonaAction {
         if (personaHasta.getFechaNacimiento()!=null) {
                 query.setParameter("fechaNacimientoHasta", personaHasta.getFechaNacimiento());;
         }
-         
-         
-         
-             return query.getResultList();
+               return query.getResultList();
     }
     
     public void crear() {
