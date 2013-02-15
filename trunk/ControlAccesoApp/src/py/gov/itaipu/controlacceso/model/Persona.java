@@ -174,7 +174,7 @@ public class Persona implements Serializable{
         this.visitasRecibidas = visitasRecibidas;
     }
 
-    @ManyToOne
+    @ManyToOne(optional=true)
     public Organizacion getOrganizacion() {
         return organizacion;
     }
