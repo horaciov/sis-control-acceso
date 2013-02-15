@@ -162,13 +162,6 @@ WHERE
 				<textFieldExpression><![CDATA[$F{persona_nombre}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="fc1dc66d-357e-44fe-8098-7f4f886ea5bb" x="0" y="0" width="555" height="20"/>
-				<textElement textAlignment="Center">
-					<font size="14" isBold="true" isUnderline="true"/>
-				</textElement>
-				<text><![CDATA[Ticket de Visita]]></text>
-			</staticText>
-			<staticText>
 				<reportElement uuid="cab54242-8431-434a-9c95-02ba434c5f91" x="293" y="161" width="70" height="20"/>
 				<textElement>
 					<font isBold="true"/>
@@ -229,6 +222,13 @@ WHERE
 				</textElement>
 				<text><![CDATA[Firma Area Visitada]]></text>
 			</staticText>
+			<textField>
+				<reportElement uuid="5c6100f8-02e1-4ab6-96f3-7f3267223194" x="-1" y="-1" width="545" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true" isItalic="false" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Ticket de Visita Nro: " + $F{visita_id}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>

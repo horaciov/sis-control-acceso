@@ -2,10 +2,11 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportFichaPersona" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3c414966-9a1d-4bee-956e-23b59f293f83">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="71"/>
+	<property name="ireport.y" value="70"/>
 	<parameter name="personaId" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="pathImagen" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
      persona."id" AS persona_id,
@@ -20,9 +21,10 @@
      tipodocumento."nombre" AS tipodocumento_nombre,
      organizacion."nombre" AS organizacion_nombre,
      organizacion."descripcion" AS organizacion_descripcion,
-     organizacion."tipoorganizacion" AS organizacion_tipoorganizacion
+     organizacion."tipoorganizacion" AS organizacion_tipoorganizacion,
+     persona."fotografiapath" AS persona_fotografiapath
 FROM
-     "controlacceso"."organizacion" organizacion INNER JOIN "controlacceso"."persona" persona ON organizacion."id" = persona."organizacion_id"
+     "controlacceso"."organizacion" organizacion FULL JOIN "controlacceso"."persona" persona ON organizacion."id" = persona."organizacion_id"
      INNER JOIN "controlacceso"."tipodocumento" tipodocumento ON persona."tipodocumento_id" = tipodocumento."id"
      INNER JOIN "controlacceso"."nacionalidad" nacionalidad ON persona."nacionalidad_id" = nacionalidad."id"
 WHERE persona."id" = $P{personaId}]]>
@@ -40,6 +42,7 @@ WHERE persona."id" = $P{personaId}]]>
 	<field name="organizacion_nombre" class="java.lang.String"/>
 	<field name="organizacion_descripcion" class="java.lang.String"/>
 	<field name="organizacion_tipoorganizacion" class="java.lang.String"/>
+	<field name="persona_fotografiaPath" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -230,11 +233,11 @@ WHERE persona."id" = $P{personaId}]]>
 				<text><![CDATA[ORGANIZACION:]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement uuid="7a01b287-54a1-43ee-82c5-ceb5ebf3adbd" x="330" y="9" width="203" height="123"/>
+				<reportElement uuid="7a01b287-54a1-43ee-82c5-ceb5ebf3adbd" x="328" y="7" width="230" height="125"/>
 			</rectangle>
 			<image hAlign="Center" vAlign="Middle">
-				<reportElement uuid="28da7409-ac05-476c-836f-4cb7a9eb6deb" x="338" y="18" width="189" height="107"/>
-				<imageExpression><![CDATA[$F{persona_fotografia}]]></imageExpression>
+				<reportElement uuid="ed76a01b-fcb3-4f73-8353-fbf12f2a236c" x="333" y="11" width="227" height="111"/>
+				<imageExpression><![CDATA[( $F{persona_fotografiaPath} == null ? null : $P{pathImagen} + $F{persona_fotografiaPath} )]]></imageExpression>
 			</image>
 		</band>
 	</detail>
