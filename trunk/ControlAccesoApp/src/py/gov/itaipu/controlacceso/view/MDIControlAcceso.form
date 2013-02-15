@@ -297,7 +297,7 @@
                                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                               <Component id="jButtonOrganigrama" min="-2" pref="70" max="-2" attributes="0"/>
                                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="jButtonReportes1" min="-2" pref="65" max="-2" attributes="0"/>
+                                              <Component id="jButtonVisitas" min="-2" pref="65" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -404,7 +404,7 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="1" attributes="0">
                                       <Group type="103" alignment="1" groupAlignment="1" max="-2" attributes="0">
-                                          <Component id="jButtonReportes1" max="32767" attributes="0"/>
+                                          <Component id="jButtonVisitas" max="32767" attributes="0"/>
                                           <Component id="jButtonVisitantes" alignment="1" max="32767" attributes="0"/>
                                           <Component id="jButtonReportes" alignment="1" min="-2" pref="57" max="-2" attributes="0"/>
                                       </Group>
@@ -706,14 +706,14 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonOrganigramaActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButtonReportes1">
+        <Component class="javax.swing.JButton" name="jButtonVisitas">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/resource/img/handshake48.jpeg"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonReportes1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonVisitasActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelPersonaVisitada5">
