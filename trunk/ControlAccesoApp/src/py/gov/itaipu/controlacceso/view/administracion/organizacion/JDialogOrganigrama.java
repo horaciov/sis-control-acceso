@@ -374,21 +374,7 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
             area.setOrganizacionPadre(areaPadre);
             manejaOrganizacion(true);
             manejaPersona(false);
-            //            jTextFieldAreaNombre.setText("");
-            //            jTextFieldAreaNombre.setEditable(true);
-            //            jTextFieldAreaPadreNombre.setText(areaPadre.getNombre());
-            //
-            //            jTextFieldEmpleadoApellido.setText("");
-            //            jTextFieldEmpleadoApellido.setEditable(false);
-            //            jTextFieldEmpleadoNombre.setText("");
-            //            jTextFieldEmpleadoNombre.setEditable(false);
-            //            jTextFieldEmpleadoOrganizacion.setText("");
-            //            jTextFieldEmpleadoNroDoc.setText("");
-            //            jTextFieldEmpleadoNroDoc.setEditable(false);
-            //
-            //            jButtonGuardarArea.setEnabled(true);
-            //            jButtonGuardarEmpleado.setEnabled(false);
-
+          
         }
 
     }//GEN-LAST:event_jButtonOrganizacionNuevoActionPerformed
@@ -401,7 +387,7 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (validarOrganizacion()) {
             area.setNombre(jTextFieldAreaNombre.getText());
-            area.setTipoOrganizacion("EXTERNA");
+            area.setTipoOrganizacion("INTERNA");
             organizacionAction.setEntity(area);
             organizacionAction.crear();
             areaPadre.getOrganizacionesHijas().add(area);

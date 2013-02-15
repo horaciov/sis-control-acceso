@@ -5,27 +5,17 @@
 package py.gov.itaipu.controlacceso.view.visita;
 
 import java.awt.Dialog;
-import java.beans.PropertyVetoException;
-import java.io.BufferedInputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Formatter;
 import java.util.HashMap;
-import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.*;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.stream.MemoryCacheImageInputStream;
-import javax.persistence.EntityManager;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -34,14 +24,11 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import org.jdesktop.observablecollections.ObservableCollections;
-import org.jdesktop.swingbinding.JTableBinding;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.action.visita.VisitaAction;
 import py.gov.itaipu.controlacceso.model.Motivo;
-import py.gov.itaipu.controlacceso.model.Nacionalidad;
 import py.gov.itaipu.controlacceso.model.Organizacion;
 import py.gov.itaipu.controlacceso.model.Persona;
-import py.gov.itaipu.controlacceso.model.TipoDocumento;
 import py.gov.itaipu.controlacceso.model.Visita;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 import py.gov.itaipu.controlacceso.view.JDialogBuscador;
@@ -51,10 +38,10 @@ import py.gov.itaipu.controlacceso.view.persona.JInternalFramePersona;
 
 /**
  *
- * @author vimartih
+ * @author fboy
  */
-public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
-    
+public class JDialogConsultaVisitas extends javax.swing.JDialog {
+
     private VisitaAction visitaAction;
     private TableCellRenderer rendererTime;
     private CRUDAction<Motivo> motivoAction;
@@ -62,19 +49,18 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
     private Organizacion organizacionExterna;
     private Persona persona;
     private Persona personaVisitada;
-
+    
     /**
-     * Creates new form JInternalFrameMotivo
+     * Creates new form JDialogConsultaVisitas
      */
-    public JInternalFrameConsultaVisita() {
-        setClosable(true);
+    public JDialogConsultaVisitas(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         visitaAction = new VisitaAction();
         visitaAction.setVisita(new Visita());        
         motivoAction = new CRUDAction<Motivo>(new Motivo());
         organizacionAction = new CRUDAction<Organizacion>(new Organizacion());
         rendererTime = new TimeRenderer();
-        initComponents();        
-        
+        initComponents();
     }
 
     /**
@@ -97,9 +83,9 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
         Organizacion o=new Organizacion();
         o.setNombre("TODAS");
         listOrganizacionInternas.add(0, o);
+        jButtonCerrar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableVisitas = new javax.swing.JTable();
-        jButtonCerrar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
@@ -131,33 +117,11 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
         jButtonImprimirListado = new javax.swing.JButton();
         jButtonImprimirVisita = new javax.swing.JButton();
 
-        setTitle("Consulta de visitas");
-
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listVisitas, jTableVisitas);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${persona.nombre} ${persona.apellido}"));
-        columnBinding.setColumnName("Persona");
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${persona.organizacion.nombre}"));
-        columnBinding.setColumnName("Organización");
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${fechaIngreso}"));
-        columnBinding.setColumnName("Fecha Ingreso");
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${fechaSalida}"));
-        columnBinding.setColumnName("Fecha de Salida");
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${motivo.nombre}"));
-        columnBinding.setColumnName("Motivo");
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${personaVisitada.nombre} ${personaVisitada.apellido}"));
-        columnBinding.setColumnName("Persona Visitada");
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${organizacionInterna.nombre}"));
-        columnBinding.setColumnName("Area Visitada");
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${observacion}"));
-        columnBinding.setColumnName("Observacion");
-        bindingGroup.addBinding(jTableBinding);
-        jTableBinding.bind();
-        jScrollPane1.setViewportView(jTableVisitas);
-        jTableVisitas.getColumnModel().getColumn(0).setMinWidth(200);
-        jTableVisitas.getColumnModel().getColumn(0).setPreferredWidth(200);
-        jTableVisitas.getColumnModel().getColumn(0).setMaxWidth(200);
-        jTableVisitas.getColumnModel().getColumn(2).setCellRenderer(rendererTime);
-        jTableVisitas.getColumnModel().getColumn(3).setCellRenderer(rendererTime);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("CONSULTA DE VISITAS");
+        setBounds(new java.awt.Rectangle(30, 30, 0, 0));
+        setModalityType(java.awt.Dialog.ModalityType.MODELESS);
+        setResizable(false);
 
         jButtonCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/exit.png"))); // NOI18N
         jButtonCerrar.setText("Cerrar");
@@ -169,6 +133,37 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
                 jButtonCerrarActionPerformed(evt);
             }
         });
+
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listVisitas, jTableVisitas);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${persona.nombre} ${persona.apellido}"));
+        columnBinding.setColumnName("Persona");
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${persona.organizacion.nombre}"));
+        columnBinding.setColumnName("Organizacion");
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${fechaIngreso}"));
+        columnBinding.setColumnName("Fecha Ingreso");
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${fechaSalida}"));
+        columnBinding.setColumnName("Fecha salida");
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${motivo.nombre}"));
+        columnBinding.setColumnName("Motivo");
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${personaVisitada.nombre} ${personaVisitada.apellido}"));
+        columnBinding.setColumnName("Persona Visitada");
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${organizacionInterna.nombre}"));
+        columnBinding.setColumnName("Area Visitada");
+        columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${observacion}"));
+        columnBinding.setColumnName("Observacion");
+        columnBinding.setEditable(false);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
+        jScrollPane1.setViewportView(jTableVisitas);
+        jTableVisitas.getColumnModel().getColumn(2).setCellRenderer(rendererTime);
+        jTableVisitas.getColumnModel().getColumn(3).setCellRenderer(rendererTime);
 
         jLabel1.setText("Criterio de búsqueda");
 
@@ -198,12 +193,6 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
 
         org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listOrganizacionInternas, jComboBoxOrganizacionInternta);
         bindingGroup.addBinding(jComboBoxBinding);
-
-        jComboBoxOrganizacionInternta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxOrganizacionInterntaActionPerformed(evt);
-            }
-        });
 
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listMotivos, jComboBoxMotivo);
         bindingGroup.addBinding(jComboBoxBinding);
@@ -313,7 +302,7 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
                         .addComponent(jLabel7)
                         .addGap(18, 18, 18)
                         .addComponent(jFormattedTextFieldHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addComponent(jButtonLimpiarOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -426,19 +415,19 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(19, 19, 19)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonImprimirVisita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23))
+                .addContainerGap())
         );
 
         bindingGroup.bind();
@@ -446,32 +435,73 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jButtonCerrarActionPerformed
+
+    private void jButtonBuscarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarPersonaActionPerformed
+        // TODO add your handling code here:
+        JInternalFramePersona jFramePersona = new JInternalFramePersona();
+        jFramePersona.setModoBuscador(true);
+        jFramePersona.setTitle("Buscador de Personas Externas");
+        jFramePersona.setTipoOrganizacionPersona("EXTERNA");
+        jFramePersona.setVisible(true);
+        JDialogBuscador buscador=new JDialogBuscador(null, true);
+        buscador.setSize(jFramePersona.getSize());
+        //jFramePersona.setClosable(false);
+        jFramePersona.setResizable(false);
+        buscador.getjDesktopPaneBuscador().add(jFramePersona);
+        buscador.setVisible(true);
+        persona=jFramePersona.getPersonaSeleccionada();
+        if(persona!=null)
+        jTextFieldPersona.setText(persona.getNombre()+", "+persona.getApellido());
+    }//GEN-LAST:event_jButtonBuscarPersonaActionPerformed
+
+    private void jButtonBuscarPersonaVisitadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarPersonaVisitadaActionPerformed
+        // TODO add your handling code here:
+        JInternalFramePersona jFramePersona = new JInternalFramePersona();
+        jFramePersona.setModoBuscador(true);
+        jFramePersona.setTitle("Buscador de Personas Internas");
+        jFramePersona.setTipoOrganizacionPersona("INTERNA");
+        jFramePersona.setVisible(true);
+        JDialogBuscador buscador=new JDialogBuscador(null, true);
+        buscador.setSize(jFramePersona.getSize());
+        //jFramePersona.setClosable(false);
+        jFramePersona.setResizable(false);
+        buscador.getjDesktopPaneBuscador().add(jFramePersona);
+        buscador.setVisible(true);
+        personaVisitada=jFramePersona.getPersonaSeleccionada();
+        if(personaVisitada!=null)
+        jTextFieldPersonaVisitada.setText(personaVisitada.getNombre()+", "+personaVisitada.getApellido());
+    }//GEN-LAST:event_jButtonBuscarPersonaVisitadaActionPerformed
+
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
         // TODO add your handling code here:
         Visita v = new Visita();
         Date hasta=null;
-        
+
         if (jTextAreaObservacion.getText() != null && !jTextAreaObservacion.getText().equals("")) {
             v.setObservacion(jTextAreaObservacion.getText().toUpperCase());
         }
-        
+
         Motivo motivo = (Motivo) jComboBoxMotivo.getSelectedItem();
         if (motivo.getId() != null) {
             v.setMotivo(motivo);
         }
-        
+
         v.setPersona(persona);
         v.setPersonaVisitada(personaVisitada);
-                    
+
         Organizacion organizacionInterna = (Organizacion) jComboBoxOrganizacionInternta.getSelectedItem();
         if (organizacionInterna.getId() != null) {
             v.setOrganizacionInterna(organizacionInterna);
         }
-       
+
         if (jFormattedTextFieldDesde.getText()!=null && !jFormattedTextFieldDesde.getText().equals("")) {
             v.setFechaIngreso(((Date)jFormattedTextFieldDesde.getValue()));
         }
-        
+
         if (jFormattedTextFieldHasta.getText()!=null && !jFormattedTextFieldHasta.getText().equals("")) {
             hasta=(Date)jFormattedTextFieldHasta.getValue();
             Calendar cal = Calendar.getInstance(); // creates calendar
@@ -479,94 +509,53 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
             cal.add(Calendar.HOUR_OF_DAY, 23);
             cal.add(Calendar.MINUTE, 59);
             cal.add(Calendar.SECOND, 59);
-            hasta=cal.getTime(); 
-            
+            hasta=cal.getTime();
+
         }
-        
+
         listVisitas.clear();
         listVisitas.addAll(visitaAction.findByParameters(v, hasta, organizacionExterna, "N"));
     }//GEN-LAST:event_jButtonBuscarActionPerformed
-    
-    private void jButtonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarActionPerformed
+
+    private void jButtonBuscarOrganizacionExternaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarOrganizacionExternaActionPerformed
+
         // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_jButtonCerrarActionPerformed
-    
+        JInternalFrameOrganizacionExterna jFrameOrganizacionExterna = new JInternalFrameOrganizacionExterna();
+        jFrameOrganizacionExterna.setModoBuscador(true);
+        jFrameOrganizacionExterna.setVisible(true);
+        JDialogBuscador buscador=new JDialogBuscador(null, true);
+        buscador.setSize(jFrameOrganizacionExterna.getSize());
+        jFrameOrganizacionExterna.setClosable(false);
+        jFrameOrganizacionExterna.setResizable(false);
+        jFrameOrganizacionExterna.setTitle("Buscador de organización externa");
+        buscador.getjDesktopPaneBuscador().add(jFrameOrganizacionExterna);
+        buscador.setVisible(true);
+        organizacionExterna=jFrameOrganizacionExterna.getOrganizacionSeleccionada();
+        if(organizacionExterna!=null)
+        jTextFieldOrganizacionExterna.setText(organizacionExterna.getNombre());
+
+    }//GEN-LAST:event_jButtonBuscarOrganizacionExternaActionPerformed
+
     private void jButtonLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarActionPerformed
         // TODO add your handling code here:
         persona=null;
         personaVisitada=null;
         organizacionExterna=null;
-        
+
         jComboBoxMotivo.setSelectedIndex(0);
         jComboBoxOrganizacionInternta.setSelectedIndex(0);
-        
-        jTextAreaObservacion.setText(null);    
-        
+
+        jTextAreaObservacion.setText(null);
+
         jTextFieldPersona.setText(null);
         jTextFieldPersonaVisitada.setText(null);
         jTextFieldOrganizacionExterna.setText(null);
-        
+
         jFormattedTextFieldDesde.setText(null);
         jFormattedTextFieldHasta.setText(null);
-        
+
         listVisitas.clear();
     }//GEN-LAST:event_jButtonLimpiarActionPerformed
-
-    private void jButtonBuscarOrganizacionExternaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarOrganizacionExternaActionPerformed
-
-            // TODO add your handling code here:
-            JInternalFrameOrganizacionExterna jFrameOrganizacionExterna = new JInternalFrameOrganizacionExterna();
-            jFrameOrganizacionExterna.setModoBuscador(true);
-            jFrameOrganizacionExterna.setVisible(true);            
-            JDialogBuscador buscador=new JDialogBuscador(null, closable);        
-            buscador.setSize(jFrameOrganizacionExterna.getSize());
-            jFrameOrganizacionExterna.setClosable(false);
-            jFrameOrganizacionExterna.setResizable(false);
-            jFrameOrganizacionExterna.setTitle("Buscador de organización externa");
-            buscador.getjDesktopPaneBuscador().add(jFrameOrganizacionExterna);
-            buscador.setVisible(true);        
-            organizacionExterna=jFrameOrganizacionExterna.getOrganizacionSeleccionada();
-            if(organizacionExterna!=null)
-                jTextFieldOrganizacionExterna.setText(organizacionExterna.getNombre());
-       
-    }//GEN-LAST:event_jButtonBuscarOrganizacionExternaActionPerformed
-
-    private void jButtonBuscarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarPersonaActionPerformed
-        // TODO add your handling code here:
-         JInternalFramePersona jFramePersona = new JInternalFramePersona();
-            jFramePersona.setModoBuscador(true);
-            jFramePersona.setTitle("Buscador de Personas Externas");
-            jFramePersona.setTipoOrganizacionPersona("EXTERNA");
-            jFramePersona.setVisible(true);            
-            JDialogBuscador buscador=new JDialogBuscador(null, closable);        
-            buscador.setSize(jFramePersona.getSize());
-            //jFramePersona.setClosable(false);
-            jFramePersona.setResizable(false);
-            buscador.getjDesktopPaneBuscador().add(jFramePersona);
-            buscador.setVisible(true);        
-            persona=jFramePersona.getPersonaSeleccionada();
-            if(persona!=null)
-                jTextFieldPersona.setText(persona.getNombre()+", "+persona.getApellido());
-    }//GEN-LAST:event_jButtonBuscarPersonaActionPerformed
-
-    private void jButtonBuscarPersonaVisitadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarPersonaVisitadaActionPerformed
-        // TODO add your handling code here:
-            JInternalFramePersona jFramePersona = new JInternalFramePersona();
-            jFramePersona.setModoBuscador(true);
-            jFramePersona.setTitle("Buscador de Personas Internas");
-            jFramePersona.setTipoOrganizacionPersona("INTERNA");
-            jFramePersona.setVisible(true);            
-            JDialogBuscador buscador=new JDialogBuscador(null, closable);        
-            buscador.setSize(jFramePersona.getSize());
-            //jFramePersona.setClosable(false);
-            jFramePersona.setResizable(false);
-            buscador.getjDesktopPaneBuscador().add(jFramePersona);
-            buscador.setVisible(true);        
-            personaVisitada=jFramePersona.getPersonaSeleccionada();
-            if(personaVisitada!=null)
-                jTextFieldPersonaVisitada.setText(personaVisitada.getNombre()+", "+personaVisitada.getApellido());
-    }//GEN-LAST:event_jButtonBuscarPersonaVisitadaActionPerformed
 
     private void jButtonLimpiarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarPersonaActionPerformed
         // TODO add your handling code here:
@@ -584,68 +573,66 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         organizacionExterna=null;
         jTextFieldOrganizacionExterna.setText(null);
-
     }//GEN-LAST:event_jButtonLimpiarOrganizacionActionPerformed
 
     private void jButtonImprimirListadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImprimirListadoActionPerformed
         // TODO add your handling code here:
         try {
-            
+
             Class.forName("org.postgresql.Driver");
             Connection conexion = EntityManagerCA.getConexion();
             JasperReport reporte = (JasperReport) JRLoader.loadObject("reports/reporteListadoVisitas.jasper");
             //Parametros
-                Map<String, Object> parametros = new HashMap<String, Object> ();
-                ///Parametros
-                if (persona!=null && persona.getId()!=null) {
-                    parametros.put("pPersonaText",(Object)(persona.getApellido()+", "+persona.getNombre()));
-                    parametros.put("pPersonaId",(Object)persona.getId().intValue());
-                }
-                if (personaVisitada!=null && personaVisitada.getId()!=null) {
-                    parametros.put("pPersonaVisitadaText",(Object)(personaVisitada.getApellido()+", "+personaVisitada.getNombre()));
-                    parametros.put("pPersonaVisitadaId",(Object)personaVisitada.getId().intValue());
-                }
-                
-                if ( organizacionExterna!=null &&  organizacionExterna.getId()!=null) {
-                    parametros.put("pOrganizacionText",(Object)organizacionExterna.getNombre());
-                    parametros.put("pOrganizacionId",(Object)organizacionExterna.getId().intValue());
-                }
-                
-                Organizacion organizacionInterna = (Organizacion) jComboBoxOrganizacionInternta.getSelectedItem();
-                if (organizacionInterna.getId() != null) {
-                    parametros.put("pOrganizacionVisitadaText",(Object)organizacionInterna.getNombre());
-                    parametros.put("pOrganizacionVisitadaId",(Object)organizacionInterna.getId().intValue());
-                }
-                 Motivo motivo = (Motivo) jComboBoxMotivo.getSelectedItem();
-                if (motivo.getId() != null) {
-                    parametros.put("pMotivoText",(Object)motivo.getNombre());
-                    parametros.put("pMotivoId",(Object)motivo.getId().intValue());
-                }
-                if (jTextAreaObservacion.getText()!=null && !jTextAreaObservacion.getText().equals("")) {
-                    parametros.put("pObservacion",(Object)jTextAreaObservacion.getText().toUpperCase());
-                }
-                
-                if (jFormattedTextFieldDesde!=null && !jFormattedTextFieldDesde.getText().equals("")) {
-                    String vFecha = jFormattedTextFieldDesde.getText().substring(6,10)+jFormattedTextFieldDesde.getText().substring(3,5)+jFormattedTextFieldDesde.getText().substring(0,2);
-                    parametros.put("pFechaDesde",(Object)vFecha.toUpperCase());
-                    vFecha = vFecha.substring(6,8)+"/"+vFecha.substring(4,6)+"/"+vFecha.substring(0,4);
-                    parametros.put("pFechaDesdeText",(Object)vFecha.toUpperCase());
-                }
-              if (jFormattedTextFieldHasta!=null && !jFormattedTextFieldHasta.getText().equals("")) {
-                    String vFechaH = jFormattedTextFieldHasta.getText().substring(6,10)+jFormattedTextFieldHasta.getText().substring(3,5)+jFormattedTextFieldHasta.getText().substring(0,2);
-                    parametros.put("pFechaHasta",(Object)vFechaH.toUpperCase());
-                    vFechaH = vFechaH.substring(6,8)+"/"+vFechaH.substring(4,6)+"/"+vFechaH.substring(0,4);
-                    parametros.put("pFechaHastaText",(Object)vFechaH.toUpperCase());
-                }  
-                 
-                
-                JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, conexion);
+            Map<String, Object> parametros = new HashMap<String, Object> ();
+            ///Parametros
+            if (persona!=null && persona.getId()!=null) {
+                parametros.put("pPersonaText",(Object)(persona.getApellido()+", "+persona.getNombre()));
+                parametros.put("pPersonaId",(Object)persona.getId().intValue());
+            }
+            if (personaVisitada!=null && personaVisitada.getId()!=null) {
+                parametros.put("pPersonaVisitadaText",(Object)(personaVisitada.getApellido()+", "+personaVisitada.getNombre()));
+                parametros.put("pPersonaVisitadaId",(Object)personaVisitada.getId().intValue());
+            }
 
-//            Muestra el Reporte en Pantalla
+            if ( organizacionExterna!=null &&  organizacionExterna.getId()!=null) {
+                parametros.put("pOrganizacionText",(Object)organizacionExterna.getNombre());
+                parametros.put("pOrganizacionId",(Object)organizacionExterna.getId().intValue());
+            }
+
+            Organizacion organizacionInterna = (Organizacion) jComboBoxOrganizacionInternta.getSelectedItem();
+            if (organizacionInterna.getId() != null) {
+                parametros.put("pOrganizacionVisitadaText",(Object)organizacionInterna.getNombre());
+                parametros.put("pOrganizacionVisitadaId",(Object)organizacionInterna.getId().intValue());
+            }
+            Motivo motivo = (Motivo) jComboBoxMotivo.getSelectedItem();
+            if (motivo.getId() != null) {
+                parametros.put("pMotivoText",(Object)motivo.getNombre());
+                parametros.put("pMotivoId",(Object)motivo.getId().intValue());
+            }
+            if (jTextAreaObservacion.getText()!=null && !jTextAreaObservacion.getText().equals("")) {
+                parametros.put("pObservacion",(Object)jTextAreaObservacion.getText().toUpperCase());
+            }
+
+            if (jFormattedTextFieldDesde!=null && !jFormattedTextFieldDesde.getText().equals("")) {
+                String vFecha = jFormattedTextFieldDesde.getText().substring(6,10)+jFormattedTextFieldDesde.getText().substring(3,5)+jFormattedTextFieldDesde.getText().substring(0,2);
+                parametros.put("pFechaDesde",(Object)vFecha.toUpperCase());
+                vFecha = vFecha.substring(6,8)+"/"+vFecha.substring(4,6)+"/"+vFecha.substring(0,4);
+                parametros.put("pFechaDesdeText",(Object)vFecha.toUpperCase());
+            }
+            if (jFormattedTextFieldHasta!=null && !jFormattedTextFieldHasta.getText().equals("")) {
+                String vFechaH = jFormattedTextFieldHasta.getText().substring(6,10)+jFormattedTextFieldHasta.getText().substring(3,5)+jFormattedTextFieldHasta.getText().substring(0,2);
+                parametros.put("pFechaHasta",(Object)vFechaH.toUpperCase());
+                vFechaH = vFechaH.substring(6,8)+"/"+vFechaH.substring(4,6)+"/"+vFechaH.substring(0,4);
+                parametros.put("pFechaHastaText",(Object)vFechaH.toUpperCase());
+            }
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, conexion);
+
+            //            Muestra el Reporte en Pantalla
             JasperViewer jviewer = new JasperViewer(jasperPrint, false);
             jviewer.setModalExclusionType(Dialog.ModalExclusionType.NO_EXCLUDE);
             jviewer.viewReport(jasperPrint,false);
-       
+
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(JInternalFramePersona.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -653,7 +640,7 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
         } catch (JRException ex) {
             Logger.getLogger(JInternalFramePersona.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_jButtonImprimirListadoActionPerformed
 
     private void jButtonImprimirVisitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImprimirVisitaActionPerformed
@@ -672,7 +659,7 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
             Map<String, Object> parametros = new HashMap<String, Object>();
             parametros.put("idVis", (Object) v.getId());
             //Paso el full path del proyecto al reporte para obtener las imagenes.
-            java.io.File file = new java.io.File("");   
+            java.io.File file = new java.io.File("");
             String abspath=file.getAbsolutePath()+"/";
             parametros.put("pathImagen", (Object) abspath);
             //                //Fotografia
@@ -700,10 +687,47 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButtonImprimirVisitaActionPerformed
 
-    private void jComboBoxOrganizacionInterntaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxOrganizacionInterntaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBoxOrganizacionInterntaActionPerformed
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(JDialogConsultaVisitas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(JDialogConsultaVisitas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(JDialogConsultaVisitas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(JDialogConsultaVisitas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
 
+        /* Create and display the dialog */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                JDialogConsultaVisitas dialog = new JDialogConsultaVisitas(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            }
+        });
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonBuscarOrganizacionExterna;
