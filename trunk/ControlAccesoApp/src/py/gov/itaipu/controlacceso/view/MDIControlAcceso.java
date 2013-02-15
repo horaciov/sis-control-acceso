@@ -50,12 +50,12 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         visitaAction.setVisita(new Visita());   
         rendererTime = new TimeRenderer();
         tipoDocAction = new CRUDAction(new TipoDocumento());
-        
         initComponents();
         jComboBoxTipoDoc.setVisible(false);
         jLabelTipoDeDoc.setVisible(false);
         jComboBoxTipoDoc.setSelectedItem(tipoDocAction.findByNamedQuery("TipoDocumento.findCI"));
-        setExtendedState(MAXIMIZED_BOTH);
+        this.menuBar.setVisible(false);
+        //        setExtendedState(MAXIMIZED_BOTH);
     }
 
     /**
@@ -136,11 +136,6 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
-            }
-        });
-        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                formMouseMoved(evt);
             }
         });
 
@@ -475,15 +470,6 @@ public class MDIControlAcceso extends javax.swing.JFrame {
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jSeparator1, jSeparator5});
 
-        menuBar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                menuBarMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                menuBarMouseExited(evt);
-            }
-        });
-
         jMenuPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/Boss.gif"))); // NOI18N
         jMenuPersona.setText("Persona");
 
@@ -625,11 +611,10 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(desktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addComponent(desktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         bindingGroup.bind();
@@ -717,24 +702,6 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         consultaVisitaFrame.setVisible(true);
         this.desktopPane.add(consultaVisitaFrame);
     }//GEN-LAST:event_jMenuItemConsultaVisitaActionPerformed
-
-    private void menuBarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuBarMouseEntered
-        // TODO add your handling code here:
-        this.menuBar.setVisible(true);
-    }//GEN-LAST:event_menuBarMouseEntered
-
-    private void menuBarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuBarMouseExited
-        // TODO add your handling code here:
-        this.menuBar.setVisible(false);
-    }//GEN-LAST:event_menuBarMouseExited
-
-    private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
-        // TODO add your handling code here:
-        if (evt.getPoint().y < 50) {
-            menuBar.setVisible(true);
-        }
-
-    }//GEN-LAST:event_formMouseMoved
 
     private void jTextFieldNroTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNroTicketActionPerformed
         // TODO add your handling code here:
