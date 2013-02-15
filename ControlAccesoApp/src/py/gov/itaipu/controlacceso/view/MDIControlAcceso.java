@@ -17,6 +17,7 @@ import py.gov.itaipu.controlacceso.action.visita.VisitaAction;
 import py.gov.itaipu.controlacceso.model.TipoDocumento;
 import py.gov.itaipu.controlacceso.model.Visita;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
+import py.gov.itaipu.controlacceso.view.administracion.organizacion.JDialogOrganigrama;
 import py.gov.itaipu.controlacceso.view.administracion.organizacion.JInternalFrameOrganigrama;
 import py.gov.itaipu.controlacceso.view.administracion.organizacion.JInternalFrameOrganizacionExterna;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameEstado;
@@ -25,6 +26,8 @@ import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInterna
 import py.gov.itaipu.controlacceso.view.administracion.organizacion.JInternalFrameOrganizacionInterna;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameTipoAntecedente;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameTipoDocumento;
+import py.gov.itaipu.controlacceso.view.persona.JDialogPersona;
+import py.gov.itaipu.controlacceso.view.persona.JDialogPersonaPrincipal;
 import py.gov.itaipu.controlacceso.view.visita.JDialogVisita;
 import py.gov.itaipu.controlacceso.view.visita.JInternalFrameConsultaVisita;
 import py.gov.itaipu.controlacceso.view.visita.JInternalFrameRegistroVisita;
@@ -88,9 +91,26 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         jComboBoxTipoDoc = new javax.swing.JComboBox();
         jLabelPersonaVisitada4 = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
-        jLabelVisitasPorEmpleado2 = new javax.swing.JLabel();
-        jLabelVisitasPorEmpleado = new javax.swing.JLabel();
-        jLabelVisitasPorEmpleado1 = new javax.swing.JLabel();
+        jButtonVisitantes = new javax.swing.JButton();
+        jButtonReportes = new javax.swing.JButton();
+        jButtonOrganigrama = new javax.swing.JButton();
+        jButtonReportes1 = new javax.swing.JButton();
+        jLabelPersonaVisitada5 = new javax.swing.JLabel();
+        jSeparator6 = new javax.swing.JSeparator();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jButtonReporteGeneral = new javax.swing.JButton();
+        jButtonReporteVisitasPorPersona = new javax.swing.JButton();
+        jButtonReporteVisitasPorArea = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jButtonReporteVisitasPorPersona1 = new javax.swing.JButton();
+        jButtonReporteVisitasPorPersona2 = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         jMenuPersona = new javax.swing.JMenu();
         jMenuItemRegistro = new javax.swing.JMenuItem();
@@ -124,11 +144,11 @@ public class MDIControlAcceso extends javax.swing.JFrame {
             }
         });
 
-        jLabelDocNro.setFont(new java.awt.Font("Bookman Old Style", 0, 24)); // NOI18N
+        jLabelDocNro.setFont(new java.awt.Font("Bookman Old Style", 0, 36)); // NOI18N
         jLabelDocNro.setForeground(new java.awt.Color(0, 0, 153));
         jLabelDocNro.setText("Nro Doc:");
 
-        jTextFieldDocumentoPersona.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jTextFieldDocumentoPersona.setFont(new java.awt.Font("Tahoma", 0, 30)); // NOI18N
         jTextFieldDocumentoPersona.setForeground(new java.awt.Color(204, 0, 0));
         jTextFieldDocumentoPersona.setToolTipText("Nro de Documento");
         jTextFieldDocumentoPersona.addActionListener(new java.awt.event.ActionListener() {
@@ -150,11 +170,11 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         jLabelPersonaVisitada1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/salida.jpeg"))); // NOI18N
         jLabelPersonaVisitada1.setText("Salida.");
 
-        jLabelDocNro1.setFont(new java.awt.Font("Bookman Old Style", 0, 24)); // NOI18N
+        jLabelDocNro1.setFont(new java.awt.Font("Bookman Old Style", 0, 36)); // NOI18N
         jLabelDocNro1.setForeground(new java.awt.Color(0, 0, 153));
         jLabelDocNro1.setText("Nro Ticket:");
 
-        jTextFieldNroTicket.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jTextFieldNroTicket.setFont(new java.awt.Font("Tahoma", 0, 30)); // NOI18N
         jTextFieldNroTicket.setForeground(new java.awt.Color(204, 0, 0));
         jTextFieldNroTicket.setToolTipText("El número de ticket generado para la visita.");
         jTextFieldNroTicket.addActionListener(new java.awt.event.ActionListener() {
@@ -170,7 +190,7 @@ public class MDIControlAcceso extends javax.swing.JFrame {
 
         jLabelPersonaVisitada3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabelPersonaVisitada3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/ficha.png"))); // NOI18N
-        jLabelPersonaVisitada3.setText("Visitas.");
+        jLabelPersonaVisitada3.setText("Visitas Activas.");
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listVisitas, jTableVisitas);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${id}"));
@@ -223,29 +243,68 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         jComboBoxTipoDoc.setSelectedItem(null);
 
         jLabelPersonaVisitada4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabelPersonaVisitada4.setForeground(new java.awt.Color(0, 0, 153));
         jLabelPersonaVisitada4.setText("Informes");
 
-        jLabelVisitasPorEmpleado2.setText("* General");
-        jLabelVisitasPorEmpleado2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabelVisitasPorEmpleado2MouseClicked(evt);
+        jButtonVisitantes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/ficha.png"))); // NOI18N
+        jButtonVisitantes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVisitantesActionPerformed(evt);
             }
         });
 
-        jLabelVisitasPorEmpleado.setText("* Visitas Por Empleado");
-        jLabelVisitasPorEmpleado.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabelVisitasPorEmpleadoMouseClicked(evt);
+        jButtonReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/logo_itaipu.png"))); // NOI18N
+        jButtonReportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonReportesActionPerformed(evt);
             }
         });
 
-        jLabelVisitasPorEmpleado1.setText("* Visitas Por Área");
-        jLabelVisitasPorEmpleado1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabelVisitasPorEmpleado1MouseClicked(evt);
+        jButtonOrganigrama.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/organigrama.png"))); // NOI18N
+        jButtonOrganigrama.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonOrganigramaActionPerformed(evt);
             }
         });
+
+        jButtonReportes1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/handshake48.jpeg"))); // NOI18N
+        jButtonReportes1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonReportes1ActionPerformed(evt);
+            }
+        });
+
+        jLabelPersonaVisitada5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabelPersonaVisitada5.setText("Datos del Sistema");
+
+        jLabel1.setText("Visitantes");
+
+        jLabel2.setText("Organigrama");
+
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Visitas");
+
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Acerca de");
+
+        jButtonReporteGeneral.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/icon-doc.gif"))); // NOI18N
+
+        jButtonReporteVisitasPorPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/icon-doc.gif"))); // NOI18N
+
+        jButtonReporteVisitasPorArea.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/icon-doc.gif"))); // NOI18N
+
+        jLabel5.setText("General");
+
+        jLabel6.setText("Visitas por Persona");
+
+        jLabel7.setText("Visitas por Area");
+
+        jLabel8.setText("Visitas por Rango Fecha");
+
+        jButtonReporteVisitasPorPersona1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/icon-doc.gif"))); // NOI18N
+
+        jButtonReporteVisitasPorPersona2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/icon-doc.gif"))); // NOI18N
+
+        jLabel9.setText("Personas no Gratas");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -254,60 +313,107 @@ public class MDIControlAcceso extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabelPersonaVisitada2, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabelPersonaVisitada2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(26, 26, 26))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jRadioButtonNacional)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jRadioButtonExtranjero)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelTipoDeDoc)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxTipoDoc, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabelPersonaVisitada1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(jLabelDocNro1)
                                     .addGap(18, 18, 18)
-                                    .addComponent(jTextFieldNroTicket, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE))
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jTextFieldNroTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jTextFieldDocumentoPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabelDocNro)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(23, 23, 23)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jButtonVisitantes, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(jButtonOrganigrama, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(jButtonReportes1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jButtonReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabelPersonaVisitada4, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jSeparator1)
                                 .addComponent(jSeparator5)
-                                .addComponent(jLabelPersonaVisitada1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jRadioButtonNacional)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jRadioButtonExtranjero)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabelTipoDeDoc)
+                                .addComponent(jSeparator6)
+                                .addComponent(jSeparator4)
+                                .addComponent(jLabelPersonaVisitada5, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButtonReporteVisitasPorArea, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jButtonReporteGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jComboBoxTipoDoc, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabelDocNro)
-                                        .addGap(47, 47, 47)
-                                        .addComponent(jTextFieldDocumentoPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addComponent(jLabelVisitasPorEmpleado)
-                            .addComponent(jLabelPersonaVisitada4, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelVisitasPorEmpleado1)
-                            .addComponent(jLabelVisitasPorEmpleado2))
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jButtonReporteVisitasPorPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(40, 40, 40)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jButtonReporteVisitasPorPersona2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jButtonReporteVisitasPorPersona1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabelPersonaVisitada3, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSeparator3)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 907, Short.MAX_VALUE)))
         );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jTextFieldDocumentoPersona, jTextFieldNroTicket});
+
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelPersonaVisitada2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelPersonaVisitada3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabelPersonaVisitada3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelPersonaVisitada2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextFieldDocumentoPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelDocNro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabelDocNro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jTextFieldDocumentoPersona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jRadioButtonNacional)
@@ -319,22 +425,55 @@ public class MDIControlAcceso extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(11, 11, 11)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelDocNro1)
-                            .addComponent(jTextFieldNroTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(179, 179, 179)
-                        .addComponent(jLabelPersonaVisitada4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldNroTicket, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(28, 28, 28)
+                        .addComponent(jLabelPersonaVisitada5, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jButtonReportes1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButtonVisitantes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButtonReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jButtonOrganigrama, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4))
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabelPersonaVisitada4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(1, 1, 1)
+                                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButtonReporteGeneral, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jButtonReporteVisitasPorPersona1, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButtonReporteVisitasPorPersona, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)))
+                            .addComponent(jButtonReporteVisitasPorPersona2)
+                            .addComponent(jLabel9))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelVisitasPorEmpleado2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelVisitasPorEmpleado)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelVisitasPorEmpleado1))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButtonReporteVisitasPorArea)
+                            .addComponent(jLabel7))
+                        .addContainerGap())
+                    .addComponent(jScrollPane1)))
         );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jTextFieldDocumentoPersona, jTextFieldNroTicket});
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jSeparator1, jSeparator5});
 
         menuBar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -479,17 +618,18 @@ public class MDIControlAcceso extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(desktopPane))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 1417, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
-                .addComponent(desktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, 587, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addComponent(desktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -539,9 +679,14 @@ public class MDIControlAcceso extends javax.swing.JFrame {
 
     private void jMenuItemRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRegistroActionPerformed
         // TODO add your handling code here:
-        JInternalFramePersona personaFrame = new JInternalFramePersona();
-        personaFrame.setVisible(true);
-        this.desktopPane.add(personaFrame);
+//        JInternalFramePersona personaFrame = new JInternalFramePersona();
+//        personaFrame.setVisible(true);
+//        this.desktopPane.add(personaFrame);
+//        
+        JDialogPersonaPrincipal dialogPersona = new JDialogPersonaPrincipal(null, false);
+        dialogPersona.setVisible(true);
+        
+        
     }//GEN-LAST:event_jMenuItemRegistroActionPerformed
 
     private void jMenuItemOrganizacionInternaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemOrganizacionInternaActionPerformed
@@ -625,18 +770,6 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextFieldNroTicketKeyPressed
 
-    private void jLabelVisitasPorEmpleadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelVisitasPorEmpleadoMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabelVisitasPorEmpleadoMouseClicked
-
-    private void jLabelVisitasPorEmpleado1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelVisitasPorEmpleado1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabelVisitasPorEmpleado1MouseClicked
-
-    private void jLabelVisitasPorEmpleado2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelVisitasPorEmpleado2MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabelVisitasPorEmpleado2MouseClicked
-
     private void jTextFieldDocumentoPersonaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldDocumentoPersonaKeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -668,6 +801,28 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         jLabelTipoDeDoc.setVisible(false);
         jComboBoxTipoDoc.setSelectedItem(tipoDocAction.findByNamedQuery("TipoDocumento.findCI").get(0));
     }//GEN-LAST:event_jRadioButtonNacionalItemStateChanged
+
+    private void jButtonReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReportesActionPerformed
+        // TODO add your handling code here:
+        JDialogAbout about = new JDialogAbout(this, rootPaneCheckingEnabled);
+        about.setVisible(true);
+    }//GEN-LAST:event_jButtonReportesActionPerformed
+
+    private void jButtonReportes1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReportes1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonReportes1ActionPerformed
+
+    private void jButtonVisitantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVisitantesActionPerformed
+        // TODO add your handling code here:
+        JDialogPersonaPrincipal dialogPersona = new JDialogPersonaPrincipal(null, false);
+        dialogPersona.setVisible(true);
+    }//GEN-LAST:event_jButtonVisitantesActionPerformed
+
+    private void jButtonOrganigramaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOrganigramaActionPerformed
+        // TODO add your handling code here:
+        JDialogOrganigrama dialogOrganigrama = new JDialogOrganigrama(null, false);
+        dialogOrganigrama.setVisible(true);
+    }//GEN-LAST:event_jButtonOrganigramaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -709,17 +864,33 @@ public class MDIControlAcceso extends javax.swing.JFrame {
     private javax.swing.JMenuItem contentMenuItem;
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu helpMenu;
+    private javax.swing.JButton jButtonOrganigrama;
+    private javax.swing.JButton jButtonReporteGeneral;
+    private javax.swing.JButton jButtonReporteVisitasPorArea;
+    private javax.swing.JButton jButtonReporteVisitasPorPersona;
+    private javax.swing.JButton jButtonReporteVisitasPorPersona1;
+    private javax.swing.JButton jButtonReporteVisitasPorPersona2;
+    private javax.swing.JButton jButtonReportes;
+    private javax.swing.JButton jButtonReportes1;
+    private javax.swing.JButton jButtonVisitantes;
     private javax.swing.JComboBox jComboBoxTipoDoc;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelDocNro;
     private javax.swing.JLabel jLabelDocNro1;
     private javax.swing.JLabel jLabelPersonaVisitada1;
     private javax.swing.JLabel jLabelPersonaVisitada2;
     private javax.swing.JLabel jLabelPersonaVisitada3;
     private javax.swing.JLabel jLabelPersonaVisitada4;
+    private javax.swing.JLabel jLabelPersonaVisitada5;
     private javax.swing.JLabel jLabelTipoDeDoc;
-    private javax.swing.JLabel jLabelVisitasPorEmpleado;
-    private javax.swing.JLabel jLabelVisitasPorEmpleado1;
-    private javax.swing.JLabel jLabelVisitasPorEmpleado2;
     private javax.swing.JMenu jMenuAdministracion;
     private javax.swing.JMenuItem jMenuItemAntecedente;
     private javax.swing.JMenuItem jMenuItemConsultaVisita;
@@ -743,6 +914,7 @@ public class MDIControlAcceso extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSeparator jSeparator6;
     private javax.swing.JTable jTableVisitas;
     private javax.swing.JTextField jTextFieldDocumentoPersona;
     private javax.swing.JTextField jTextFieldNroTicket;
