@@ -36,6 +36,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.model.Nacionalidad;
 import py.gov.itaipu.controlacceso.model.TipoDocumento;
@@ -374,11 +375,20 @@ public class JDialogPersona extends javax.swing.JDialog {
         listTipoDocumento.addAll(tipoDocAction.findAll());
     }//GEN-LAST:event_jButtonNuevoTipoDocActionPerformed
 
+    public JTextField getjTextFieldNroDoc() {
+        return jTextFieldNroDoc;
+    }
+
+    
+    
     public void cargarDatospersona() {
         jTextFieldApellido.setText(persona.getApellido().toUpperCase());
         jTextFieldNombre.setText(persona.getNombre().toUpperCase());
         jTextFieldNroDoc.setText(persona.getNumeroDocumento().toUpperCase());
-        jTextFieldOrganizacion.setText((persona.getOrganizacion().getNombre()));
+        
+        if(persona.getOrganizacion()!=null)
+            jTextFieldOrganizacion.setText((persona.getOrganizacion().getNombre()));
+        
         jFormattedTextFieldFechaNac.setValue(persona.getFechaNacimiento());
         jComboBoxEstadoCivil.setSelectedItem(persona.getEstadoCivil().toUpperCase());
         jComboBoxSexo.setSelectedItem(persona.getSexo().toUpperCase());
@@ -460,12 +470,7 @@ public class JDialogPersona extends javax.swing.JDialog {
                 personaAction.crear();
                 JOptionPane.showMessageDialog(this, "Se ha creado con exito nueva Persona", "Info", 1);
             }
-            //ACTUALIZO LA PERSONA AGREGADA EN LA LISTA DE LA ORGANIZACION, PARA REFLEJAR EN EN EL ARBOL DE VISITAS
-            Organizacion or = persona.getOrganizacion();
-            or.getPersonas().add(persona);
-            organizacionAction.setEntity(or);
-            organizacionAction.guardar();
-            
+          
             this.dispose();
         }
 
@@ -485,10 +490,10 @@ public class JDialogPersona extends javax.swing.JDialog {
         } else if (jComboBoxTipoDocumento.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(null, "Seleccionar el Tipo de Documento", "Error", JOptionPane.ERROR_MESSAGE);
             resultado = false;
-        } else if (persona.getOrganizacion()==null || persona.getOrganizacion().getId()==null){
+        } /*else if (persona.getOrganizacion()==null || persona.getOrganizacion().getId()==null){
             JOptionPane.showMessageDialog(null, "Seleccionar la Organizacion de la Persona", "Error", JOptionPane.ERROR_MESSAGE);
             resultado = false;
-        } 
+        } */
         return resultado;
     }
 

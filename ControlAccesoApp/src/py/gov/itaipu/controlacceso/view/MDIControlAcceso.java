@@ -745,8 +745,10 @@ public class MDIControlAcceso extends javax.swing.JFrame {
             JDialogVisita dialogVisita = new JDialogVisita(this, rootPaneCheckingEnabled);
             dialogVisita.setVisita(new Visita());
             dialogVisita.getjTextFieldDocumentoPersona().setText(jTextFieldDocumentoPersona.getText());
+            dialogVisita.getjComboBoxTipoDoc().setSelectedItem(jComboBoxTipoDoc.getSelectedItem());
             dialogVisita.actualizarDatos();
-            dialogVisita.setVisible(true);
+            if(dialogVisita.getPersona().getId()!=null)
+                dialogVisita.setVisible(true);
             listVisitas.clear();
             listVisitas.addAll(visitaAction.findVisitasPendientes());
         }
