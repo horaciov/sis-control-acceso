@@ -30,10 +30,10 @@ FROM
      INNER JOIN "controlacceso"."persona" persona ON visita."persona_id" = persona."id"
      FULL JOIN "controlacceso"."persona" persona_visitada ON visita."personavisitada_id" = persona_visitada."id"
      INNER JOIN "controlacceso"."motivo" motivo ON visita."motivo_id" = motivo."id"
-     INNER JOIN "controlacceso"."nacionalidad" nacionalidad ON persona."nacionalidad_id" = nacionalidad."id"
+     LEFT JOIN "controlacceso"."nacionalidad" nacionalidad ON persona."nacionalidad_id" = nacionalidad."id"
      INNER JOIN "controlacceso"."organizacion" organizacion ON visita."organizacioninterna_id" = organizacion."id"
      INNER JOIN "controlacceso"."tipodocumento" tipodocumento ON persona."tipodocumento_id" = tipodocumento."id"
-     INNER JOIN "controlacceso"."organizacion" organizacion_A ON persona."organizacion_id" = organizacion_A."id"
+     LEFT JOIN "controlacceso"."organizacion" organizacion_A ON persona."organizacion_id" = organizacion_A."id"
 WHERE
      visita.id = $P{idVis}]]>
 	</queryString>
