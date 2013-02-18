@@ -5,6 +5,11 @@
 package py.gov.itaipu.controlacceso.view.visita;
 
 import java.awt.Dialog;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -24,6 +29,9 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import org.jdesktop.observablecollections.ObservableCollections;
+import org.krysalis.barcode4j.impl.upcean.UPCABean;
+import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
+import org.krysalis.barcode4j.tools.UnitConv;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.action.visita.VisitaAction;
 import py.gov.itaipu.controlacceso.model.Motivo;
@@ -643,6 +651,33 @@ public class JDialogConsultaVisitas extends javax.swing.JDialog {
 
     }//GEN-LAST:event_jButtonImprimirListadoActionPerformed
 
+     private InputStream generaBarCode(String codeDigits){
+        
+        while (codeDigits.length() < 11) {            
+            codeDigits = "0" + codeDigits;
+        }
+        
+        ByteArrayInputStream bis;
+        UPCABean bean = new UPCABean();
+        final int dpi = 150;
+        bean.setModuleWidth(UnitConv.in2mm(2.0f / dpi));
+        bean.setFontSize(2.0);
+        bean.doQuietZone(true);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        BitmapCanvasProvider canvas = new BitmapCanvasProvider(out, "image/jpeg", dpi,   BufferedImage.TYPE_BYTE_BINARY, false, 0);
+        bean.generateBarcode(canvas, codeDigits);
+        try {   
+            canvas.finish();
+            out.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(JDialogVisita.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        bis = new ByteArrayInputStream(out.toByteArray());
+        return bis;
+    }
+    
+    
     private void jButtonImprimirVisitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImprimirVisitaActionPerformed
         // TODO add your handling code here:
         if (jTableVisitas.getSelectedRow() < 0) {
@@ -651,7 +686,7 @@ public class JDialogConsultaVisitas extends javax.swing.JDialog {
         }
         Visita v = (Visita) listVisitas.get(jTableVisitas.getSelectedRow());
         try {
-
+            InputStream bis = generaBarCode(v.getId().toString());
             Class.forName("org.postgresql.Driver");
             Connection conexion = EntityManagerCA.getConexion();
             JasperReport reporte = (JasperReport) JRLoader.loadObject("reports/reporteTicketVisitas.jasper");
@@ -662,6 +697,7 @@ public class JDialogConsultaVisitas extends javax.swing.JDialog {
             java.io.File file = new java.io.File("");
             String abspath=file.getAbsolutePath()+"/";
             parametros.put("pathImagen", (Object) abspath);
+            parametros.put("barCode", bis);
             //                //Fotografia
             //                ByteArrayInputStream bis = new ByteArrayInputStream(visita.getPersona().getFotografia());
             //                InputStream iS = bis;
