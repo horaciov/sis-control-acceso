@@ -3,7 +3,6 @@
  * and open the template in the editor.
  */
 package py.gov.itaipu.controlacceso.view.reportes;
-
 import java.awt.Dialog;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -17,19 +16,19 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
+import py.gov.itaipu.controlacceso.model.Persona;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 import py.gov.itaipu.controlacceso.view.persona.JInternalFramePersona;
-
 /**
  *
  * @author fboy
  */
-public class JDialogRepVisitasFecha extends javax.swing.JDialog {
-
+public class JDialogRepPersonasNoGratas extends javax.swing.JDialog {
+private Persona persona;
     /**
-     * Creates new form JDialogRepVisitasFecha
+     * Creates new form JDialogRepVisitasVisitante
      */
-    public JDialogRepVisitasFecha(java.awt.Frame parent, boolean modal) {
+    public JDialogRepPersonasNoGratas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -43,23 +42,11 @@ public class JDialogRepVisitasFecha extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jFormattedTextFieldDesde = new javax.swing.JFormattedTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jFormattedTextFieldHasta = new javax.swing.JFormattedTextField();
         jButtonImprimirListado = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("REPORTE DE VISITAS POR RANGO DE FECHAS");
-
-        jFormattedTextFieldDesde.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
-
-        jLabel3.setText("Desde:");
-
-        jLabel7.setText("Hasta:");
-
-        jFormattedTextFieldHasta.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        setTitle("REPORTE DE PERSONAS NO GRATAS");
 
         jButtonImprimirListado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/printer.png"))); // NOI18N
         jButtonImprimirListado.setText("LISTADO");
@@ -71,47 +58,27 @@ public class JDialogRepVisitasFecha extends javax.swing.JDialog {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("LISTADO DE VISITAS POR RANGO DE FECHAS");
+        jLabel1.setText("LISTADO DE PERSONAS NO GRATAS");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jFormattedTextFieldDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel7)
-                        .addGap(18, 18, 18)
-                        .addComponent(jFormattedTextFieldHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE))
-                .addGap(21, 21, 21))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(133, 133, 133)
+                .addGap(178, 178, 178)
                 .addComponent(jButtonImprimirListado)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(42, 42, 42)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(19, 19, 19)
                 .addComponent(jLabel1)
-                .addGap(43, 43, 43)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jFormattedTextFieldDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jFormattedTextFieldHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addGap(28, 28, 28)
+                .addGap(67, 67, 67)
                 .addComponent(jButtonImprimirListado)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jFormattedTextFieldDesde, jFormattedTextFieldHasta});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -122,24 +89,9 @@ public class JDialogRepVisitasFecha extends javax.swing.JDialog {
 
             Class.forName("org.postgresql.Driver");
             Connection conexion = EntityManagerCA.getConexion();
-            JasperReport reporte = (JasperReport) JRLoader.loadObject("reports/reporteListadoVisitas.jasper");
+            JasperReport reporte = (JasperReport) JRLoader.loadObject("reports/reporteListadoPersonasNoGratas.jasper");
             //Parametros
             Map<String, Object> parametros = new HashMap<String, Object> ();
-            ///Parametros
-           
-            if (jFormattedTextFieldDesde!=null && !jFormattedTextFieldDesde.getText().equals("")) {
-                String vFecha = jFormattedTextFieldDesde.getText().substring(6,10)+jFormattedTextFieldDesde.getText().substring(3,5)+jFormattedTextFieldDesde.getText().substring(0,2);
-                parametros.put("pFechaDesde",(Object)vFecha.toUpperCase());
-                vFecha = vFecha.substring(6,8)+"/"+vFecha.substring(4,6)+"/"+vFecha.substring(0,4);
-                parametros.put("pFechaDesdeText",(Object)vFecha.toUpperCase());
-            }
-            if (jFormattedTextFieldHasta!=null && !jFormattedTextFieldHasta.getText().equals("")) {
-                String vFechaH = jFormattedTextFieldHasta.getText().substring(6,10)+jFormattedTextFieldHasta.getText().substring(3,5)+jFormattedTextFieldHasta.getText().substring(0,2);
-                parametros.put("pFechaHasta",(Object)vFechaH.toUpperCase());
-                vFechaH = vFechaH.substring(6,8)+"/"+vFechaH.substring(4,6)+"/"+vFechaH.substring(0,4);
-                parametros.put("pFechaHastaText",(Object)vFechaH.toUpperCase());
-            }
-
             JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, conexion);
 
             //            Muestra el Reporte en Pantalla
@@ -147,14 +99,13 @@ public class JDialogRepVisitasFecha extends javax.swing.JDialog {
             jviewer.setModalExclusionType(Dialog.ModalExclusionType.NO_EXCLUDE);
             jviewer.viewReport(jasperPrint,false);
 
-        } catch (JRException ex) {
-            Logger.getLogger(JDialogRepVisitasFecha.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(JDialogRepVisitasFecha.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(JInternalFramePersona.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-    
+        } catch (SQLException ex) {
+            Logger.getLogger(JInternalFramePersona.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JRException ex) {
+            Logger.getLogger(JInternalFramePersona.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButtonImprimirListadoActionPerformed
 
     /**
@@ -174,20 +125,20 @@ public class JDialogRepVisitasFecha extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JDialogRepVisitasFecha.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDialogRepPersonasNoGratas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JDialogRepVisitasFecha.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDialogRepPersonasNoGratas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JDialogRepVisitasFecha.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDialogRepPersonasNoGratas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JDialogRepVisitasFecha.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDialogRepPersonasNoGratas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JDialogRepVisitasFecha dialog = new JDialogRepVisitasFecha(new javax.swing.JFrame(), true);
+                JDialogRepPersonasNoGratas dialog = new JDialogRepPersonasNoGratas(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -200,10 +151,6 @@ public class JDialogRepVisitasFecha extends javax.swing.JDialog {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonImprimirListado;
-    private javax.swing.JFormattedTextField jFormattedTextFieldDesde;
-    private javax.swing.JFormattedTextField jFormattedTextFieldHasta;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel7;
     // End of variables declaration//GEN-END:variables
 }
