@@ -5,11 +5,14 @@
 package py.gov.itaipu.controlacceso.model;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -26,6 +29,7 @@ import org.hibernate.validator.constraints.NotEmpty;
     @NamedQuery(name = "Estado.findById", query = "SELECT e FROM Estado e WHERE e.id = :id"),
     @NamedQuery(name = "Estado.findByNombre", query = "SELECT e FROM Estado e WHERE e.nombre = :nombre"),
     @NamedQuery(name = "Estado.findByDescripcion", query = "SELECT e FROM Estado e WHERE e.descripcion = :descripcion")})
+@Table(name="estado", uniqueConstraints=@UniqueConstraint(columnNames={"nombre"}))
 public class Estado implements Serializable {
     private static final long serialVersionUID = 1L;
    
@@ -57,6 +61,7 @@ public class Estado implements Serializable {
 
     @NotEmpty
     @Length(max=200)
+    @Column(nullable=false)
     public String getNombre() {
         return nombre;
     }

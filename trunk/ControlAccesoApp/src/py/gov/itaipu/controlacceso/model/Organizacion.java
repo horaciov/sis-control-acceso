@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -28,6 +30,7 @@ import org.hibernate.validator.constraints.NotEmpty;
     @NamedQuery(name = "Organizacion.findOrganizacionPadre", query = "SELECT o FROM Organizacion o where o.nivelOrganigrama = 1 "),
     @NamedQuery(name = "Organizacion.findOrgMaxNivel", query = "SELECT o FROM Organizacion o where o.nivelOrganigrama = ( SELECT max(og.nivelOrganigrama) from Organizacion og )")
     })
+@Table(name="organizacion", uniqueConstraints=@UniqueConstraint(columnNames={"nombre","tipoorganizacion"}))
 public class Organizacion implements Serializable{
     private static final long serialVersionUID = 1L;
     
