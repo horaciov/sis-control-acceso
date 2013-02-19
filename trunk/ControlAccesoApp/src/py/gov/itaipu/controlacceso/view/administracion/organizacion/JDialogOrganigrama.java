@@ -27,6 +27,8 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
     private Organizacion area;
     private Organizacion areaPadre;
     private PersonaAction personaAction;
+    private Boolean modoBuscador;
+    private Object seleccionado;
 
     /**
      * Creates new form JDialogOrganigrama
@@ -71,6 +73,11 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("ORGANIGRAMA");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jLabel6.setText("Apellido:");
 
@@ -82,6 +89,11 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
         DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", true);
         jTreeOrganigrama = new JTree(root);
         jTreeOrganigrama.setCellRenderer(new CustomIconRenderer());
+        jTreeOrganigrama.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTreeOrganigramaMousePressed(evt);
+            }
+        });
         jTreeOrganigrama.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
             public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
                 jTreeOrganigramaValueChanged(evt);
@@ -440,6 +452,30 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
 
         }
     }//GEN-LAST:event_jButtonGuardarEmpleadoActionPerformed
+
+    private void jTreeOrganigramaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTreeOrganigramaMousePressed
+       // TODO add your handling code here:
+        if(evt.getClickCount()==2 && modoBuscador){   
+            DefaultMutableTreeNode nodoSeleccionado = (DefaultMutableTreeNode) jTreeOrganigrama.getLastSelectedPathComponent();
+            seleccionado = nodoSeleccionado.getUserObject();
+            this.dispose();
+        }
+    }//GEN-LAST:event_jTreeOrganigramaMousePressed
+
+    public Object getSeleccionado() {
+        return seleccionado;
+    }
+    
+    
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+       // TODO add your handling code here:
+        if (modoBuscador) {
+            jButtonPersonaNuevo.setVisible(false);
+            jButtonOrganizacionNuevo.setVisible(false);
+            jButtonGuardarArea.setVisible(false);
+            jButtonGuardarEmpleado.setVisible(false);
+        }
+    }//GEN-LAST:event_formWindowActivated
     private boolean validarPersona(){
         if (jTextFieldEmpleadoApellido.getText()==null || jTextFieldEmpleadoApellido.getText().equals("") ) {
             JOptionPane.showMessageDialog(this, "INGRESE APELLIDO.", "Error", 0);
@@ -465,6 +501,16 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
         return true;
     }
 
+    public Boolean getModoBuscador() {
+        return modoBuscador;
+    }
+
+    public void setModoBuscador(Boolean modoBuscador) {
+        this.modoBuscador = modoBuscador;
+    }
+
+    
+    
     /**
      * @param args the command line arguments
      */

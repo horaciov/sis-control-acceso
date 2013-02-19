@@ -28,7 +28,10 @@ import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInterna
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameTipoDocumento;
 import py.gov.itaipu.controlacceso.view.persona.JDialogPersona;
 import py.gov.itaipu.controlacceso.view.persona.JDialogPersonaPrincipal;
+import py.gov.itaipu.controlacceso.view.reportes.JDialogRepVisitasAreaPersona;
 import py.gov.itaipu.controlacceso.view.reportes.JDialogRepVisitasFecha;
+import py.gov.itaipu.controlacceso.view.reportes.JDialogRepVisitasGeneral;
+import py.gov.itaipu.controlacceso.view.reportes.JDialogRepVisitasVisitante;
 import py.gov.itaipu.controlacceso.view.visita.JDialogConsultaVisitas;
 import py.gov.itaipu.controlacceso.view.visita.JDialogVisita;
 import py.gov.itaipu.controlacceso.view.visita.JInternalFrameConsultaVisita;
@@ -104,7 +107,7 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jButtonReporteGeneral = new javax.swing.JButton();
-        jButtonReporteVisitasPorPersona = new javax.swing.JButton();
+        jButtonReporteVisitasPorVisitante = new javax.swing.JButton();
         jButtonReporteVisitasPorArea = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -284,16 +287,31 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         jLabel4.setText("Acerca de");
 
         jButtonReporteGeneral.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/icon-doc.gif"))); // NOI18N
+        jButtonReporteGeneral.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonReporteGeneralActionPerformed(evt);
+            }
+        });
 
-        jButtonReporteVisitasPorPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/icon-doc.gif"))); // NOI18N
+        jButtonReporteVisitasPorVisitante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/icon-doc.gif"))); // NOI18N
+        jButtonReporteVisitasPorVisitante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonReporteVisitasPorVisitanteActionPerformed(evt);
+            }
+        });
 
         jButtonReporteVisitasPorArea.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/icon-doc.gif"))); // NOI18N
+        jButtonReporteVisitasPorArea.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonReporteVisitasPorAreaActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("General");
 
-        jLabel6.setText("Visitas por Persona");
+        jLabel6.setText("Visitas por Visitante");
 
-        jLabel7.setText("Visitas por Area");
+        jLabel7.setText("Visitas por Area/Persona");
 
         jLabel8.setText("Visitas por Rango Fecha");
 
@@ -368,7 +386,7 @@ public class MDIControlAcceso extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jButtonReporteVisitasPorArea, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -376,7 +394,7 @@ public class MDIControlAcceso extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jButtonReporteVisitasPorPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jButtonReporteVisitasPorVisitante, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(40, 40, 40)
@@ -388,7 +406,7 @@ public class MDIControlAcceso extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jButtonReporteVisitasPorPersona1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabelPersonaVisitada3, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -461,7 +479,7 @@ public class MDIControlAcceso extends javax.swing.JFrame {
                                     .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButtonReporteVisitasPorPersona, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jButtonReporteVisitasPorVisitante, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)))
                             .addComponent(jButtonReporteVisitasPorPersona2)
                             .addComponent(jLabel9))
@@ -809,6 +827,24 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         dialogRepVisFec.setVisible(true);
     }//GEN-LAST:event_jButtonReporteVisitasPorPersona1ActionPerformed
 
+    private void jButtonReporteVisitasPorVisitanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReporteVisitasPorVisitanteActionPerformed
+        // TODO add your handling code here:
+        JDialogRepVisitasVisitante dialogRepVisVis = new JDialogRepVisitasVisitante(null, false);
+        dialogRepVisVis.setVisible(true);
+    }//GEN-LAST:event_jButtonReporteVisitasPorVisitanteActionPerformed
+
+    private void jButtonReporteVisitasPorAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReporteVisitasPorAreaActionPerformed
+        // TODO add your handling code here:
+        JDialogRepVisitasAreaPersona dialogRepVisAreaPers = new JDialogRepVisitasAreaPersona(null, false);
+        dialogRepVisAreaPers.setVisible(true);
+    }//GEN-LAST:event_jButtonReporteVisitasPorAreaActionPerformed
+
+    private void jButtonReporteGeneralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReporteGeneralActionPerformed
+        // TODO add your handling code here:
+        JDialogRepVisitasGeneral dialogRepVisGen = new JDialogRepVisitasGeneral(null, false);
+        dialogRepVisGen.setVisible(true);
+    }//GEN-LAST:event_jButtonReporteGeneralActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -852,9 +888,9 @@ public class MDIControlAcceso extends javax.swing.JFrame {
     private javax.swing.JButton jButtonOrganigrama;
     private javax.swing.JButton jButtonReporteGeneral;
     private javax.swing.JButton jButtonReporteVisitasPorArea;
-    private javax.swing.JButton jButtonReporteVisitasPorPersona;
     private javax.swing.JButton jButtonReporteVisitasPorPersona1;
     private javax.swing.JButton jButtonReporteVisitasPorPersona2;
+    private javax.swing.JButton jButtonReporteVisitasPorVisitante;
     private javax.swing.JButton jButtonReportes;
     private javax.swing.JButton jButtonVisitantes;
     private javax.swing.JButton jButtonVisitas;
