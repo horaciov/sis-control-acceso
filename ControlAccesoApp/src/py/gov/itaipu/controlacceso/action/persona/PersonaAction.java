@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import py.gov.itaipu.controlacceso.model.Estado;
 import py.gov.itaipu.controlacceso.model.Nacionalidad;
 import py.gov.itaipu.controlacceso.model.Persona;
 import py.gov.itaipu.controlacceso.model.TipoDocumento;
@@ -153,6 +154,24 @@ public class PersonaAction {
                 query.setParameter("fechaNacimientoHasta", personaHasta.getFechaNacimiento());;
         }
                return query.getResultList();
+    }
+    
+    public void habilitar(){
+        Estado e=(Estado)em.createNamedQuery("Estado.findByNombre").setParameter("nombre", "HABILITADO").getSingleResult();
+        persona.setEstado(e);
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();       
+        em.merge(persona);
+        tx.commit();
+    }
+    
+    public void inhabilitar(){
+        Estado e=(Estado)em.createNamedQuery("Estado.findByNombre").setParameter("nombre", "INHABILITADO").getSingleResult();
+        persona.setEstado(e);
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();        
+        em.merge(persona);
+        tx.commit();
     }
     
     public void crear() {
