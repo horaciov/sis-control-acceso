@@ -143,6 +143,18 @@ public class VisitaAction {
             return null;
         }
     }
+    
+    public Visita findPendienteByPersona(Persona persona){
+        Query query;
+        query = em.createQuery(" from Visita v where v.fechaSalida is null and v.anulado = 'N' and persona.id= :idPersona )");
+        query.setParameter("idPersona", persona.getId());
+        List<Visita> result = query.getResultList();
+        if (result.size() > 0) {
+            return result.get(0);
+        } else {
+            return null;
+        }
+    }
 
     public void anular() {
         visita.setAnulado("S");
@@ -159,8 +171,9 @@ public class VisitaAction {
     public void guardar() {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
-        em.merge(visita);
+        em.merge(visita);       
         tx.commit();
+        em.clear();
     }
 
     public void eliminar() {

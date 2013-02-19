@@ -82,6 +82,8 @@
                               <Component id="jButtonGuardar" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jButtonCancelar" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jButtonRegistrarSalida" min="-2" pref="99" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
@@ -275,6 +277,7 @@
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jButtonGuardar" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jButtonCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jButtonRegistrarSalida" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" attributes="0">
@@ -670,6 +673,17 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonCambiarEstadoPersonaActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonRegistrarSalida">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/resource/img/icon-clock.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Salida"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonRegistrarSalidaActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
