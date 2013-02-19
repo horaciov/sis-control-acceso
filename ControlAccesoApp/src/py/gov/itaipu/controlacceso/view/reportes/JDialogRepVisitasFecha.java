@@ -153,7 +153,8 @@ public class JDialogRepVisitasFecha extends javax.swing.JDialog {
             Logger.getLogger(JDialogRepVisitasFecha.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(JInternalFramePersona.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
+        this.dispose();
     
     }//GEN-LAST:event_jButtonImprimirListadoActionPerformed
 

@@ -59,7 +59,7 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         initComponents();
         jComboBoxTipoDoc.setVisible(false);
         jLabelTipoDeDoc.setVisible(false);
-        jComboBoxTipoDoc.setSelectedItem(tipoDocAction.findByNamedQuery("TipoDocumento.findCI"));
+        jComboBoxTipoDoc.setSelectedItem(tipoDocAction.findByNamedQuery("TipoDocumento.findCI").get(0));
         this.menuBar.setVisible(false);
         //        setExtendedState(MAXIMIZED_BOTH);
     }
@@ -152,11 +152,6 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         jTextFieldDocumentoPersona.setFont(new java.awt.Font("Tahoma", 0, 30)); // NOI18N
         jTextFieldDocumentoPersona.setForeground(new java.awt.Color(204, 0, 0));
         jTextFieldDocumentoPersona.setToolTipText("Nro de Documento");
-        jTextFieldDocumentoPersona.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldDocumentoPersonaActionPerformed(evt);
-            }
-        });
         jTextFieldDocumentoPersona.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTextFieldDocumentoPersonaKeyPressed(evt);
@@ -777,17 +772,13 @@ public class MDIControlAcceso extends javax.swing.JFrame {
             dialogVisita.setVisita(new Visita());
             dialogVisita.getjTextFieldDocumentoPersona().setText(jTextFieldDocumentoPersona.getText());
             dialogVisita.getjComboBoxTipoDoc().setSelectedItem(jComboBoxTipoDoc.getSelectedItem());
-            dialogVisita.actualizarDatos();
+//            dialogVisita.actualizarDatos();
             if(dialogVisita.getPersona().getId()!=null)
                 dialogVisita.setVisible(true);
             listVisitas.clear();
             listVisitas.addAll(visitaAction.findVisitasPendientes());
         }
     }//GEN-LAST:event_jTextFieldDocumentoPersonaKeyPressed
-
-    private void jTextFieldDocumentoPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDocumentoPersonaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldDocumentoPersonaActionPerformed
 
     private void jRadioButtonExtranjeroItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioButtonExtranjeroItemStateChanged
         // TODO add your handling code here:  

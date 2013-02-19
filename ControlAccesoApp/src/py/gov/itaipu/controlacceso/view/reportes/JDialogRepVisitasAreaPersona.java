@@ -80,6 +80,8 @@ public class JDialogRepVisitasAreaPersona extends javax.swing.JDialog {
             }
         });
 
+        jTextFieldAreaPersona.setEditable(false);
+
         jLabel2.setText("Area/Persona:");
 
         jButtonImprimirListado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/printer.png"))); // NOI18N
@@ -198,6 +200,7 @@ public class JDialogRepVisitasAreaPersona extends javax.swing.JDialog {
         } catch (JRException ex) {
             Logger.getLogger(JInternalFramePersona.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.dispose();
     }//GEN-LAST:event_jButtonImprimirListadoActionPerformed
 
     /**

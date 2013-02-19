@@ -232,6 +232,9 @@
           <Image iconType="3" name="/resource/img/save.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Guardar"/>
+        <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+          <ComponentRef name="jButtonCancelar"/>
+        </Property>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonGuardarActionPerformed"/>
@@ -249,11 +252,21 @@
       </Events>
     </Component>
     <Component class="javax.swing.JComboBox" name="jComboBoxNacionalidad">
+      <Properties>
+        <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+          <ComponentRef name="jComboBoxSexo"/>
+        </Property>
+      </Properties>
       <BindingProperties>
         <BindingProperty name="elements" source="listNacionalidades" target="jComboBoxNacionalidad" targetPath="elements" updateStrategy="0" immediately="false"/>
       </BindingProperties>
     </Component>
     <Component class="javax.swing.JComboBox" name="jComboBoxTipoDocumento">
+      <Properties>
+        <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+          <ComponentRef name="jComboBoxNacionalidad"/>
+        </Property>
+      </Properties>
       <BindingProperties>
         <BindingProperty name="elements" source="listTipoDocumento" target="jComboBoxTipoDocumento" targetPath="elements" updateStrategy="0" immediately="false"/>
       </BindingProperties>
@@ -262,6 +275,9 @@
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="new javax.swing.DefaultComboBoxModel(new String[] { &quot;SOLTERO&quot;, &quot;CASADO&quot;, &quot;DIVORCIADO&quot;, &quot;VIUDO&quot; })" type="code"/>
+        </Property>
+        <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+          <ComponentRef name="jFormattedTextFieldFechaNac"/>
         </Property>
       </Properties>
     </Component>
@@ -286,6 +302,11 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldApellido">
+      <Properties>
+        <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+          <ComponentRef name="jTextFieldNroDoc"/>
+        </Property>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelFechaNac">
       <Properties>
@@ -293,11 +314,19 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldNombre">
+      <Properties>
+        <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+          <ComponentRef name="jTextFieldApellido"/>
+        </Property>
+      </Properties>
     </Component>
     <Component class="javax.swing.JFormattedTextField" name="jFormattedTextFieldFechaNac">
       <Properties>
         <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
           <Format subtype="0" type="1"/>
+        </Property>
+        <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+          <ComponentRef name="jButtonBuscarOrganizacion"/>
         </Property>
       </Properties>
     </Component>
@@ -321,6 +350,9 @@
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="new javax.swing.DefaultComboBoxModel(new String[] { &quot;MASCULINO&quot;, &quot;FEMENINO&quot; })" type="code"/>
         </Property>
+        <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+          <ComponentRef name="jComboBoxEstadoCivil"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelNroD">
@@ -334,6 +366,11 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldNroDoc">
+      <Properties>
+        <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+          <ComponentRef name="jComboBoxTipoDocumento"/>
+        </Property>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelOrganizacion">
       <Properties>
@@ -351,6 +388,9 @@
           <Image iconType="3" name="/resource/img/view.png"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="Buscar Organizacion"/>
+        <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+          <ComponentRef name="jButtonTomarFoto"/>
+        </Property>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonBuscarOrganizacionActionPerformed"/>
@@ -374,6 +414,9 @@
           <Image iconType="3" name="/resource/img/CAMARA.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Tomar Fotografia"/>
+        <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+          <ComponentRef name="jButtonCargarFoto"/>
+        </Property>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonTomarFotoActionPerformed"/>
@@ -385,6 +428,9 @@
           <Image iconType="3" name="/resource/img/carpeta_abierta.jpg"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Cargar Fotografia"/>
+        <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+          <ComponentRef name="jButtonGuardar"/>
+        </Property>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonCargarFotoActionPerformed"/>

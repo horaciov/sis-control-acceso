@@ -106,6 +106,7 @@ private Persona persona;
         } catch (JRException ex) {
             Logger.getLogger(JInternalFramePersona.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.dispose();
     }//GEN-LAST:event_jButtonImprimirListadoActionPerformed
 
     /**

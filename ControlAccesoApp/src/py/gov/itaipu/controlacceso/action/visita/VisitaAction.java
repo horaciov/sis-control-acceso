@@ -42,7 +42,7 @@ public class VisitaAction {
 
     public List<Visita> findVisitasPendientes() {
         Query query;
-        query = em.createQuery(" from Visita v where v.fechaSalida is null and v.anulado = 'N' )");
+        query = em.createQuery(" from Visita v where v.fechaSalida is null and v.anulado = 'N' order by v.id )");
         return query.getResultList();
     }
 
