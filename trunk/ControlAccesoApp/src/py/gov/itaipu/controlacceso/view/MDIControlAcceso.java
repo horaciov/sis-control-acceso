@@ -28,6 +28,7 @@ import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInterna
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameTipoDocumento;
 import py.gov.itaipu.controlacceso.view.persona.JDialogPersona;
 import py.gov.itaipu.controlacceso.view.persona.JDialogPersonaPrincipal;
+import py.gov.itaipu.controlacceso.view.reportes.JDialogRepPersonasNoGratas;
 import py.gov.itaipu.controlacceso.view.reportes.JDialogRepVisitasAreaPersona;
 import py.gov.itaipu.controlacceso.view.reportes.JDialogRepVisitasFecha;
 import py.gov.itaipu.controlacceso.view.reportes.JDialogRepVisitasGeneral;
@@ -323,6 +324,11 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         });
 
         jButtonReporteVisitasPorPersona2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/icon-doc.gif"))); // NOI18N
+        jButtonReporteVisitasPorPersona2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonReporteVisitasPorPersona2ActionPerformed(evt);
+            }
+        });
 
         jLabel9.setText("Personas no Gratas");
 
@@ -844,6 +850,12 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         JDialogRepVisitasGeneral dialogRepVisGen = new JDialogRepVisitasGeneral(null, false);
         dialogRepVisGen.setVisible(true);
     }//GEN-LAST:event_jButtonReporteGeneralActionPerformed
+
+    private void jButtonReporteVisitasPorPersona2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReporteVisitasPorPersona2ActionPerformed
+        // TODO add your handling code here:
+        JDialogRepPersonasNoGratas dialogRepPersNoGratas = new JDialogRepPersonasNoGratas(null, false);
+        dialogRepPersNoGratas.setVisible(true);
+    }//GEN-LAST:event_jButtonReporteVisitasPorPersona2ActionPerformed
 
     /**
      * @param args the command line arguments
