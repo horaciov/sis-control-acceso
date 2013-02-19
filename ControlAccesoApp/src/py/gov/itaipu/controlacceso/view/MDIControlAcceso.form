@@ -316,7 +316,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jButtonReporteVisitasPorArea" min="-2" pref="31" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jLabel7" min="-2" pref="128" max="-2" attributes="0"/>
+                                  <Component id="jLabel7" min="-2" pref="177" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -326,7 +326,7 @@
                                           <Component id="jLabel5" min="-2" pref="128" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jButtonReporteVisitasPorPersona" min="-2" pref="31" max="-2" attributes="0"/>
+                                          <Component id="jButtonReporteVisitasPorVisitante" min="-2" pref="31" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="jLabel6" min="-2" pref="128" max="-2" attributes="0"/>
                                       </Group>
@@ -341,7 +341,7 @@
                                       <Group type="102" attributes="0">
                                           <Component id="jButtonReporteVisitasPorPersona1" min="-2" pref="31" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jLabel8" min="-2" pref="128" max="-2" attributes="0"/>
+                                          <Component id="jLabel8" min="-2" pref="176" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -430,7 +430,7 @@
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jButtonReporteVisitasPorPersona" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jButtonReporteVisitasPorVisitante" alignment="1" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel6" alignment="1" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -754,13 +754,19 @@
               <Image iconType="3" name="/resource/img/icon-doc.gif"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonReporteGeneralActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButtonReporteVisitasPorPersona">
+        <Component class="javax.swing.JButton" name="jButtonReporteVisitasPorVisitante">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/resource/img/icon-doc.gif"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonReporteVisitasPorVisitanteActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonReporteVisitasPorArea">
           <Properties>
@@ -768,6 +774,9 @@
               <Image iconType="3" name="/resource/img/icon-doc.gif"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonReporteVisitasPorAreaActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
@@ -776,12 +785,12 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Visitas por Persona"/>
+            <Property name="text" type="java.lang.String" value="Visitas por Visitante"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel7">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Visitas por Area"/>
+            <Property name="text" type="java.lang.String" value="Visitas por Area/Persona"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel8">
