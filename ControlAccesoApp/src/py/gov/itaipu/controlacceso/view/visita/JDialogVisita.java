@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -104,6 +105,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         jLabelTipoDeDoc.setVisible(false);
         jComboBoxTipoDoc.setSelectedItem(tipoDocAction.findByNamedQuery("TipoDocumento.findCI"));
         jButtonActualizarFotografia.setVisible(false);
+        jButtonRegistrarSalida.setVisible(false);
 
     }
 
@@ -223,6 +225,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         jRadioButtonExtranjero = new javax.swing.JRadioButton();
         jRadioButtonNacional = new javax.swing.JRadioButton();
         jButtonCambiarEstadoPersona = new javax.swing.JButton();
+        jButtonRegistrarSalida = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registro de visita");
@@ -440,6 +443,14 @@ public class JDialogVisita extends javax.swing.JDialog {
             }
         });
 
+        jButtonRegistrarSalida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/icon-clock.png"))); // NOI18N
+        jButtonRegistrarSalida.setText("Salida");
+        jButtonRegistrarSalida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRegistrarSalidaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -469,6 +480,8 @@ public class JDialogVisita extends javax.swing.JDialog {
                                 .addComponent(jButtonGuardar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButtonCancelar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonRegistrarSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -621,7 +634,8 @@ public class JDialogVisita extends javax.swing.JDialog {
                                 .addGap(107, 107, 107)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jButtonGuardar)
-                                    .addComponent(jButtonCancelar)))
+                                    .addComponent(jButtonCancelar)
+                                    .addComponent(jButtonRegistrarSalida)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(3, 3, 3)
                                 .addComponent(jScrollPanePersonasVisitadas)))
@@ -665,6 +679,13 @@ public class JDialogVisita extends javax.swing.JDialog {
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
         if (visita == null) {
+            return;
+        }
+
+        //Validamos que la persona no se encuentre con una visita pendiente.
+        if (action.findPendienteByPersona(persona)!=null) {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(this, "ATENCIÓN!. No es posible su ingreso hasta que se registre su salida", "Error", 0);
             return;
         }
 
@@ -799,17 +820,18 @@ public class JDialogVisita extends javax.swing.JDialog {
         if (jFramePersona.getPersonaSeleccionada() != null) {
             persona = jFramePersona.getPersonaSeleccionada();
             if (persona != null) {
-                jButtonTomarFotografia.setEnabled(true);
-                //Cargar Fotografia
-                if (persona.getFotografiaPath() != null && !persona.getFotografiaPath().equals("")) {
-                    mostrarFotoPersona();
-                } else {
-                    jLabelFotografia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/sin_foto_small.jpg")));
-                }
-                jTextFieldPersona.setText(persona.getNombre() + ", " + persona.getApellido());
+//                jButtonTomarFotografia.setEnabled(true);
+//                //Cargar Fotografia
+//                if (persona.getFotografiaPath() != null && !persona.getFotografiaPath().equals("")) {
+//                    mostrarFotoPersona();
+//                } else {
+//                    jLabelFotografia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/sin_foto_small.jpg")));
+//                }
+                //  jTextFieldPersona.setText(persona.getNombre() + ", " + persona.getApellido());
                 jTextFieldDocumentoPersona.setText(persona.getNumeroDocumento());
+                actualizarDatos();
             }
-            jTextFieldOrganizacion.setText(persona.getOrganizacion().getNombre());
+            //jTextFieldOrganizacion.setText(persona.getOrganizacion().getNombre());
 
         }
 
@@ -916,8 +938,17 @@ public class JDialogVisita extends javax.swing.JDialog {
             persona = buscarPersona();
 
             if (persona != null && persona.getId() != null) {
-                //CARGAR DATOS DE LA PERSONA ENCONTRADA
 
+                //Validamos que la persona no se encuentre con una visita pendiente.
+                if (action.findPendienteByPersona(persona)!=null) {
+                    Toolkit.getDefaultToolkit().beep();
+                    JOptionPane.showMessageDialog(this, "ATENCIÓN!. No es posible su ingreso hasta que se registre su salida", "Error", 0); 
+                    jButtonRegistrarSalida.setVisible(true);
+                }else{
+                    jButtonRegistrarSalida.setVisible(false);
+                }
+
+                //CARGAR DATOS DE LA PERSONA ENCONTRADA                                
                 jTextFieldPersona.setText(persona.getNombre() + ", " + persona.getApellido());
 
                 if (persona.getOrganizacion() != null) {
@@ -1118,6 +1149,29 @@ public class JDialogVisita extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButtonCambiarEstadoPersonaActionPerformed
 
+    private void jButtonRegistrarSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarSalidaActionPerformed
+        // TODO add your handling code here:
+                Visita v = action.findPendienteByPersona(persona);
+    
+                Calendar c = Calendar.getInstance();
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                if (JOptionPane.showConfirmDialog(this, "Está seguro que desea marcar la salida de "
+                        + v.getPersona().getNombre()
+                        + " " + v.getPersona().getApellido()
+                        + ", a las: " + sdf.format(c.getTime())
+                        + "?", "Registro de salida", 0) != 0) {
+                    return;
+                }
+
+                v.setFechaSalida(c.getTime());
+                action.setVisita(v);
+                action.guardar();
+                listUltimasVisitas.clear();
+                listUltimasVisitas.addAll(action.findByPersona(persona));
+                JOptionPane.showMessageDialog(this, "Se ha registrado la salida correctamente", "Info", 1);
+                jButtonRegistrarSalida.setVisible(false);
+    }//GEN-LAST:event_jButtonRegistrarSalidaActionPerformed
+
     private BufferedImage resizeImage(BufferedImage originalImage, int width, int height, int type) throws IOException {
         BufferedImage resizedImage = new BufferedImage(width, height, type);
         Graphics2D g = resizedImage.createGraphics();
@@ -1177,6 +1231,7 @@ public class JDialogVisita extends javax.swing.JDialog {
     private javax.swing.JButton jButtonGuardar;
     private javax.swing.JButton jButtonLimpiarPersona;
     private javax.swing.JButton jButtonLimpiarPersonaVisitada;
+    private javax.swing.JButton jButtonRegistrarSalida;
     private javax.swing.JButton jButtonTomarFotografia;
     private javax.swing.JComboBox jComboBoxMotivo;
     private javax.swing.JComboBox jComboBoxTipoDoc;
