@@ -28,6 +28,7 @@ import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInterna
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameTipoDocumento;
 import py.gov.itaipu.controlacceso.view.persona.JDialogPersona;
 import py.gov.itaipu.controlacceso.view.persona.JDialogPersonaPrincipal;
+import py.gov.itaipu.controlacceso.view.reportes.JDialogRepVisitasFecha;
 import py.gov.itaipu.controlacceso.view.visita.JDialogConsultaVisitas;
 import py.gov.itaipu.controlacceso.view.visita.JDialogVisita;
 import py.gov.itaipu.controlacceso.view.visita.JInternalFrameConsultaVisita;
@@ -297,6 +298,11 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         jLabel8.setText("Visitas por Rango Fecha");
 
         jButtonReporteVisitasPorPersona1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/icon-doc.gif"))); // NOI18N
+        jButtonReporteVisitasPorPersona1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonReporteVisitasPorPersona1ActionPerformed(evt);
+            }
+        });
 
         jButtonReporteVisitasPorPersona2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/icon-doc.gif"))); // NOI18N
 
@@ -796,6 +802,12 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         JDialogOrganigrama dialogOrganigrama = new JDialogOrganigrama(null, false);
         dialogOrganigrama.setVisible(true);
     }//GEN-LAST:event_jButtonOrganigramaActionPerformed
+
+    private void jButtonReporteVisitasPorPersona1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReporteVisitasPorPersona1ActionPerformed
+        // TODO add your handling code here:
+        JDialogRepVisitasFecha dialogRepVisFec = new JDialogRepVisitasFecha(null, false);
+        dialogRepVisFec.setVisible(true);
+    }//GEN-LAST:event_jButtonReporteVisitasPorPersona1ActionPerformed
 
     /**
      * @param args the command line arguments
