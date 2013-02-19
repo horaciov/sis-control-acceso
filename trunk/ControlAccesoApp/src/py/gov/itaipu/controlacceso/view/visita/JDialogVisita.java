@@ -8,6 +8,7 @@ import com.lowagie.text.pdf.ArabicLigaturizer;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ItemEvent;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -44,6 +45,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
+import org.codehaus.groovy.control.messages.Message;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.krysalis.barcode4j.impl.upcean.UPCABean;
 import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
@@ -83,7 +85,6 @@ public class JDialogVisita extends javax.swing.JDialog {
     private VisitaAction action;
     private TableCellRenderer rendererTime;
 
-
     /**
      * Creates new form JDialogMotivo
      */
@@ -105,12 +106,13 @@ public class JDialogVisita extends javax.swing.JDialog {
         jButtonActualizarFotografia.setVisible(false);
 
     }
-    private InputStream generaBarCode(String codeDigits){
-        
-        while (codeDigits.length() < 11) {            
+
+    private InputStream generaBarCode(String codeDigits) {
+
+        while (codeDigits.length() < 11) {
             codeDigits = "0" + codeDigits;
         }
-        
+
         ByteArrayInputStream bis;
         UPCABean bean = new UPCABean();
         final int dpi = 150;
@@ -118,19 +120,18 @@ public class JDialogVisita extends javax.swing.JDialog {
         bean.setFontSize(2.0);
         bean.doQuietZone(true);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        BitmapCanvasProvider canvas = new BitmapCanvasProvider(out, "image/jpeg", dpi,   BufferedImage.TYPE_BYTE_BINARY, false, 0);
+        BitmapCanvasProvider canvas = new BitmapCanvasProvider(out, "image/jpeg", dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0);
         bean.generateBarcode(canvas, codeDigits);
-        try {   
+        try {
             canvas.finish();
             out.flush();
         } catch (IOException ex) {
             Logger.getLogger(JDialogVisita.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         bis = new ByteArrayInputStream(out.toByteArray());
         return bis;
     }
-    
 
     public Visita getVisita() {
         return visita;
@@ -213,7 +214,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         jLabelPersonaVisitada1 = new javax.swing.JLabel();
         jButtonTomarFotografia = new javax.swing.JButton();
         jLabelSemaforo = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelPersonaEstado = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableVisitas = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
@@ -221,6 +222,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         jComboBoxTipoDoc = new javax.swing.JComboBox();
         jRadioButtonExtranjero = new javax.swing.JRadioButton();
         jRadioButtonNacional = new javax.swing.JRadioButton();
+        jButtonCambiarEstadoPersona = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registro de visita");
@@ -380,9 +382,9 @@ public class JDialogVisita extends javax.swing.JDialog {
         jLabelSemaforo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelSemaforo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/Semaforo_verde.png"))); // NOI18N
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Persona Habilitada");
+        jLabelPersonaEstado.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabelPersonaEstado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelPersonaEstado.setText("Persona Habilitada");
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listUltimasVisitas, jTableVisitas);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${fechaIngreso}"));
@@ -428,6 +430,13 @@ public class JDialogVisita extends javax.swing.JDialog {
         jRadioButtonNacional.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jRadioButtonNacionalItemStateChanged(evt);
+            }
+        });
+
+        jButtonCambiarEstadoPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/check.gif"))); // NOI18N
+        jButtonCambiarEstadoPersona.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCambiarEstadoPersonaActionPerformed(evt);
             }
         });
 
@@ -500,17 +509,20 @@ public class JDialogVisita extends javax.swing.JDialog {
                                                 .addGap(18, 18, 18)
                                                 .addComponent(jLabelTipoDeDoc)
                                                 .addGap(10, 10, 10)
-                                                .addComponent(jComboBoxTipoDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                                .addComponent(jComboBoxTipoDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addComponent(jLabel10)
                                         .addGap(32, 32, 32)
                                         .addComponent(jScrollPane2)))
                                 .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabelSemaforo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabelFotografia, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabelPersonaEstado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabelSemaforo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabelFotografia, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jButtonCambiarEstadoPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(85, 85, 85)))))
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
@@ -538,42 +550,46 @@ public class JDialogVisita extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabelFotografia, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(26, 26, 26)
-                            .addComponent(jLabelSemaforo, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jLabel1))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(108, 108, 108)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jRadioButtonExtranjero)
-                                        .addComponent(jLabelTipoDeDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jComboBoxTipoDoc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jRadioButtonNacional)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabelFotografia, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(26, 26, 26)
+                                .addComponent(jLabelSemaforo, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabelPersonaEstado))
+                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jButtonLimpiarPersona, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButtonBuscarPersona))
-                                    .addComponent(jButtonTomarFotografia)
-                                    .addComponent(jButtonActualizarFotografia))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(108, 108, 108)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jRadioButtonExtranjero)
+                                            .addComponent(jLabelTipoDeDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jComboBoxTipoDoc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jRadioButtonNacional)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jButtonLimpiarPersona, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jButtonBuscarPersona))
+                                        .addComponent(jButtonTomarFotografia)
+                                        .addComponent(jButtonActualizarFotografia))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel2)
+                                        .addComponent(jTextFieldPersona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(17, 17, 17)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jTextFieldPersona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGap(17, 17, 17)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel7)
-                                .addComponent(jTextFieldOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(26, 26, 26)
-                            .addComponent(jLabel10)
-                            .addGap(45, 45, 45)))
+                                    .addComponent(jLabel7)
+                                    .addComponent(jTextFieldOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(26, 26, 26)
+                                .addComponent(jLabel10)
+                                .addGap(45, 45, 45)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonCambiarEstadoPersona)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabelPersonaVisitada, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -586,7 +602,7 @@ public class JDialogVisita extends javax.swing.JDialog {
                                     .addComponent(jTextFieldDocumentoPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(123, 123, 123)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5)
                                     .addComponent(jTextFieldPersonaVisitada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -651,6 +667,13 @@ public class JDialogVisita extends javax.swing.JDialog {
         if (visita == null) {
             return;
         }
+
+        if (persona.getEstado() != null && persona.getEstado().getNombre().equals("INHABILITADO")) {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(this, "ATENCIÓN!, la persona está inhabilitada. No es posible su ingreso", "Error", 0);
+            return;
+        }
+
         action = new VisitaAction(visita);
 
         if (!validar()) {
@@ -710,7 +733,7 @@ public class JDialogVisita extends javax.swing.JDialog {
             String abspath = file.getAbsolutePath() + "/";
             parametros.put("pathImagen", (Object) abspath);
             parametros.put("barCode", bis);
-          
+
 
 
 //                //Fotografia
@@ -896,11 +919,26 @@ public class JDialogVisita extends javax.swing.JDialog {
                 //CARGAR DATOS DE LA PERSONA ENCONTRADA
 
                 jTextFieldPersona.setText(persona.getNombre() + ", " + persona.getApellido());
-                
-                if(persona.getOrganizacion()!=null)
+
+                if (persona.getOrganizacion() != null) {
                     jTextFieldOrganizacion.setText(persona.getOrganizacion().getNombre());
-                
+                }
+
                 jButtonTomarFotografia.setEnabled(true);
+
+                if (persona.getEstado() != null && persona.getEstado().getNombre().equals("INHABILITADO")) {
+                    jLabelSemaforo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/Semaforo_rojo.png")));
+                    jLabelPersonaEstado.setText("PERSONA NO HABILITADA");
+                    jButtonCambiarEstadoPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/check.gif")));
+                    jButtonCambiarEstadoPersona.setToolTipText("HABILITAR");
+                    Toolkit.getDefaultToolkit().beep();
+                    JOptionPane.showMessageDialog(this, "ATENCIÓN!, la persona está inhabilitada. No es posible su ingreso", "Error", 0);
+                } else {
+                    jLabelSemaforo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/Semaforo_verde.png")));
+                    jLabelPersonaEstado.setText("PERSONA HABILITADA");
+                    jButtonCambiarEstadoPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/stop_sign.jpeg")));
+                    jButtonCambiarEstadoPersona.setToolTipText("INHABILITAR");
+                }
 
                 //Ultimas Visitas
                 listUltimasVisitas.clear();
@@ -923,7 +961,7 @@ public class JDialogVisita extends javax.swing.JDialog {
                     this.setVisible(false);
                     return;
                 }
-                JDialogPersona dialogPersona=new JDialogPersona(null, rootPaneCheckingEnabled);
+                JDialogPersona dialogPersona = new JDialogPersona(null, rootPaneCheckingEnabled);
                 dialogPersona.getjTextFieldNroDoc().setText(jTextFieldDocumentoPersona.getText());
                 dialogPersona.getjTextFieldNroDoc().setEditable(false);
                 dialogPersona.setVisible(true);
@@ -1061,6 +1099,25 @@ public class JDialogVisita extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jComboBoxTipoDocItemStateChanged
 
+    private void jButtonCambiarEstadoPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCambiarEstadoPersonaActionPerformed
+        // TODO add your handling code here:
+        personaAction.setPersona(persona);
+        if (persona.getEstado() != null && persona.getEstado().getNombre().equals("INHABILITADO")) {
+            personaAction.habilitar();
+            jLabelSemaforo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/Semaforo_verde.png")));
+            jLabelPersonaEstado.setText("PERSONA HABILITADA");
+            jButtonCambiarEstadoPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/stop_sign.jpeg")));
+            jButtonCambiarEstadoPersona.setToolTipText("INHABILITAR");
+
+        } else {
+            personaAction.inhabilitar();
+            jLabelSemaforo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/Semaforo_rojo.png")));
+            jLabelPersonaEstado.setText("PERSONA NO HABILITADA");
+            jButtonCambiarEstadoPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/check.gif")));
+            jButtonCambiarEstadoPersona.setToolTipText("HABILITAR");
+        }
+    }//GEN-LAST:event_jButtonCambiarEstadoPersonaActionPerformed
+
     private BufferedImage resizeImage(BufferedImage originalImage, int width, int height, int type) throws IOException {
         BufferedImage resizedImage = new BufferedImage(width, height, type);
         Graphics2D g = resizedImage.createGraphics();
@@ -1115,6 +1172,7 @@ public class JDialogVisita extends javax.swing.JDialog {
     private javax.swing.JButton jButtonActualizarFotografia;
     private javax.swing.JButton jButtonBuscarPersona;
     private javax.swing.JButton jButtonBuscarPersonaVisitada;
+    private javax.swing.JButton jButtonCambiarEstadoPersona;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonGuardar;
     private javax.swing.JButton jButtonLimpiarPersona;
@@ -1122,7 +1180,6 @@ public class JDialogVisita extends javax.swing.JDialog {
     private javax.swing.JButton jButtonTomarFotografia;
     private javax.swing.JComboBox jComboBoxMotivo;
     private javax.swing.JComboBox jComboBoxTipoDoc;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1133,6 +1190,7 @@ public class JDialogVisita extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabelDocNro;
     private javax.swing.JLabel jLabelFotografia;
+    private javax.swing.JLabel jLabelPersonaEstado;
     private javax.swing.JLabel jLabelPersonaVisitada;
     private javax.swing.JLabel jLabelPersonaVisitada1;
     private javax.swing.JLabel jLabelSemaforo;
