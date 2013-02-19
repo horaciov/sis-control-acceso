@@ -341,11 +341,6 @@ public class JDialogVisita extends javax.swing.JDialog {
         jTextFieldDocumentoPersona.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
         jTextFieldDocumentoPersona.setForeground(new java.awt.Color(204, 0, 0));
         jTextFieldDocumentoPersona.setToolTipText("Nro de Documento");
-        jTextFieldDocumentoPersona.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldDocumentoPersonaActionPerformed(evt);
-            }
-        });
         jTextFieldDocumentoPersona.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTextFieldDocumentoPersonaFocusLost(evt);
@@ -978,6 +973,16 @@ public class JDialogVisita extends javax.swing.JDialog {
                 //Cargar Fotografia
                 if (persona.getFotografiaPath() != null && !persona.getFotografiaPath().equals("")) {
                     mostrarFotoPersona();
+                }else{
+                    if (JOptionPane.showConfirmDialog(this, "La persona no cuenta con Fotografia Actual, Desea cargar la Fotografia?", "Fotografia", 0) == 0) {
+                    
+                        JDialogFotografia dialogFotografia = new JDialogFotografia(null, rootPaneCheckingEnabled, "CAPTURAR");
+                        dialogFotografia.setPersona(persona);
+                        dialogFotografia.setVisible(true);        // TODO add your handling code here:
+                        if (dialogFotografia.isCapturado()) {
+                            mostrarFotoPersona();
+                        }
+                    }
                 }
 
             } else if (registroDesdeBaseDeDatosExterna()) {
@@ -995,8 +1000,12 @@ public class JDialogVisita extends javax.swing.JDialog {
                 JDialogPersona dialogPersona = new JDialogPersona(null, rootPaneCheckingEnabled);
                 dialogPersona.getjTextFieldNroDoc().setText(jTextFieldDocumentoPersona.getText());
                 dialogPersona.getjTextFieldNroDoc().setEditable(false);
+                dialogPersona.getjComboBoxTipoDocumento().setSelectedItem(jComboBoxTipoDoc.getSelectedItem());
+                dialogPersona.getjComboBoxTipoDocumento().setEnabled(false);
                 dialogPersona.setVisible(true);
                 actualizarDatos();
+                
+                
             }
         } else {
             JOptionPane.showMessageDialog(this, "INGRESE NRO DE DOCUMENTO.", "Error", 0);
@@ -1028,13 +1037,12 @@ public class JDialogVisita extends javax.swing.JDialog {
 
         return personaBuscada;
     }
-    private void jTextFieldDocumentoPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDocumentoPersonaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldDocumentoPersonaActionPerformed
-
     private void jTextFieldDocumentoPersonaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldDocumentoPersonaFocusLost
         // TODO add your handling code here:
-        actualizarDatos();
+        if (jTextFieldDocumentoPersona.getText() != null && !jTextFieldDocumentoPersona.getText().equals(persona.getNumeroDocumento()) ) {
+            actualizarDatos();     
+        }
+
 
     }//GEN-LAST:event_jTextFieldDocumentoPersonaFocusLost
     private void mostrarFotoPersona() {

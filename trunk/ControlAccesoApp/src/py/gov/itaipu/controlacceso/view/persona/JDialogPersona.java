@@ -32,6 +32,7 @@ import javax.imageio.stream.ImageInputStreamImpl;
 import javax.imageio.stream.ImageOutputStreamImpl;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -87,6 +88,8 @@ public class JDialogPersona extends javax.swing.JDialog {
         organizacionAction = new CRUDAction(new Organizacion());
         antecedenteAction = new CRUDAction(new Antecedente());
         initComponents();
+        jComboBoxTipoDocumento.setSelectedItem(tipoDocAction.findByNamedQuery("TipoDocumento.findCI").get(0));
+        
     }
 
     /**
@@ -147,6 +150,7 @@ public class JDialogPersona extends javax.swing.JDialog {
 
         jButtonGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/save.png"))); // NOI18N
         jButtonGuardar.setText("Guardar");
+        jButtonGuardar.setNextFocusableComponent(jButtonCancelar);
         jButtonGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonGuardarActionPerformed(evt);
@@ -161,13 +165,18 @@ public class JDialogPersona extends javax.swing.JDialog {
             }
         });
 
+        jComboBoxNacionalidad.setNextFocusableComponent(jComboBoxSexo);
+
         org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listNacionalidades, jComboBoxNacionalidad);
         bindingGroup.addBinding(jComboBoxBinding);
+
+        jComboBoxTipoDocumento.setNextFocusableComponent(jComboBoxNacionalidad);
 
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listTipoDocumento, jComboBoxTipoDocumento);
         bindingGroup.addBinding(jComboBoxBinding);
 
         jComboBoxEstadoCivil.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "SOLTERO", "CASADO", "DIVORCIADO", "VIUDO" }));
+        jComboBoxEstadoCivil.setNextFocusableComponent(jFormattedTextFieldFechaNac);
 
         jLabelApe.setText("Apellido");
 
@@ -180,9 +189,14 @@ public class JDialogPersona extends javax.swing.JDialog {
 
         jLabelNomb.setText("Nombre");
 
+        jTextFieldApellido.setNextFocusableComponent(jTextFieldNroDoc);
+
         jLabelFechaNac.setText("Fecha de Nacimiento");
 
+        jTextFieldNombre.setNextFocusableComponent(jTextFieldApellido);
+
         jFormattedTextFieldFechaNac.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        jFormattedTextFieldFechaNac.setNextFocusableComponent(jButtonBuscarOrganizacion);
 
         jLabelNAcion.setText("Nacionalidad");
 
@@ -191,10 +205,13 @@ public class JDialogPersona extends javax.swing.JDialog {
         jLabelEstCiv.setText("Estado Civil");
 
         jComboBoxSexo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "MASCULINO", "FEMENINO" }));
+        jComboBoxSexo.setNextFocusableComponent(jComboBoxEstadoCivil);
 
         jLabelNroD.setText("Nro Documento");
 
         jLabelTipDoc.setText("Tipo Documento");
+
+        jTextFieldNroDoc.setNextFocusableComponent(jComboBoxTipoDocumento);
 
         jLabelOrganizacion.setText("Organizacion");
 
@@ -202,6 +219,7 @@ public class JDialogPersona extends javax.swing.JDialog {
 
         jButtonBuscarOrganizacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/view.png"))); // NOI18N
         jButtonBuscarOrganizacion.setToolTipText("Buscar Organizacion");
+        jButtonBuscarOrganizacion.setNextFocusableComponent(jButtonTomarFoto);
         jButtonBuscarOrganizacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonBuscarOrganizacionActionPerformed(evt);
@@ -215,6 +233,7 @@ public class JDialogPersona extends javax.swing.JDialog {
 
         jButtonTomarFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/CAMARA.png"))); // NOI18N
         jButtonTomarFoto.setText("Tomar Fotografia");
+        jButtonTomarFoto.setNextFocusableComponent(jButtonCargarFoto);
         jButtonTomarFoto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonTomarFotoActionPerformed(evt);
@@ -223,6 +242,7 @@ public class JDialogPersona extends javax.swing.JDialog {
 
         jButtonCargarFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/carpeta_abierta.jpg"))); // NOI18N
         jButtonCargarFoto.setText("Cargar Fotografia");
+        jButtonCargarFoto.setNextFocusableComponent(jButtonGuardar);
         jButtonCargarFoto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCargarFotoActionPerformed(evt);
@@ -594,6 +614,11 @@ public class JDialogPersona extends javax.swing.JDialog {
                 jLabelFoto.setIcon(iconoFoto);
                            
     }
+
+    public JComboBox getjComboBoxTipoDocumento() {
+        return jComboBoxTipoDocumento;
+    }
+    
     
      private void guardarImagen(Image img, File file) {
          String string = "fotografias/"+persona.getNumeroDocumento()+".jpg";
