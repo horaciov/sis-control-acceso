@@ -18,6 +18,7 @@ import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import py.gov.itaipu.controlacceso.model.Persona;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
+import py.gov.itaipu.controlacceso.utils.windows.WindowUtil;
 import py.gov.itaipu.controlacceso.view.JDialogBuscador;
 import py.gov.itaipu.controlacceso.view.persona.JInternalFramePersona;
 /**
@@ -169,6 +170,7 @@ private Persona persona;
         jFramePersona.setModoBuscador(true);
         jFramePersona.setTitle("Buscador de Personas Externas");
         jFramePersona.setTipoOrganizacionPersona("EXTERNA");
+        WindowUtil.centerWindow(jFramePersona);
         jFramePersona.setVisible(true);
         JDialogBuscador buscador=new JDialogBuscador(null, true);
         buscador.setSize(jFramePersona.getSize());
