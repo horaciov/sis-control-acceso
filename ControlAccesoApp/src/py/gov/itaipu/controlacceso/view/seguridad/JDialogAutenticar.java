@@ -19,7 +19,7 @@ public class JDialogAutenticar extends javax.swing.JDialog {
      */
     public JDialogAutenticar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        initComponents();
+        initComponents();        
         getRootPane().setDefaultButton(jButtonAceptar);
     }
 
@@ -49,6 +49,12 @@ public class JDialogAutenticar extends javax.swing.JDialog {
         setTitle("Inicio de sesión - Control de acceso");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setModal(true);
+        setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabelTitulo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabelTitulo.setForeground(new java.awt.Color(0, 0, 153));
@@ -154,6 +160,11 @@ public class JDialogAutenticar extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Usuario y password incorrectos.", "Error", 0);
         }
     }//GEN-LAST:event_jButtonAceptarActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

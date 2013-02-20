@@ -781,7 +781,6 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Debe seleccionar una Persona", "Error", 0);
             return;
         }
-
         Persona p = (Persona) listPersonas.get(jTablePersonas.getSelectedRow());
         JDialogPersona dialogPersona = new JDialogPersona(null, true);
         WindowUtil.centerWindow(dialogPersona);
