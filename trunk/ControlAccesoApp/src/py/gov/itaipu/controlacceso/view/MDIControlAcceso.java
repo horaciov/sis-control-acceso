@@ -17,6 +17,7 @@ import py.gov.itaipu.controlacceso.action.visita.VisitaAction;
 import py.gov.itaipu.controlacceso.model.TipoDocumento;
 import py.gov.itaipu.controlacceso.model.Visita;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
+import py.gov.itaipu.controlacceso.utils.windows.WindowUtil;
 import py.gov.itaipu.controlacceso.view.administracion.organizacion.JDialogOrganigrama;
 import py.gov.itaipu.controlacceso.view.administracion.organizacion.JInternalFrameOrganigrama;
 import py.gov.itaipu.controlacceso.view.administracion.organizacion.JInternalFrameOrganizacionExterna;
@@ -139,6 +140,7 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de control de acceso");
         setPreferredSize(new java.awt.Dimension(1275, 621));
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -764,6 +766,7 @@ public class MDIControlAcceso extends javax.swing.JFrame {
             // Enter was pressed. Your code goes here.
 
             JDialogVisita dialogVisita = new JDialogVisita(this, rootPaneCheckingEnabled);
+            WindowUtil.centerWindow(dialogVisita);
             dialogVisita.setVisita(new Visita());
             dialogVisita.getjTextFieldDocumentoPersona().setText(jTextFieldDocumentoPersona.getText());
             dialogVisita.getjComboBoxTipoDoc().setSelectedItem(jComboBoxTipoDoc.getSelectedItem());
@@ -792,12 +795,14 @@ public class MDIControlAcceso extends javax.swing.JFrame {
     private void jButtonReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReportesActionPerformed
         // TODO add your handling code here:
         JDialogAbout about = new JDialogAbout(this, rootPaneCheckingEnabled);
+        WindowUtil.centerWindow(about);
         about.setVisible(true);
     }//GEN-LAST:event_jButtonReportesActionPerformed
 
     private void jButtonVisitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVisitasActionPerformed
         // TODO add your handling code here:
         JDialogConsultaVisitas visitas = new JDialogConsultaVisitas(this, rootPaneCheckingEnabled);
+        WindowUtil.centerWindow(visitas);
         visitas.setVisible(true);
         
     }//GEN-LAST:event_jButtonVisitasActionPerformed
@@ -805,42 +810,49 @@ public class MDIControlAcceso extends javax.swing.JFrame {
     private void jButtonVisitantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVisitantesActionPerformed
         // TODO add your handling code here:
         JDialogPersonaPrincipal dialogPersona = new JDialogPersonaPrincipal(null, false);
+        WindowUtil.centerWindow(dialogPersona);
         dialogPersona.setVisible(true);
     }//GEN-LAST:event_jButtonVisitantesActionPerformed
 
     private void jButtonOrganigramaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOrganigramaActionPerformed
         // TODO add your handling code here:
         JDialogOrganigrama dialogOrganigrama = new JDialogOrganigrama(null, false);
+        WindowUtil.centerWindow(dialogOrganigrama);
         dialogOrganigrama.setVisible(true);
     }//GEN-LAST:event_jButtonOrganigramaActionPerformed
 
     private void jButtonReporteVisitasPorPersona1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReporteVisitasPorPersona1ActionPerformed
         // TODO add your handling code here:
         JDialogRepVisitasFecha dialogRepVisFec = new JDialogRepVisitasFecha(null, false);
+        WindowUtil.centerWindow(dialogRepVisFec);
         dialogRepVisFec.setVisible(true);
     }//GEN-LAST:event_jButtonReporteVisitasPorPersona1ActionPerformed
 
     private void jButtonReporteVisitasPorVisitanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReporteVisitasPorVisitanteActionPerformed
         // TODO add your handling code here:
         JDialogRepVisitasVisitante dialogRepVisVis = new JDialogRepVisitasVisitante(null, false);
+        WindowUtil.centerWindow(dialogRepVisVis);
         dialogRepVisVis.setVisible(true);
     }//GEN-LAST:event_jButtonReporteVisitasPorVisitanteActionPerformed
 
     private void jButtonReporteVisitasPorAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReporteVisitasPorAreaActionPerformed
         // TODO add your handling code here:
         JDialogRepVisitasAreaPersona dialogRepVisAreaPers = new JDialogRepVisitasAreaPersona(null, false);
+        WindowUtil.centerWindow(dialogRepVisAreaPers);
         dialogRepVisAreaPers.setVisible(true);
     }//GEN-LAST:event_jButtonReporteVisitasPorAreaActionPerformed
 
     private void jButtonReporteGeneralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReporteGeneralActionPerformed
         // TODO add your handling code here:
         JDialogRepVisitasGeneral dialogRepVisGen = new JDialogRepVisitasGeneral(null, false);
+        WindowUtil.centerWindow(dialogRepVisGen);
         dialogRepVisGen.setVisible(true);
     }//GEN-LAST:event_jButtonReporteGeneralActionPerformed
 
     private void jButtonReporteVisitasPorPersona2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReporteVisitasPorPersona2ActionPerformed
         // TODO add your handling code here:
         JDialogRepPersonasNoGratas dialogRepPersNoGratas = new JDialogRepPersonasNoGratas(null, false);
+        WindowUtil.centerWindow(dialogRepPersNoGratas);
         dialogRepPersNoGratas.setVisible(true);
     }//GEN-LAST:event_jButtonReporteVisitasPorPersona2ActionPerformed
 

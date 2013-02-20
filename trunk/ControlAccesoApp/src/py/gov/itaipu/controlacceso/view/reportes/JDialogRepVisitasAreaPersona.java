@@ -21,6 +21,7 @@ import net.sf.jasperreports.view.JasperViewer;
 import py.gov.itaipu.controlacceso.model.Organizacion;
 import py.gov.itaipu.controlacceso.model.Persona;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
+import py.gov.itaipu.controlacceso.utils.windows.WindowUtil;
 
 import py.gov.itaipu.controlacceso.view.persona.JInternalFramePersona;
 
@@ -141,6 +142,7 @@ public class JDialogRepVisitasAreaPersona extends javax.swing.JDialog {
         JDialogOrganigrama jOrganigrama = new JDialogOrganigrama(null, true);
         jOrganigrama.setModoBuscador(true);
         jOrganigrama.setTitle("Seleccionar Area/Persona Visitada");
+        WindowUtil.centerWindow(jOrganigrama);
         jOrganigrama.setVisible(true);
         jOrganigrama.setResizable(false);
         seleccionado = jOrganigrama.getSeleccionado();

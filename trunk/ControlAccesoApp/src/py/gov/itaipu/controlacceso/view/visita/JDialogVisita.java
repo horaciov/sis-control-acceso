@@ -62,6 +62,7 @@ import py.gov.itaipu.controlacceso.model.Visita;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 import py.gov.itaipu.controlacceso.utils.tree.CustomIconRenderer;
 import py.gov.itaipu.controlacceso.utils.tree.UtilesArbol;
+import py.gov.itaipu.controlacceso.utils.windows.WindowUtil;
 import py.gov.itaipu.controlacceso.view.FileFilterExtension;
 import py.gov.itaipu.controlacceso.view.JDialogBuscador;
 import py.gov.itaipu.controlacceso.view.TimeRenderer;
@@ -803,6 +804,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         jFramePersona.setModoBuscador(true);
         jFramePersona.setTipoOrganizacionPersona("EXTERNA");
         jFramePersona.setTitle("Buscador de Personas Externas");
+        WindowUtil.centerWindow(jFramePersona);
         jFramePersona.setVisible(true);
         JDialogBuscador buscador = new JDialogBuscador(null, true);
         buscador.setSize(jFramePersona.getSize());
@@ -976,6 +978,7 @@ public class JDialogVisita extends javax.swing.JDialog {
                     
                         JDialogFotografia dialogFotografia = new JDialogFotografia(null, rootPaneCheckingEnabled, "CAPTURAR");
                         dialogFotografia.setPersona(persona);
+                        WindowUtil.centerWindow(dialogFotografia);
                         dialogFotografia.setVisible(true);        // TODO add your handling code here:
                         if (dialogFotografia.isCapturado()) {
                             mostrarFotoPersona();
@@ -1000,6 +1003,7 @@ public class JDialogVisita extends javax.swing.JDialog {
                 dialogPersona.getjTextFieldNroDoc().setEditable(false);
                 dialogPersona.getjComboBoxTipoDocumento().setSelectedItem(jComboBoxTipoDoc.getSelectedItem());
                 dialogPersona.getjComboBoxTipoDocumento().setEnabled(false);
+                WindowUtil.centerWindow(dialogPersona);
                 dialogPersona.setVisible(true);
                 actualizarDatos();
                 
@@ -1097,6 +1101,7 @@ public class JDialogVisita extends javax.swing.JDialog {
 
     private void jButtonTomarFotografiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTomarFotografiaActionPerformed
         JDialogFotografia dialogFotografia = new JDialogFotografia(null, rootPaneCheckingEnabled, "CAPTURAR");
+        WindowUtil.centerWindow(dialogFotografia);
         dialogFotografia.setPersona(persona);
         dialogFotografia.setVisible(true);        // TODO add your handling code here:
         if (dialogFotografia.isCapturado()) {

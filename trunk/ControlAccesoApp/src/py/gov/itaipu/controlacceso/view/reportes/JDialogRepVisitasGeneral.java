@@ -37,6 +37,7 @@ import py.gov.itaipu.controlacceso.model.Organizacion;
 import py.gov.itaipu.controlacceso.model.Persona;
 import py.gov.itaipu.controlacceso.model.Visita;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
+import py.gov.itaipu.controlacceso.utils.windows.WindowUtil;
 import py.gov.itaipu.controlacceso.view.JDialogBuscador;
 import py.gov.itaipu.controlacceso.view.TimeRenderer;
 import py.gov.itaipu.controlacceso.view.administracion.organizacion.JDialogOrganigrama;
@@ -374,6 +375,7 @@ public class JDialogRepVisitasGeneral extends javax.swing.JDialog {
         jFrameOrganizacionExterna.setClosable(false);
         jFrameOrganizacionExterna.setResizable(false);
         jFrameOrganizacionExterna.setTitle("Buscador de organización externa");
+        WindowUtil.centerWindow(jFrameOrganizacionExterna);
         buscador.getjDesktopPaneBuscador().add(jFrameOrganizacionExterna);
         buscador.setVisible(true);
         organizacionExterna=jFrameOrganizacionExterna.getOrganizacionSeleccionada();
@@ -476,6 +478,7 @@ public class JDialogRepVisitasGeneral extends javax.swing.JDialog {
         jFramePersona.setModoBuscador(true);
         jFramePersona.setTitle("Buscador de Personas Externas");
         jFramePersona.setTipoOrganizacionPersona("EXTERNA");
+        WindowUtil.centerWindow(jFramePersona);
         jFramePersona.setVisible(true);
         JDialogBuscador buscador=new JDialogBuscador(null, true);
         buscador.setSize(jFramePersona.getSize());
@@ -495,6 +498,7 @@ public class JDialogRepVisitasGeneral extends javax.swing.JDialog {
         jOrganigrama.setTitle("Seleccionar Area/Persona Visitada");
         jOrganigrama.setVisible(true);
         jOrganigrama.setResizable(false);
+        WindowUtil.centerWindow(jOrganigrama);
         Object seleccionado = jOrganigrama.getSeleccionado();
 
         if (seleccionado.getClass().getSimpleName().equals("Persona")) {
