@@ -784,6 +784,7 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
 
         Persona p = (Persona) listPersonas.get(jTablePersonas.getSelectedRow());
         JDialogPersona dialogPersona = new JDialogPersona(null, true);
+        WindowUtil.centerWindow(dialogPersona);
         dialogPersona.setPersona(p);
         dialogPersona.cargarDatospersona();
         dialogPersona.setVisible(true);
