@@ -191,6 +191,8 @@ public class JDialogTipoDocumento extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_formWindowActivated
 
+    
+    
     /**
      * @param args the command line arguments
      */
