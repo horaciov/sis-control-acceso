@@ -77,7 +77,6 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         listVisitas = ObservableCollections.observableList(visitaAction.findVisitasPendientes());
         buttonGroupExtranjero = new javax.swing.ButtonGroup();
         listTipoDocumento = tipoDocAction.findAll();
-        desktopPane = new javax.swing.JDesktopPane();
         jPanel1 = new javax.swing.JPanel();
         jLabelDocNro = new javax.swing.JLabel();
         jTextFieldDocumentoPersona = new javax.swing.JTextField();
@@ -139,6 +138,7 @@ public class MDIControlAcceso extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de control de acceso");
+        setPreferredSize(new java.awt.Dimension(1275, 621));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -212,6 +212,10 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         jScrollPane1.setViewportView(jTableVisitas);
+        jTableVisitas.getColumnModel().getColumn(0).setPreferredWidth(30);
+        jTableVisitas.getColumnModel().getColumn(1).setPreferredWidth(70);
+        jTableVisitas.getColumnModel().getColumn(2).setPreferredWidth(30);
+        jTableVisitas.getColumnModel().getColumn(4).setPreferredWidth(50);
         jTableVisitas.getColumnModel().getColumn(4).setCellRenderer(rendererTime);
 
         buttonGroupExtranjero.add(jRadioButtonNacional);
@@ -351,39 +355,37 @@ public class MDIControlAcceso extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabelDocNro1)
-                                    .addGap(18, 18, 18)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jTextFieldNroTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextFieldDocumentoPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addComponent(jLabelDocNro)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGap(23, 23, 23)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(jButtonVisitantes, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(jButtonOrganigrama, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(jButtonVisitas, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGap(18, 18, 18)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jButtonReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addComponent(jLabelPersonaVisitada4, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jSeparator1)
-                                .addComponent(jSeparator5)
-                                .addComponent(jSeparator6)
-                                .addComponent(jSeparator4)
-                                .addComponent(jLabelPersonaVisitada5, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabelDocNro1)
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextFieldNroTicket, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
+                                    .addComponent(jTextFieldDocumentoPersona)))
+                            .addComponent(jLabelDocNro)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(23, 23, 23)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jButtonVisitantes, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButtonOrganigrama, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButtonVisitas, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButtonReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabelPersonaVisitada4, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelPersonaVisitada5, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jSeparator6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
+                                .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.LEADING))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jButtonReporteVisitasPorArea, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -407,23 +409,22 @@ public class MDIControlAcceso extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jButtonReporteVisitasPorPersona1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabelPersonaVisitada3, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSeparator3)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 907, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 784, Short.MAX_VALUE)
+                    .addComponent(jSeparator3))
+                .addGap(5, 5, 5))
         );
-
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jTextFieldDocumentoPersona, jTextFieldNroTicket});
-
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabelPersonaVisitada3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelPersonaVisitada3, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
                     .addComponent(jLabelPersonaVisitada2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -452,10 +453,10 @@ public class MDIControlAcceso extends javax.swing.JFrame {
                         .addGap(28, 28, 28)
                         .addComponent(jLabelPersonaVisitada5, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addComponent(jButtonVisitas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -493,8 +494,6 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jTextFieldDocumentoPersona, jTextFieldNroTicket});
-
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jSeparator1, jSeparator5});
 
         jMenuPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/Boss.gif"))); // NOI18N
         jMenuPersona.setText("Persona");
@@ -629,18 +628,14 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 1417, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 10, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(desktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 8, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -652,7 +647,7 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         // TODO add your handling code here:
         JInternalFrameMotivo motivoFrame = new JInternalFrameMotivo();
         motivoFrame.setVisible(true);
-        this.desktopPane.add(motivoFrame);
+//        this.desktopPane.add(motivoFrame);
     }//GEN-LAST:event_jMenuItemMotivoVisitaActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
@@ -664,28 +659,28 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         // TODO add your handling code here:
         JInternalFrameEstado estadoFrame = new JInternalFrameEstado();
         estadoFrame.setVisible(true);
-        this.desktopPane.add(estadoFrame);
+//        this.desktopPane.add(estadoFrame);
     }//GEN-LAST:event_jMenuItemEstadoActionPerformed
 
     private void jMenuItemAntecedenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAntecedenteActionPerformed
         // TODO add your handling code here:
         JInternalFrameTipoAntecedente tipoAntecedenteFrame = new JInternalFrameTipoAntecedente();
         tipoAntecedenteFrame.setVisible(true);
-        this.desktopPane.add(tipoAntecedenteFrame);
+//        this.desktopPane.add(tipoAntecedenteFrame);
     }//GEN-LAST:event_jMenuItemAntecedenteActionPerformed
 
     private void jMenuItemTipoDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemTipoDocumentoActionPerformed
         // TODO add your handling code here:
         JInternalFrameTipoDocumento tipoDocumentoFrame = new JInternalFrameTipoDocumento();
         tipoDocumentoFrame.setVisible(true);
-        this.desktopPane.add(tipoDocumentoFrame);
+//        this.desktopPane.add(tipoDocumentoFrame);
     }//GEN-LAST:event_jMenuItemTipoDocumentoActionPerformed
 
     private void jMenuItemNacionalidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemNacionalidadActionPerformed
         // TODO add your handling code here:
         JInternalFrameNacionalidad nacionalidadFrame = new JInternalFrameNacionalidad();
         nacionalidadFrame.setVisible(true);
-        this.desktopPane.add(nacionalidadFrame);
+//        this.desktopPane.add(nacionalidadFrame);
     }//GEN-LAST:event_jMenuItemNacionalidadActionPerformed
 
     private void jMenuItemRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRegistroActionPerformed
@@ -705,28 +700,28 @@ public class MDIControlAcceso extends javax.swing.JFrame {
 //        JInternalFrameOrganizacionInterna organizacionInternaFrame = new JInternalFrameOrganizacionInterna();
         JInternalFrameOrganigrama organizacionInternaFrame = new JInternalFrameOrganigrama();
         organizacionInternaFrame.setVisible(true);
-        this.desktopPane.add(organizacionInternaFrame);
+//        this.desktopPane.add(organizacionInternaFrame);
     }//GEN-LAST:event_jMenuItemOrganizacionInternaActionPerformed
 
     private void jMenuItemOrganizacionExternaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemOrganizacionExternaActionPerformed
         // TODO add your handling code here:
         JInternalFrameOrganizacionExterna organizacionExternaFrame = new JInternalFrameOrganizacionExterna();
         organizacionExternaFrame.setVisible(true);
-        this.desktopPane.add(organizacionExternaFrame);
+//        this.desktopPane.add(organizacionExternaFrame);
     }//GEN-LAST:event_jMenuItemOrganizacionExternaActionPerformed
 
     private void jMenuItemRegistroVisitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRegistroVisitaActionPerformed
         // TODO add your handling code here:
         JInternalFrameRegistroVisita registroVisitaFrame = new JInternalFrameRegistroVisita();
         registroVisitaFrame.setVisible(true);
-        this.desktopPane.add(registroVisitaFrame);
+//        this.desktopPane.add(registroVisitaFrame);
     }//GEN-LAST:event_jMenuItemRegistroVisitaActionPerformed
 
     private void jMenuItemConsultaVisitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConsultaVisitaActionPerformed
         // TODO add your handling code here:
         JInternalFrameConsultaVisita consultaVisitaFrame = new JInternalFrameConsultaVisita();
         consultaVisitaFrame.setVisible(true);
-        this.desktopPane.add(consultaVisitaFrame);
+//        this.desktopPane.add(consultaVisitaFrame);
     }//GEN-LAST:event_jMenuItemConsultaVisitaActionPerformed
 
     private void jTextFieldNroTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNroTicketActionPerformed
@@ -887,7 +882,6 @@ public class MDIControlAcceso extends javax.swing.JFrame {
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.ButtonGroup buttonGroupExtranjero;
     private javax.swing.JMenuItem contentMenuItem;
-    private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JButton jButtonOrganigrama;
     private javax.swing.JButton jButtonReporteGeneral;
