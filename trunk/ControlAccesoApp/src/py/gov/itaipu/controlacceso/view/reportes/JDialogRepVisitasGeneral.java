@@ -58,6 +58,7 @@ public class JDialogRepVisitasGeneral extends javax.swing.JDialog {
     private Persona persona;
     private Persona personaVisitada;
     private Organizacion organizacionVisitada;
+
     /**
      * Creates new form JDialogConsultaVisitas
      */
@@ -370,7 +371,7 @@ public class JDialogRepVisitasGeneral extends javax.swing.JDialog {
         JInternalFrameOrganizacionExterna jFrameOrganizacionExterna = new JInternalFrameOrganizacionExterna();
         jFrameOrganizacionExterna.setModoBuscador(true);
         jFrameOrganizacionExterna.setVisible(true);
-        JDialogBuscador buscador=new JDialogBuscador(null, true);
+        JDialogBuscador buscador = new JDialogBuscador(null, true);
         buscador.setSize(jFrameOrganizacionExterna.getSize());
         jFrameOrganizacionExterna.setClosable(false);
         jFrameOrganizacionExterna.setResizable(false);
@@ -378,28 +379,29 @@ public class JDialogRepVisitasGeneral extends javax.swing.JDialog {
         WindowUtil.centerWindow(jFrameOrganizacionExterna);
         buscador.getjDesktopPaneBuscador().add(jFrameOrganizacionExterna);
         buscador.setVisible(true);
-        organizacionExterna=jFrameOrganizacionExterna.getOrganizacionSeleccionada();
-        if(organizacionExterna!=null)
-        jTextFieldOrganizacionExterna.setText(organizacionExterna.getNombre());
+        organizacionExterna = jFrameOrganizacionExterna.getOrganizacionSeleccionada();
+        if (organizacionExterna != null) {
+            jTextFieldOrganizacionExterna.setText(organizacionExterna.getNombre());
+        }
 
     }//GEN-LAST:event_jButtonBuscarOrganizacionExternaActionPerformed
 
     private void jButtonLimpiarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarPersonaActionPerformed
         // TODO add your handling code here:
-        persona=null;
+        persona = null;
         jTextFieldPersona.setText(null);
     }//GEN-LAST:event_jButtonLimpiarPersonaActionPerformed
 
     private void jButtonLimpiarPersonaVisitadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarPersonaVisitadaActionPerformed
         // TODO add your handling code here:
-        personaVisitada=null;
-        organizacionVisitada=null;
+        personaVisitada = null;
+        organizacionVisitada = null;
         jTextFieldAreaPersonaVisitada.setText(null);
     }//GEN-LAST:event_jButtonLimpiarPersonaVisitadaActionPerformed
 
     private void jButtonLimpiarOrganizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarOrganizacionActionPerformed
         // TODO add your handling code here:
-        organizacionExterna=null;
+        organizacionExterna = null;
         jTextFieldOrganizacionExterna.setText(null);
     }//GEN-LAST:event_jButtonLimpiarOrganizacionActionPerformed
 
@@ -411,47 +413,47 @@ public class JDialogRepVisitasGeneral extends javax.swing.JDialog {
             Connection conexion = EntityManagerCA.getConexion();
             JasperReport reporte = (JasperReport) JRLoader.loadObject("reports/reporteListadoVisitas.jasper");
             //Parametros
-            Map<String, Object> parametros = new HashMap<String, Object> ();
+            Map<String, Object> parametros = new HashMap<String, Object>();
             ///Parametros
-            if (persona!=null && persona.getId()!=null) {
-                parametros.put("pPersonaText",(Object)(persona.getApellido()+", "+persona.getNombre()));
-                parametros.put("pPersonaId",(Object)persona.getId().intValue());
+            if (persona != null && persona.getId() != null) {
+                parametros.put("pPersonaText", (Object) (persona.getApellido() + ", " + persona.getNombre()));
+                parametros.put("pPersonaId", (Object) persona.getId().intValue());
             }
-            if (personaVisitada!=null && personaVisitada.getId()!=null) {
-                parametros.put("pPersonaVisitadaText",(Object)(personaVisitada.getApellido()+", "+personaVisitada.getNombre()));
-                parametros.put("pPersonaVisitadaId",(Object)personaVisitada.getId().intValue());
-            }
-
-            if ( organizacionExterna!=null &&  organizacionExterna.getId()!=null) {
-                parametros.put("pOrganizacionText",(Object)organizacionExterna.getNombre());
-                parametros.put("pOrganizacionId",(Object)organizacionExterna.getId().intValue());
+            if (personaVisitada != null && personaVisitada.getId() != null) {
+                parametros.put("pPersonaVisitadaText", (Object) (personaVisitada.getApellido() + ", " + personaVisitada.getNombre()));
+                parametros.put("pPersonaVisitadaId", (Object) personaVisitada.getId().intValue());
             }
 
-            
-            if (organizacionVisitada!=null && organizacionVisitada.getId() != null) {
-                parametros.put("pOrganizacionVisitadaText",organizacionVisitada.getNombre());
-                parametros.put("pOrganizacionVisitadaId",organizacionVisitada.getId().intValue());
+            if (organizacionExterna != null && organizacionExterna.getId() != null) {
+                parametros.put("pOrganizacionText", (Object) organizacionExterna.getNombre());
+                parametros.put("pOrganizacionId", (Object) organizacionExterna.getId().intValue());
+            }
+
+
+            if (organizacionVisitada != null && organizacionVisitada.getId() != null) {
+                parametros.put("pOrganizacionVisitadaText", organizacionVisitada.getNombre());
+                parametros.put("pOrganizacionVisitadaId", organizacionVisitada.getId().intValue());
             }
             Motivo motivo = (Motivo) jComboBoxMotivo.getSelectedItem();
             if (motivo.getId() != null) {
-                parametros.put("pMotivoText",(Object)motivo.getNombre());
-                parametros.put("pMotivoId",(Object)motivo.getId().intValue());
+                parametros.put("pMotivoText", (Object) motivo.getNombre());
+                parametros.put("pMotivoId", (Object) motivo.getId().intValue());
             }
-            if (jTextAreaObservacion.getText()!=null && !jTextAreaObservacion.getText().equals("")) {
-                parametros.put("pObservacion",(Object)jTextAreaObservacion.getText().toUpperCase());
+            if (jTextAreaObservacion.getText() != null && !jTextAreaObservacion.getText().equals("")) {
+                parametros.put("pObservacion", (Object) jTextAreaObservacion.getText().toUpperCase());
             }
 
-            if (jFormattedTextFieldDesde!=null && !jFormattedTextFieldDesde.getText().equals("")) {
-                String vFecha = jFormattedTextFieldDesde.getText().substring(6,10)+jFormattedTextFieldDesde.getText().substring(3,5)+jFormattedTextFieldDesde.getText().substring(0,2);
-                parametros.put("pFechaDesde",(Object)vFecha.toUpperCase());
-                vFecha = vFecha.substring(6,8)+"/"+vFecha.substring(4,6)+"/"+vFecha.substring(0,4);
-                parametros.put("pFechaDesdeText",(Object)vFecha.toUpperCase());
+            if (jFormattedTextFieldDesde != null && !jFormattedTextFieldDesde.getText().equals("")) {
+                String vFecha = jFormattedTextFieldDesde.getText().substring(6, 10) + jFormattedTextFieldDesde.getText().substring(3, 5) + jFormattedTextFieldDesde.getText().substring(0, 2);
+                parametros.put("pFechaDesde", (Object) vFecha.toUpperCase());
+                vFecha = vFecha.substring(6, 8) + "/" + vFecha.substring(4, 6) + "/" + vFecha.substring(0, 4);
+                parametros.put("pFechaDesdeText", (Object) vFecha.toUpperCase());
             }
-            if (jFormattedTextFieldHasta!=null && !jFormattedTextFieldHasta.getText().equals("")) {
-                String vFechaH = jFormattedTextFieldHasta.getText().substring(6,10)+jFormattedTextFieldHasta.getText().substring(3,5)+jFormattedTextFieldHasta.getText().substring(0,2);
-                parametros.put("pFechaHasta",(Object)vFechaH.toUpperCase());
-                vFechaH = vFechaH.substring(6,8)+"/"+vFechaH.substring(4,6)+"/"+vFechaH.substring(0,4);
-                parametros.put("pFechaHastaText",(Object)vFechaH.toUpperCase());
+            if (jFormattedTextFieldHasta != null && !jFormattedTextFieldHasta.getText().equals("")) {
+                String vFechaH = jFormattedTextFieldHasta.getText().substring(6, 10) + jFormattedTextFieldHasta.getText().substring(3, 5) + jFormattedTextFieldHasta.getText().substring(0, 2);
+                parametros.put("pFechaHasta", (Object) vFechaH.toUpperCase());
+                vFechaH = vFechaH.substring(6, 8) + "/" + vFechaH.substring(4, 6) + "/" + vFechaH.substring(0, 4);
+                parametros.put("pFechaHastaText", (Object) vFechaH.toUpperCase());
             }
 
             JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, conexion);
@@ -459,7 +461,7 @@ public class JDialogRepVisitasGeneral extends javax.swing.JDialog {
             //            Muestra el Reporte en Pantalla
             JasperViewer jviewer = new JasperViewer(jasperPrint, false);
             jviewer.setModalExclusionType(Dialog.ModalExclusionType.NO_EXCLUDE);
-            jviewer.viewReport(jasperPrint,false);
+            jviewer.viewReport(jasperPrint, false);
 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(JInternalFramePersona.class.getName()).log(Level.SEVERE, null, ex);
@@ -480,15 +482,16 @@ public class JDialogRepVisitasGeneral extends javax.swing.JDialog {
         jFramePersona.setTipoOrganizacionPersona("EXTERNA");
         WindowUtil.centerWindow(jFramePersona);
         jFramePersona.setVisible(true);
-        JDialogBuscador buscador=new JDialogBuscador(null, true);
+        JDialogBuscador buscador = new JDialogBuscador(null, true);
         buscador.setSize(jFramePersona.getSize());
         //jFramePersona.setClosable(false);
         jFramePersona.setResizable(false);
         buscador.getjDesktopPaneBuscador().add(jFramePersona);
         buscador.setVisible(true);
-        persona=jFramePersona.getPersonaSeleccionada();
-        if(persona!=null)
-        jTextFieldPersona.setText(persona.getNombre()+", "+persona.getApellido());
+        persona = jFramePersona.getPersonaSeleccionada();
+        if (persona != null) {
+            jTextFieldPersona.setText(persona.getNombre() + ", " + persona.getApellido());
+        }
     }//GEN-LAST:event_jButtonBuscarPersonaActionPerformed
 
     private void jButtonBuscarAreaPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarAreaPersonaActionPerformed
@@ -499,26 +502,29 @@ public class JDialogRepVisitasGeneral extends javax.swing.JDialog {
         jOrganigrama.setVisible(true);
         jOrganigrama.setResizable(false);
         WindowUtil.centerWindow(jOrganigrama);
-        Object seleccionado = jOrganigrama.getSeleccionado();
+        if (jOrganigrama.getSeleccionado() != null) {
+            Object seleccionado = jOrganigrama.getSeleccionado();
 
-        if (seleccionado.getClass().getSimpleName().equals("Persona")) {
-            personaVisitada = (Persona) seleccionado;
-            organizacionVisitada = null;
-            jTextFieldAreaPersonaVisitada.setText(personaVisitada.getApellido()+", "+personaVisitada.getNombre());
-        } else if (seleccionado.getClass().getSimpleName().equals("Organizacion")) {
-            personaVisitada = null;
-            organizacionVisitada = (Organizacion) seleccionado;
-            jTextFieldAreaPersonaVisitada.setText(organizacionVisitada.getNombre());
+            if (seleccionado.getClass().getSimpleName().equals("Persona")) {
+                personaVisitada = (Persona) seleccionado;
+                organizacionVisitada = null;
+                jTextFieldAreaPersonaVisitada.setText(personaVisitada.getApellido() + ", " + personaVisitada.getNombre());
+            } else if (seleccionado.getClass().getSimpleName().equals("Organizacion")) {
+                personaVisitada = null;
+                organizacionVisitada = (Organizacion) seleccionado;
+                jTextFieldAreaPersonaVisitada.setText(organizacionVisitada.getNombre());
+            }
         }
+
 
     }//GEN-LAST:event_jButtonBuscarAreaPersonaActionPerformed
 
-     private InputStream generaBarCode(String codeDigits){
-        
-        while (codeDigits.length() < 11) {            
+    private InputStream generaBarCode(String codeDigits) {
+
+        while (codeDigits.length() < 11) {
             codeDigits = "0" + codeDigits;
         }
-        
+
         ByteArrayInputStream bis;
         UPCABean bean = new UPCABean();
         final int dpi = 150;
@@ -526,20 +532,19 @@ public class JDialogRepVisitasGeneral extends javax.swing.JDialog {
         bean.setFontSize(2.0);
         bean.doQuietZone(true);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        BitmapCanvasProvider canvas = new BitmapCanvasProvider(out, "image/jpeg", dpi,   BufferedImage.TYPE_BYTE_BINARY, false, 0);
+        BitmapCanvasProvider canvas = new BitmapCanvasProvider(out, "image/jpeg", dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0);
         bean.generateBarcode(canvas, codeDigits);
-        try {   
+        try {
             canvas.finish();
             out.flush();
         } catch (IOException ex) {
             Logger.getLogger(JDialogVisita.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         bis = new ByteArrayInputStream(out.toByteArray());
         return bis;
     }
-    
-    
+
     /**
      * @param args the command line arguments
      */
