@@ -527,7 +527,7 @@
                 <BindingParameter name="NAME" value="Tipo Doc"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
               </Subbinding>
-              <Subbinding sourcePath="${nroDocumento}">
+              <Subbinding sourcePath="${numeroDocumento}">
                 <BindingParameter name="NAME" value="Nro Documento"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
               </Subbinding>
