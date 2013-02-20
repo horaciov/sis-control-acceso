@@ -20,6 +20,7 @@ public class JDialogAutenticar extends javax.swing.JDialog {
     public JDialogAutenticar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        getRootPane().setDefaultButton(jButtonAceptar);
     }
 
     /**
