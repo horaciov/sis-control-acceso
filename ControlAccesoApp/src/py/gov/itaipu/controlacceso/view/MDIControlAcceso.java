@@ -764,14 +764,12 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             // Enter was pressed. Your code goes here.
-
             JDialogVisita dialogVisita = new JDialogVisita(this, rootPaneCheckingEnabled);
             WindowUtil.centerWindow(dialogVisita);
             dialogVisita.setVisita(new Visita());
             dialogVisita.getjTextFieldDocumentoPersona().setText(jTextFieldDocumentoPersona.getText());
             dialogVisita.getjComboBoxTipoDoc().setSelectedItem(jComboBoxTipoDoc.getSelectedItem());
-            if(dialogVisita.getPersona().getId()==null)
-                dialogVisita.actualizarDatos();
+            dialogVisita.actualizarDatos();
             if(dialogVisita.getPersona().getId()!=null)
                 dialogVisita.setVisible(true);
             listVisitas.clear();

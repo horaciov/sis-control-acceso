@@ -1136,7 +1136,7 @@ public class JDialogVisita extends javax.swing.JDialog {
     }//GEN-LAST:event_jRadioButtonNacionalItemStateChanged
 
     private void jComboBoxTipoDocItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxTipoDocItemStateChanged
-        if (evt.getStateChange() == ItemEvent.SELECTED && jTextFieldDocumentoPersona.getText() != null && !jTextFieldDocumentoPersona.getText().equals("")) {
+        if (evt.getStateChange() == ItemEvent.SELECTED && jTextFieldDocumentoPersona.getText() != null && !jTextFieldDocumentoPersona.getText().equals("") && this.isVisible()) {
             actualizarDatos();
         }
     }//GEN-LAST:event_jComboBoxTipoDocItemStateChanged
