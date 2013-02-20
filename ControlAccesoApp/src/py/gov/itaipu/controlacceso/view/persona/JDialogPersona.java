@@ -49,6 +49,7 @@ import py.gov.itaipu.controlacceso.model.Organizacion;
 import py.gov.itaipu.controlacceso.model.Persona;
 import py.gov.itaipu.controlacceso.test.ImageFrame;
 import py.gov.itaipu.controlacceso.test.ShowImage;
+import py.gov.itaipu.controlacceso.utils.windows.WindowUtil;
 import py.gov.itaipu.controlacceso.view.FileFilterExtension;
 import py.gov.itaipu.controlacceso.view.JDialogBuscador;
 import py.gov.itaipu.controlacceso.view.administracion.organizacion.JInternalFrameOrganizacion;
@@ -102,7 +103,7 @@ public class JDialogPersona extends javax.swing.JDialog {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        listNacionalidades = nacionalidadAction.findAll();
+        listNacionalidades = ObservableCollections.observableList(nacionalidadAction.findAll());
         listTipoDocumento = ObservableCollections.observableList(tipoDocAction.findAll());
         listOrganizaciones = ObservableCollections.observableList(organizacionAction.findAll());
         listAntecedentes = ObservableCollections.observableList(persona.getAntecedentes())
@@ -134,6 +135,9 @@ public class JDialogPersona extends javax.swing.JDialog {
         jLabelFoto = new javax.swing.JLabel();
         jButtonTomarFoto = new javax.swing.JButton();
         jButtonCargarFoto = new javax.swing.JButton();
+        jButtonNacionalidad = new javax.swing.JButton();
+        jButtonNacionalidadEdit = new javax.swing.JButton();
+        jButtonEditTipoDoc = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registro de Personas");
@@ -249,6 +253,27 @@ public class JDialogPersona extends javax.swing.JDialog {
             }
         });
 
+        jButtonNacionalidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/new.jpg"))); // NOI18N
+        jButtonNacionalidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNacionalidadActionPerformed(evt);
+            }
+        });
+
+        jButtonNacionalidadEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/edit.png"))); // NOI18N
+        jButtonNacionalidadEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNacionalidadEditActionPerformed(evt);
+            }
+        });
+
+        jButtonEditTipoDoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/edit.png"))); // NOI18N
+        jButtonEditTipoDoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditTipoDocActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -285,7 +310,9 @@ public class JDialogPersona extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButtonNuevoTipoDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(65, 65, 65)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonEditTipoDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
                         .addComponent(jLabelFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(24, 24, 24))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -313,7 +340,12 @@ public class JDialogPersona extends javax.swing.JDialog {
                             .addComponent(jComboBoxSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBoxNacionalidad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonBuscarOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonBuscarOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButtonNacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonNacionalidadEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
@@ -339,22 +371,28 @@ public class JDialogPersona extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextFieldApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelApe))
-                        .addGap(4, 4, 4)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelNroD, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldNroDoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBoxTipoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelTipDoc)
-                            .addComponent(jButtonNuevoTipoDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelNAcion)
-                            .addComponent(jComboBoxNacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jTextFieldApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabelApe))
+                                .addGap(4, 4, 4)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabelNroD, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextFieldNroDoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jComboBoxTipoDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabelTipDoc)
+                                    .addComponent(jButtonNuevoTipoDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButtonEditTipoDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabelNAcion)
+                                        .addComponent(jComboBoxNacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jButtonNacionalidadEdit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jButtonNacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelEstCiv1)
@@ -388,11 +426,18 @@ public class JDialogPersona extends javax.swing.JDialog {
 
     private void jButtonNuevoTipoDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoTipoDocActionPerformed
         // TODO add your handling code here:
+        TipoDocumento td = (TipoDocumento) jComboBoxTipoDocumento.getSelectedItem();
         JDialogTipoDocumento dialogTipoDocumento = new JDialogTipoDocumento(null, rootPaneCheckingEnabled);
         dialogTipoDocumento.setTipoDocumento(new TipoDocumento());
+        WindowUtil.centerWindow(dialogTipoDocumento);
         dialogTipoDocumento.setVisible(true);
         listTipoDocumento.clear();
         listTipoDocumento.addAll(tipoDocAction.findAll());
+            if (dialogTipoDocumento.getTipoDocumento().getId()!=null) {
+                jComboBoxTipoDocumento.setSelectedItem(dialogTipoDocumento.getTipoDocumento());
+            }else{
+                jComboBoxTipoDocumento.setSelectedItem(td);
+            }
     }//GEN-LAST:event_jButtonNuevoTipoDocActionPerformed
 
     public JTextField getjTextFieldNroDoc() {
@@ -604,6 +649,45 @@ public class JDialogPersona extends javax.swing.JDialog {
              mostrarFotoPersona();
         }
     }//GEN-LAST:event_jButtonTomarFotoActionPerformed
+
+    private void jButtonNacionalidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNacionalidadActionPerformed
+        // TODO add your handling code here:
+        Nacionalidad nac = (Nacionalidad)jComboBoxNacionalidad.getSelectedItem();
+        JDialogoNacionalidad dialogNacionalidad = new JDialogoNacionalidad(null, rootPaneCheckingEnabled);
+        dialogNacionalidad.setNacionalidad(new Nacionalidad());
+        WindowUtil.centerWindow(dialogNacionalidad);
+        dialogNacionalidad.setVisible(true);
+        listNacionalidades.clear();
+        listNacionalidades.addAll(nacionalidadAction.findAll());
+        if (dialogNacionalidad.getNacionalidad().getId()!=null) {
+            jComboBoxNacionalidad.setSelectedItem(dialogNacionalidad.getNacionalidad());
+        }else{
+            jComboBoxNacionalidad.setSelectedItem(nac);
+        }
+    }//GEN-LAST:event_jButtonNacionalidadActionPerformed
+
+    private void jButtonNacionalidadEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNacionalidadEditActionPerformed
+        // TODO add your handling code here:
+        JDialogoNacionalidad dialogNacionalidad = new JDialogoNacionalidad(null, rootPaneCheckingEnabled);
+        dialogNacionalidad.setNacionalidad((Nacionalidad)jComboBoxNacionalidad.getSelectedItem());
+        WindowUtil.centerWindow(dialogNacionalidad);
+        dialogNacionalidad.setVisible(true);
+        listNacionalidades.clear();
+        listNacionalidades.addAll(nacionalidadAction.findAll());
+        jComboBoxNacionalidad.setSelectedItem(dialogNacionalidad.getNacionalidad());
+    }//GEN-LAST:event_jButtonNacionalidadEditActionPerformed
+
+    private void jButtonEditTipoDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditTipoDocActionPerformed
+        // TODO add your handling code here:
+                // TODO add your handling code here:
+        JDialogTipoDocumento dialogTipoDocumento = new JDialogTipoDocumento(null, rootPaneCheckingEnabled);
+        dialogTipoDocumento.setTipoDocumento((TipoDocumento)jComboBoxTipoDocumento.getSelectedItem());
+        WindowUtil.centerWindow(dialogTipoDocumento);
+        dialogTipoDocumento.setVisible(true);
+        listTipoDocumento.clear();
+        listTipoDocumento.addAll(tipoDocAction.findAll());
+        jComboBoxTipoDocumento.setSelectedItem(dialogTipoDocumento.getTipoDocumento());
+    }//GEN-LAST:event_jButtonEditTipoDocActionPerformed
     
     private void mostrarFotoPersona(){
          
@@ -700,7 +784,10 @@ public class JDialogPersona extends javax.swing.JDialog {
     private javax.swing.JButton jButtonBuscarOrganizacion;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonCargarFoto;
+    private javax.swing.JButton jButtonEditTipoDoc;
     private javax.swing.JButton jButtonGuardar;
+    private javax.swing.JButton jButtonNacionalidad;
+    private javax.swing.JButton jButtonNacionalidadEdit;
     private javax.swing.JButton jButtonNuevoTipoDoc;
     private javax.swing.JButton jButtonTomarFoto;
     private javax.swing.JComboBox jComboBoxEstadoCivil;

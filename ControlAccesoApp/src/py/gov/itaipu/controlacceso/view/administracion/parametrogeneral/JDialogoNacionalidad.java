@@ -15,7 +15,7 @@ import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
  * @author fboy
  */
 public class JDialogoNacionalidad extends javax.swing.JDialog {
-    private Nacionalidad tipoAntecedente;
+    private Nacionalidad nacionalidad;
     private Boolean readOnly;
     
     
@@ -121,14 +121,14 @@ public class JDialogoNacionalidad extends javax.swing.JDialog {
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
-        CRUDAction<Nacionalidad> em = new CRUDAction(tipoAntecedente);
-            tipoAntecedente.setDescripcion(jTextAreaDescripcion.getText());
-            tipoAntecedente.setNombre(jTextFieldNombre.getText());     
-        if (tipoAntecedente.getNombre().equals("")) 
+        CRUDAction<Nacionalidad> em = new CRUDAction(nacionalidad);
+            nacionalidad.setDescripcion(jTextAreaDescripcion.getText());
+            nacionalidad.setNombre(jTextFieldNombre.getText());     
+        if (nacionalidad.getNombre().equals("")) 
         {
              JOptionPane.showMessageDialog(null, "Nombre es Obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
         }else{
-       if (tipoAntecedente.getId()==null) {
+       if (nacionalidad.getId()==null) {
                 em.crear();
                  JOptionPane.showMessageDialog(this, "Se ha creado con éxito","Info",1);
             }else{
@@ -143,8 +143,8 @@ public class JDialogoNacionalidad extends javax.swing.JDialog {
     private void windowsActivate(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowsActivate
         // TODO add your handling code here:
        
-            jTextAreaDescripcion.setText(tipoAntecedente.getDescripcion());
-            jTextFieldNombre.setText(tipoAntecedente.getNombre());
+            jTextAreaDescripcion.setText(nacionalidad.getDescripcion());
+            jTextFieldNombre.setText(nacionalidad.getNombre());
             if (readOnly) {
                 this.jTextAreaDescripcion.setEditable(false);
                 this.jTextFieldNombre.setEditable(false);
@@ -211,11 +211,11 @@ public class JDialogoNacionalidad extends javax.swing.JDialog {
 
 
      public Nacionalidad getNacionalidad() {
-        return tipoAntecedente;
+        return nacionalidad;
     }
 
     public void setNacionalidad(Nacionalidad tipoAntecedente) {
-        this.tipoAntecedente = tipoAntecedente;
+        this.nacionalidad = tipoAntecedente;
     }
 
     public Boolean getReadOnly() {
