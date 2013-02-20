@@ -36,6 +36,7 @@ import py.gov.itaipu.controlacceso.model.TipoDocumento;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 import org.jdesktop.observablecollections.ObservableCollections;
 import py.gov.itaipu.controlacceso.model.Organizacion;
+import py.gov.itaipu.controlacceso.utils.windows.WindowUtil;
 import py.gov.itaipu.controlacceso.view.JDialogBuscador;
 import py.gov.itaipu.controlacceso.view.TimeRenderer;
 import py.gov.itaipu.controlacceso.view.administracion.organizacion.JInternalFrameOrganizacion;
@@ -527,6 +528,7 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
 
         Persona p = (Persona) listPersonas.get(jTablePersonas.getSelectedRow());
         JDialogPersona dialogPersona = new JDialogPersona(null, true);
+        WindowUtil.centerWindow(dialogPersona);
         dialogPersona.setPersona(p);
         dialogPersona.setReadOnly(true);
         dialogPersona.cargarDatospersona();
@@ -765,6 +767,8 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
         //         dialogoNuevo.setVisible(true);
         Persona p = new Persona();
         JDialogPersona dialogPersona = new JDialogPersona(null, true);
+        WindowUtil.centerWindow(dialogPersona);
+        WindowUtil.centerWindow(dialogPersona);
         dialogPersona.setPersona(p);
         dialogPersona.setVisible(true);
         listPersonas.clear();
