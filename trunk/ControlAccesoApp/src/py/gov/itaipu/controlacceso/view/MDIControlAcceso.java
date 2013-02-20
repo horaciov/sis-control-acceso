@@ -13,7 +13,9 @@ import javax.swing.JOptionPane;
 import javax.swing.table.TableCellRenderer;
 import org.jdesktop.observablecollections.ObservableCollections;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
+import py.gov.itaipu.controlacceso.action.persona.PersonaAction;
 import py.gov.itaipu.controlacceso.action.visita.VisitaAction;
+import py.gov.itaipu.controlacceso.model.Persona;
 import py.gov.itaipu.controlacceso.model.TipoDocumento;
 import py.gov.itaipu.controlacceso.model.Visita;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
@@ -25,6 +27,7 @@ import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInterna
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameMotivo;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameNacionalidad;
 import py.gov.itaipu.controlacceso.view.administracion.organizacion.JInternalFrameOrganizacionInterna;
+import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JDialogTipoDocumento;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameTipoAntecedente;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JInternalFrameTipoDocumento;
 import py.gov.itaipu.controlacceso.view.persona.JDialogPersona;
@@ -46,6 +49,7 @@ import py.gov.itaipu.controlacceso.view.visita.JInternalFrameRegistroVisita;
 public class MDIControlAcceso extends javax.swing.JFrame {
 
     private VisitaAction visitaAction;
+    private PersonaAction personaAction;
     private TableCellRenderer rendererTime;
     private CRUDAction<TipoDocumento> tipoDocAction;
     
@@ -57,9 +61,13 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         visitaAction.setVisita(new Visita());   
         rendererTime = new TimeRenderer();
         tipoDocAction = new CRUDAction(new TipoDocumento());
+        personaAction= new PersonaAction();
+        personaAction.setPersona(new Persona());
         initComponents();
         jComboBoxTipoDoc.setVisible(false);
         jLabelTipoDeDoc.setVisible(false);
+        jButtonNuevoTipoDoc.setVisible(false);
+        jButtonEditTipoDoc.setVisible(false);
         jComboBoxTipoDoc.setSelectedItem(tipoDocAction.findByNamedQuery("TipoDocumento.findCI").get(0));
         this.menuBar.setVisible(false);
         //        setExtendedState(MAXIMIZED_BOTH);
@@ -77,7 +85,7 @@ public class MDIControlAcceso extends javax.swing.JFrame {
 
         listVisitas = ObservableCollections.observableList(visitaAction.findVisitasPendientes());
         buttonGroupExtranjero = new javax.swing.ButtonGroup();
-        listTipoDocumento = tipoDocAction.findAll();
+        listTipoDocumento = ObservableCollections.observableList(tipoDocAction.findAll());
         jPanel1 = new javax.swing.JPanel();
         jLabelDocNro = new javax.swing.JLabel();
         jTextFieldDocumentoPersona = new javax.swing.JTextField();
@@ -117,6 +125,8 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         jButtonReporteVisitasPorPersona1 = new javax.swing.JButton();
         jButtonReporteVisitasPorPersona2 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
+        jButtonNuevoTipoDoc = new javax.swing.JButton();
+        jButtonEditTipoDoc = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         jMenuPersona = new javax.swing.JMenu();
         jMenuItemRegistro = new javax.swing.JMenuItem();
@@ -333,6 +343,20 @@ public class MDIControlAcceso extends javax.swing.JFrame {
 
         jLabel9.setText("Personas no Gratas");
 
+        jButtonNuevoTipoDoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/new.jpg"))); // NOI18N
+        jButtonNuevoTipoDoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNuevoTipoDocActionPerformed(evt);
+            }
+        });
+
+        jButtonEditTipoDoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/edit.png"))); // NOI18N
+        jButtonEditTipoDoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditTipoDocActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -351,6 +375,10 @@ public class MDIControlAcceso extends javax.swing.JFrame {
                         .addComponent(jLabelTipoDeDoc)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBoxTipoDoc, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonNuevoTipoDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonEditTipoDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabelPersonaVisitada1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -439,11 +467,14 @@ public class MDIControlAcceso extends javax.swing.JFrame {
                             .addComponent(jLabelDocNro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jTextFieldDocumentoPersona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jRadioButtonNacional)
-                            .addComponent(jRadioButtonExtranjero)
-                            .addComponent(jLabelTipoDeDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBoxTipoDoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jRadioButtonNacional)
+                                .addComponent(jRadioButtonExtranjero)
+                                .addComponent(jLabelTipoDeDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jComboBoxTipoDoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jButtonNuevoTipoDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonEditTipoDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(12, 12, 12)
                         .addComponent(jLabelPersonaVisitada1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -762,13 +793,30 @@ public class MDIControlAcceso extends javax.swing.JFrame {
 
     private void jTextFieldDocumentoPersonaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldDocumentoPersonaKeyPressed
         // TODO add your handling code here:
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER && jTextFieldDocumentoPersona.getText()!=null && !jTextFieldDocumentoPersona.getText().equals("")) {
             // Enter was pressed. Your code goes here.
             JDialogVisita dialogVisita = new JDialogVisita(this, rootPaneCheckingEnabled);
             WindowUtil.centerWindow(dialogVisita);
             dialogVisita.setVisita(new Visita());
             dialogVisita.getjTextFieldDocumentoPersona().setText(jTextFieldDocumentoPersona.getText());
             dialogVisita.getjComboBoxTipoDoc().setSelectedItem(jComboBoxTipoDoc.getSelectedItem());
+            
+            if(personaAction.findByNumeroDocumento(jTextFieldDocumentoPersona.getText(),(TipoDocumento) jComboBoxTipoDoc.getSelectedItem()).size()<1){
+                if (JOptionPane.showConfirmDialog(this, "La persona no existe, desea registrarla?", "Persona no registrada", 0) != 0) {
+                    return;
+                }
+                JDialogPersona dialogPersona = new JDialogPersona(null, rootPaneCheckingEnabled);
+                dialogPersona.getjTextFieldNroDoc().setText(jTextFieldDocumentoPersona.getText());
+                dialogPersona.getjTextFieldNroDoc().setEditable(false);
+                dialogPersona.getjComboBoxTipoDocumento().setSelectedItem(jComboBoxTipoDoc.getSelectedItem());
+                dialogPersona.getjComboBoxTipoDocumento().setEnabled(false);
+                WindowUtil.centerWindow(dialogPersona);
+                dialogPersona.setVisible(true);
+                listTipoDocumento.clear();
+                listTipoDocumento.addAll(tipoDocAction.findAll());
+                jComboBoxTipoDoc.setSelectedItem(dialogPersona.getjComboBoxTipoDocumento().getSelectedItem());
+            }
+            
             dialogVisita.actualizarDatos();
             if(dialogVisita.getPersona().getId()!=null)
                 dialogVisita.setVisible(true);
@@ -781,12 +829,16 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         // TODO add your handling code here:  
         jComboBoxTipoDoc.setVisible(true);
         jLabelTipoDeDoc.setVisible(true);
+        jButtonEditTipoDoc.setVisible(true);
+        jButtonNuevoTipoDoc.setVisible(true);
     }//GEN-LAST:event_jRadioButtonExtranjeroItemStateChanged
 
     private void jRadioButtonNacionalItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioButtonNacionalItemStateChanged
         // TODO add your handling code here:
         jComboBoxTipoDoc.setVisible(false);
         jLabelTipoDeDoc.setVisible(false);
+        jButtonEditTipoDoc.setVisible(false);
+        jButtonNuevoTipoDoc.setVisible(false);
         jComboBoxTipoDoc.setSelectedItem(tipoDocAction.findByNamedQuery("TipoDocumento.findCI").get(0));
     }//GEN-LAST:event_jRadioButtonNacionalItemStateChanged
 
@@ -854,6 +906,34 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         dialogRepPersNoGratas.setVisible(true);
     }//GEN-LAST:event_jButtonReporteVisitasPorPersona2ActionPerformed
 
+    private void jButtonNuevoTipoDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoTipoDocActionPerformed
+        // TODO add your handling code here:
+        TipoDocumento td = (TipoDocumento) jComboBoxTipoDoc.getSelectedItem();
+        JDialogTipoDocumento dialogTipoDocumento = new JDialogTipoDocumento(null, rootPaneCheckingEnabled);
+        dialogTipoDocumento.setTipoDocumento(new TipoDocumento());
+        WindowUtil.centerWindow(dialogTipoDocumento);
+        dialogTipoDocumento.setVisible(true);
+        listTipoDocumento.clear();
+        listTipoDocumento.addAll(tipoDocAction.findAll());
+        if (dialogTipoDocumento.getTipoDocumento().getId()!=null) {
+            jComboBoxTipoDoc.setSelectedItem(dialogTipoDocumento.getTipoDocumento());
+        }else{
+            jComboBoxTipoDoc.setSelectedItem(td);
+        }
+    }//GEN-LAST:event_jButtonNuevoTipoDocActionPerformed
+
+    private void jButtonEditTipoDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditTipoDocActionPerformed
+        // TODO add your handling code here:
+        // TODO add your handling code here:
+        JDialogTipoDocumento dialogTipoDocumento = new JDialogTipoDocumento(null, rootPaneCheckingEnabled);
+        dialogTipoDocumento.setTipoDocumento((TipoDocumento)jComboBoxTipoDoc.getSelectedItem());
+        WindowUtil.centerWindow(dialogTipoDocumento);
+        dialogTipoDocumento.setVisible(true);
+        listTipoDocumento.clear();
+        listTipoDocumento.addAll(tipoDocAction.findAll());
+        jComboBoxTipoDoc.setSelectedItem(dialogTipoDocumento.getTipoDocumento());
+    }//GEN-LAST:event_jButtonEditTipoDocActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -893,6 +973,8 @@ public class MDIControlAcceso extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroupExtranjero;
     private javax.swing.JMenuItem contentMenuItem;
     private javax.swing.JMenu helpMenu;
+    private javax.swing.JButton jButtonEditTipoDoc;
+    private javax.swing.JButton jButtonNuevoTipoDoc;
     private javax.swing.JButton jButtonOrganigrama;
     private javax.swing.JButton jButtonReporteGeneral;
     private javax.swing.JButton jButtonReporteVisitasPorArea;

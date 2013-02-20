@@ -11,7 +11,7 @@
     </Component>
     <Component class="java.util.List" name="listTipoDocumento">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="tipoDocAction.findAll()"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="ObservableCollections.observableList(tipoDocAction.findAll())"/>
       </AuxValues>
     </Component>
     <Menu class="javax.swing.JMenuBar" name="menuBar">
@@ -259,6 +259,10 @@
                           <Component id="jLabelTipoDeDoc" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jComboBoxTipoDoc" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jButtonNuevoTipoDoc" min="-2" pref="19" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jButtonEditTipoDoc" min="-2" pref="19" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -374,11 +378,15 @@
                               <Component id="jTextFieldDocumentoPersona" linkSize="3" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jRadioButtonNacional" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jRadioButtonExtranjero" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabelTipoDeDoc" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                              <Component id="jComboBoxTipoDoc" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jRadioButtonNacional" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jRadioButtonExtranjero" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabelTipoDeDoc" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                                  <Component id="jComboBoxTipoDoc" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="jButtonNuevoTipoDoc" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="jButtonEditTipoDoc" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                           <Component id="jLabelPersonaVisitada1" min="-2" pref="26" max="-2" attributes="0"/>
@@ -815,6 +823,26 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Personas no Gratas"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButtonNuevoTipoDoc">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/resource/img/new.jpg"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonNuevoTipoDocActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButtonEditTipoDoc">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/resource/img/edit.png"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonEditTipoDocActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
