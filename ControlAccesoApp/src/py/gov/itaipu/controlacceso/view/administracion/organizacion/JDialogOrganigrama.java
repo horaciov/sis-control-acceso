@@ -35,6 +35,7 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
      */
     public JDialogOrganigrama(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        modoBuscador = false;
         personaAction = new PersonaAction(new Persona());
         organizacionAction = new CRUDAction<Organizacion>();
         organizacionAction.setEntity(new Organizacion());

@@ -145,7 +145,8 @@ public class JDialogRepVisitasAreaPersona extends javax.swing.JDialog {
         WindowUtil.centerWindow(jOrganigrama);
         jOrganigrama.setVisible(true);
         jOrganigrama.setResizable(false);
-        seleccionado = jOrganigrama.getSeleccionado();
+        if (jOrganigrama.getSeleccionado()!=null) {
+            seleccionado = jOrganigrama.getSeleccionado();
         
             if (seleccionado.getClass().getSimpleName().equals("Persona")) {
                 persona = (Persona) seleccionado;
@@ -156,6 +157,8 @@ public class JDialogRepVisitasAreaPersona extends javax.swing.JDialog {
                 area = (Organizacion) seleccionado;
                     jTextFieldAreaPersona.setText(area.getNombre());
             }
+        }
+        
       
     }//GEN-LAST:event_jButtonBuscarAreaPersonaActionPerformed
 
