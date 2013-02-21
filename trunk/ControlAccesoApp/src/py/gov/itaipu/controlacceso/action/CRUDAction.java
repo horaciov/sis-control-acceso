@@ -62,8 +62,9 @@ public class CRUDAction<E> {
     }
 
     public void crear() throws EntidadExiste {
-        EntityTransaction tx = em.getTransaction();
+        EntityTransaction tx = null;
         try {
+            tx = em.getTransaction();
             tx.begin();
             em.persist(entity);
             em.flush();

@@ -182,16 +182,18 @@ public class PersonaAction {
     }
 
     public void crear() throws EntidadExiste {
-        try {
-            EntityTransaction tx = em.getTransaction();
+        EntityTransaction tx = null;
+        try {    
+            tx = em.getTransaction();
             tx.begin();
             em.persist(persona);
             em.flush();
             tx.commit();
         }catch(EntityExistsException e) {
+            tx.rollback();
+            persona.setId(null);
             throw new EntidadExiste("Le persona ya existe");
-        }
-        catch (RuntimeException e2) {
+        }catch (RuntimeException e2) {
             JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
             System.exit(-1);
         }finally {
@@ -204,6 +206,7 @@ public class PersonaAction {
             EntityTransaction tx = em.getTransaction();
             tx.begin();
             em.merge(persona);
+            em.flush();
             tx.commit();
         }catch(EntityExistsException e) {
             throw new EntidadExiste("Le persona ya existe");
