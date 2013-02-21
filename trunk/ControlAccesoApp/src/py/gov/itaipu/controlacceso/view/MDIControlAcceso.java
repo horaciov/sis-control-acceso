@@ -798,8 +798,7 @@ public class MDIControlAcceso extends javax.swing.JFrame {
             JDialogVisita dialogVisita = new JDialogVisita(this, rootPaneCheckingEnabled);
             WindowUtil.centerWindow(dialogVisita);
             dialogVisita.setVisita(new Visita());
-            dialogVisita.getjTextFieldDocumentoPersona().setText(jTextFieldDocumentoPersona.getText());
-            dialogVisita.getjComboBoxTipoDoc().setSelectedItem(jComboBoxTipoDoc.getSelectedItem());
+            
             
             if(personaAction.findByNumeroDocumento(jTextFieldDocumentoPersona.getText(),(TipoDocumento) jComboBoxTipoDoc.getSelectedItem()).size()<1){
                 if (JOptionPane.showConfirmDialog(this, "La persona no existe, desea registrarla?", "Persona no registrada", 0) != 0) {
@@ -817,6 +816,8 @@ public class MDIControlAcceso extends javax.swing.JFrame {
                 jComboBoxTipoDoc.setSelectedItem(dialogPersona.getjComboBoxTipoDocumento().getSelectedItem());
             }
             
+            dialogVisita.getjTextFieldDocumentoPersona().setText(jTextFieldDocumentoPersona.getText());
+            dialogVisita.getjComboBoxTipoDoc().setSelectedItem(jComboBoxTipoDoc.getSelectedItem());
             dialogVisita.actualizarDatos();
             if(dialogVisita.getPersona().getId()!=null)
                 dialogVisita.setVisible(true);
