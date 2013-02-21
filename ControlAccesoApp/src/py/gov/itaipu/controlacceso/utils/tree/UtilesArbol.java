@@ -29,7 +29,10 @@ public class UtilesArbol {
 
         //SE AGREGAN TODAS LAS ORGANIZACIONES AL ARBOL
         listaOrganizacionesArbolAux = organizacionAction.findByNamedQuery("Organizacion.findOrganizacionPadre");
-        Organizacion orgPadre = listaOrganizacionesArbolAux.get(0);
+        Organizacion orgPadre;
+        if(listaOrganizacionesArbolAux.size()<1)
+            return root;
+        orgPadre = listaOrganizacionesArbolAux.get(0);
         node = new DefaultMutableTreeNode(orgPadre, true);
         root.add(node);
         agregarhijos(node, incluyePersonas);
