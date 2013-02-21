@@ -29,8 +29,10 @@ import javax.media.util.BufferToImage;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import py.gov.itaipu.controlacceso.action.persona.PersonaAction;
 import py.gov.itaipu.controlacceso.model.Persona;
+import py.gov.itaipu.controlacceso.model.exception.EntidadExiste;
 import py.gov.itaipu.controlacceso.view.persona.JDialogPersona;
 
 /**
@@ -38,6 +40,7 @@ import py.gov.itaipu.controlacceso.view.persona.JDialogPersona;
  * @author fboy
  */
 public class JDialogFotografia extends javax.swing.JDialog {
+
     private boolean capturado;
     private String modo;
     public CaptureDeviceInfo di = null;
@@ -47,26 +50,22 @@ public class JDialogFotografia extends javax.swing.JDialog {
     Component videoScreen;
     Persona persona;
     Image img;
-    
-    
-    
+
     /**
      * Creates new form JDialogFotografia
      */
     public JDialogFotografia(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+
     }
 
-    public JDialogFotografia(java.awt.Frame parent, boolean modal,String modo) {
+    public JDialogFotografia(java.awt.Frame parent, boolean modal, String modo) {
         super(parent, modal);
         initComponents();
         this.modo = modo;
     }
 
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -151,31 +150,30 @@ public class JDialogFotografia extends javax.swing.JDialog {
 
     private void jButtonCapturarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCapturarActionPerformed
         // TODO add your handling code here:
-        
-        
-        
-            try {
-                FrameGrabbingControl fgc = (FrameGrabbingControl) player.getControl("javax.media.control.FrameGrabbingControl");
-                Buffer buf = fgc.grabFrame();//grab the current frame on video screen
-                BufferToImage btoi = new BufferToImage((VideoFormat) buf.getFormat());
-                img = btoi.createImage(buf);
-                if (persona.getId()!=null) {
-                    // SI ES UNA ACTUALIZACION DE LA FOTO DE LA PERSONA
-                    String pathFoto = "fotografias/"+persona.getNumeroDocumento()+".jpg";
-                    saveImagetoFile(img, pathFoto);
-                    actualizarFotoPersona(pathFoto);
-                    
-                }else{
-                    // SI ES LA CREACION DE UNA PERSONA NUEVA  SOLO SETEAMOS LA FOTO en la variable img.
-                }    
-            } catch (Exception e) {
-            
+
+
+
+        try {
+            FrameGrabbingControl fgc = (FrameGrabbingControl) player.getControl("javax.media.control.FrameGrabbingControl");
+            Buffer buf = fgc.grabFrame();//grab the current frame on video screen
+            BufferToImage btoi = new BufferToImage((VideoFormat) buf.getFormat());
+            img = btoi.createImage(buf);
+            if (persona.getId() != null) {
+                // SI ES UNA ACTUALIZACION DE LA FOTO DE LA PERSONA
+                String pathFoto = "fotografias/" + persona.getNumeroDocumento() + ".jpg";
+                saveImagetoFile(img, pathFoto);
+                actualizarFotoPersona(pathFoto);
+
+            } else {
+                // SI ES LA CREACION DE UNA PERSONA NUEVA  SOLO SETEAMOS LA FOTO en la variable img.
             }
-            
-            capturado = true;
-            player.close();
-            this.dispose();
-         
+        } catch (Exception e) {
+        }
+
+        capturado = true;
+        player.close();
+        this.dispose();
+
 
     }//GEN-LAST:event_jButtonCapturarActionPerformed
 
@@ -183,56 +181,62 @@ public class JDialogFotografia extends javax.swing.JDialog {
         return img;
     }
 
-    private void actualizarFotoPersona(String pathFoto){
-            persona.setFotografiaPath(pathFoto);
-            PersonaAction pAction = new PersonaAction();
-            pAction.setPersona(persona);
+    private void actualizarFotoPersona(String pathFoto) {
+        persona.setFotografiaPath(pathFoto);
+        PersonaAction pAction = new PersonaAction();
+        pAction.setPersona(persona);
+        try {
             pAction.guardar();
-        
+        } catch (EntidadExiste e) {
+            JOptionPane.showMessageDialog(this, "La persona ya existe", "Error", 0);
+            return;
+        }
+
     }
-    
+
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
         if (modo.equals("CAPTURAR")) {
-               player.close();
+            player.close();
         }
-      
-      
+
+
     }//GEN-LAST:event_formWindowClosing
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
         capturado = false;
-          if (modo.equals("CAPTURAR")) {
-              jLabelTitulo.setText("Capturar Fotografia");
-              iniciarWebCam();
-            
-        }else if(modo.equals("VER")){
-          
+        if (modo.equals("CAPTURAR")) {
+            jLabelTitulo.setText("Capturar Fotografia");
+            iniciarWebCam();
+
+        } else if (modo.equals("VER")) {
+
             jLabelTitulo.setText("Mostrar Fotografia");
             mostrarFotografia();
             jButtonCapturar.setVisible(false);
         }
     }//GEN-LAST:event_formWindowActivated
- 
-    private void mostrarFotografia(){
-            javax.swing.JLabel jLabelFotografia = new JLabel();    
-            BufferedImage image;
-             try {
-                String rutaImagen = persona.getFotografiaPath();
-                File fileImagen = new File(rutaImagen) ;
-                image = ImageIO.read(fileImagen);
-                //REGULAR TAMAÑO    
+
+    private void mostrarFotografia() {
+        javax.swing.JLabel jLabelFotografia = new JLabel();
+        BufferedImage image;
+        try {
+            String rutaImagen = persona.getFotografiaPath();
+            File fileImagen = new File(rutaImagen);
+            image = ImageIO.read(fileImagen);
+            //REGULAR TAMAÑO    
 //                Image imageScale =  image.getScaledInstance(570, 338, image.SCALE_FAST);
-                ImageIcon iconoFoto = new javax.swing.ImageIcon(image);
-                jLabelFotografia.setSize(600, 470);
-                jLabelFotografia.setIcon(iconoFoto);
-                jPanelCamara.add(jLabelFotografia);
-                jLabelFotografia.setVisible(true);
-            } catch (IOException ex) {
-                Logger.getLogger(JDialogPersona.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            ImageIcon iconoFoto = new javax.swing.ImageIcon(image);
+            jLabelFotografia.setSize(600, 470);
+            jLabelFotografia.setIcon(iconoFoto);
+            jPanelCamara.add(jLabelFotografia);
+            jLabelFotografia.setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(JDialogPersona.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+
     private void saveImagetoFile(Image img, String string) {
         try {
             int w = img.getWidth(null);
@@ -243,12 +247,11 @@ public class JDialogFotografia extends javax.swing.JDialog {
             g2.dispose();
             String fileType = string.substring(string.indexOf('.') + 1);
             ImageIO.write(bi, fileType, new File(string));
-            
+
         } catch (Exception e) {
         }
     }
-    
-    
+
     /**
      * @param args the command line arguments
      */
@@ -290,24 +293,23 @@ public class JDialogFotografia extends javax.swing.JDialog {
             }
         });
     }
-    
-    
-  private void  iniciarWebCam() {
+
+    private void iniciarWebCam() {
         try {
 //gets a list of devices how support the given videoformat
             String str1 = "vfw:Microsoft WDM Image Capture (Win32):0";
             di = CaptureDeviceManager.getDevice(str1);
             ml = di.getLocator();
-            
+
             player = Manager.createRealizedPlayer(ml);
             player.start();
 
             videoScreen = player.getVisualComponent();
-            
+
             //place player and video screen on the frame
             jPanelCamara.add(videoScreen, BorderLayout.CENTER);
             jPanelCamara.add(player.getControlPanelComponent(), BorderLayout.SOUTH);
-         
+
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -328,11 +330,6 @@ public class JDialogFotografia extends javax.swing.JDialog {
     public void setModo(String modo) {
         this.modo = modo;
     }
-    
-    
-    
-    
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCapturar;
     private javax.swing.JLabel jLabelTitulo;

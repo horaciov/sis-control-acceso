@@ -136,10 +136,10 @@ public class JDialogoNacionalidad extends javax.swing.JDialog {
                     return;
                 }
             } else {
-                try{
+                try {
                     em.guardar();
                     JOptionPane.showMessageDialog(this, "Se ha guardado con éxito", "Info", 1);
-                } catch (EntidadExiste e) {                 
+                } catch (EntidadExiste e) {
                     JOptionPane.showMessageDialog(this, "La nacionalidad ya existe", "Error", 0);
                     return;
                 }

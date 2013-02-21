@@ -9,6 +9,7 @@ import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import javax.swing.JOptionPane;
 import org.hibernate.exception.ConstraintViolationException;
 import py.gov.itaipu.controlacceso.model.exception.EntidadExiste;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
@@ -68,8 +69,11 @@ public class CRUDAction<E> {
             em.flush();
             tx.commit();
         } catch (EntityExistsException re) {
-            tx.rollback();            
+            tx.rollback();
             throw new EntidadExiste("La entidad a persistir ya existe");
+        } catch (RuntimeException e) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         } finally {
             em.clear();
         }
@@ -82,16 +86,24 @@ public class CRUDAction<E> {
             em.merge(entity);
             em.flush();
             tx.commit();
-        } catch (EntityExistsException re) {            
+        } catch (EntityExistsException re) {
             tx.rollback();
             throw new EntidadExiste("La entidad a persistir ya existe");
+        } catch (RuntimeException e) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
     }
 
     public void eliminar() {
-        EntityTransaction tx = em.getTransaction();
-        tx.begin();
-        em.remove(entity);
-        tx.commit();
+        try {
+            EntityTransaction tx = em.getTransaction();
+            tx.begin();
+            em.remove(entity);
+            tx.commit();
+        } catch (RuntimeException e) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
     }
 }

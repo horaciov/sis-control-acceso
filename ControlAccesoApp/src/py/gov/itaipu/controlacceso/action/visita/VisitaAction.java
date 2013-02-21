@@ -9,6 +9,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import javax.swing.JOptionPane;
 import py.gov.itaipu.controlacceso.model.Organizacion;
 import py.gov.itaipu.controlacceso.model.Persona;
 import py.gov.itaipu.controlacceso.model.Visita;
@@ -143,8 +144,8 @@ public class VisitaAction {
             return null;
         }
     }
-    
-    public Visita findPendienteByPersona(Persona persona){
+
+    public Visita findPendienteByPersona(Persona persona) {
         Query query;
         query = em.createQuery(" from Visita v where v.fechaSalida is null and v.anulado = 'N' and persona.id= :idPersona )");
         query.setParameter("idPersona", persona.getId());
@@ -162,24 +163,39 @@ public class VisitaAction {
     }
 
     public void crear() {
-        EntityTransaction tx = em.getTransaction();
-        tx.begin();
-        em.persist(visita);
-        tx.commit();
+        try {
+            EntityTransaction tx = em.getTransaction();
+            tx.begin();
+            em.persist(visita);
+            tx.commit();
+        } catch (RuntimeException e) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
     }
 
     public void guardar() {
-        EntityTransaction tx = em.getTransaction();
-        tx.begin();
-        em.merge(visita);       
-        tx.commit();
-        em.clear();
+        try {
+            EntityTransaction tx = em.getTransaction();
+            tx.begin();
+            em.merge(visita);
+            tx.commit();
+            em.clear();
+        } catch (RuntimeException e) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
     }
 
     public void eliminar() {
-        EntityTransaction tx = em.getTransaction();
-        tx.begin();
-        em.remove(visita);
-        tx.commit();
+        try {
+            EntityTransaction tx = em.getTransaction();
+            tx.begin();
+            em.remove(visita);
+            tx.commit();
+        } catch (RuntimeException e) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
     }
 }
