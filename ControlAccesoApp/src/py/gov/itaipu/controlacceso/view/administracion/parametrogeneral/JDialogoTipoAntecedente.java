@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import javax.xml.soap.Text;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.model.TipoAntecedente;
+import py.gov.itaipu.controlacceso.model.exception.EntidadExiste;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 
 /**
@@ -15,11 +16,10 @@ import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
  * @author fboy
  */
 public class JDialogoTipoAntecedente extends javax.swing.JDialog {
+
     private TipoAntecedente tipoAntecedente;
     private Boolean readOnly;
-    
-    
-    
+
     /**
      * Creates new form JDialogoTipoAntecedente
      */
@@ -29,7 +29,6 @@ public class JDialogoTipoAntecedente extends javax.swing.JDialog {
         initComponents();
     }
 
-   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -122,16 +121,25 @@ public class JDialogoTipoAntecedente extends javax.swing.JDialog {
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
         CRUDAction<TipoAntecedente> em = new CRUDAction(tipoAntecedente);
-            tipoAntecedente.setDescripcion(jTextAreaDescripcion.getText());
-            tipoAntecedente.setNombre(jTextFieldNombre.getText());     
-        if (tipoAntecedente.getNombre().equals("")) 
-        {
-             JOptionPane.showMessageDialog(null, "Nombre es Obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
-        }else{
-       if (tipoAntecedente.getId()==null) {
-                em.crear();
-            }else{
-                em.guardar();
+        tipoAntecedente.setDescripcion(jTextAreaDescripcion.getText());
+        tipoAntecedente.setNombre(jTextFieldNombre.getText());
+        if (tipoAntecedente.getNombre().equals("")) {
+            JOptionPane.showMessageDialog(null, "Nombre es Obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            if (tipoAntecedente.getId() == null) {
+                try {
+                    em.crear();
+                } catch (EntidadExiste e) {
+                    JOptionPane.showMessageDialog(this, "El tipo de antecedente ya existe", "Error", 0);
+                    return;
+                }
+            } else {
+                try {
+                    em.guardar();
+                }catch (EntidadExiste e) {
+                    JOptionPane.showMessageDialog(this, "El tipo de antecedente ya existe", "Error", 0);
+                    return;
+                }
             }
             this.setVisible(false);
         }
@@ -140,17 +148,17 @@ public class JDialogoTipoAntecedente extends javax.swing.JDialog {
 
     private void windowsActivate(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowsActivate
         // TODO add your handling code here:
-       
-            jTextAreaDescripcion.setText(tipoAntecedente.getDescripcion());
-            jTextFieldNombre.setText(tipoAntecedente.getNombre());
-            if (readOnly) {
-                this.jTextAreaDescripcion.setEditable(false);
-                this.jTextFieldNombre.setEditable(false);
-                this.jButtonGuardar.setVisible(false);
-            }
-            
-            
-      
+
+        jTextAreaDescripcion.setText(tipoAntecedente.getDescripcion());
+        jTextFieldNombre.setText(tipoAntecedente.getNombre());
+        if (readOnly) {
+            this.jTextAreaDescripcion.setEditable(false);
+            this.jTextFieldNombre.setEditable(false);
+            this.jButtonGuardar.setVisible(false);
+        }
+
+
+
     }//GEN-LAST:event_windowsActivate
 
     /**
@@ -204,11 +212,9 @@ public class JDialogoTipoAntecedente extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     void setInactivefields(boolean b) {
-        
-        }
+    }
 
-
-     public TipoAntecedente getTipoAntecedente() {
+    public TipoAntecedente getTipoAntecedente() {
         return tipoAntecedente;
     }
 
@@ -223,6 +229,4 @@ public class JDialogoTipoAntecedente extends javax.swing.JDialog {
     public void setReadOnly(Boolean readOnly) {
         this.readOnly = readOnly;
     }
-    
-
 }

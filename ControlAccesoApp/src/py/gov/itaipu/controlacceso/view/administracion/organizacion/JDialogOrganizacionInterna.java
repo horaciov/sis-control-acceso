@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import org.jdesktop.observablecollections.ObservableCollections;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.model.Organizacion;
+import py.gov.itaipu.controlacceso.model.exception.EntidadExiste;
 
 /**
  *
@@ -19,16 +20,16 @@ public class JDialogOrganizacionInterna extends javax.swing.JDialog {
 
     private Organizacion organizacion;
     private Boolean readOnly;
-     private CRUDAction<Organizacion> organizacionAction;
-    
+    private CRUDAction<Organizacion> organizacionAction;
+
     /**
      * Creates new form JDialogOrganizacionInterna
      */
     public JDialogOrganizacionInterna(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        readOnly=false;
+        readOnly = false;
         organizacionAction = new CRUDAction<Organizacion>(new Organizacion());
-        initComponents();        
+        initComponents();
     }
 
     public Organizacion getOrganizacion() {
@@ -47,8 +48,6 @@ public class JDialogOrganizacionInterna extends javax.swing.JDialog {
         this.readOnly = readOnly;
     }
 
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -184,44 +183,54 @@ public class JDialogOrganizacionInterna extends javax.swing.JDialog {
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
-        if(organizacion==null)
-            return;
-        CRUDAction<Organizacion> action=new CRUDAction<Organizacion>(organizacion);
-        if(jTextFieldOrganizacion.getText()==null || jTextFieldOrganizacion.getText().equals("")){
-            JOptionPane.showMessageDialog(this, "El nombre de organizacion es obligatorio","Error",0);
+        if (organizacion == null) {
             return;
         }
-        
-        
+        CRUDAction<Organizacion> action = new CRUDAction<Organizacion>(organizacion);
+        if (jTextFieldOrganizacion.getText() == null || jTextFieldOrganizacion.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "El nombre de organizacion es obligatorio", "Error", 0);
+            return;
+        }
+
+
         Organizacion o = (Organizacion) jComboBoxOrganizaciones.getSelectedItem();
-        if (o.getId()==null) {
+        if (o.getId() == null) {
             //EN EL CASO DE NO TENER PADRE, SE VERIFICA QUE NO EXISTE YA ORGANIZACION PADRE
             List<Organizacion> oPadre = organizacionAction.findByNamedQuery("Organizacion.findOrganizacionPadre");
-            if (oPadre.size()>0) {
+            if (oPadre.size() > 0) {
                 //Ya Existe La organizacion Padre
-                JOptionPane.showMessageDialog(this, "Debe Seleccionar la Organizacion Padre","Error",0);
-            return;
-            }else{
-              organizacion.setNivelOrganigrama(1L);
+                JOptionPane.showMessageDialog(this, "Debe Seleccionar la Organizacion Padre", "Error", 0);
+                return;
+            } else {
+                organizacion.setNivelOrganigrama(1L);
             }
-         }else{
+        } else {
             organizacion.setOrganizacionPadre(o);
-            organizacion.setNivelOrganigrama(o.getNivelOrganigrama()+1);
+            organizacion.setNivelOrganigrama(o.getNivelOrganigrama() + 1);
         }
-        
+
         organizacion.setNombre(jTextFieldOrganizacion.getText());
         organizacion.setDescripcion(jTextAreaDescripcion.getText());
         organizacion.setTipoOrganizacion("INTERNA");
-        
-        
-        if(organizacion.getId()==null) {
-            action.crear();
-            JOptionPane.showMessageDialog(this, "Se ha creado con éxito","Info",1);
+
+
+        if (organizacion.getId() == null) {
+            try {
+                action.crear();
+                JOptionPane.showMessageDialog(this, "Se ha creado con éxito", "Info", 1);
+            } catch (EntidadExiste e) {
+                JOptionPane.showMessageDialog(this, "La organización ya existe", "Error", 0);
+                return;
+            }
+        } else {
+            try {
+                action.guardar();
+                JOptionPane.showMessageDialog(this, "Se ha actualizado correctamente", "Info", 1);
+            } catch (EntidadExiste e) {
+                JOptionPane.showMessageDialog(this, "La organización ya existe", "Error", 0);
+                return;
+            }
         }
-        else {
-            action.guardar();
-            JOptionPane.showMessageDialog(this, "Se ha actualizado correctamente","Info",1);
-        }              
         this.dispose();
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
@@ -229,11 +238,11 @@ public class JDialogOrganizacionInterna extends javax.swing.JDialog {
         // TODO add your handling code here:
         jTextFieldOrganizacion.setText(organizacion.getNombre());
         jTextAreaDescripcion.setText(organizacion.getDescripcion());
-        if (organizacion.getOrganizacionPadre()!=null && organizacion.getOrganizacionPadre().getId()!=null) {
+        if (organizacion.getOrganizacionPadre() != null && organizacion.getOrganizacionPadre().getId() != null) {
             jComboBoxOrganizaciones.setSelectedItem(organizacion.getOrganizacionPadre());
         }
-        
-        if(readOnly){
+
+        if (readOnly) {
             jTextFieldOrganizacion.setEditable(false);
             jTextAreaDescripcion.setEditable(false);
             jComboBoxOrganizaciones.setEnabled(false);

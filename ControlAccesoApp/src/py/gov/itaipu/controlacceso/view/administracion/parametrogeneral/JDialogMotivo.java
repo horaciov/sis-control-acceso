@@ -7,6 +7,7 @@ package py.gov.itaipu.controlacceso.view.administracion.parametrogeneral;
 import javax.swing.JOptionPane;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.model.Motivo;
+import py.gov.itaipu.controlacceso.model.exception.EntidadExiste;
 
 /**
  *
@@ -16,14 +17,15 @@ public class JDialogMotivo extends javax.swing.JDialog {
 
     private Motivo motivo;
     private Boolean readOnly;
-    
+
     /**
      * Creates new form JDialogMotivo
      */
     public JDialogMotivo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        readOnly=false;
-        initComponents();        
+        readOnly = false;
+        initComponents();
+        this.getRootPane().setDefaultButton(jButtonGuardar);
     }
 
     public Motivo getMotivo() {
@@ -42,8 +44,6 @@ public class JDialogMotivo extends javax.swing.JDialog {
         this.readOnly = readOnly;
     }
 
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -157,23 +157,33 @@ public class JDialogMotivo extends javax.swing.JDialog {
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
-        if(motivo==null)
+        if (motivo == null) {
             return;
-        CRUDAction<Motivo> action=new CRUDAction<Motivo>(motivo);
-        if(jTextFieldMotivo.getText()==null || jTextFieldMotivo.getText().equals("")){
-            JOptionPane.showMessageDialog(this, "El motivo es obligatorio","Error",0);
+        }
+        CRUDAction<Motivo> action = new CRUDAction<Motivo>(motivo);
+        if (jTextFieldMotivo.getText() == null || jTextFieldMotivo.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "El motivo es obligatorio", "Error", 0);
             return;
         }
         motivo.setNombre(jTextFieldMotivo.getText());
         motivo.setDescripcion(jTextAreaDescripcion.getText());
-        if(motivo.getId()==null) {
-            action.crear();
-            JOptionPane.showMessageDialog(this, "Se ha creado con éxito","Info",1);
+        if (motivo.getId() == null) {
+            try {
+                action.crear();
+                JOptionPane.showMessageDialog(this, "Se ha creado con éxito", "Info", 1);
+            } catch (EntidadExiste e) {
+                JOptionPane.showMessageDialog(this, "El motivo ya existe", "Error", 0);
+                return;
+            }
+        } else {
+            try {
+                action.guardar();
+                JOptionPane.showMessageDialog(this, "Se ha actualizado correctamente", "Info", 1);
+            } catch (EntidadExiste e) {
+                JOptionPane.showMessageDialog(this, "El motivo ya existe", "Error", 0);
+                return;
+            }
         }
-        else {
-            action.guardar();
-            JOptionPane.showMessageDialog(this, "Se ha actualizado correctamente","Info",1);
-        }              
         this.dispose();
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
@@ -181,8 +191,8 @@ public class JDialogMotivo extends javax.swing.JDialog {
         // TODO add your handling code here:
         jTextFieldMotivo.setText(motivo.getNombre());
         jTextAreaDescripcion.setText(motivo.getDescripcion());
-        
-        if(readOnly){
+
+        if (readOnly) {
             jTextFieldMotivo.setEditable(false);
             jTextAreaDescripcion.setEditable(false);
             jButtonGuardar.setVisible(false);

@@ -7,6 +7,7 @@ package py.gov.itaipu.controlacceso.view.administracion.parametrogeneral;
 import javax.swing.JOptionPane;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.model.TipoDocumento;
+import py.gov.itaipu.controlacceso.model.exception.EntidadExiste;
 
 /**
  *
@@ -16,14 +17,15 @@ public class JDialogTipoDocumento extends javax.swing.JDialog {
 
     private TipoDocumento tipoDocumento;
     private Boolean readOnly;
-    
+
     /**
      * Creates new form JDialogMotivo
      */
     public JDialogTipoDocumento(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        readOnly=false;
-        initComponents();        
+        readOnly = false;
+        initComponents();
+        this.getRootPane().setDefaultButton(jButtonGuardar);
     }
 
     public TipoDocumento getTipoDocumento() {
@@ -34,8 +36,6 @@ public class JDialogTipoDocumento extends javax.swing.JDialog {
         this.tipoDocumento = tipoDocumento;
     }
 
-    
-
     public Boolean getReadOnly() {
         return readOnly;
     }
@@ -43,9 +43,7 @@ public class JDialogTipoDocumento extends javax.swing.JDialog {
     public void setReadOnly(Boolean readOnly) {
         this.readOnly = readOnly;
     }
-    
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -159,23 +157,33 @@ public class JDialogTipoDocumento extends javax.swing.JDialog {
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
-        if(tipoDocumento==null)
+        if (tipoDocumento == null) {
             return;
-        CRUDAction<TipoDocumento> action=new CRUDAction<TipoDocumento>(tipoDocumento);
-        if(jTextFieldTipoDocumento.getText()==null || jTextFieldTipoDocumento.getText().equals("")){
-            JOptionPane.showMessageDialog(this, "El tipo es obligatorio","Error",0);
+        }
+        CRUDAction<TipoDocumento> action = new CRUDAction<TipoDocumento>(tipoDocumento);
+        if (jTextFieldTipoDocumento.getText() == null || jTextFieldTipoDocumento.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "El tipo es obligatorio", "Error", 0);
             return;
         }
         tipoDocumento.setNombre(jTextFieldTipoDocumento.getText());
         tipoDocumento.setDescripcion(jTextAreaDescripcion.getText());
-        if(tipoDocumento.getId()==null) {
-            action.crear();
-            JOptionPane.showMessageDialog(this, "Se ha creado con éxito","Info",1);
+        if (tipoDocumento.getId() == null) {
+            try {
+                action.crear();
+                JOptionPane.showMessageDialog(this, "Se ha creado con éxito", "Info", 1);
+            } catch (EntidadExiste e) {
+                JOptionPane.showMessageDialog(this, "El tipo de documento ya existe", "Error", 0);
+                return;
+            }
+        } else {
+            try {
+                action.guardar();
+                JOptionPane.showMessageDialog(this, "Se ha actualizado correctamente", "Info", 1);
+            } catch (EntidadExiste e) {
+                JOptionPane.showMessageDialog(this, "El tipo de documento ya existe", "Error", 0);
+                return;
+            }
         }
-        else {
-            action.guardar();
-            JOptionPane.showMessageDialog(this, "Se ha actualizado correctamente","Info",1);
-        }              
         this.dispose();
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
@@ -183,16 +191,14 @@ public class JDialogTipoDocumento extends javax.swing.JDialog {
         // TODO add your handling code here:
         jTextFieldTipoDocumento.setText(tipoDocumento.getNombre());
         jTextAreaDescripcion.setText(tipoDocumento.getDescripcion());
-        
-        if(readOnly){
+
+        if (readOnly) {
             jTextFieldTipoDocumento.setEditable(false);
             jTextAreaDescripcion.setEditable(false);
             jButtonGuardar.setVisible(false);
         }
     }//GEN-LAST:event_formWindowActivated
 
-    
-    
     /**
      * @param args the command line arguments
      */

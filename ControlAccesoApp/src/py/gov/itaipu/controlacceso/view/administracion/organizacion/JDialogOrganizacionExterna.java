@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import org.jdesktop.observablecollections.ObservableCollections;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.model.Organizacion;
+import py.gov.itaipu.controlacceso.model.exception.EntidadExiste;
 
 /**
  *
@@ -17,15 +18,14 @@ public class JDialogOrganizacionExterna extends javax.swing.JDialog {
 
     private Organizacion organizacion;
     private Boolean readOnly;
-    
-    
+
     /**
      * Creates new form JDialogOrganizacionExterna
      */
     public JDialogOrganizacionExterna(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        readOnly=false;
-        initComponents();        
+        readOnly = false;
+        initComponents();
     }
 
     public Organizacion getOrganizacion() {
@@ -44,8 +44,6 @@ public class JDialogOrganizacionExterna extends javax.swing.JDialog {
         this.readOnly = readOnly;
     }
 
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -159,24 +157,34 @@ public class JDialogOrganizacionExterna extends javax.swing.JDialog {
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
-        if(organizacion==null)
+        if (organizacion == null) {
             return;
-        CRUDAction<Organizacion> action=new CRUDAction<Organizacion>(organizacion);
-        if(jTextFieldOrganizacion.getText()==null || jTextFieldOrganizacion.getText().equals("")){
-            JOptionPane.showMessageDialog(this, "El organizacion es obligatorio","Error",0);
+        }
+        CRUDAction<Organizacion> action = new CRUDAction<Organizacion>(organizacion);
+        if (jTextFieldOrganizacion.getText() == null || jTextFieldOrganizacion.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "El organizacion es obligatorio", "Error", 0);
             return;
         }
         organizacion.setNombre(jTextFieldOrganizacion.getText());
         organizacion.setDescripcion(jTextAreaDescripcion.getText());
         organizacion.setTipoOrganizacion("EXTERNA");
-        if(organizacion.getId()==null) {
-            action.crear();
-            JOptionPane.showMessageDialog(this, "Se ha creado con éxito","Info",1);
+        if (organizacion.getId() == null) {
+            try {
+                action.crear();
+                JOptionPane.showMessageDialog(this, "Se ha creado con éxito", "Info", 1);
+            } catch (EntidadExiste e) {
+                JOptionPane.showMessageDialog(this, "La organización ya existe", "Error", 0);
+                return;
+            }
+        } else {
+            try {
+                action.guardar();
+                JOptionPane.showMessageDialog(this, "Se ha actualizado correctamente", "Info", 1);
+            } catch (EntidadExiste e) {
+                JOptionPane.showMessageDialog(this, "La organización ya existe", "Error", 0);
+                return;
+            }
         }
-        else {
-            action.guardar();
-            JOptionPane.showMessageDialog(this, "Se ha actualizado correctamente","Info",1);
-        }              
         this.dispose();
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
@@ -184,8 +192,8 @@ public class JDialogOrganizacionExterna extends javax.swing.JDialog {
         // TODO add your handling code here:
         jTextFieldOrganizacion.setText(organizacion.getNombre());
         jTextAreaDescripcion.setText(organizacion.getDescripcion());
-        
-        if(readOnly){
+
+        if (readOnly) {
             jTextFieldOrganizacion.setEditable(false);
             jTextAreaDescripcion.setEditable(false);
             jButtonGuardar.setVisible(false);
