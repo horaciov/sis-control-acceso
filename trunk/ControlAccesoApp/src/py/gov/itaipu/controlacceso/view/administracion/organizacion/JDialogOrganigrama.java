@@ -408,7 +408,7 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
                 areaPadre.getOrganizacionesHijas().add(area);
 
                 JOptionPane.showMessageDialog(this, "Se ha guardado con exito el Area Interna", "Info", 1);
-            } catch (EntidadExiste e) {                
+            } catch (EntidadExiste e) {
                 JOptionPane.showMessageDialog(this, "La organización ya existe", "Error", 0);
                 return;
             }
@@ -443,9 +443,15 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
             persona.setApellido(jTextFieldEmpleadoApellido.getText());
             persona.setNumeroDocumento(jTextFieldEmpleadoNroDoc.getText());
             personaAction.setPersona(persona);
-            personaAction.crear();
+            try {
+                personaAction.crear();
+                   JOptionPane.showMessageDialog(this, "Se ha guardado con exito los Datos del Empleado", "Info", 1);
+            } catch (EntidadExiste e) {
+                JOptionPane.showMessageDialog(this, "La persona ya existe", "Error", 0);
+                return;
+            }
+         
 
-            JOptionPane.showMessageDialog(this, "Se ha guardado con exito los Datos del Empleado", "Info", 1);
             manejaPersona(false);
 
             DefaultMutableTreeNode nodoSeleccionado = (DefaultMutableTreeNode) jTreeOrganigrama.getLastSelectedPathComponent();

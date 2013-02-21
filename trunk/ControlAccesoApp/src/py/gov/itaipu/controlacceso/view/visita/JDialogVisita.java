@@ -59,6 +59,7 @@ import py.gov.itaipu.controlacceso.model.Organizacion;
 import py.gov.itaipu.controlacceso.model.Persona;
 import py.gov.itaipu.controlacceso.model.TipoDocumento;
 import py.gov.itaipu.controlacceso.model.Visita;
+import py.gov.itaipu.controlacceso.model.exception.EntidadExiste;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 import py.gov.itaipu.controlacceso.utils.tree.CustomIconRenderer;
 import py.gov.itaipu.controlacceso.utils.tree.UtilesArbol;
@@ -677,7 +678,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         }
 
         //Validamos que la persona no se encuentre con una visita pendiente.
-        if (action.findPendienteByPersona(persona)!=null) {
+        if (action.findPendienteByPersona(persona) != null) {
             Toolkit.getDefaultToolkit().beep();
             JOptionPane.showMessageDialog(this, "ATENCIÓN!. No es posible su ingreso hasta que se registre su salida", "Error", 0);
             return;
@@ -879,8 +880,13 @@ public class JDialogVisita extends javax.swing.JDialog {
                 persona.setFotografia(fotografiaByte);
                 PersonaAction pAction = new PersonaAction();
                 pAction.setPersona(persona);
-                pAction.guardar();
-                JOptionPane.showMessageDialog(this, "Se ha guardado con exito los nuevos Datos de Persona", "Info", 1);
+                try {
+                    pAction.guardar();
+                    JOptionPane.showMessageDialog(this, "Se ha guardado con exito los nuevos Datos de Persona", "Info", 1);
+                } catch (EntidadExiste e) {
+                    JOptionPane.showMessageDialog(this, "La persona ya existe", "Error", 0);
+                    return;
+                }
 
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(JDialogPersona.class.getName()).log(Level.SEVERE, null, ex);
@@ -935,11 +941,11 @@ public class JDialogVisita extends javax.swing.JDialog {
             if (persona != null && persona.getId() != null) {
 
                 //Validamos que la persona no se encuentre con una visita pendiente.
-                if (action.findPendienteByPersona(persona)!=null) {
+                if (action.findPendienteByPersona(persona) != null) {
                     Toolkit.getDefaultToolkit().beep();
-                    JOptionPane.showMessageDialog(this, "ATENCIÓN!. No es posible su ingreso hasta que se registre su salida", "Error", 0); 
+                    JOptionPane.showMessageDialog(this, "ATENCIÓN!. No es posible su ingreso hasta que se registre su salida", "Error", 0);
                     jButtonRegistrarSalida.setVisible(true);
-                }else{
+                } else {
                     jButtonRegistrarSalida.setVisible(false);
                 }
 
@@ -973,9 +979,9 @@ public class JDialogVisita extends javax.swing.JDialog {
                 //Cargar Fotografia
                 if (persona.getFotografiaPath() != null && !persona.getFotografiaPath().equals("")) {
                     mostrarFotoPersona();
-                }else{
+                } else {
                     if (JOptionPane.showConfirmDialog(this, "La persona no cuenta con Fotografia Actual, Desea cargar la Fotografia?", "Fotografia", 0) == 0) {
-                    
+
                         JDialogFotografia dialogFotografia = new JDialogFotografia(null, rootPaneCheckingEnabled, "CAPTURAR");
                         dialogFotografia.setPersona(persona);
                         WindowUtil.centerWindow(dialogFotografia);
@@ -1006,8 +1012,8 @@ public class JDialogVisita extends javax.swing.JDialog {
                 WindowUtil.centerWindow(dialogPersona);
                 dialogPersona.setVisible(true);
                 actualizarDatos();
-                
-                
+
+
             }
         } else {
             JOptionPane.showMessageDialog(this, "INGRESE NRO DE DOCUMENTO.", "Error", 0);
@@ -1041,8 +1047,8 @@ public class JDialogVisita extends javax.swing.JDialog {
     }
     private void jTextFieldDocumentoPersonaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldDocumentoPersonaFocusLost
         // TODO add your handling code here:
-        if (jTextFieldDocumentoPersona.getText() != null && !jTextFieldDocumentoPersona.getText().equals(persona.getNumeroDocumento()) ) {
-            actualizarDatos();     
+        if (jTextFieldDocumentoPersona.getText() != null && !jTextFieldDocumentoPersona.getText().equals(persona.getNumeroDocumento())) {
+            actualizarDatos();
         }
 
 
@@ -1162,25 +1168,25 @@ public class JDialogVisita extends javax.swing.JDialog {
 
     private void jButtonRegistrarSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarSalidaActionPerformed
         // TODO add your handling code here:
-                Visita v = action.findPendienteByPersona(persona);
-    
-                Calendar c = Calendar.getInstance();
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-                if (JOptionPane.showConfirmDialog(this, "Está seguro que desea marcar la salida de "
-                        + v.getPersona().getNombre()
-                        + " " + v.getPersona().getApellido()
-                        + ", a las: " + sdf.format(c.getTime())
-                        + "?", "Registro de salida", 0) != 0) {
-                    return;
-                }
+        Visita v = action.findPendienteByPersona(persona);
 
-                v.setFechaSalida(c.getTime());
-                action.setVisita(v);
-                action.guardar();
-                listUltimasVisitas.clear();
-                listUltimasVisitas.addAll(action.findByPersona(persona));
-                JOptionPane.showMessageDialog(this, "Se ha registrado la salida correctamente", "Info", 1);
-                jButtonRegistrarSalida.setVisible(false);
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        if (JOptionPane.showConfirmDialog(this, "Está seguro que desea marcar la salida de "
+                + v.getPersona().getNombre()
+                + " " + v.getPersona().getApellido()
+                + ", a las: " + sdf.format(c.getTime())
+                + "?", "Registro de salida", 0) != 0) {
+            return;
+        }
+
+        v.setFechaSalida(c.getTime());
+        action.setVisita(v);
+        action.guardar();
+        listUltimasVisitas.clear();
+        listUltimasVisitas.addAll(action.findByPersona(persona));
+        JOptionPane.showMessageDialog(this, "Se ha registrado la salida correctamente", "Info", 1);
+        jButtonRegistrarSalida.setVisible(false);
     }//GEN-LAST:event_jButtonRegistrarSalidaActionPerformed
 
     private BufferedImage resizeImage(BufferedImage originalImage, int width, int height, int type) throws IOException {

@@ -472,9 +472,14 @@ public class JInternalFrameOrganigrama extends javax.swing.JInternalFrame {
             persona.setApellido(jTextFieldEmpleadoApellido.getText());
             persona.setNumeroDocumento(jTextFieldEmpleadoNroDoc.getText());
             personaAction.setPersona(persona);
-            personaAction.crear();
+            try {
+                personaAction.crear();
 
-            JOptionPane.showMessageDialog(this, "Se ha guardado con exito los Datos del Empleado", "Info", 1);
+                JOptionPane.showMessageDialog(this, "Se ha guardado con exito los Datos del Empleado", "Info", 1);
+            } catch (EntidadExiste e) {
+                JOptionPane.showMessageDialog(this, "La persona ya existe", "Error", 0);
+                return;
+            }
             manejaPersona(false);
 
             DefaultMutableTreeNode nodoSeleccionado = (DefaultMutableTreeNode) jTreeOrganigrama.getLastSelectedPathComponent();
