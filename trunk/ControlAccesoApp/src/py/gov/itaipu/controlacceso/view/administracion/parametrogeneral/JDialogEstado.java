@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.model.Estado;
 import py.gov.itaipu.controlacceso.model.Motivo;
+import py.gov.itaipu.controlacceso.model.exception.EntidadExiste;
 
 /**
  *
@@ -17,14 +18,15 @@ public class JDialogEstado extends javax.swing.JDialog {
 
     private Estado estado;
     private Boolean readOnly;
-    
+
     /**
      * Creates new form JDialogMotivo
      */
     public JDialogEstado(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        readOnly=false;
-        initComponents();        
+        readOnly = false;
+        initComponents();
+        this.getRootPane().setDefaultButton(jButtonGuardar);
     }
 
     public Estado getEstado() {
@@ -33,7 +35,7 @@ public class JDialogEstado extends javax.swing.JDialog {
 
     public void setEstado(Estado estado) {
         this.estado = estado;
-    } 
+    }
 
     public Boolean getReadOnly() {
         return readOnly;
@@ -42,9 +44,7 @@ public class JDialogEstado extends javax.swing.JDialog {
     public void setReadOnly(Boolean readOnly) {
         this.readOnly = readOnly;
     }
-    
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -158,23 +158,33 @@ public class JDialogEstado extends javax.swing.JDialog {
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
-        if(estado==null)
+        if (estado == null) {
             return;
-        CRUDAction<Estado> action=new CRUDAction<Estado>(estado);
-        if(jTextFieldEstado.getText()==null || jTextFieldEstado.getText().equals("")){
-            JOptionPane.showMessageDialog(this, "El estado es obligatorio","Error",0);
+        }
+        CRUDAction<Estado> action = new CRUDAction<Estado>(estado);
+        if (jTextFieldEstado.getText() == null || jTextFieldEstado.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "El estado es obligatorio", "Error", 0);
             return;
         }
         estado.setNombre(jTextFieldEstado.getText());
         estado.setDescripcion(jTextAreaDescripcion.getText());
-        if(estado.getId()==null) {
-            action.crear();
-            JOptionPane.showMessageDialog(this, "Se ha creado con éxito","Info",1);
+        if (estado.getId() == null) {
+            try {
+                action.crear();
+                JOptionPane.showMessageDialog(this, "Se ha creado con éxito", "Info", 1);
+            } catch (EntidadExiste e) {
+                JOptionPane.showMessageDialog(this, "El estado ya existe", "Error", 0);
+                return;
+            }
+        } else {
+            try {
+                action.guardar();
+                JOptionPane.showMessageDialog(this, "Se ha actualizado correctamente", "Info", 1);
+            } catch (EntidadExiste e) {
+                JOptionPane.showMessageDialog(this, "El estado ya existe", "Error", 0);
+                return;
+            }
         }
-        else {
-            action.guardar();
-            JOptionPane.showMessageDialog(this, "Se ha actualizado correctamente","Info",1);
-        }              
         this.dispose();
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
@@ -182,8 +192,8 @@ public class JDialogEstado extends javax.swing.JDialog {
         // TODO add your handling code here:
         jTextFieldEstado.setText(estado.getNombre());
         jTextAreaDescripcion.setText(estado.getDescripcion());
-        
-        if(readOnly){
+
+        if (readOnly) {
             jTextFieldEstado.setEditable(false);
             jTextAreaDescripcion.setEditable(false);
             jButtonGuardar.setVisible(false);

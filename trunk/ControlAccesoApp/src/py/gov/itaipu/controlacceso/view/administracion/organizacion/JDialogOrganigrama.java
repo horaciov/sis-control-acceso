@@ -13,6 +13,7 @@ import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.action.persona.PersonaAction;
 import py.gov.itaipu.controlacceso.model.Organizacion;
 import py.gov.itaipu.controlacceso.model.Persona;
+import py.gov.itaipu.controlacceso.model.exception.EntidadExiste;
 import py.gov.itaipu.controlacceso.utils.tree.CustomIconRenderer;
 import py.gov.itaipu.controlacceso.utils.tree.UtilesArbol;
 
@@ -387,7 +388,7 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
             area.setOrganizacionPadre(areaPadre);
             manejaOrganizacion(true);
             manejaPersona(false);
-          
+
         }
 
     }//GEN-LAST:event_jButtonOrganizacionNuevoActionPerformed
@@ -402,10 +403,15 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
             area.setNombre(jTextFieldAreaNombre.getText());
             area.setTipoOrganizacion("INTERNA");
             organizacionAction.setEntity(area);
-            organizacionAction.crear();
-            areaPadre.getOrganizacionesHijas().add(area);
+            try {
+                organizacionAction.crear();
+                areaPadre.getOrganizacionesHijas().add(area);
 
-            JOptionPane.showMessageDialog(this, "Se ha guardado con exito el Area Interna", "Info", 1);
+                JOptionPane.showMessageDialog(this, "Se ha guardado con exito el Area Interna", "Info", 1);
+            } catch (EntidadExiste e) {                
+                JOptionPane.showMessageDialog(this, "La organización ya existe", "Error", 0);
+                return;
+            }
             manejaOrganizacion(false);
             DefaultMutableTreeNode nodoSeleccionado = (DefaultMutableTreeNode) jTreeOrganigrama.getLastSelectedPathComponent();
             //                DefaultMutableTreeNode nodoNuevo = new DefaultMutableTreeNode(area,true);
@@ -455,8 +461,8 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonGuardarEmpleadoActionPerformed
 
     private void jTreeOrganigramaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTreeOrganigramaMousePressed
-       // TODO add your handling code here:
-        if(evt.getClickCount()==2 && modoBuscador){   
+        // TODO add your handling code here:
+        if (evt.getClickCount() == 2 && modoBuscador) {
             DefaultMutableTreeNode nodoSeleccionado = (DefaultMutableTreeNode) jTreeOrganigrama.getLastSelectedPathComponent();
             seleccionado = nodoSeleccionado.getUserObject();
             this.dispose();
@@ -466,10 +472,9 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
     public Object getSeleccionado() {
         return seleccionado;
     }
-    
-    
+
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-       // TODO add your handling code here:
+        // TODO add your handling code here:
         if (modoBuscador) {
             jButtonPersonaNuevo.setVisible(false);
             jButtonOrganizacionNuevo.setVisible(false);
@@ -477,22 +482,22 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
             jButtonGuardarEmpleado.setVisible(false);
         }
     }//GEN-LAST:event_formWindowActivated
-    private boolean validarPersona(){
-        if (jTextFieldEmpleadoApellido.getText()==null || jTextFieldEmpleadoApellido.getText().equals("") ) {
+    private boolean validarPersona() {
+        if (jTextFieldEmpleadoApellido.getText() == null || jTextFieldEmpleadoApellido.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "INGRESE APELLIDO.", "Error", 0);
             return false;
         }
-        if (jTextFieldEmpleadoNombre.getText()==null || jTextFieldEmpleadoApellido.getText().equals("") ) {
+        if (jTextFieldEmpleadoNombre.getText() == null || jTextFieldEmpleadoApellido.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "INGRESE NOMBRE.", "Error", 0);
             return false;
         }
-        if (jTextFieldEmpleadoNroDoc.getText()==null || jTextFieldEmpleadoNroDoc.getText().equals("") ) {
+        if (jTextFieldEmpleadoNroDoc.getText() == null || jTextFieldEmpleadoNroDoc.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "INGRESE NRO DOCUMENTO.", "Error", 0);
             return false;
         }
-    return true;
+        return true;
     }
-    
+
     private boolean validarOrganizacion() {
         if (jTextFieldAreaNombre.getText() == null || jTextFieldAreaNombre.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "INGRESE NOMBRE DE AREA.", "Error", 0);
@@ -510,8 +515,6 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
         this.modoBuscador = modoBuscador;
     }
 
-    
-    
     /**
      * @param args the command line arguments
      */

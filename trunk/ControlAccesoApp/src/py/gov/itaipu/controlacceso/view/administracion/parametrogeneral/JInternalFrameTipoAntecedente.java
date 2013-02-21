@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import org.jdesktop.observablecollections.ObservableCollections;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.model.TipoAntecedente;
+import py.gov.itaipu.controlacceso.model.exception.EntidadExiste;
 
 /**
  *
@@ -16,10 +17,9 @@ import py.gov.itaipu.controlacceso.model.TipoAntecedente;
  */
 public class JInternalFrameTipoAntecedente extends javax.swing.JInternalFrame {
 
-     private CRUDAction<TipoAntecedente> tipoAntecedenteAction;
-     private TipoAntecedente tipoAntecedente;
-    
-    
+    private CRUDAction<TipoAntecedente> tipoAntecedenteAction;
+    private TipoAntecedente tipoAntecedente;
+
     /**
      * Creates new form JInternalFrameTipoAntecedente
      */
@@ -240,25 +240,30 @@ public class JInternalFrameTipoAntecedente extends javax.swing.JInternalFrame {
 
     private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
         // TODO add your handling code here:
-         tipoAntecedente = new TipoAntecedente();   
-         JDialogoTipoAntecedente dialogoNuevo = new JDialogoTipoAntecedente(null, closable);
-         dialogoNuevo.setTipoAntecedente(tipoAntecedente);
-         dialogoNuevo.setVisible(true);
-         listaTipoAntecedente.clear();
-         listaTipoAntecedente.addAll(tipoAntecedenteAction.findAll());
-        
-         
-         
+        tipoAntecedente = new TipoAntecedente();
+        JDialogoTipoAntecedente dialogoNuevo = new JDialogoTipoAntecedente(null, closable);
+        dialogoNuevo.setTipoAntecedente(tipoAntecedente);
+        dialogoNuevo.setVisible(true);
+        listaTipoAntecedente.clear();
+        listaTipoAntecedente.addAll(tipoAntecedenteAction.findAll());
+
+
+
     }//GEN-LAST:event_jButtonNuevoActionPerformed
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
-            tipoAntecedente.setNombre(jTextFieldNombre.getText());
-            tipoAntecedente.setDescripcion(jTextAreaDescripcion.getText());
-            tipoAntecedenteAction.setEntity(tipoAntecedente);
+        tipoAntecedente.setNombre(jTextFieldNombre.getText());
+        tipoAntecedente.setDescripcion(jTextAreaDescripcion.getText());
+        tipoAntecedenteAction.setEntity(tipoAntecedente);
+        try {
             tipoAntecedenteAction.crear();
-            jDialogNuevoTipoAntecedente.setVisible(false);
-        
+        } catch (EntidadExiste e) {
+            JOptionPane.showMessageDialog(this, "El tipo de antecedente ya existe", "Error", 0);
+            return;
+        }
+        jDialogNuevoTipoAntecedente.setVisible(false);
+
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void jTextFieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreActionPerformed
@@ -267,55 +272,54 @@ public class JInternalFrameTipoAntecedente extends javax.swing.JInternalFrame {
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         // TODO add your handling code here:
-         if(jTableTiposAntecedentes.getSelectedRow()<0){
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un Tipo de Antecedente","Error",0);
+        if (jTableTiposAntecedentes.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un Tipo de Antecedente", "Error", 0);
             return;
-        } 
+        }
         tipoAntecedente = (TipoAntecedente) listaTipoAntecedente.get(jTableTiposAntecedentes.getSelectedRow());
-         JDialogoTipoAntecedente dialogoNuevo = new JDialogoTipoAntecedente(null, closable);
-         dialogoNuevo.setTipoAntecedente(tipoAntecedente);
-         dialogoNuevo.setVisible(true);
-         listaTipoAntecedente.clear();
-         listaTipoAntecedente.addAll(tipoAntecedenteAction.findAll());
-        
+        JDialogoTipoAntecedente dialogoNuevo = new JDialogoTipoAntecedente(null, closable);
+        dialogoNuevo.setTipoAntecedente(tipoAntecedente);
+        dialogoNuevo.setVisible(true);
+        listaTipoAntecedente.clear();
+        listaTipoAntecedente.addAll(tipoAntecedenteAction.findAll());
+
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
         // TODO add your handling code here:
-   
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jButtonEliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminar1ActionPerformed
         // TODO add your handling code here:
-         if(jTableTiposAntecedentes.getSelectedRow()<0){
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un Tipo de Antecedente","Error",0);
+        if (jTableTiposAntecedentes.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un Tipo de Antecedente", "Error", 0);
             return;
         }
-        if(JOptionPane.showConfirmDialog(this,"Está seguro que desea eliminar?","Eliminar Tipo Antecedente",0)!=0)
-            return;       
-        TipoAntecedente ta=(TipoAntecedente) listaTipoAntecedente.get(jTableTiposAntecedentes.getSelectedRow());
+        if (JOptionPane.showConfirmDialog(this, "Está seguro que desea eliminar?", "Eliminar Tipo Antecedente", 0) != 0) {
+            return;
+        }
+        TipoAntecedente ta = (TipoAntecedente) listaTipoAntecedente.get(jTableTiposAntecedentes.getSelectedRow());
         tipoAntecedenteAction.setEntity(ta);
         tipoAntecedenteAction.eliminar();
         listaTipoAntecedente.clear();
         listaTipoAntecedente.addAll(tipoAntecedenteAction.findAll());
-        JOptionPane.showMessageDialog(this, "Se ha eliminado correctamente","Info",1);
+        JOptionPane.showMessageDialog(this, "Se ha eliminado correctamente", "Info", 1);
     }//GEN-LAST:event_jButtonEliminar1ActionPerformed
 
     private void jButtonVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerActionPerformed
-        if(jTableTiposAntecedentes.getSelectedRow()<0){
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un Tipo de Antecedente","Error",0);
+        if (jTableTiposAntecedentes.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un Tipo de Antecedente", "Error", 0);
             return;
         }
-         tipoAntecedente = (TipoAntecedente) listaTipoAntecedente.get(jTableTiposAntecedentes.getSelectedRow());
-         JDialogoTipoAntecedente dialogoNuevo = new JDialogoTipoAntecedente(null, closable);
-         dialogoNuevo.setTipoAntecedente(tipoAntecedente);
-         dialogoNuevo.setReadOnly(true);
-         dialogoNuevo.setVisible(true);
-                
-      
+        tipoAntecedente = (TipoAntecedente) listaTipoAntecedente.get(jTableTiposAntecedentes.getSelectedRow());
+        JDialogoTipoAntecedente dialogoNuevo = new JDialogoTipoAntecedente(null, closable);
+        dialogoNuevo.setTipoAntecedente(tipoAntecedente);
+        dialogoNuevo.setReadOnly(true);
+        dialogoNuevo.setVisible(true);
+
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonVerActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonEliminar;
@@ -342,6 +346,4 @@ public class JInternalFrameTipoAntecedente extends javax.swing.JInternalFrame {
     public void setTipoAntecedente(TipoAntecedente tipoAntecedente) {
         this.tipoAntecedente = tipoAntecedente;
     }
-
-
 }

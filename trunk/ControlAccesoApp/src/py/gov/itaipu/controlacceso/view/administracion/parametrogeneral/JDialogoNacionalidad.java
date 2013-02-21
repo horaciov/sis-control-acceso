@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import javax.xml.soap.Text;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.model.Nacionalidad;
+import py.gov.itaipu.controlacceso.model.exception.EntidadExiste;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 
 /**
@@ -15,11 +16,10 @@ import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
  * @author fboy
  */
 public class JDialogoNacionalidad extends javax.swing.JDialog {
+
     private Nacionalidad nacionalidad;
     private Boolean readOnly;
-    
-    
-    
+
     /**
      * Creates new form JDialogoNacionalidad
      */
@@ -27,9 +27,9 @@ public class JDialogoNacionalidad extends javax.swing.JDialog {
         super(parent, modal);
         readOnly = false;
         initComponents();
+        this.getRootPane().setDefaultButton(jButtonGuardar);
     }
 
-   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -122,18 +122,27 @@ public class JDialogoNacionalidad extends javax.swing.JDialog {
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
         CRUDAction<Nacionalidad> em = new CRUDAction(nacionalidad);
-            nacionalidad.setDescripcion(jTextAreaDescripcion.getText());
-            nacionalidad.setNombre(jTextFieldNombre.getText());     
-        if (nacionalidad.getNombre().equals("")) 
-        {
-             JOptionPane.showMessageDialog(null, "Nombre es Obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
-        }else{
-       if (nacionalidad.getId()==null) {
-                em.crear();
-                 JOptionPane.showMessageDialog(this, "Se ha creado con éxito","Info",1);
-            }else{
-                em.guardar();
-                 JOptionPane.showMessageDialog(this, "Se ha guardado con éxito","Info",1);
+        nacionalidad.setDescripcion(jTextAreaDescripcion.getText());
+        nacionalidad.setNombre(jTextFieldNombre.getText());
+        if (nacionalidad.getNombre().equals("")) {
+            JOptionPane.showMessageDialog(null, "Nombre es Obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            if (nacionalidad.getId() == null) {
+                try {
+                    em.crear();
+                    JOptionPane.showMessageDialog(this, "Se ha creado con éxito", "Info", 1);
+                } catch (EntidadExiste e) {
+                    JOptionPane.showMessageDialog(this, "La nacionalidad ya existe", "Error", 0);
+                    return;
+                }
+            } else {
+                try{
+                    em.guardar();
+                    JOptionPane.showMessageDialog(this, "Se ha guardado con éxito", "Info", 1);
+                } catch (EntidadExiste e) {                 
+                    JOptionPane.showMessageDialog(this, "La nacionalidad ya existe", "Error", 0);
+                    return;
+                }
             }
             this.setVisible(false);
         }
@@ -142,17 +151,17 @@ public class JDialogoNacionalidad extends javax.swing.JDialog {
 
     private void windowsActivate(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowsActivate
         // TODO add your handling code here:
-       
-            jTextAreaDescripcion.setText(nacionalidad.getDescripcion());
-            jTextFieldNombre.setText(nacionalidad.getNombre());
-            if (readOnly) {
-                this.jTextAreaDescripcion.setEditable(false);
-                this.jTextFieldNombre.setEditable(false);
-                this.jButtonGuardar.setVisible(false);
-            }
-            
-            
-      
+
+        jTextAreaDescripcion.setText(nacionalidad.getDescripcion());
+        jTextFieldNombre.setText(nacionalidad.getNombre());
+        if (readOnly) {
+            this.jTextAreaDescripcion.setEditable(false);
+            this.jTextFieldNombre.setEditable(false);
+            this.jButtonGuardar.setVisible(false);
+        }
+
+
+
     }//GEN-LAST:event_windowsActivate
 
     /**
@@ -206,11 +215,9 @@ public class JDialogoNacionalidad extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     void setInactivefields(boolean b) {
-        
-        }
+    }
 
-
-     public Nacionalidad getNacionalidad() {
+    public Nacionalidad getNacionalidad() {
         return nacionalidad;
     }
 
@@ -225,6 +232,4 @@ public class JDialogoNacionalidad extends javax.swing.JDialog {
     public void setReadOnly(Boolean readOnly) {
         this.readOnly = readOnly;
     }
-    
-
 }
