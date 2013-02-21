@@ -68,10 +68,10 @@
      INNER JOIN "controlacceso"."persona" persona ON visita."persona_id" = persona."id"
      FULL JOIN "controlacceso"."persona" persona_A ON visita."personavisitada_id" = persona_A."id"
      INNER JOIN "controlacceso"."motivo" motivo ON visita."motivo_id" = motivo."id"
-     INNER JOIN "controlacceso"."nacionalidad" nacionalidad ON persona."nacionalidad_id" = nacionalidad."id"
+     FULL JOIN "controlacceso"."nacionalidad" nacionalidad ON persona."nacionalidad_id" = nacionalidad."id"
      INNER JOIN "controlacceso"."organizacion" organizacion_A ON visita."organizacioninterna_id" = organizacion_A."id"
      INNER JOIN "controlacceso"."tipodocumento" tipodocumento ON persona."tipodocumento_id" = tipodocumento."id"
-     INNER JOIN "controlacceso"."organizacion" organizacion ON persona."organizacion_id" = organizacion."id"
+     FULL JOIN "controlacceso"."organizacion" organizacion ON persona."organizacion_id" = organizacion."id"
    WHERE
     ( visita."anulado" = 'N' ) and
     ( $P{pPersonaId} is null or visita."persona_id" = $P{pPersonaId} ) and
@@ -307,7 +307,7 @@
 			<textField>
 				<reportElement uuid="ea9934b4-5253-46cd-bea5-f02cc54b9893" x="436" y="1" width="132" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{organizacion_nombre}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[( $F{organizacion_nombre} == null ? "---" : $F{organizacion_nombre} ) ]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="05240ebf-d913-4e9f-8fe8-66241ae61b5a" x="144" y="21" width="181" height="20"/>
