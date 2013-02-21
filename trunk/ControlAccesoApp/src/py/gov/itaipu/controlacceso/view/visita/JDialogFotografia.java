@@ -58,12 +58,24 @@ public class JDialogFotografia extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
-    }
+        }
 
-    public JDialogFotografia(java.awt.Frame parent, boolean modal, String modo) {
+    public JDialogFotografia(java.awt.Frame parent, boolean modal, String modo, Persona persona) throws Exception {
         super(parent, modal);
         initComponents();
         this.modo = modo;
+        this.persona = persona;
+        capturado = false;
+        if (modo.equals("CAPTURAR")) {
+            jLabelTitulo.setText("Capturar Fotografia");
+             //place player and video screen on the frame
+             iniciarWebCam();
+        } else if (modo.equals("VER")) {
+            jLabelTitulo.setText("Mostrar Fotografia");
+            mostrarFotografia();
+            jButtonCapturar.setVisible(false);
+        }
+               
     }
 
     /**
@@ -205,23 +217,13 @@ public class JDialogFotografia extends javax.swing.JDialog {
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
-        capturado = false;
-        if (modo.equals("CAPTURAR")) {
-            jLabelTitulo.setText("Capturar Fotografia");
-            iniciarWebCam();
-
-        } else if (modo.equals("VER")) {
-
-            jLabelTitulo.setText("Mostrar Fotografia");
-            mostrarFotografia();
-            jButtonCapturar.setVisible(false);
-        }
+        
     }//GEN-LAST:event_formWindowActivated
 
-    private void mostrarFotografia() {
+    private void mostrarFotografia() throws IOException {
         javax.swing.JLabel jLabelFotografia = new JLabel();
         BufferedImage image;
-        try {
+        
             String rutaImagen = persona.getFotografiaPath();
             File fileImagen = new File(rutaImagen);
             image = ImageIO.read(fileImagen);
@@ -232,9 +234,7 @@ public class JDialogFotografia extends javax.swing.JDialog {
             jLabelFotografia.setIcon(iconoFoto);
             jPanelCamara.add(jLabelFotografia);
             jLabelFotografia.setVisible(true);
-        } catch (IOException ex) {
-            Logger.getLogger(JDialogPersona.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
     }
 
     private void saveImagetoFile(Image img, String string) {
@@ -294,8 +294,8 @@ public class JDialogFotografia extends javax.swing.JDialog {
         });
     }
 
-    private void iniciarWebCam() {
-        try {
+    private void iniciarWebCam() throws Exception {
+        
 //gets a list of devices how support the given videoformat
             String str1 = "vfw:Microsoft WDM Image Capture (Win32):0";
             di = CaptureDeviceManager.getDevice(str1);
@@ -306,13 +306,10 @@ public class JDialogFotografia extends javax.swing.JDialog {
 
             videoScreen = player.getVisualComponent();
 
-            //place player and video screen on the frame
+//            //place player and video screen on the frame
             jPanelCamara.add(videoScreen, BorderLayout.CENTER);
             jPanelCamara.add(player.getControlPanelComponent(), BorderLayout.SOUTH);
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+       
     }
 
     public Persona getPersona() {

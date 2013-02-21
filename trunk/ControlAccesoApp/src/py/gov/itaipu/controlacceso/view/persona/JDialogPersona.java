@@ -473,7 +473,7 @@ public class JDialogPersona extends javax.swing.JDialog {
                 ImageIcon iconoFoto = new javax.swing.ImageIcon(image);
                 jLabelFoto.setIcon(iconoFoto);
             } catch (IOException ex) {
-                Logger.getLogger(JDialogPersona.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "No se puede Mostrar la Fotografia en este momento", "Error", 0);
             }
         }
 
@@ -652,13 +652,21 @@ public class JDialogPersona extends javax.swing.JDialog {
 
     private void jButtonTomarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTomarFotoActionPerformed
         // TODO add your handling code here:
-        JDialogFotografia dialogFotografia = new JDialogFotografia(null, rootPaneCheckingEnabled, "CAPTURAR");
-        dialogFotografia.setPersona(persona);
-        dialogFotografia.setVisible(true);        // TODO add your handling code here:
-        if (dialogFotografia.isCapturado()) {
-            imgFotoPersona = dialogFotografia.getImg();
-            mostrarFotoPersona();
+        
+        JDialogFotografia dialogFotografia;
+        try {
+            dialogFotografia = new JDialogFotografia(null, rootPaneCheckingEnabled, "CAPTURAR", persona);
+//            dialogFotografia.setPersona(persona);
+            dialogFotografia.setVisible(true);        // TODO add your handling code here:
+            if (dialogFotografia.isCapturado()) {
+                imgFotoPersona = dialogFotografia.getImg();
+                mostrarFotoPersona();
+            }
+        } catch (Exception ex) {
+               JOptionPane.showMessageDialog(this, "En este momento no se puede inicializar la camara, verifique el dispositivo e intente de nuevo", "Error", 0);
+               return;
         }
+        
     }//GEN-LAST:event_jButtonTomarFotoActionPerformed
 
     private void jButtonNacionalidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNacionalidadActionPerformed
@@ -729,6 +737,7 @@ public class JDialogPersona extends javax.swing.JDialog {
                 persona.setFotografiaPath(string);
 
             } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "No se ha podido generar el archivo de Fotografia", "Error", 0);
             }
         } else if (imgFotoPersonaFile != null) {
             try {
@@ -738,7 +747,7 @@ public class JDialogPersona extends javax.swing.JDialog {
                 persona.setFotografiaPath(string);
 
             } catch (IOException ex) {
-                Logger.getLogger(JDialogPersona.class.getName()).log(Level.SEVERE, null, ex);
+                  JOptionPane.showMessageDialog(this, "No se ha podido generar el archivo de Fotografia", "Error", 0);
             }
         }
 

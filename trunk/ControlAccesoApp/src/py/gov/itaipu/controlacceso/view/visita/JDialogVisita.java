@@ -55,6 +55,7 @@ import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.action.persona.PersonaAction;
 import py.gov.itaipu.controlacceso.action.visita.VisitaAction;
 import py.gov.itaipu.controlacceso.model.Motivo;
+import py.gov.itaipu.controlacceso.model.Nacionalidad;
 import py.gov.itaipu.controlacceso.model.Organizacion;
 import py.gov.itaipu.controlacceso.model.Persona;
 import py.gov.itaipu.controlacceso.model.TipoDocumento;
@@ -228,6 +229,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         jRadioButtonNacional = new javax.swing.JRadioButton();
         jButtonCambiarEstadoPersona = new javax.swing.JButton();
         jButtonRegistrarSalida = new javax.swing.JButton();
+        jButtonNuevoMotivo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registro de visita");
@@ -448,6 +450,14 @@ public class JDialogVisita extends javax.swing.JDialog {
             }
         });
 
+        jButtonNuevoMotivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/new.jpg"))); // NOI18N
+        jButtonNuevoMotivo.setToolTipText("Actualizar Fotografia");
+        jButtonNuevoMotivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNuevoMotivoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -490,7 +500,9 @@ public class JDialogVisita extends javax.swing.JDialog {
                                                     .addGroup(layout.createSequentialGroup()
                                                         .addComponent(jTextFieldOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addGap(0, 0, Short.MAX_VALUE)))
-                                                .addGap(94, 94, 94))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(jButtonNuevoMotivo, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(68, 68, 68))
                                             .addGroup(layout.createSequentialGroup()
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addGroup(layout.createSequentialGroup()
@@ -598,7 +610,8 @@ public class JDialogVisita extends javax.swing.JDialog {
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(jLabelDocNro)
                                             .addComponent(jTextFieldDocumentoPersona, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 0, Short.MAX_VALUE))))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButtonNuevoMotivo, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabelFotografia, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -621,21 +634,21 @@ public class JDialogVisita extends javax.swing.JDialog {
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel6)
-                                    .addComponent(jComboBoxMotivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jComboBoxMotivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(20, 20, 20)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel3)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(44, 44, 44)
-                                        .addComponent(jButtonActualizarFotografia, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(107, 107, 107)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jButtonGuardar)
-                                    .addComponent(jButtonCancelar)
-                                    .addComponent(jButtonRegistrarSalida))))
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(44, 44, 44)
+                                .addComponent(jButtonActualizarFotografia, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(107, 107, 107)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonGuardar)
+                            .addComponent(jButtonCancelar)
+                            .addComponent(jButtonRegistrarSalida))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButtonBuscarPersonaVisitada)
@@ -981,13 +994,17 @@ public class JDialogVisita extends javax.swing.JDialog {
                     mostrarFotoPersona();
                 } else {
                     if (JOptionPane.showConfirmDialog(this, "La persona no cuenta con Fotografia Actual, Desea cargar la Fotografia?", "Fotografia", 0) == 0) {
-
-                        JDialogFotografia dialogFotografia = new JDialogFotografia(null, rootPaneCheckingEnabled, "CAPTURAR");
-                        dialogFotografia.setPersona(persona);
-                        WindowUtil.centerWindow(dialogFotografia);
-                        dialogFotografia.setVisible(true);        // TODO add your handling code here:
-                        if (dialogFotografia.isCapturado()) {
-                            mostrarFotoPersona();
+                        try {
+                            JDialogFotografia dialogFotografia = new JDialogFotografia(null, rootPaneCheckingEnabled, "CAPTURAR",persona);
+//                            dialogFotografia.setPersona(persona);
+                            WindowUtil.centerWindow(dialogFotografia);
+                            dialogFotografia.setVisible(true);        // TODO add your handling code here:
+                            if (dialogFotografia.isCapturado()) {
+                                mostrarFotoPersona();
+                            }
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(this, "En este momento no se puede inicializar la camara, verifique el dispositivo e intente de nuevo", "Error", 0);
+                            return;
                         }
                     }
                 }
@@ -1064,7 +1081,7 @@ public class JDialogVisita extends javax.swing.JDialog {
             ImageIcon iconoFoto = new javax.swing.ImageIcon(imageScale);
             jLabelFotografia.setIcon(iconoFoto);
         } catch (IOException ex) {
-            Logger.getLogger(JDialogPersona.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "No se puede Mostrar la Fotografia en este momento", "Error", 0);
         }
         ///CARGAR FOTO DESDE LA BASE DE DATOS SUPLANTADO POR LECTURA DESDE ARCHIVO DIRECTO
 //                            ByteArrayInputStream bis = new ByteArrayInputStream(persona.getFotografia());
@@ -1106,21 +1123,31 @@ public class JDialogVisita extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonBuscarPersonaVisitadaActionPerformed
 
     private void jButtonTomarFotografiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTomarFotografiaActionPerformed
-        JDialogFotografia dialogFotografia = new JDialogFotografia(null, rootPaneCheckingEnabled, "CAPTURAR");
-        WindowUtil.centerWindow(dialogFotografia);
-        dialogFotografia.setPersona(persona);
-        dialogFotografia.setVisible(true);        // TODO add your handling code here:
-        if (dialogFotografia.isCapturado()) {
-            mostrarFotoPersona();
+        try {
+            JDialogFotografia dialogFotografia = new JDialogFotografia(null, rootPaneCheckingEnabled, "CAPTURAR",persona);
+            WindowUtil.centerWindow(dialogFotografia);
+//            dialogFotografia.setPersona(persona);
+            dialogFotografia.setVisible(true);        // TODO add your handling code here:
+            if (dialogFotografia.isCapturado()) {
+                mostrarFotoPersona();
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "En este momento no se puede inicializar la camara, verifique el dispositivo e intente de nuevo", "Error", 0);
+            return;
         }
     }//GEN-LAST:event_jButtonTomarFotografiaActionPerformed
 
     private void jLabelFotografiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelFotografiaMouseClicked
         // TODO add your handling code here:
         if (evt.getClickCount() == 2 && persona != null && !persona.getFotografiaPath().equals("")) {
-            JDialogFotografia dialogFotografia = new JDialogFotografia(null, rootPaneCheckingEnabled, "VER");
-            dialogFotografia.setPersona(persona);
-            dialogFotografia.setVisible(true);
+            try {
+                JDialogFotografia dialogFotografia = new JDialogFotografia(null, rootPaneCheckingEnabled, "VER",persona);
+//                dialogFotografia.setPersona(persona);
+                dialogFotografia.setVisible(true);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "No se puede Mostrar la Fotografia en este momento", "Error", 0);
+                return;
+            }
         }
     }//GEN-LAST:event_jLabelFotografiaMouseClicked
 
@@ -1189,6 +1216,22 @@ public class JDialogVisita extends javax.swing.JDialog {
         jButtonRegistrarSalida.setVisible(false);
     }//GEN-LAST:event_jButtonRegistrarSalidaActionPerformed
 
+    private void jButtonNuevoMotivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoMotivoActionPerformed
+        // TODO add your handling code here:
+        Motivo mot = (Motivo) jComboBoxMotivo.getSelectedItem();
+        JDialogMotivo dialogMotivo = new JDialogMotivo(null, rootPaneCheckingEnabled);
+        dialogMotivo.setMotivo(new Motivo());
+        WindowUtil.centerWindow(dialogMotivo);
+        dialogMotivo.setVisible(true);
+        listMotivos.clear();
+        listMotivos.addAll(motivoAction.findAll());
+        if (dialogMotivo.getMotivo().getId() != null) {
+            jComboBoxMotivo.setSelectedItem(dialogMotivo.getMotivo());
+        } else {
+            jComboBoxMotivo.setSelectedItem(mot);
+        }
+    }//GEN-LAST:event_jButtonNuevoMotivoActionPerformed
+
     private BufferedImage resizeImage(BufferedImage originalImage, int width, int height, int type) throws IOException {
         BufferedImage resizedImage = new BufferedImage(width, height, type);
         Graphics2D g = resizedImage.createGraphics();
@@ -1248,6 +1291,7 @@ public class JDialogVisita extends javax.swing.JDialog {
     private javax.swing.JButton jButtonGuardar;
     private javax.swing.JButton jButtonLimpiarPersona;
     private javax.swing.JButton jButtonLimpiarPersonaVisitada;
+    private javax.swing.JButton jButtonNuevoMotivo;
     private javax.swing.JButton jButtonRegistrarSalida;
     private javax.swing.JButton jButtonTomarFotografia;
     private javax.swing.JComboBox jComboBoxMotivo;
