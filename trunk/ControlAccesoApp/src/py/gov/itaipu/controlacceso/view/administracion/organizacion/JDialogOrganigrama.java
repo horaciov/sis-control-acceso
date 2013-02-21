@@ -356,7 +356,10 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
         if (activa) {
             jTextFieldAreaNombre.setText("");
             jTextFieldAreaNombre.setEditable(true);
-            jTextFieldAreaPadreNombre.setText(areaPadre.getNombre());
+            if (area.getNivelOrganigrama()>1){
+                jTextFieldAreaPadreNombre.setText(areaPadre.getNombre());
+            }
+            
             jButtonGuardarArea.setEnabled(true);
         } else {
             jTextFieldAreaNombre.setText("");
@@ -382,10 +385,16 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
             List<Organizacion> oPadre = organizacionAction.findByNamedQuery("Organizacion.findOrganizacionPadre");
             if (oPadre.size() > 0) {
                 JOptionPane.showMessageDialog(this, "DEBE SELECCIONAR ORGANIZACION SUPERIOR.", "Error", 0);
+            } else{
+                area = new Organizacion();
+                area.setNivelOrganigrama(1L);
+                manejaOrganizacion(true);
+                manejaPersona(false);
             }
         } else {
             area = new Organizacion();
             area.setOrganizacionPadre(areaPadre);
+            area.setNivelOrganigrama(areaPadre.getNivelOrganigrama()+1);
             manejaOrganizacion(true);
             manejaPersona(false);
 
@@ -400,12 +409,13 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
     private void jButtonGuardarAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarAreaActionPerformed
         // TODO add your handling code here:
         if (validarOrganizacion()) {
+            
             area.setNombre(jTextFieldAreaNombre.getText());
             area.setTipoOrganizacion("INTERNA");
             organizacionAction.setEntity(area);
             try {
                 organizacionAction.crear();
-                areaPadre.getOrganizacionesHijas().add(area);
+//                areaPadre.getOrganizacionesHijas().add(area);
 
                 JOptionPane.showMessageDialog(this, "Se ha guardado con exito el Area Interna", "Info", 1);
             } catch (EntidadExiste e) {
