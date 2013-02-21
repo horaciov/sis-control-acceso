@@ -203,7 +203,7 @@ WHERE
 				<textElement/>
 				<textFieldExpression><![CDATA[( $F{visita_fechasalida} == null ? "---" : $F{visita_fechasalida} )]]></textFieldExpression>
 			</textField>
-			<image hAlign="Center" vAlign="Middle">
+			<image hAlign="Center" vAlign="Middle" onErrorType="Icon">
 				<reportElement uuid="1459f631-d53f-4a1b-92a4-03fdd33e420f" x="306" y="215" width="225" height="111"/>
 				<imageExpression><![CDATA[( $F{persona_fotografiaPath} == null ? null : $P{pathImagen} + $F{persona_fotografiaPath} )]]></imageExpression>
 			</image>
