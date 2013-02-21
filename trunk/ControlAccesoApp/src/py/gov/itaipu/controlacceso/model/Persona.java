@@ -8,18 +8,22 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.UniqueConstraint;
 
 /**
  *
  * @author fboy
  */
 @Entity
+@Table(name="persona", uniqueConstraints=@UniqueConstraint(columnNames={"numerodocumento","tipodocumento_id"}))
 public class Persona implements Serializable{
     
     private Long id;
@@ -60,6 +64,7 @@ public class Persona implements Serializable{
         this.id = id;
     }
 
+    @Column(nullable=false)
     public String getNombre() {
         return nombre;
     }
@@ -68,6 +73,7 @@ public class Persona implements Serializable{
         this.nombre = nombre.toUpperCase();
     }
 
+    @Column(nullable=false)
     public String getApellido() {
         return apellido;
     }
@@ -95,6 +101,7 @@ public class Persona implements Serializable{
         this.estado = estado;
     }
 
+    @Column(nullable=false)
     public String getNumeroDocumento() {
         return numeroDocumento;
     }
