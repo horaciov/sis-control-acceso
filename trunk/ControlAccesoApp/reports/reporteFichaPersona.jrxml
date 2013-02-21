@@ -235,7 +235,7 @@ WHERE persona."id" = $P{personaId}]]>
 			<rectangle>
 				<reportElement uuid="7a01b287-54a1-43ee-82c5-ceb5ebf3adbd" x="328" y="7" width="230" height="125"/>
 			</rectangle>
-			<image hAlign="Center" vAlign="Middle">
+			<image hAlign="Center" vAlign="Middle" onErrorType="Icon">
 				<reportElement uuid="ed76a01b-fcb3-4f73-8353-fbf12f2a236c" x="333" y="11" width="227" height="111"/>
 				<imageExpression><![CDATA[( $F{persona_fotografiaPath} == null ? null : $P{pathImagen} + $F{persona_fotografiaPath} )]]></imageExpression>
 			</image>
