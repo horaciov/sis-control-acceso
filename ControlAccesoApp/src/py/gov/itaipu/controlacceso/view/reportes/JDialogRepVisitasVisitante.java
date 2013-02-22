@@ -20,6 +20,7 @@ import py.gov.itaipu.controlacceso.model.Persona;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 import py.gov.itaipu.controlacceso.utils.windows.WindowUtil;
 import py.gov.itaipu.controlacceso.view.JDialogBuscador;
+import py.gov.itaipu.controlacceso.view.persona.JDialogPersonaPrincipal;
 import py.gov.itaipu.controlacceso.view.persona.JInternalFramePersona;
 /**
  *
@@ -166,19 +167,13 @@ private Persona persona;
 
     private void jButtonBuscarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarPersonaActionPerformed
         // TODO add your handling code here:
-        JInternalFramePersona jFramePersona = new JInternalFramePersona();
-        jFramePersona.setModoBuscador(true);
-        jFramePersona.setTitle("Buscador de Personas Externas");
-        jFramePersona.setTipoOrganizacionPersona("EXTERNA");
-        WindowUtil.centerWindow(jFramePersona);
-        jFramePersona.setVisible(true);
-        JDialogBuscador buscador=new JDialogBuscador(null, true);
-        buscador.setSize(jFramePersona.getSize());
-        //jFramePersona.setClosable(false);
-        jFramePersona.setResizable(false);
-        buscador.getjDesktopPaneBuscador().add(jFramePersona);
-        buscador.setVisible(true);
-        persona=jFramePersona.getPersonaSeleccionada();
+        JDialogPersonaPrincipal jdP = new JDialogPersonaPrincipal(null, true);
+        jdP.setModoBuscador(true);
+        jdP.setTitle("Buscador de Personas Externas");
+        WindowUtil.centerWindow(jdP);
+        jdP.setResizable(false);
+        jdP.setVisible(true);
+        persona=jdP.getPersonaSeleccionada();
         if(persona!=null)
         jTextFieldPersona.setText(persona.getNombre()+", "+persona.getApellido());
     }//GEN-LAST:event_jButtonBuscarPersonaActionPerformed

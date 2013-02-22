@@ -121,8 +121,6 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
             jTextFieldNroDoc = new javax.swing.JTextField();
             jLabelEstCivil = new javax.swing.JLabel();
             jLabelEstNacionalidad = new javax.swing.JLabel();
-            jRadioButtonExterna = new javax.swing.JRadioButton();
-            jRadioButtonInterna = new javax.swing.JRadioButton();
             jButtonBuscarOrganizacion = new javax.swing.JButton();
             jTextFieldOrganizacionFiltro = new javax.swing.JTextField();
             jLabelOrganizacion = new javax.swing.JLabel();
@@ -130,9 +128,7 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
             jSeparator3 = new javax.swing.JSeparator();
             jButtonImprimirListado = new javax.swing.JButton();
             jLabelSexo = new javax.swing.JLabel();
-            jRadioButtonAmbos = new javax.swing.JRadioButton();
             jButtonImprimirFicha = new javax.swing.JButton();
-            jLabel9 = new javax.swing.JLabel();
             jButtonLimpiar = new javax.swing.JButton();
             jComboBoxSexo = new javax.swing.JComboBox();
             jButtonBuscar = new javax.swing.JButton();
@@ -228,15 +224,6 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
 
         jLabelEstNacionalidad.setText("Nacionalidad");
 
-        jRadioButtonExterna.setText("Externa");
-
-        jRadioButtonInterna.setText("Interna");
-        jRadioButtonInterna.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButtonInternaActionPerformed(evt);
-            }
-        });
-
         jButtonBuscarOrganizacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/view.png"))); // NOI18N
         jButtonBuscarOrganizacion.setToolTipText("Buscar Organizacion");
         jButtonBuscarOrganizacion.addActionListener(new java.awt.event.ActionListener() {
@@ -268,9 +255,6 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
 
         jLabelSexo.setText("Sexo:");
 
-        jRadioButtonAmbos.setSelected(true);
-        jRadioButtonAmbos.setText("Ambos");
-
         jButtonImprimirFicha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/ficha.png"))); // NOI18N
         jButtonImprimirFicha.setText("IMPRIMIR");
         jButtonImprimirFicha.setPreferredSize(new java.awt.Dimension(110, 25));
@@ -279,8 +263,6 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
                 jButtonImprimirFichaActionPerformed(evt);
             }
         });
-
-        jLabel9.setText("Tipo Persona");
 
         jButtonLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/clear.jpeg"))); // NOI18N
         jButtonLimpiar.setText("LIMPIAR");
@@ -433,16 +415,7 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
                                     .addComponent(jComboBoxEstadoCivil, javax.swing.GroupLayout.Alignment.TRAILING, 0, 172, Short.MAX_VALUE)
                                     .addComponent(jComboBoxSexo, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(38, 38, 38)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(49, 49, 49)
-                                        .addComponent(jRadioButtonInterna)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jRadioButtonExterna)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jRadioButtonAmbos))
-                                    .addComponent(jPanelFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jPanelFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
@@ -477,14 +450,10 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
                         .addComponent(jLabelOrganizacion)
                         .addComponent(jTextFieldOrganizacionFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jButtonBuscarOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jRadioButtonInterna)
-                    .addComponent(jRadioButtonAmbos)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabelSexo)
-                        .addComponent(jComboBoxSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jRadioButtonExterna))
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36)
+                        .addComponent(jComboBoxSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonBuscar)
                     .addComponent(jButtonLimpiar)
@@ -515,10 +484,6 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jRadioButtonInternaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonInternaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButtonInternaActionPerformed
 
     private void jButtonBuscarOrganizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarOrganizacionActionPerformed
         // TODO add your handling code here:
@@ -597,13 +562,13 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
             if (jComboBoxSexo.getSelectedIndex() != 0) {
                 parametros.put("pSexo", (Object) jComboBoxSexo.getSelectedItem().toString());
             }
-            if (!jRadioButtonAmbos.isSelected()) {
-                if (jRadioButtonInterna.isSelected()) {
-                    parametros.put("pTipoOrg", (Object) "INTERNA");
-                } else if (jRadioButtonExterna.isSelected()) {
-                    parametros.put("pTipoOrg", (Object) "EXTERNA");
-                }
-            }
+//            if (!jRadioButtonAmbos.isSelected()) {
+//                if (jRadioButtonInterna.isSelected()) {
+//                    parametros.put("pTipoOrg", (Object) "INTERNA");
+//                } else if (jRadioButtonExterna.isSelected()) {
+//                    parametros.put("pTipoOrg", (Object) "EXTERNA");
+//                }
+//            }
 
             if (jFormattedTextFechDesde != null && !jFormattedTextFechDesde.getText().equals("")) {
                 String vFecha = jFormattedTextFechDesde.getText().substring(6, 10) + jFormattedTextFechDesde.getText().substring(3, 5) + jFormattedTextFechDesde.getText().substring(0, 2);
@@ -686,7 +651,7 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
             jFormattedTextFechDesde.setText(null);
             jFormattedTextFechHasta.setText(null);
             if (!modoBuscador) {
-                jRadioButtonAmbos.setSelected(true);
+//                jRadioButtonAmbos.setSelected(true);
             }
 
             personaFiltro = new Persona();
@@ -810,6 +775,8 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButtonNuevoActionPerformed
 
+    
+    
     private void jButtonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarActionPerformed
         // TODO add your handling code here:
         try {
@@ -862,6 +829,18 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
             this.dispose();
         }
     }//GEN-LAST:event_jTablePersonasMouseClicked
+
+    public Persona getPersonaSeleccionada() {
+        return personaSeleccionada;
+    }
+
+    public Boolean getModoBuscador() {
+        return modoBuscador;
+    }
+
+    public void setModoBuscador(Boolean modoBuscador) {
+        this.modoBuscador = modoBuscador;
+    }
 
     /**
      * @param args the command line arguments
@@ -929,7 +908,6 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelApellido;
     private javax.swing.JLabel jLabelEstCivil;
     private javax.swing.JLabel jLabelEstNacionalidad;
@@ -937,9 +915,6 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelOrganizacion;
     private javax.swing.JLabel jLabelSexo;
     private javax.swing.JPanel jPanelFechaNac;
-    private javax.swing.JRadioButton jRadioButtonAmbos;
-    private javax.swing.JRadioButton jRadioButtonExterna;
-    private javax.swing.JRadioButton jRadioButtonInterna;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
