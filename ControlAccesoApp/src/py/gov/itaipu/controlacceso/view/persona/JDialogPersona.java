@@ -54,6 +54,7 @@ import py.gov.itaipu.controlacceso.test.ShowImage;
 import py.gov.itaipu.controlacceso.utils.windows.WindowUtil;
 import py.gov.itaipu.controlacceso.view.FileFilterExtension;
 import py.gov.itaipu.controlacceso.view.JDialogBuscador;
+import py.gov.itaipu.controlacceso.view.administracion.organizacion.JDialogOrganizacionExterna;
 import py.gov.itaipu.controlacceso.view.administracion.organizacion.JInternalFrameOrganizacion;
 import py.gov.itaipu.controlacceso.view.administracion.organizacion.JInternalFrameOrganizacionExterna;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JDialogoNacionalidad;
@@ -148,6 +149,7 @@ public class JDialogPersona extends javax.swing.JDialog {
                     jButtonNacionalidad = new javax.swing.JButton();
                     jButtonNacionalidadEdit = new javax.swing.JButton();
                     jButtonEditTipoDoc = new javax.swing.JButton();
+                    jButtonNuevoOrganizacion = new javax.swing.JButton();
 
                 } catch (ErrorInesperado ei) {
                     JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -299,6 +301,13 @@ public class JDialogPersona extends javax.swing.JDialog {
             }
         });
 
+        jButtonNuevoOrganizacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/new.jpg"))); // NOI18N
+        jButtonNuevoOrganizacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNuevoOrganizacionActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -366,7 +375,10 @@ public class JDialogPersona extends javax.swing.JDialog {
                             .addComponent(jComboBoxNacionalidad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButtonBuscarOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButtonBuscarOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonNuevoOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButtonNacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -435,7 +447,8 @@ public class JDialogPersona extends javax.swing.JDialog {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabelOrganizacion)
                                 .addComponent(jTextFieldOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jButtonBuscarOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jButtonBuscarOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonNuevoOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButtonGuardar)
@@ -756,6 +769,21 @@ public class JDialogPersona extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButtonEditTipoDocActionPerformed
 
+    private void jButtonNuevoOrganizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoOrganizacionActionPerformed
+        // TODO add your handling code here:
+        
+            Organizacion or = persona.getOrganizacion();
+            JDialogOrganizacionExterna jdO = new JDialogOrganizacionExterna(null, true);
+            jdO.setOrganizacion(new Organizacion());
+            WindowUtil.centerWindow(jdO);
+            jdO.setVisible(true);
+            if (jdO.getOrganizacion().getId() != null) {
+                persona.setOrganizacion(jdO.getOrganizacion());
+                jTextFieldOrganizacion.setText(persona.getOrganizacion().getNombre());
+            }
+        
+    }//GEN-LAST:event_jButtonNuevoOrganizacionActionPerformed
+
     private void mostrarFotoPersona() {
 
         //REGULAR TAMAÑO    
@@ -854,6 +882,7 @@ public class JDialogPersona extends javax.swing.JDialog {
     private javax.swing.JButton jButtonGuardar;
     private javax.swing.JButton jButtonNacionalidad;
     private javax.swing.JButton jButtonNacionalidadEdit;
+    private javax.swing.JButton jButtonNuevoOrganizacion;
     private javax.swing.JButton jButtonNuevoTipoDoc;
     private javax.swing.JButton jButtonTomarFoto;
     private javax.swing.JComboBox jComboBoxEstadoCivil;
