@@ -115,18 +115,7 @@
                                   <Component id="jComboBoxSexo" alignment="1" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jLabel9" min="-2" pref="75" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
-                                      <Component id="jRadioButtonInterna" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jRadioButtonExterna" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jRadioButtonAmbos" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="jPanelFechaNac" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="jPanelFechaNac" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -173,16 +162,12 @@
                       <Component id="jTextFieldOrganizacionFiltro" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jButtonBuscarOrganizacion" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
-                  <Component id="jRadioButtonInterna" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jRadioButtonAmbos" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                       <Component id="jLabelSexo" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jComboBoxSexo" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jRadioButtonExterna" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jLabel9" alignment="0" min="-2" pref="23" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jButtonBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButtonLimpiar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -343,19 +328,6 @@
         <Property name="text" type="java.lang.String" value="Nacionalidad"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="jRadioButtonExterna">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Externa"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JRadioButton" name="jRadioButtonInterna">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Interna"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButtonInternaActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JButton" name="jButtonBuscarOrganizacion">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -409,12 +381,6 @@
         <Property name="text" type="java.lang.String" value="Sexo:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="jRadioButtonAmbos">
-      <Properties>
-        <Property name="selected" type="boolean" value="true"/>
-        <Property name="text" type="java.lang.String" value="Ambos"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JButton" name="jButtonImprimirFicha">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -428,11 +394,6 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonImprimirFichaActionPerformed"/>
       </Events>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel9">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Tipo Persona"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonLimpiar">
       <Properties>
