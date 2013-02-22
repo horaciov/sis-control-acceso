@@ -48,6 +48,7 @@ import py.gov.itaipu.controlacceso.model.Antecedente;
 import py.gov.itaipu.controlacceso.model.Organizacion;
 import py.gov.itaipu.controlacceso.model.Persona;
 import py.gov.itaipu.controlacceso.model.exception.EntidadExiste;
+import py.gov.itaipu.controlacceso.model.exception.ErrorInesperado;
 import py.gov.itaipu.controlacceso.test.ImageFrame;
 import py.gov.itaipu.controlacceso.test.ShowImage;
 import py.gov.itaipu.controlacceso.utils.windows.WindowUtil;
@@ -81,16 +82,21 @@ public class JDialogPersona extends javax.swing.JDialog {
      */
     public JDialogPersona(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        readOnly = false;
-        persona = new Persona();
-        persona.setAntecedentes(new ArrayList<Antecedente>());
-        personaAction = new PersonaAction(persona);
-        nacionalidadAction = new CRUDAction(new Nacionalidad());
-        tipoDocAction = new CRUDAction(new TipoDocumento());
-        organizacionAction = new CRUDAction(new Organizacion());
-        antecedenteAction = new CRUDAction(new Antecedente());
-        initComponents();
-        jComboBoxTipoDocumento.setSelectedItem(tipoDocAction.findByNamedQuery("TipoDocumento.findCI").get(0));
+        try {
+            readOnly = false;
+            persona = new Persona();
+            persona.setAntecedentes(new ArrayList<Antecedente>());
+            personaAction = new PersonaAction(persona);
+            nacionalidadAction = new CRUDAction(new Nacionalidad());
+            tipoDocAction = new CRUDAction(new TipoDocumento());
+            organizacionAction = new CRUDAction(new Organizacion());
+            antecedenteAction = new CRUDAction(new Antecedente());
+            initComponents();
+            jComboBoxTipoDocumento.setSelectedItem(tipoDocAction.findByNamedQuery("TipoDocumento.findCI").get(0));
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
 
     }
 
@@ -104,41 +110,59 @@ public class JDialogPersona extends javax.swing.JDialog {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        listNacionalidades = ObservableCollections.observableList(nacionalidadAction.findAll());
-        listTipoDocumento = ObservableCollections.observableList(tipoDocAction.findAll());
-        listOrganizaciones = ObservableCollections.observableList(organizacionAction.findAll());
-        listAntecedentes = ObservableCollections.observableList(persona.getAntecedentes())
-        ;
-        jLabel1 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
-        jButtonGuardar = new javax.swing.JButton();
-        jButtonCancelar = new javax.swing.JButton();
-        jComboBoxNacionalidad = new javax.swing.JComboBox();
-        jComboBoxTipoDocumento = new javax.swing.JComboBox();
-        jComboBoxEstadoCivil = new javax.swing.JComboBox();
-        jLabelApe = new javax.swing.JLabel();
-        jButtonNuevoTipoDoc = new javax.swing.JButton();
-        jLabelNomb = new javax.swing.JLabel();
-        jTextFieldApellido = new javax.swing.JTextField();
-        jLabelFechaNac = new javax.swing.JLabel();
-        jTextFieldNombre = new javax.swing.JTextField();
-        jFormattedTextFieldFechaNac = new javax.swing.JFormattedTextField();
-        jLabelNAcion = new javax.swing.JLabel();
-        jLabelEstCiv1 = new javax.swing.JLabel();
-        jLabelEstCiv = new javax.swing.JLabel();
-        jComboBoxSexo = new javax.swing.JComboBox();
-        jLabelNroD = new javax.swing.JLabel();
-        jLabelTipDoc = new javax.swing.JLabel();
-        jTextFieldNroDoc = new javax.swing.JTextField();
-        jLabelOrganizacion = new javax.swing.JLabel();
-        jTextFieldOrganizacion = new javax.swing.JTextField();
-        jButtonBuscarOrganizacion = new javax.swing.JButton();
-        jLabelFoto = new javax.swing.JLabel();
-        jButtonTomarFoto = new javax.swing.JButton();
-        jButtonCargarFoto = new javax.swing.JButton();
-        jButtonNacionalidad = new javax.swing.JButton();
-        jButtonNacionalidadEdit = new javax.swing.JButton();
-        jButtonEditTipoDoc = new javax.swing.JButton();
+        try{
+            listNacionalidades = ObservableCollections.observableList(nacionalidadAction.findAll());
+            try{
+                listTipoDocumento = ObservableCollections.observableList(tipoDocAction.findAll());
+                try{
+                    listOrganizaciones = ObservableCollections.observableList(organizacionAction.findAll());
+                    listAntecedentes = ObservableCollections.observableList(persona.getAntecedentes())
+                    ;
+                    jLabel1 = new javax.swing.JLabel();
+                    jSeparator1 = new javax.swing.JSeparator();
+                    jButtonGuardar = new javax.swing.JButton();
+                    jButtonCancelar = new javax.swing.JButton();
+                    jComboBoxNacionalidad = new javax.swing.JComboBox();
+                    jComboBoxTipoDocumento = new javax.swing.JComboBox();
+                    jComboBoxEstadoCivil = new javax.swing.JComboBox();
+                    jLabelApe = new javax.swing.JLabel();
+                    jButtonNuevoTipoDoc = new javax.swing.JButton();
+                    jLabelNomb = new javax.swing.JLabel();
+                    jTextFieldApellido = new javax.swing.JTextField();
+                    jLabelFechaNac = new javax.swing.JLabel();
+                    jTextFieldNombre = new javax.swing.JTextField();
+                    jFormattedTextFieldFechaNac = new javax.swing.JFormattedTextField();
+                    jLabelNAcion = new javax.swing.JLabel();
+                    jLabelEstCiv1 = new javax.swing.JLabel();
+                    jLabelEstCiv = new javax.swing.JLabel();
+                    jComboBoxSexo = new javax.swing.JComboBox();
+                    jLabelNroD = new javax.swing.JLabel();
+                    jLabelTipDoc = new javax.swing.JLabel();
+                    jTextFieldNroDoc = new javax.swing.JTextField();
+                    jLabelOrganizacion = new javax.swing.JLabel();
+                    jTextFieldOrganizacion = new javax.swing.JTextField();
+                    jButtonBuscarOrganizacion = new javax.swing.JButton();
+                    jLabelFoto = new javax.swing.JLabel();
+                    jButtonTomarFoto = new javax.swing.JButton();
+                    jButtonCargarFoto = new javax.swing.JButton();
+                    jButtonNacionalidad = new javax.swing.JButton();
+                    jButtonNacionalidadEdit = new javax.swing.JButton();
+                    jButtonEditTipoDoc = new javax.swing.JButton();
+
+                } catch (ErrorInesperado ei) {
+                    JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+                    System.exit(-1);
+                }
+
+            } catch (ErrorInesperado ei) {
+                JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+                System.exit(-1);
+            }
+
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registro de Personas");
@@ -427,17 +451,22 @@ public class JDialogPersona extends javax.swing.JDialog {
 
     private void jButtonNuevoTipoDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoTipoDocActionPerformed
         // TODO add your handling code here:
-        TipoDocumento td = (TipoDocumento) jComboBoxTipoDocumento.getSelectedItem();
-        JDialogTipoDocumento dialogTipoDocumento = new JDialogTipoDocumento(null, rootPaneCheckingEnabled);
-        dialogTipoDocumento.setTipoDocumento(new TipoDocumento());
-        WindowUtil.centerWindow(dialogTipoDocumento);
-        dialogTipoDocumento.setVisible(true);
-        listTipoDocumento.clear();
-        listTipoDocumento.addAll(tipoDocAction.findAll());
-        if (dialogTipoDocumento.getTipoDocumento().getId() != null) {
-            jComboBoxTipoDocumento.setSelectedItem(dialogTipoDocumento.getTipoDocumento());
-        } else {
-            jComboBoxTipoDocumento.setSelectedItem(td);
+        try {
+            TipoDocumento td = (TipoDocumento) jComboBoxTipoDocumento.getSelectedItem();
+            JDialogTipoDocumento dialogTipoDocumento = new JDialogTipoDocumento(null, rootPaneCheckingEnabled);
+            dialogTipoDocumento.setTipoDocumento(new TipoDocumento());
+            WindowUtil.centerWindow(dialogTipoDocumento);
+            dialogTipoDocumento.setVisible(true);
+            listTipoDocumento.clear();
+            listTipoDocumento.addAll(tipoDocAction.findAll());
+            if (dialogTipoDocumento.getTipoDocumento().getId() != null) {
+                jComboBoxTipoDocumento.setSelectedItem(dialogTipoDocumento.getTipoDocumento());
+            } else {
+                jComboBoxTipoDocumento.setSelectedItem(td);
+            }
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
     }//GEN-LAST:event_jButtonNuevoTipoDocActionPerformed
 
@@ -514,41 +543,45 @@ public class JDialogPersona extends javax.swing.JDialog {
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
-        if (validacionesNuevaPersona()) {
+        try {
+            if (validacionesNuevaPersona()) {
 
-            personaAction.setPersona(persona);
-            persona.setApellido(jTextFieldApellido.getText());
-            persona.setNombre(jTextFieldNombre.getText());
-            persona.setNumeroDocumento(jTextFieldNroDoc.getText());
-            persona.setFechaNacimiento((Date) jFormattedTextFieldFechaNac.getValue());
-            persona.setEstadoCivil(jComboBoxEstadoCivil.getSelectedItem().toString());
-            persona.setSexo(jComboBoxSexo.getSelectedItem().toString());
-            persona.setNacionalidad((Nacionalidad) listNacionalidades.get(jComboBoxNacionalidad.getSelectedIndex()));
-            persona.setTipoDocumento((TipoDocumento) listTipoDocumento.get(jComboBoxTipoDocumento.getSelectedIndex()));
-            guardarImagen(imgFotoPersona, imgFotoPersonaFile);
+                personaAction.setPersona(persona);
+                persona.setApellido(jTextFieldApellido.getText());
+                persona.setNombre(jTextFieldNombre.getText());
+                persona.setNumeroDocumento(jTextFieldNroDoc.getText());
+                persona.setFechaNacimiento((Date) jFormattedTextFieldFechaNac.getValue());
+                persona.setEstadoCivil(jComboBoxEstadoCivil.getSelectedItem().toString());
+                persona.setSexo(jComboBoxSexo.getSelectedItem().toString());
+                persona.setNacionalidad((Nacionalidad) listNacionalidades.get(jComboBoxNacionalidad.getSelectedIndex()));
+                persona.setTipoDocumento((TipoDocumento) listTipoDocumento.get(jComboBoxTipoDocumento.getSelectedIndex()));
+                guardarImagen(imgFotoPersona, imgFotoPersonaFile);
 
 
-            if (persona.getId() != null) {
-                try {
-                    personaAction.guardar();
-                    JOptionPane.showMessageDialog(this, "Se ha guardado con exito los nuevos Datos de Persona", "Info", 1);
-                } catch (EntidadExiste e) {
-                    JOptionPane.showMessageDialog(this, "La persona ya existe", "Error", 0);
-                    return;
+                if (persona.getId() != null) {
+                    try {
+                        personaAction.guardar();
+                        JOptionPane.showMessageDialog(this, "Se ha guardado con exito los nuevos Datos de Persona", "Info", 1);
+                    } catch (EntidadExiste e) {
+                        JOptionPane.showMessageDialog(this, "La persona ya existe", "Error", 0);
+                        return;
+                    }
+                } else {
+                    try {
+                        personaAction.crear();
+                        JOptionPane.showMessageDialog(this, "Se ha creado con exito nueva Persona", "Info", 1);
+                    } catch (EntidadExiste e) {
+                        JOptionPane.showMessageDialog(this, "La persona ya existe", "Error", 0);
+                        return;
+                    }
                 }
-            } else {
-                try {
-                    personaAction.crear();
-                    JOptionPane.showMessageDialog(this, "Se ha creado con exito nueva Persona", "Info", 1);
-                } catch (EntidadExiste e) {
-                    JOptionPane.showMessageDialog(this, "La persona ya existe", "Error", 0);
-                    return;
-                }
+
+                this.dispose();
             }
-
-            this.dispose();
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
-
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private boolean validacionesNuevaPersona() {
@@ -652,7 +685,7 @@ public class JDialogPersona extends javax.swing.JDialog {
 
     private void jButtonTomarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTomarFotoActionPerformed
         // TODO add your handling code here:
-        
+
         JDialogFotografia dialogFotografia;
         try {
             dialogFotografia = new JDialogFotografia(null, rootPaneCheckingEnabled, "CAPTURAR", persona);
@@ -663,49 +696,64 @@ public class JDialogPersona extends javax.swing.JDialog {
                 mostrarFotoPersona();
             }
         } catch (Exception ex) {
-               JOptionPane.showMessageDialog(this, "En este momento no se puede inicializar la camara, verifique el dispositivo e intente de nuevo", "Error", 0);
-               return;
+            JOptionPane.showMessageDialog(this, "En este momento no se puede inicializar la camara, verifique el dispositivo e intente de nuevo", "Error", 0);
+            return;
         }
-        
+
     }//GEN-LAST:event_jButtonTomarFotoActionPerformed
 
     private void jButtonNacionalidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNacionalidadActionPerformed
         // TODO add your handling code here:
-        Nacionalidad nac = (Nacionalidad) jComboBoxNacionalidad.getSelectedItem();
-        JDialogoNacionalidad dialogNacionalidad = new JDialogoNacionalidad(null, rootPaneCheckingEnabled);
-        dialogNacionalidad.setNacionalidad(new Nacionalidad());
-        WindowUtil.centerWindow(dialogNacionalidad);
-        dialogNacionalidad.setVisible(true);
-        listNacionalidades.clear();
-        listNacionalidades.addAll(nacionalidadAction.findAll());
-        if (dialogNacionalidad.getNacionalidad().getId() != null) {
-            jComboBoxNacionalidad.setSelectedItem(dialogNacionalidad.getNacionalidad());
-        } else {
-            jComboBoxNacionalidad.setSelectedItem(nac);
+        try {
+            Nacionalidad nac = (Nacionalidad) jComboBoxNacionalidad.getSelectedItem();
+            JDialogoNacionalidad dialogNacionalidad = new JDialogoNacionalidad(null, rootPaneCheckingEnabled);
+            dialogNacionalidad.setNacionalidad(new Nacionalidad());
+            WindowUtil.centerWindow(dialogNacionalidad);
+            dialogNacionalidad.setVisible(true);
+            listNacionalidades.clear();
+            listNacionalidades.addAll(nacionalidadAction.findAll());
+            if (dialogNacionalidad.getNacionalidad().getId() != null) {
+                jComboBoxNacionalidad.setSelectedItem(dialogNacionalidad.getNacionalidad());
+            } else {
+                jComboBoxNacionalidad.setSelectedItem(nac);
+            }
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
     }//GEN-LAST:event_jButtonNacionalidadActionPerformed
 
     private void jButtonNacionalidadEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNacionalidadEditActionPerformed
         // TODO add your handling code here:
-        JDialogoNacionalidad dialogNacionalidad = new JDialogoNacionalidad(null, rootPaneCheckingEnabled);
-        dialogNacionalidad.setNacionalidad((Nacionalidad) jComboBoxNacionalidad.getSelectedItem());
-        WindowUtil.centerWindow(dialogNacionalidad);
-        dialogNacionalidad.setVisible(true);
-        listNacionalidades.clear();
-        listNacionalidades.addAll(nacionalidadAction.findAll());
-        jComboBoxNacionalidad.setSelectedItem(dialogNacionalidad.getNacionalidad());
+        try {
+            JDialogoNacionalidad dialogNacionalidad = new JDialogoNacionalidad(null, rootPaneCheckingEnabled);
+            dialogNacionalidad.setNacionalidad((Nacionalidad) jComboBoxNacionalidad.getSelectedItem());
+            WindowUtil.centerWindow(dialogNacionalidad);
+            dialogNacionalidad.setVisible(true);
+            listNacionalidades.clear();
+            listNacionalidades.addAll(nacionalidadAction.findAll());
+            jComboBoxNacionalidad.setSelectedItem(dialogNacionalidad.getNacionalidad());
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
     }//GEN-LAST:event_jButtonNacionalidadEditActionPerformed
 
     private void jButtonEditTipoDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditTipoDocActionPerformed
         // TODO add your handling code here:
         // TODO add your handling code here:
-        JDialogTipoDocumento dialogTipoDocumento = new JDialogTipoDocumento(null, rootPaneCheckingEnabled);
-        dialogTipoDocumento.setTipoDocumento((TipoDocumento) jComboBoxTipoDocumento.getSelectedItem());
-        WindowUtil.centerWindow(dialogTipoDocumento);
-        dialogTipoDocumento.setVisible(true);
-        listTipoDocumento.clear();
-        listTipoDocumento.addAll(tipoDocAction.findAll());
-        jComboBoxTipoDocumento.setSelectedItem(dialogTipoDocumento.getTipoDocumento());
+        try {
+            JDialogTipoDocumento dialogTipoDocumento = new JDialogTipoDocumento(null, rootPaneCheckingEnabled);
+            dialogTipoDocumento.setTipoDocumento((TipoDocumento) jComboBoxTipoDocumento.getSelectedItem());
+            WindowUtil.centerWindow(dialogTipoDocumento);
+            dialogTipoDocumento.setVisible(true);
+            listTipoDocumento.clear();
+            listTipoDocumento.addAll(tipoDocAction.findAll());
+            jComboBoxTipoDocumento.setSelectedItem(dialogTipoDocumento.getTipoDocumento());
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
     }//GEN-LAST:event_jButtonEditTipoDocActionPerformed
 
     private void mostrarFotoPersona() {
@@ -747,7 +795,7 @@ public class JDialogPersona extends javax.swing.JDialog {
                 persona.setFotografiaPath(string);
 
             } catch (IOException ex) {
-                  JOptionPane.showMessageDialog(this, "No se ha podido generar el archivo de Fotografia", "Error", 0);
+                JOptionPane.showMessageDialog(this, "No se ha podido generar el archivo de Fotografia", "Error", 0);
             }
         }
 

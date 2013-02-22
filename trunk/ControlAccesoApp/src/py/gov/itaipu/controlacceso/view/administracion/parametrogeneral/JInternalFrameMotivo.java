@@ -14,27 +14,26 @@ import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.swingbinding.JTableBinding;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.model.Motivo;
+import py.gov.itaipu.controlacceso.model.exception.ErrorInesperado;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
-
 
 /**
  *
  * @author vimartih
  */
 public class JInternalFrameMotivo extends javax.swing.JInternalFrame {
-   
-    
+
     private CRUDAction<Motivo> motivoAction;
-    
+
     /**
      * Creates new form JInternalFrameMotivo
      */
     public JInternalFrameMotivo() {
         setClosable(true);
-        motivoAction=new CRUDAction<Motivo>();
+        motivoAction = new CRUDAction<Motivo>();
         motivoAction.setEntity(new Motivo());
-        initComponents();      
-        
+        initComponents();
+
     }
 
     /**
@@ -47,16 +46,22 @@ public class JInternalFrameMotivo extends javax.swing.JInternalFrame {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        listMotivos = ObservableCollections.observableList(motivoAction.findAll());
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableMotivos = new javax.swing.JTable();
-        jButtonNuevo = new javax.swing.JButton();
-        jButtonEditar = new javax.swing.JButton();
-        jButtonCerrar = new javax.swing.JButton();
-        jButtonEliminar = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
-        jLabel1 = new javax.swing.JLabel();
-        jButtonVer = new javax.swing.JButton();
+        try{
+            listMotivos = ObservableCollections.observableList(motivoAction.findAll());
+            jScrollPane1 = new javax.swing.JScrollPane();
+            jTableMotivos = new javax.swing.JTable();
+            jButtonNuevo = new javax.swing.JButton();
+            jButtonEditar = new javax.swing.JButton();
+            jButtonCerrar = new javax.swing.JButton();
+            jButtonEliminar = new javax.swing.JButton();
+            jSeparator1 = new javax.swing.JSeparator();
+            jLabel1 = new javax.swing.JLabel();
+            jButtonVer = new javax.swing.JButton();
+
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
 
         setTitle("Gestión de motivos");
 
@@ -149,7 +154,6 @@ public class JInternalFrameMotivo extends javax.swing.JInternalFrame {
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 595, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButtonVer, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButtonNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -177,7 +181,7 @@ public class JInternalFrameMotivo extends javax.swing.JInternalFrame {
                     .addComponent(jButtonCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonVer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -187,42 +191,58 @@ public class JInternalFrameMotivo extends javax.swing.JInternalFrame {
 
     private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
         // TODO add your handling code here:    
-        JDialogMotivo dialogMotivo = new JDialogMotivo(null, closable);
-        dialogMotivo.setMotivo(new Motivo());
-        dialogMotivo.setVisible(true);
-        listMotivos.clear();
-        listMotivos.addAll(motivoAction.findAll());
+        try {
+            JDialogMotivo dialogMotivo = new JDialogMotivo(null, closable);
+            dialogMotivo.setMotivo(new Motivo());
+            dialogMotivo.setVisible(true);
+            listMotivos.clear();
+            listMotivos.addAll(motivoAction.findAll());
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
 
     }//GEN-LAST:event_jButtonNuevoActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         // TODO add your handling code here:
-        if(jTableMotivos.getSelectedRow()<0){
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un motivo","Error",0);
-            return;
+        try {
+            if (jTableMotivos.getSelectedRow() < 0) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un motivo", "Error", 0);
+                return;
+            }
+            Motivo m = (Motivo) listMotivos.get(jTableMotivos.getSelectedRow());
+            JDialogMotivo dialogMotivo = new JDialogMotivo(null, closable);
+            dialogMotivo.setMotivo(m);
+            dialogMotivo.setVisible(true);
+            listMotivos.clear();
+            listMotivos.addAll(motivoAction.findAll());
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
-        Motivo m=(Motivo) listMotivos.get(jTableMotivos.getSelectedRow());
-        JDialogMotivo dialogMotivo = new JDialogMotivo(null, closable);
-        dialogMotivo.setMotivo(m);
-        dialogMotivo.setVisible(true);
-        listMotivos.clear();
-        listMotivos.addAll(motivoAction.findAll());
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
         // TODO add your handling code here:
-         if(jTableMotivos.getSelectedRow()<0){
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un motivo","Error",0);
-            return;
+        try {
+            if (jTableMotivos.getSelectedRow() < 0) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un motivo", "Error", 0);
+                return;
+            }
+            if (JOptionPane.showConfirmDialog(this, "Está seguro que desea eliminar?", "Eliminar Motivo", 0) != 0) {
+                return;
+            }
+            Motivo m = (Motivo) listMotivos.get(jTableMotivos.getSelectedRow());
+            motivoAction.setEntity(m);
+            motivoAction.eliminar();
+            listMotivos.clear();
+            listMotivos.addAll(motivoAction.findAll());
+            JOptionPane.showMessageDialog(this, "Se ha eliminado correctamente", "Info", 1);
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
-        if(JOptionPane.showConfirmDialog(this,"Está seguro que desea eliminar?","Eliminar Motivo",0)!=0)
-            return;       
-        Motivo m=(Motivo) listMotivos.get(jTableMotivos.getSelectedRow());
-        motivoAction.setEntity(m);
-        motivoAction.eliminar();
-        listMotivos.clear();
-        listMotivos.addAll(motivoAction.findAll());
-        JOptionPane.showMessageDialog(this, "Se ha eliminado correctamente","Info",1);
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jButtonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarActionPerformed
@@ -232,19 +252,16 @@ public class JInternalFrameMotivo extends javax.swing.JInternalFrame {
 
     private void jButtonVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerActionPerformed
         // TODO add your handling code here:
-         if(jTableMotivos.getSelectedRow()<0){
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un motivo","Error",0);
+        if (jTableMotivos.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un motivo", "Error", 0);
             return;
         }
-        Motivo m=(Motivo) listMotivos.get(jTableMotivos.getSelectedRow());
+        Motivo m = (Motivo) listMotivos.get(jTableMotivos.getSelectedRow());
         JDialogMotivo dialogMotivo = new JDialogMotivo(null, closable);
         dialogMotivo.setMotivo(m);
         dialogMotivo.setReadOnly(true);
         dialogMotivo.setVisible(true);
     }//GEN-LAST:event_jButtonVerActionPerformed
-    
-    
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCerrar;
     private javax.swing.JButton jButtonEditar;

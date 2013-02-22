@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.TableCellRenderer;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -36,6 +37,7 @@ import py.gov.itaipu.controlacceso.model.Motivo;
 import py.gov.itaipu.controlacceso.model.Organizacion;
 import py.gov.itaipu.controlacceso.model.Persona;
 import py.gov.itaipu.controlacceso.model.Visita;
+import py.gov.itaipu.controlacceso.model.exception.ErrorInesperado;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 import py.gov.itaipu.controlacceso.utils.windows.WindowUtil;
 import py.gov.itaipu.controlacceso.view.JDialogBuscador;
@@ -82,14 +84,24 @@ public class JDialogRepVisitasGeneral extends javax.swing.JDialog {
 
         List<Visita> l=new ArrayList<Visita>();
         listVisitas = ObservableCollections.observableList(l);
-        listMotivos = ObservableCollections.observableList(motivoAction.findAll());
-        Motivo m=new Motivo();
-        m.setNombre("TODOS");
-        listMotivos.add(0,m);
-        listOrganizacionInternas = ObservableCollections.observableList(organizacionAction.findByNamedQuery("Organizacion.findAllInterna"));
-        Organizacion o=new Organizacion();
-        o.setNombre("TODAS");
-        listOrganizacionInternas.add(0, o);
+        try{
+            listMotivos = ObservableCollections.observableList(motivoAction.findAll());
+            Motivo m=new Motivo();
+            m.setNombre("TODOS");
+            listMotivos.add(0,m);
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
+        try{
+            listOrganizacionInternas = ObservableCollections.observableList(organizacionAction.findByNamedQuery("Organizacion.findAllInterna"));
+            Organizacion o=new Organizacion();
+            o.setNombre("TODAS");
+            listOrganizacionInternas.add(0, o);
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
         jSeparator1 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
         jTextFieldAreaPersonaVisitada = new javax.swing.JTextField();

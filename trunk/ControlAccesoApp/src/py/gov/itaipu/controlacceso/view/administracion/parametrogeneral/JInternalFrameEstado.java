@@ -15,27 +15,26 @@ import org.jdesktop.swingbinding.JTableBinding;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.model.Estado;
 import py.gov.itaipu.controlacceso.model.Motivo;
+import py.gov.itaipu.controlacceso.model.exception.ErrorInesperado;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
-
 
 /**
  *
  * @author vimartih
  */
 public class JInternalFrameEstado extends javax.swing.JInternalFrame {
-   
-    
+
     private CRUDAction<Estado> estadoAction;
-    
+
     /**
      * Creates new form JInternalFrameMotivo
      */
     public JInternalFrameEstado() {
         setClosable(true);
-        estadoAction=new CRUDAction<Estado>();
+        estadoAction = new CRUDAction<Estado>();
         estadoAction.setEntity(new Estado());
-        initComponents();      
-        
+        initComponents();
+
     }
 
     /**
@@ -48,16 +47,22 @@ public class JInternalFrameEstado extends javax.swing.JInternalFrame {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        listEstados = ObservableCollections.observableList(estadoAction.findAll());
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableEstados = new javax.swing.JTable();
-        jButtonNuevo = new javax.swing.JButton();
-        jButtonEditar = new javax.swing.JButton();
-        jButtonCerrar = new javax.swing.JButton();
-        jButtonEliminar = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
-        jLabel1 = new javax.swing.JLabel();
-        jButtonVer = new javax.swing.JButton();
+        try{
+            listEstados = ObservableCollections.observableList(estadoAction.findAll());
+            jScrollPane1 = new javax.swing.JScrollPane();
+            jTableEstados = new javax.swing.JTable();
+            jButtonNuevo = new javax.swing.JButton();
+            jButtonEditar = new javax.swing.JButton();
+            jButtonCerrar = new javax.swing.JButton();
+            jButtonEliminar = new javax.swing.JButton();
+            jSeparator1 = new javax.swing.JSeparator();
+            jLabel1 = new javax.swing.JLabel();
+            jButtonVer = new javax.swing.JButton();
+
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
 
         setTitle("Gestión de motivos");
 
@@ -168,7 +173,7 @@ public class JInternalFrameEstado extends javax.swing.JInternalFrame {
                     .addComponent(jButtonCerrar)
                     .addComponent(jButtonEliminar)
                     .addComponent(jButtonVer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
 
         getAccessibleContext().setAccessibleName("Gestión de estados");
@@ -180,42 +185,57 @@ public class JInternalFrameEstado extends javax.swing.JInternalFrame {
 
     private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
         // TODO add your handling code here:    
-        JDialogEstado dialogEstado = new JDialogEstado(null, closable);
-        dialogEstado.setEstado(new Estado());
-        dialogEstado.setVisible(true);
-        listEstados.clear();
-        listEstados.addAll(estadoAction.findAll());
-
+        try {
+            JDialogEstado dialogEstado = new JDialogEstado(null, closable);
+            dialogEstado.setEstado(new Estado());
+            dialogEstado.setVisible(true);
+            listEstados.clear();
+            listEstados.addAll(estadoAction.findAll());
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
     }//GEN-LAST:event_jButtonNuevoActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         // TODO add your handling code here:
-        if(jTableEstados.getSelectedRow()<0){
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un motivo","Error",0);
-            return;
+        try {
+            if (jTableEstados.getSelectedRow() < 0) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un motivo", "Error", 0);
+                return;
+            }
+            Estado e = (Estado) listEstados.get(jTableEstados.getSelectedRow());
+            JDialogEstado dialogEstado = new JDialogEstado(null, closable);
+            dialogEstado.setEstado(e);
+            dialogEstado.setVisible(true);
+            listEstados.clear();
+            listEstados.addAll(estadoAction.findAll());
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
-        Estado e=(Estado) listEstados.get(jTableEstados.getSelectedRow());
-        JDialogEstado dialogEstado = new JDialogEstado(null, closable);
-        dialogEstado.setEstado(e);
-        dialogEstado.setVisible(true);
-        listEstados.clear();
-        listEstados.addAll(estadoAction.findAll());
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
         // TODO add your handling code here:
-        if(jTableEstados.getSelectedRow()<0){
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un estado","Error",0);
-            return;
+        try {
+            if (jTableEstados.getSelectedRow() < 0) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un estado", "Error", 0);
+                return;
+            }
+            if (JOptionPane.showConfirmDialog(this, "Está seguro que desea eliminar?", "Eliminar Estado", 0) != 0) {
+                return;
+            }
+            Estado e = (Estado) listEstados.get(jTableEstados.getSelectedRow());
+            estadoAction.setEntity(e);
+            estadoAction.eliminar();
+            listEstados.clear();
+            listEstados.addAll(estadoAction.findAll());
+            JOptionPane.showMessageDialog(this, "Se ha eliminado correctamente", "Info", 1);
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
-        if(JOptionPane.showConfirmDialog(this,"Está seguro que desea eliminar?","Eliminar Estado",0)!=0)
-            return;       
-        Estado e=(Estado) listEstados.get(jTableEstados.getSelectedRow());
-        estadoAction.setEntity(e);
-        estadoAction.eliminar();
-        listEstados.clear();
-        listEstados.addAll(estadoAction.findAll());
-        JOptionPane.showMessageDialog(this, "Se ha eliminado correctamente","Info",1);
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jButtonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarActionPerformed
@@ -225,19 +245,16 @@ public class JInternalFrameEstado extends javax.swing.JInternalFrame {
 
     private void jButtonVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerActionPerformed
         // TODO add your handling code here:
-        if(jTableEstados.getSelectedRow()<0){
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un motivo","Error",0);
+        if (jTableEstados.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un motivo", "Error", 0);
             return;
         }
-        Estado e=(Estado) listEstados.get(jTableEstados.getSelectedRow());
+        Estado e = (Estado) listEstados.get(jTableEstados.getSelectedRow());
         JDialogEstado dialogEstado = new JDialogEstado(null, closable);
         dialogEstado.setEstado(e);
         dialogEstado.setReadOnly(true);
         dialogEstado.setVisible(true);
     }//GEN-LAST:event_jButtonVerActionPerformed
-    
-    
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCerrar;
     private javax.swing.JButton jButtonEditar;

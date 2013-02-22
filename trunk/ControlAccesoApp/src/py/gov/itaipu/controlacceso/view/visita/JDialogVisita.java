@@ -61,6 +61,7 @@ import py.gov.itaipu.controlacceso.model.Persona;
 import py.gov.itaipu.controlacceso.model.TipoDocumento;
 import py.gov.itaipu.controlacceso.model.Visita;
 import py.gov.itaipu.controlacceso.model.exception.EntidadExiste;
+import py.gov.itaipu.controlacceso.model.exception.ErrorInesperado;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 import py.gov.itaipu.controlacceso.utils.tree.CustomIconRenderer;
 import py.gov.itaipu.controlacceso.utils.tree.UtilesArbol;
@@ -94,22 +95,26 @@ public class JDialogVisita extends javax.swing.JDialog {
      */
     public JDialogVisita(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        persona = new Persona();
-        rendererTime = new TimeRenderer();
-        readOnly = false;
-        motivoAction = new CRUDAction<Motivo>(new Motivo());
-        organizacionAction = new CRUDAction<Organizacion>(new Organizacion());
-        tipoDocAction = new CRUDAction(new TipoDocumento());
-        personaAction = new PersonaAction(persona);
-        areaVisitada = new Organizacion();
-        action = new VisitaAction(new Visita());
-        initComponents();
-        jComboBoxTipoDoc.setVisible(false);
-        jLabelTipoDeDoc.setVisible(false);
-        jComboBoxTipoDoc.setSelectedItem(tipoDocAction.findByNamedQuery("TipoDocumento.findCI"));
-        jButtonActualizarFotografia.setVisible(false);
-        jButtonRegistrarSalida.setVisible(false);
-
+        try {
+            persona = new Persona();
+            rendererTime = new TimeRenderer();
+            readOnly = false;
+            motivoAction = new CRUDAction<Motivo>(new Motivo());
+            organizacionAction = new CRUDAction<Organizacion>(new Organizacion());
+            tipoDocAction = new CRUDAction(new TipoDocumento());
+            personaAction = new PersonaAction(persona);
+            areaVisitada = new Organizacion();
+            action = new VisitaAction(new Visita());
+            initComponents();
+            jComboBoxTipoDoc.setVisible(false);
+            jLabelTipoDeDoc.setVisible(false);
+            jComboBoxTipoDoc.setSelectedItem(tipoDocAction.findByNamedQuery("TipoDocumento.findCI"));
+            jButtonActualizarFotografia.setVisible(false);
+            jButtonRegistrarSalida.setVisible(false);
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
     }
 
     private InputStream generaBarCode(String codeDigits) {
@@ -180,56 +185,79 @@ public class JDialogVisita extends javax.swing.JDialog {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        listMotivos = ObservableCollections.observableList(motivoAction.findAll());
-        listOrganizacionInterna = ObservableCollections.observableList(organizacionAction.findByNamedQuery("Organizacion.findAllInterna"));
-        Organizacion o=new Organizacion();
-        o.setNombre("NINGUNA");
-        listOrganizacionInterna.add(0, o);
-        listUltimasVisitas = ObservableCollections.observableList(action.findByPersona(persona));
-        buttonGroupExtranjero = new javax.swing.ButtonGroup();
-        listTipoDocumento = tipoDocAction.findAll();
-        jTextFieldPersona = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextAreaObservacion = new javax.swing.JTextArea();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jButtonGuardar = new javax.swing.JButton();
-        jButtonCancelar = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
-        jLabel4 = new javax.swing.JLabel();
-        jTextFieldPersonaVisitada = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jComboBoxMotivo = new javax.swing.JComboBox();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jButtonBuscarPersona = new javax.swing.JButton();
-        jButtonBuscarPersonaVisitada = new javax.swing.JButton();
-        jButtonLimpiarPersonaVisitada = new javax.swing.JButton();
-        jButtonLimpiarPersona = new javax.swing.JButton();
-        jTextFieldOrganizacion = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        jButtonActualizarFotografia = new javax.swing.JButton();
-        jScrollPanePersonasVisitadas = new javax.swing.JScrollPane();
-        jTreePersonaVisitada = new javax.swing.JTree();
-        jLabelPersonaVisitada = new javax.swing.JLabel();
-        jLabelDocNro = new javax.swing.JLabel();
-        jTextFieldDocumentoPersona = new javax.swing.JTextField();
-        jLabelFotografia = new javax.swing.JLabel();
-        jTextFieldAreaVisitada = new javax.swing.JTextField();
-        jLabelPersonaVisitada1 = new javax.swing.JLabel();
-        jButtonTomarFotografia = new javax.swing.JButton();
-        jLabelSemaforo = new javax.swing.JLabel();
-        jLabelPersonaEstado = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTableVisitas = new javax.swing.JTable();
-        jLabel10 = new javax.swing.JLabel();
-        jLabelTipoDeDoc = new javax.swing.JLabel();
-        jComboBoxTipoDoc = new javax.swing.JComboBox();
-        jRadioButtonExtranjero = new javax.swing.JRadioButton();
-        jRadioButtonNacional = new javax.swing.JRadioButton();
-        jButtonCambiarEstadoPersona = new javax.swing.JButton();
-        jButtonRegistrarSalida = new javax.swing.JButton();
-        jButtonNuevoMotivo = new javax.swing.JButton();
+        try{
+            listMotivos = ObservableCollections.observableList(motivoAction.findAll());
+            try{
+                listOrganizacionInterna = ObservableCollections.observableList(organizacionAction.findByNamedQuery("Organizacion.findAllInterna"));
+                Organizacion o=new Organizacion();
+                o.setNombre("NINGUNA");
+                listOrganizacionInterna.add(0, o);
+            } catch (ErrorInesperado ei) {
+                JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+                System.exit(-1);
+            }
+            try{
+                listUltimasVisitas = ObservableCollections.observableList(action.findByPersona(persona));
+                buttonGroupExtranjero = new javax.swing.ButtonGroup();
+                try{
+                    listTipoDocumento = tipoDocAction.findAll();
+                    jTextFieldPersona = new javax.swing.JTextField();
+                    jScrollPane1 = new javax.swing.JScrollPane();
+                    jTextAreaObservacion = new javax.swing.JTextArea();
+                    jLabel2 = new javax.swing.JLabel();
+                    jLabel3 = new javax.swing.JLabel();
+                    jButtonGuardar = new javax.swing.JButton();
+                    jButtonCancelar = new javax.swing.JButton();
+                    jSeparator1 = new javax.swing.JSeparator();
+                    jLabel4 = new javax.swing.JLabel();
+                    jTextFieldPersonaVisitada = new javax.swing.JTextField();
+                    jLabel5 = new javax.swing.JLabel();
+                    jComboBoxMotivo = new javax.swing.JComboBox();
+                    jLabel6 = new javax.swing.JLabel();
+                    jLabel8 = new javax.swing.JLabel();
+                    jButtonBuscarPersona = new javax.swing.JButton();
+                    jButtonBuscarPersonaVisitada = new javax.swing.JButton();
+                    jButtonLimpiarPersonaVisitada = new javax.swing.JButton();
+                    jButtonLimpiarPersona = new javax.swing.JButton();
+                    jTextFieldOrganizacion = new javax.swing.JTextField();
+                    jLabel7 = new javax.swing.JLabel();
+                    jButtonActualizarFotografia = new javax.swing.JButton();
+                    jScrollPanePersonasVisitadas = new javax.swing.JScrollPane();
+                    jTreePersonaVisitada = new javax.swing.JTree();
+                    jLabelPersonaVisitada = new javax.swing.JLabel();
+                    jLabelDocNro = new javax.swing.JLabel();
+                    jTextFieldDocumentoPersona = new javax.swing.JTextField();
+                    jLabelFotografia = new javax.swing.JLabel();
+                    jTextFieldAreaVisitada = new javax.swing.JTextField();
+                    jLabelPersonaVisitada1 = new javax.swing.JLabel();
+                    jButtonTomarFotografia = new javax.swing.JButton();
+                    jLabelSemaforo = new javax.swing.JLabel();
+                    jLabelPersonaEstado = new javax.swing.JLabel();
+                    jScrollPane2 = new javax.swing.JScrollPane();
+                    jTableVisitas = new javax.swing.JTable();
+                    jLabel10 = new javax.swing.JLabel();
+                    jLabelTipoDeDoc = new javax.swing.JLabel();
+                    jComboBoxTipoDoc = new javax.swing.JComboBox();
+                    jRadioButtonExtranjero = new javax.swing.JRadioButton();
+                    jRadioButtonNacional = new javax.swing.JRadioButton();
+                    jButtonCambiarEstadoPersona = new javax.swing.JButton();
+                    jButtonRegistrarSalida = new javax.swing.JButton();
+                    jButtonNuevoMotivo = new javax.swing.JButton();
+
+                } catch (ErrorInesperado ei) {
+                    JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+                    System.exit(-1);
+                }
+
+            } catch (ErrorInesperado ei) {
+                JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+                System.exit(-1);
+            }
+
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registro de visita");
@@ -324,7 +352,13 @@ public class JDialogVisita extends javax.swing.JDialog {
             }
         });
 
-        DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", true);
+        DefaultMutableTreeNode root = null;
+        try{
+            root = UtilesArbol.crearArbol("ORGANIGRAMA", true);
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
         jTreePersonaVisitada = new JTree(root);
         jTreePersonaVisitada.setCellRenderer(new CustomIconRenderer());
         jTreePersonaVisitada.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
@@ -686,58 +720,64 @@ public class JDialogVisita extends javax.swing.JDialog {
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
-        if (visita == null) {
-            return;
+        try {
+            if (visita == null) {
+                return;
+            }
+
+            //Validamos que la persona no se encuentre con una visita pendiente.
+            if (action.findPendienteByPersona(persona) != null) {
+                Toolkit.getDefaultToolkit().beep();
+                JOptionPane.showMessageDialog(this, "ATENCIÓN!. No es posible su ingreso hasta que se registre su salida", "Error", 0);
+                return;
+            }
+
+            if (persona.getEstado() != null && persona.getEstado().getNombre().equals("INHABILITADO")) {
+                Toolkit.getDefaultToolkit().beep();
+                JOptionPane.showMessageDialog(this, "ATENCIÓN!, la persona está inhabilitada. No es posible su ingreso", "Error", 0);
+                return;
+            }
+
+            action = new VisitaAction(visita);
+
+            if (!validar()) {
+                return;//Implementar el método con las validaciones
+            }
+
+            visita.setPersona(persona);
+            visita.setPersonaVisitada(personaVisitada);
+
+            visita.setFechaIngreso(Calendar.getInstance().getTime());
+
+            Organizacion o = areaVisitada;
+            if (o.getId() != null) {
+                visita.setOrganizacionInterna(o);
+            } else {
+                visita.setOrganizacionInterna(null);
+            }
+
+            visita.setMotivo((Motivo) jComboBoxMotivo.getSelectedItem());
+            visita.setObservacion(jTextAreaObservacion.getText());
+            visita.setAnulado("N");
+
+            if (visita.getId() == null) {
+                action.crear();
+                JOptionPane.showMessageDialog(this, "Se ha creado con éxito", "Info", 1);
+                imprimirTicket();
+            } else {
+                action.guardar();
+                JOptionPane.showMessageDialog(this, "Se ha actualizado correctamente", "Info", 1);
+            }
+
+            this.dispose();
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
-
-        //Validamos que la persona no se encuentre con una visita pendiente.
-        if (action.findPendienteByPersona(persona) != null) {
-            Toolkit.getDefaultToolkit().beep();
-            JOptionPane.showMessageDialog(this, "ATENCIÓN!. No es posible su ingreso hasta que se registre su salida", "Error", 0);
-            return;
-        }
-
-        if (persona.getEstado() != null && persona.getEstado().getNombre().equals("INHABILITADO")) {
-            Toolkit.getDefaultToolkit().beep();
-            JOptionPane.showMessageDialog(this, "ATENCIÓN!, la persona está inhabilitada. No es posible su ingreso", "Error", 0);
-            return;
-        }
-
-        action = new VisitaAction(visita);
-
-        if (!validar()) {
-            return;//Implementar el método con las validaciones
-        }
-
-        visita.setPersona(persona);
-        visita.setPersonaVisitada(personaVisitada);
-
-        visita.setFechaIngreso(Calendar.getInstance().getTime());
-
-        Organizacion o = areaVisitada;
-        if (o.getId() != null) {
-            visita.setOrganizacionInterna(o);
-        } else {
-            visita.setOrganizacionInterna(null);
-        }
-
-        visita.setMotivo((Motivo) jComboBoxMotivo.getSelectedItem());
-        visita.setObservacion(jTextAreaObservacion.getText());
-        visita.setAnulado("N");
-
-        if (visita.getId() == null) {
-            action.crear();
-            JOptionPane.showMessageDialog(this, "Se ha creado con éxito", "Info", 1);
-            imprimirTicket();
-        } else {
-            action.guardar();
-            JOptionPane.showMessageDialog(this, "Se ha actualizado correctamente", "Info", 1);
-        }
-
-        this.dispose();
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     public void cargarDatosVisita() {
+
         jTextFieldPersona.setText(visita.getPersona().getNombre() + ", " + visita.getPersona().getApellido());
         if (visita.getPersonaVisitada() != null && visita.getPersonaVisitada().getId() != null) {
             jTextFieldPersonaVisitada.setText(visita.getPersonaVisitada().getNombre() + ", " + visita.getPersonaVisitada().getApellido());
@@ -746,6 +786,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         jTextFieldAreaVisitada.setText(visita.getOrganizacionInterna().getNombre());
         jComboBoxMotivo.setSelectedItem(visita.getMotivo());
         jTextAreaObservacion.setText(visita.getObservacion());
+
     }
 
     private void imprimirTicket() {
@@ -865,47 +906,51 @@ public class JDialogVisita extends javax.swing.JDialog {
 
     private void jButtonActualizarFotografiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarFotografiaActionPerformed
         // TODO add your handling code here:
-
-        if (persona == null || persona.getId() == null) {
-            JOptionPane.showMessageDialog(this, "Debe Elegir una Persona", "Error", 0);
-            return;
-        }
-
-        JFileChooser chooser = new JFileChooser();
-        //Filtro De Extensiones
-        FileFilterExtension filtroExtension = new FileFilterExtension("JPG, JPEG, PNG", new String[]{"JPG", "JPEG", "PNG"});
-        chooser.setFileFilter(filtroExtension);
-        //Desaparece la opcion TODOS LOS ARCHIVOS
-        chooser.setAcceptAllFileFilterUsed(false);
-
-        int returnVal = chooser.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            RandomAccessFile f;
-            byte[] fotografiaByte = null;
-
-            try {
-                if (JOptionPane.showConfirmDialog(this, "Desea Actualizar la Fotografia?", "Actualizar Fotografia", 0) != 0) {
-                    return;
-                }
-                f = new RandomAccessFile(chooser.getSelectedFile(), "r");
-                fotografiaByte = new byte[(int) f.length()];
-                f.read(fotografiaByte);
-                persona.setFotografia(fotografiaByte);
-                PersonaAction pAction = new PersonaAction();
-                pAction.setPersona(persona);
-                try {
-                    pAction.guardar();
-                    JOptionPane.showMessageDialog(this, "Se ha guardado con exito los nuevos Datos de Persona", "Info", 1);
-                } catch (EntidadExiste e) {
-                    JOptionPane.showMessageDialog(this, "La persona ya existe", "Error", 0);
-                    return;
-                }
-
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(JDialogPersona.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(JDialogPersona.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+            if (persona == null || persona.getId() == null) {
+                JOptionPane.showMessageDialog(this, "Debe Elegir una Persona", "Error", 0);
+                return;
             }
+
+            JFileChooser chooser = new JFileChooser();
+            //Filtro De Extensiones
+            FileFilterExtension filtroExtension = new FileFilterExtension("JPG, JPEG, PNG", new String[]{"JPG", "JPEG", "PNG"});
+            chooser.setFileFilter(filtroExtension);
+            //Desaparece la opcion TODOS LOS ARCHIVOS
+            chooser.setAcceptAllFileFilterUsed(false);
+
+            int returnVal = chooser.showOpenDialog(this);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                RandomAccessFile f;
+                byte[] fotografiaByte = null;
+
+                try {
+                    if (JOptionPane.showConfirmDialog(this, "Desea Actualizar la Fotografia?", "Actualizar Fotografia", 0) != 0) {
+                        return;
+                    }
+                    f = new RandomAccessFile(chooser.getSelectedFile(), "r");
+                    fotografiaByte = new byte[(int) f.length()];
+                    f.read(fotografiaByte);
+                    persona.setFotografia(fotografiaByte);
+                    PersonaAction pAction = new PersonaAction();
+                    pAction.setPersona(persona);
+                    try {
+                        pAction.guardar();
+                        JOptionPane.showMessageDialog(this, "Se ha guardado con exito los nuevos Datos de Persona", "Info", 1);
+                    } catch (EntidadExiste e) {
+                        JOptionPane.showMessageDialog(this, "La persona ya existe", "Error", 0);
+                        return;
+                    }
+
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(JDialogPersona.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(JDialogPersona.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
     }//GEN-LAST:event_jButtonActualizarFotografiaActionPerformed
 
@@ -946,102 +991,105 @@ public class JDialogVisita extends javax.swing.JDialog {
     }//GEN-LAST:event_jTextFieldDocumentoPersonaKeyPressed
 
     public void actualizarDatos() {
+        try {
+            if (jTextFieldDocumentoPersona.getText() != null && !jTextFieldDocumentoPersona.getText().equals("")) {
+                //BUSCAR PERSONA EN BD LOCAL Y POLICIA
+                persona = buscarPersona();
 
-        if (jTextFieldDocumentoPersona.getText() != null && !jTextFieldDocumentoPersona.getText().equals("")) {
-            //BUSCAR PERSONA EN BD LOCAL Y POLICIA
-            persona = buscarPersona();
+                if (persona != null && persona.getId() != null) {
 
-            if (persona != null && persona.getId() != null) {
+                    //Validamos que la persona no se encuentre con una visita pendiente.
+                    if (action.findPendienteByPersona(persona) != null) {
+                        Toolkit.getDefaultToolkit().beep();
+                        JOptionPane.showMessageDialog(this, "ATENCIÓN!. No es posible su ingreso hasta que se registre su salida", "Error", 0);
+                        jButtonRegistrarSalida.setVisible(true);
+                    } else {
+                        jButtonRegistrarSalida.setVisible(false);
+                    }
 
-                //Validamos que la persona no se encuentre con una visita pendiente.
-                if (action.findPendienteByPersona(persona) != null) {
-                    Toolkit.getDefaultToolkit().beep();
-                    JOptionPane.showMessageDialog(this, "ATENCIÓN!. No es posible su ingreso hasta que se registre su salida", "Error", 0);
-                    jButtonRegistrarSalida.setVisible(true);
-                } else {
-                    jButtonRegistrarSalida.setVisible(false);
-                }
+                    //CARGAR DATOS DE LA PERSONA ENCONTRADA                                
+                    jTextFieldPersona.setText(persona.getNombre() + ", " + persona.getApellido());
 
-                //CARGAR DATOS DE LA PERSONA ENCONTRADA                                
-                jTextFieldPersona.setText(persona.getNombre() + ", " + persona.getApellido());
+                    if (persona.getOrganizacion() != null) {
+                        jTextFieldOrganizacion.setText(persona.getOrganizacion().getNombre());
+                    }
 
-                if (persona.getOrganizacion() != null) {
-                    jTextFieldOrganizacion.setText(persona.getOrganizacion().getNombre());
-                }
+                    jButtonTomarFotografia.setEnabled(true);
 
-                jButtonTomarFotografia.setEnabled(true);
+                    if (persona.getEstado() != null && persona.getEstado().getNombre().equals("INHABILITADO")) {
+                        jLabelSemaforo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/Semaforo_rojo.png")));
+                        jLabelPersonaEstado.setText("PERSONA NO HABILITADA");
+                        jButtonCambiarEstadoPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/check.gif")));
+                        jButtonCambiarEstadoPersona.setToolTipText("HABILITAR");
+                        Toolkit.getDefaultToolkit().beep();
+                        JOptionPane.showMessageDialog(this, "ATENCIÓN!, la persona está inhabilitada. No es posible su ingreso", "Error", 0);
+                    } else {
+                        jLabelSemaforo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/Semaforo_verde.png")));
+                        jLabelPersonaEstado.setText("PERSONA HABILITADA");
+                        jButtonCambiarEstadoPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/stop_sign.jpeg")));
+                        jButtonCambiarEstadoPersona.setToolTipText("INHABILITAR");
+                    }
 
-                if (persona.getEstado() != null && persona.getEstado().getNombre().equals("INHABILITADO")) {
-                    jLabelSemaforo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/Semaforo_rojo.png")));
-                    jLabelPersonaEstado.setText("PERSONA NO HABILITADA");
-                    jButtonCambiarEstadoPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/check.gif")));
-                    jButtonCambiarEstadoPersona.setToolTipText("HABILITAR");
-                    Toolkit.getDefaultToolkit().beep();
-                    JOptionPane.showMessageDialog(this, "ATENCIÓN!, la persona está inhabilitada. No es posible su ingreso", "Error", 0);
-                } else {
-                    jLabelSemaforo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/Semaforo_verde.png")));
-                    jLabelPersonaEstado.setText("PERSONA HABILITADA");
-                    jButtonCambiarEstadoPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/stop_sign.jpeg")));
-                    jButtonCambiarEstadoPersona.setToolTipText("INHABILITAR");
-                }
+                    //Ultimas Visitas
+                    listUltimasVisitas.clear();
+                    listUltimasVisitas.addAll(action.findByPersona(persona));
 
-                //Ultimas Visitas
-                listUltimasVisitas.clear();
-                listUltimasVisitas.addAll(action.findByPersona(persona));
-
-                //Cargar Fotografia
-                if (persona.getFotografiaPath() != null && !persona.getFotografiaPath().equals("")) {
-                    mostrarFotoPersona();
-                } else {
-                    if (JOptionPane.showConfirmDialog(this, "La persona no cuenta con Fotografia Actual, Desea cargar la Fotografia?", "Fotografia", 0) == 0) {
-                        try {
-                            JDialogFotografia dialogFotografia = new JDialogFotografia(null, rootPaneCheckingEnabled, "CAPTURAR",persona);
+                    //Cargar Fotografia
+                    if (persona.getFotografiaPath() != null && !persona.getFotografiaPath().equals("")) {
+                        mostrarFotoPersona();
+                    } else {
+                        if (JOptionPane.showConfirmDialog(this, "La persona no cuenta con Fotografia Actual, Desea cargar la Fotografia?", "Fotografia", 0) == 0) {
+                            try {
+                                JDialogFotografia dialogFotografia = new JDialogFotografia(null, rootPaneCheckingEnabled, "CAPTURAR", persona);
 //                            dialogFotografia.setPersona(persona);
-                            WindowUtil.centerWindow(dialogFotografia);
-                            dialogFotografia.setVisible(true);        // TODO add your handling code here:
-                            if (dialogFotografia.isCapturado()) {
-                                mostrarFotoPersona();
+                                WindowUtil.centerWindow(dialogFotografia);
+                                dialogFotografia.setVisible(true);        // TODO add your handling code here:
+                                if (dialogFotografia.isCapturado()) {
+                                    mostrarFotoPersona();
+                                }
+                            } catch (Exception e) {
+                                JOptionPane.showMessageDialog(this, "En este momento no se puede inicializar la camara, verifique el dispositivo e intente de nuevo", "Error", 0);
+                                return;
                             }
-                        } catch (Exception e) {
-                            JOptionPane.showMessageDialog(this, "En este momento no se puede inicializar la camara, verifique el dispositivo e intente de nuevo", "Error", 0);
-                            return;
                         }
                     }
-                }
 
-            } else if (registroDesdeBaseDeDatosExterna()) {
-                //hacer el registro desde la base de datos externa
+                } else if (registroDesdeBaseDeDatosExterna()) {
+                    //hacer el registro desde la base de datos externa
+                } else {
+                    jTextFieldPersona.setText("");
+                    jTextFieldOrganizacion.setText("");
+                    jLabelFotografia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/sin_foto_small.jpg")));
+                    jButtonTomarFotografia.setEnabled(false);
+                    listUltimasVisitas.clear();
+                    if (JOptionPane.showConfirmDialog(this, "La persona no existe, desea registrarla?", "Persona no registrada", 0) != 0) {
+                        this.setVisible(false);
+                        return;
+                    }
+                    JDialogPersona dialogPersona = new JDialogPersona(null, rootPaneCheckingEnabled);
+                    dialogPersona.getjTextFieldNroDoc().setText(jTextFieldDocumentoPersona.getText());
+                    dialogPersona.getjTextFieldNroDoc().setEditable(false);
+                    dialogPersona.getjComboBoxTipoDocumento().setSelectedItem(jComboBoxTipoDoc.getSelectedItem());
+                    dialogPersona.getjComboBoxTipoDocumento().setEnabled(false);
+                    WindowUtil.centerWindow(dialogPersona);
+                    dialogPersona.setVisible(true);
+                    actualizarDatos();
+
+
+                }
             } else {
+                JOptionPane.showMessageDialog(this, "INGRESE NRO DE DOCUMENTO.", "Error", 0);
                 jTextFieldPersona.setText("");
                 jTextFieldOrganizacion.setText("");
-                jLabelFotografia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/sin_foto_small.jpg")));
                 jButtonTomarFotografia.setEnabled(false);
+                jLabelFotografia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/sin_foto_small.jpg")));
                 listUltimasVisitas.clear();
-                if (JOptionPane.showConfirmDialog(this, "La persona no existe, desea registrarla?", "Persona no registrada", 0) != 0) {
-                    this.setVisible(false);
-                    return;
-                }
-                JDialogPersona dialogPersona = new JDialogPersona(null, rootPaneCheckingEnabled);
-                dialogPersona.getjTextFieldNroDoc().setText(jTextFieldDocumentoPersona.getText());
-                dialogPersona.getjTextFieldNroDoc().setEditable(false);
-                dialogPersona.getjComboBoxTipoDocumento().setSelectedItem(jComboBoxTipoDoc.getSelectedItem());
-                dialogPersona.getjComboBoxTipoDocumento().setEnabled(false);
-                WindowUtil.centerWindow(dialogPersona);
-                dialogPersona.setVisible(true);
-                actualizarDatos();
-
 
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "INGRESE NRO DE DOCUMENTO.", "Error", 0);
-            jTextFieldPersona.setText("");
-            jTextFieldOrganizacion.setText("");
-            jButtonTomarFotografia.setEnabled(false);
-            jLabelFotografia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/sin_foto_small.jpg")));
-            listUltimasVisitas.clear();
-
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
-
     }
 
     public JTextField getjTextFieldDocumentoPersona() {
@@ -1053,13 +1101,18 @@ public class JDialogVisita extends javax.swing.JDialog {
     }
 
     private Persona buscarPersona() {
-        Persona personaBuscada = new Persona();
-        /// Se busca en la tabla de personas local
-        List<Persona> listaPersonas = personaAction.findByNumeroDocumento(jTextFieldDocumentoPersona.getText().toUpperCase(), (TipoDocumento) jComboBoxTipoDoc.getSelectedItem());
-        if (listaPersonas != null && listaPersonas.size() > 0) {
-            personaBuscada = listaPersonas.get(0);
+        Persona personaBuscada = null;
+        try {
+            personaBuscada = new Persona();
+            /// Se busca en la tabla de personas local
+            List<Persona> listaPersonas = personaAction.findByNumeroDocumento(jTextFieldDocumentoPersona.getText().toUpperCase(), (TipoDocumento) jComboBoxTipoDoc.getSelectedItem());
+            if (listaPersonas != null && listaPersonas.size() > 0) {
+                personaBuscada = listaPersonas.get(0);
+            }
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
-
         return personaBuscada;
     }
     private void jTextFieldDocumentoPersonaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldDocumentoPersonaFocusLost
@@ -1081,7 +1134,7 @@ public class JDialogVisita extends javax.swing.JDialog {
             ImageIcon iconoFoto = new javax.swing.ImageIcon(imageScale);
             jLabelFotografia.setIcon(iconoFoto);
         } catch (IOException ex) {
-                JOptionPane.showMessageDialog(this, "No se puede Mostrar la Fotografia en este momento", "Error", 0);
+            JOptionPane.showMessageDialog(this, "No se puede Mostrar la Fotografia en este momento", "Error", 0);
         }
         ///CARGAR FOTO DESDE LA BASE DE DATOS SUPLANTADO POR LECTURA DESDE ARCHIVO DIRECTO
 //                            ByteArrayInputStream bis = new ByteArrayInputStream(persona.getFotografia());
@@ -1124,7 +1177,7 @@ public class JDialogVisita extends javax.swing.JDialog {
 
     private void jButtonTomarFotografiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTomarFotografiaActionPerformed
         try {
-            JDialogFotografia dialogFotografia = new JDialogFotografia(null, rootPaneCheckingEnabled, "CAPTURAR",persona);
+            JDialogFotografia dialogFotografia = new JDialogFotografia(null, rootPaneCheckingEnabled, "CAPTURAR", persona);
             WindowUtil.centerWindow(dialogFotografia);
 //            dialogFotografia.setPersona(persona);
             dialogFotografia.setVisible(true);        // TODO add your handling code here:
@@ -1141,7 +1194,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (evt.getClickCount() == 2 && persona != null && !persona.getFotografiaPath().equals("")) {
             try {
-                JDialogFotografia dialogFotografia = new JDialogFotografia(null, rootPaneCheckingEnabled, "VER",persona);
+                JDialogFotografia dialogFotografia = new JDialogFotografia(null, rootPaneCheckingEnabled, "VER", persona);
 //                dialogFotografia.setPersona(persona);
                 dialogFotografia.setVisible(true);
             } catch (Exception ex) {
@@ -1163,9 +1216,14 @@ public class JDialogVisita extends javax.swing.JDialog {
 
     private void jRadioButtonNacionalItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioButtonNacionalItemStateChanged
         // TODO add your handling code here:
-        jComboBoxTipoDoc.setVisible(false);
-        jLabelTipoDeDoc.setVisible(false);
-        jComboBoxTipoDoc.setSelectedItem(tipoDocAction.findByNamedQuery("TipoDocumento.findCI").get(0));
+        try {
+            jComboBoxTipoDoc.setVisible(false);
+            jLabelTipoDeDoc.setVisible(false);
+            jComboBoxTipoDoc.setSelectedItem(tipoDocAction.findByNamedQuery("TipoDocumento.findCI").get(0));
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
     }//GEN-LAST:event_jRadioButtonNacionalItemStateChanged
 
     private void jComboBoxTipoDocItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxTipoDocItemStateChanged
@@ -1176,59 +1234,74 @@ public class JDialogVisita extends javax.swing.JDialog {
 
     private void jButtonCambiarEstadoPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCambiarEstadoPersonaActionPerformed
         // TODO add your handling code here:
-        personaAction.setPersona(persona);
-        if (persona.getEstado() != null && persona.getEstado().getNombre().equals("INHABILITADO")) {
-            personaAction.habilitar();
-            jLabelSemaforo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/Semaforo_verde.png")));
-            jLabelPersonaEstado.setText("PERSONA HABILITADA");
-            jButtonCambiarEstadoPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/stop_sign.jpeg")));
-            jButtonCambiarEstadoPersona.setToolTipText("INHABILITAR");
+        try {
+            personaAction.setPersona(persona);
+            if (persona.getEstado() != null && persona.getEstado().getNombre().equals("INHABILITADO")) {
+                personaAction.habilitar();
+                jLabelSemaforo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/Semaforo_verde.png")));
+                jLabelPersonaEstado.setText("PERSONA HABILITADA");
+                jButtonCambiarEstadoPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/stop_sign.jpeg")));
+                jButtonCambiarEstadoPersona.setToolTipText("INHABILITAR");
 
-        } else {
-            personaAction.inhabilitar();
-            jLabelSemaforo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/Semaforo_rojo.png")));
-            jLabelPersonaEstado.setText("PERSONA NO HABILITADA");
-            jButtonCambiarEstadoPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/check.gif")));
-            jButtonCambiarEstadoPersona.setToolTipText("HABILITAR");
+            } else {
+                personaAction.inhabilitar();
+                jLabelSemaforo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/Semaforo_rojo.png")));
+                jLabelPersonaEstado.setText("PERSONA NO HABILITADA");
+                jButtonCambiarEstadoPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/check.gif")));
+                jButtonCambiarEstadoPersona.setToolTipText("HABILITAR");
+            }
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
     }//GEN-LAST:event_jButtonCambiarEstadoPersonaActionPerformed
 
     private void jButtonRegistrarSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarSalidaActionPerformed
         // TODO add your handling code here:
-        Visita v = action.findPendienteByPersona(persona);
+        try {
+            Visita v = action.findPendienteByPersona(persona);
 
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        if (JOptionPane.showConfirmDialog(this, "Está seguro que desea marcar la salida de "
-                + v.getPersona().getNombre()
-                + " " + v.getPersona().getApellido()
-                + ", a las: " + sdf.format(c.getTime())
-                + "?", "Registro de salida", 0) != 0) {
-            return;
+            Calendar c = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            if (JOptionPane.showConfirmDialog(this, "Está seguro que desea marcar la salida de "
+                    + v.getPersona().getNombre()
+                    + " " + v.getPersona().getApellido()
+                    + ", a las: " + sdf.format(c.getTime())
+                    + "?", "Registro de salida", 0) != 0) {
+                return;
+            }
+
+            v.setFechaSalida(c.getTime());
+            action.setVisita(v);
+            action.guardar();
+            listUltimasVisitas.clear();
+            listUltimasVisitas.addAll(action.findByPersona(persona));
+            JOptionPane.showMessageDialog(this, "Se ha registrado la salida correctamente", "Info", 1);
+            jButtonRegistrarSalida.setVisible(false);
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
-
-        v.setFechaSalida(c.getTime());
-        action.setVisita(v);
-        action.guardar();
-        listUltimasVisitas.clear();
-        listUltimasVisitas.addAll(action.findByPersona(persona));
-        JOptionPane.showMessageDialog(this, "Se ha registrado la salida correctamente", "Info", 1);
-        jButtonRegistrarSalida.setVisible(false);
     }//GEN-LAST:event_jButtonRegistrarSalidaActionPerformed
 
     private void jButtonNuevoMotivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoMotivoActionPerformed
         // TODO add your handling code here:
-        Motivo mot = (Motivo) jComboBoxMotivo.getSelectedItem();
-        JDialogMotivo dialogMotivo = new JDialogMotivo(null, rootPaneCheckingEnabled);
-        dialogMotivo.setMotivo(new Motivo());
-        WindowUtil.centerWindow(dialogMotivo);
-        dialogMotivo.setVisible(true);
-        listMotivos.clear();
-        listMotivos.addAll(motivoAction.findAll());
-        if (dialogMotivo.getMotivo().getId() != null) {
-            jComboBoxMotivo.setSelectedItem(dialogMotivo.getMotivo());
-        } else {
-            jComboBoxMotivo.setSelectedItem(mot);
+        try {
+            Motivo mot = (Motivo) jComboBoxMotivo.getSelectedItem();
+            JDialogMotivo dialogMotivo = new JDialogMotivo(null, rootPaneCheckingEnabled);
+            dialogMotivo.setMotivo(new Motivo());
+            WindowUtil.centerWindow(dialogMotivo);
+            dialogMotivo.setVisible(true);
+            listMotivos.clear();
+            listMotivos.addAll(motivoAction.findAll());
+            if (dialogMotivo.getMotivo().getId() != null) {
+                jComboBoxMotivo.setSelectedItem(dialogMotivo.getMotivo());
+            } else {
+                jComboBoxMotivo.setSelectedItem(mot);
+            }
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
     }//GEN-LAST:event_jButtonNuevoMotivoActionPerformed
 

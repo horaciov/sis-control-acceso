@@ -33,6 +33,7 @@ import javax.swing.JOptionPane;
 import py.gov.itaipu.controlacceso.action.persona.PersonaAction;
 import py.gov.itaipu.controlacceso.model.Persona;
 import py.gov.itaipu.controlacceso.model.exception.EntidadExiste;
+import py.gov.itaipu.controlacceso.model.exception.ErrorInesperado;
 import py.gov.itaipu.controlacceso.view.persona.JDialogPersona;
 
 /**
@@ -58,7 +59,7 @@ public class JDialogFotografia extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
-        }
+    }
 
     public JDialogFotografia(java.awt.Frame parent, boolean modal, String modo, Persona persona) throws Exception {
         super(parent, modal);
@@ -68,14 +69,14 @@ public class JDialogFotografia extends javax.swing.JDialog {
         capturado = false;
         if (modo.equals("CAPTURAR")) {
             jLabelTitulo.setText("Capturar Fotografia");
-             //place player and video screen on the frame
-             iniciarWebCam();
+            //place player and video screen on the frame
+            iniciarWebCam();
         } else if (modo.equals("VER")) {
             jLabelTitulo.setText("Mostrar Fotografia");
             mostrarFotografia();
             jButtonCapturar.setVisible(false);
         }
-               
+
     }
 
     /**
@@ -194,16 +195,20 @@ public class JDialogFotografia extends javax.swing.JDialog {
     }
 
     private void actualizarFotoPersona(String pathFoto) {
-        persona.setFotografiaPath(pathFoto);
-        PersonaAction pAction = new PersonaAction();
-        pAction.setPersona(persona);
         try {
-            pAction.guardar();
-        } catch (EntidadExiste e) {
-            JOptionPane.showMessageDialog(this, "La persona ya existe", "Error", 0);
-            return;
+            persona.setFotografiaPath(pathFoto);
+            PersonaAction pAction = new PersonaAction();
+            pAction.setPersona(persona);
+            try {
+                pAction.guardar();
+            } catch (EntidadExiste e) {
+                JOptionPane.showMessageDialog(this, "La persona ya existe", "Error", 0);
+                return;
+            }
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
-
     }
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -217,24 +222,23 @@ public class JDialogFotografia extends javax.swing.JDialog {
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
-        
     }//GEN-LAST:event_formWindowActivated
 
     private void mostrarFotografia() throws IOException {
         javax.swing.JLabel jLabelFotografia = new JLabel();
         BufferedImage image;
-        
-            String rutaImagen = persona.getFotografiaPath();
-            File fileImagen = new File(rutaImagen);
-            image = ImageIO.read(fileImagen);
-            //REGULAR TAMAÑO    
+
+        String rutaImagen = persona.getFotografiaPath();
+        File fileImagen = new File(rutaImagen);
+        image = ImageIO.read(fileImagen);
+        //REGULAR TAMAÑO    
 //                Image imageScale =  image.getScaledInstance(570, 338, image.SCALE_FAST);
-            ImageIcon iconoFoto = new javax.swing.ImageIcon(image);
-            jLabelFotografia.setSize(600, 470);
-            jLabelFotografia.setIcon(iconoFoto);
-            jPanelCamara.add(jLabelFotografia);
-            jLabelFotografia.setVisible(true);
-        
+        ImageIcon iconoFoto = new javax.swing.ImageIcon(image);
+        jLabelFotografia.setSize(600, 470);
+        jLabelFotografia.setIcon(iconoFoto);
+        jPanelCamara.add(jLabelFotografia);
+        jLabelFotografia.setVisible(true);
+
     }
 
     private void saveImagetoFile(Image img, String string) {
@@ -295,21 +299,21 @@ public class JDialogFotografia extends javax.swing.JDialog {
     }
 
     private void iniciarWebCam() throws Exception {
-        
+
 //gets a list of devices how support the given videoformat
-            String str1 = "vfw:Microsoft WDM Image Capture (Win32):0";
-            di = CaptureDeviceManager.getDevice(str1);
-            ml = di.getLocator();
+        String str1 = "vfw:Microsoft WDM Image Capture (Win32):0";
+        di = CaptureDeviceManager.getDevice(str1);
+        ml = di.getLocator();
 
-            player = Manager.createRealizedPlayer(ml);
-            player.start();
+        player = Manager.createRealizedPlayer(ml);
+        player.start();
 
-            videoScreen = player.getVisualComponent();
+        videoScreen = player.getVisualComponent();
 
 //            //place player and video screen on the frame
-            jPanelCamara.add(videoScreen, BorderLayout.CENTER);
-            jPanelCamara.add(player.getControlPanelComponent(), BorderLayout.SOUTH);
-       
+        jPanelCamara.add(videoScreen, BorderLayout.CENTER);
+        jPanelCamara.add(player.getControlPanelComponent(), BorderLayout.SOUTH);
+
     }
 
     public Persona getPersona() {

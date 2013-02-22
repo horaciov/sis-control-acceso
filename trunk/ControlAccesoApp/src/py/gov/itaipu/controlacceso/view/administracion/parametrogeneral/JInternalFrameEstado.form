@@ -5,6 +5,8 @@
     <Component class="java.util.List" name="listEstados">
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="ObservableCollections.observableList(estadoAction.findAll())"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="try{"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="} catch (ErrorInesperado ei) {&#xa;            JOptionPane.showMessageDialog(null, &quot;Verfique con el administrador la conexi&#xf3;n a la base de datos y vuelva a intentar.&quot;, &quot;Error&quot;, JOptionPane.ERROR_MESSAGE);&#xa;            System.exit(-1);&#xa;        }"/>
       </AuxValues>
     </Component>
   </NonVisualComponents>
@@ -83,7 +85,7 @@
                   <Component id="jButtonEliminar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButtonVer" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="67" max="32767" attributes="0"/>
+              <EmptySpace pref="71" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

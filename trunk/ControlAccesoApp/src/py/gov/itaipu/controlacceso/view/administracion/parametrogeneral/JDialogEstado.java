@@ -9,6 +9,7 @@ import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.model.Estado;
 import py.gov.itaipu.controlacceso.model.Motivo;
 import py.gov.itaipu.controlacceso.model.exception.EntidadExiste;
+import py.gov.itaipu.controlacceso.model.exception.ErrorInesperado;
 
 /**
  *
@@ -158,34 +159,39 @@ public class JDialogEstado extends javax.swing.JDialog {
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
-        if (estado == null) {
-            return;
-        }
-        CRUDAction<Estado> action = new CRUDAction<Estado>(estado);
-        if (jTextFieldEstado.getText() == null || jTextFieldEstado.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "El estado es obligatorio", "Error", 0);
-            return;
-        }
-        estado.setNombre(jTextFieldEstado.getText());
-        estado.setDescripcion(jTextAreaDescripcion.getText());
-        if (estado.getId() == null) {
-            try {
-                action.crear();
-                JOptionPane.showMessageDialog(this, "Se ha creado con éxito", "Info", 1);
-            } catch (EntidadExiste e) {
-                JOptionPane.showMessageDialog(this, "El estado ya existe", "Error", 0);
+        try {
+            if (estado == null) {
                 return;
             }
-        } else {
-            try {
-                action.guardar();
-                JOptionPane.showMessageDialog(this, "Se ha actualizado correctamente", "Info", 1);
-            } catch (EntidadExiste e) {
-                JOptionPane.showMessageDialog(this, "El estado ya existe", "Error", 0);
+            CRUDAction<Estado> action = new CRUDAction<Estado>(estado);
+            if (jTextFieldEstado.getText() == null || jTextFieldEstado.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "El estado es obligatorio", "Error", 0);
                 return;
             }
+            estado.setNombre(jTextFieldEstado.getText());
+            estado.setDescripcion(jTextAreaDescripcion.getText());
+            if (estado.getId() == null) {
+                try {
+                    action.crear();
+                    JOptionPane.showMessageDialog(this, "Se ha creado con éxito", "Info", 1);
+                } catch (EntidadExiste e) {
+                    JOptionPane.showMessageDialog(this, "El estado ya existe", "Error", 0);
+                    return;
+                }
+            } else {
+                try {
+                    action.guardar();
+                    JOptionPane.showMessageDialog(this, "Se ha actualizado correctamente", "Info", 1);
+                } catch (EntidadExiste e) {
+                    JOptionPane.showMessageDialog(this, "El estado ya existe", "Error", 0);
+                    return;
+                }
+            }
+            this.dispose();
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
-        this.dispose();
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated

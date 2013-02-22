@@ -5,18 +5,22 @@
     <Component class="java.util.List" name="listNacionalidades">
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="nacionalidadAction.findAll()"/>
-        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="Nacionalidad nac = new Nacionalidad();&#xa;nac.setNombre(&quot;TODAS&quot;);&#xa;listNacionalidades.add(0,nac);"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="Nacionalidad nac = new Nacionalidad();&#xa;nac.setNombre(&quot;TODAS&quot;);&#xa;listNacionalidades.add(0,nac);&#xa;} catch (ErrorInesperado ei) {&#xa;            JOptionPane.showMessageDialog(null, &quot;Verfique con el administrador la conexi&#xf3;n a la base de datos y vuelva a intentar.&quot;, &quot;Error&quot;, JOptionPane.ERROR_MESSAGE);&#xa;            System.exit(-1);&#xa;        }"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="try{"/>
       </AuxValues>
     </Component>
     <Component class="java.util.List" name="listTipoDocumento">
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="tipoDocAction.findAll()"/>
-        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="TipoDocumento tD = new TipoDocumento();&#xa;tD.setNombre(&quot;TODOS&quot;);&#xa;listTipoDocumento.add(0,tD);"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="TipoDocumento tD = new TipoDocumento();&#xa;tD.setNombre(&quot;TODOS&quot;);&#xa;listTipoDocumento.add(0,tD);&#xa;} catch (ErrorInesperado ei) {&#xa;            JOptionPane.showMessageDialog(null, &quot;Verfique con el administrador la conexi&#xf3;n a la base de datos y vuelva a intentar.&quot;, &quot;Error&quot;, JOptionPane.ERROR_MESSAGE);&#xa;            System.exit(-1);&#xa;        }"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="try{"/>
       </AuxValues>
     </Component>
     <Component class="java.util.List" name="listPersonas">
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="ObservableCollections.observableList(personaAction.findByParameters(personaFiltro,personaFiltro2,tipoOrganizacionPersona))"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="try{"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="} catch (ErrorInesperado ei) {&#xa;            JOptionPane.showMessageDialog(null, &quot;Verfique con el administrador la conexi&#xf3;n a la base de datos y vuelva a intentar.&quot;, &quot;Error&quot;, JOptionPane.ERROR_MESSAGE);&#xa;            System.exit(-1);&#xa;        }"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.ButtonGroup" name="buttonGroupTipoPersona">
@@ -183,7 +187,7 @@
                   </Group>
                   <Component id="jLabel9" min="-2" pref="23" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="51" max="32767" attributes="0"/>
+              <EmptySpace pref="55" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jButtonBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButtonLimpiar" alignment="3" min="-2" max="-2" attributes="0"/>

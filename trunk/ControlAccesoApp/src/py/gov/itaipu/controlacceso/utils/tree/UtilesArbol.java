@@ -10,6 +10,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.model.Organizacion;
 import py.gov.itaipu.controlacceso.model.Persona;
+import py.gov.itaipu.controlacceso.model.exception.ErrorInesperado;
 
 /**
  *
@@ -20,7 +21,7 @@ public class UtilesArbol {
     public UtilesArbol() {
     }
 
-    public static DefaultMutableTreeNode crearArbol(String tituloArbol, boolean incluyePersonas) {
+    public static DefaultMutableTreeNode crearArbol(String tituloArbol, boolean incluyePersonas) throws ErrorInesperado {
         DefaultMutableTreeNode root = new DefaultMutableTreeNode(tituloArbol);
         CRUDAction<Organizacion> organizacionAction = new CRUDAction<Organizacion>(new Organizacion());
         DefaultMutableTreeNode node;

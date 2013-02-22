@@ -11,6 +11,7 @@ import org.jdesktop.observablecollections.ObservableCollections;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.model.Organizacion;
 import py.gov.itaipu.controlacceso.model.exception.EntidadExiste;
+import py.gov.itaipu.controlacceso.model.exception.ErrorInesperado;
 
 /**
  *
@@ -58,22 +59,27 @@ public class JDialogOrganizacionInterna extends javax.swing.JDialog {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        listaOrganizacionesInternas = ObservableCollections.observableList(organizacionAction.findByNamedQuery("Organizacion.findAllInterna"));
-        jTextFieldOrganizacion = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextAreaDescripcion = new javax.swing.JTextArea();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jButtonGuardar = new javax.swing.JButton();
-        jButtonCancelar = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
-        jLabel4 = new javax.swing.JLabel();
-        jLabelOrgPadre = new javax.swing.JLabel();
-        jComboBoxOrganizaciones = new javax.swing.JComboBox();
+        try{
+            listaOrganizacionesInternas = ObservableCollections.observableList(organizacionAction.findByNamedQuery("Organizacion.findAllInterna"));
+            jTextFieldOrganizacion = new javax.swing.JTextField();
+            jScrollPane1 = new javax.swing.JScrollPane();
+            jTextAreaDescripcion = new javax.swing.JTextArea();
+            jLabel2 = new javax.swing.JLabel();
+            jLabel3 = new javax.swing.JLabel();
+            jButtonGuardar = new javax.swing.JButton();
+            jButtonCancelar = new javax.swing.JButton();
+            jSeparator1 = new javax.swing.JSeparator();
+            jLabel4 = new javax.swing.JLabel();
+            jLabelOrgPadre = new javax.swing.JLabel();
+            jComboBoxOrganizaciones = new javax.swing.JComboBox();
 
-        Organizacion o=new Organizacion();
-        o.setNombre("NINGUNA");
-        listaOrganizacionesInternas.add(0, o);
+            Organizacion o=new Organizacion();
+            o.setNombre("NINGUNA");
+            listaOrganizacionesInternas.add(0, o);
+        } catch (py.gov.itaipu.controlacceso.model.exception.ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Organización Interna");
@@ -183,6 +189,7 @@ public class JDialogOrganizacionInterna extends javax.swing.JDialog {
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
+        try{
         if (organizacion == null) {
             return;
         }
@@ -232,6 +239,10 @@ public class JDialogOrganizacionInterna extends javax.swing.JDialog {
             }
         }
         this.dispose();
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated

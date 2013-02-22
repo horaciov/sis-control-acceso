@@ -5,7 +5,8 @@
     <Component class="java.util.List" name="listaOrganizacionesInternas">
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="ObservableCollections.observableList(organizacionAction.findByNamedQuery(&quot;Organizacion.findAllInterna&quot;))"/>
-        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="Organizacion o=new Organizacion();&#xa;o.setNombre(&quot;NINGUNA&quot;);&#xa;listaOrganizacionesInternas.add(0, o);"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="try{"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="Organizacion o=new Organizacion();&#xa;o.setNombre(&quot;NINGUNA&quot;);&#xa;listaOrganizacionesInternas.add(0, o);&#xa;} catch (py.gov.itaipu.controlacceso.model.exception.ErrorInesperado ei) {&#xa;     JOptionPane.showMessageDialog(null, &quot;Verfique con el administrador la conexi&#xf3;n a la base de datos y vuelva a intentar.&quot;, &quot;Error&quot;, JOptionPane.ERROR_MESSAGE);&#xa;     System.exit(-1);&#xa;}"/>
       </AuxValues>
     </Component>
   </NonVisualComponents>

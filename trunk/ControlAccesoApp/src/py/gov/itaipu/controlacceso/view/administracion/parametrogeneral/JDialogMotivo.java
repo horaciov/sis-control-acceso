@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.model.Motivo;
 import py.gov.itaipu.controlacceso.model.exception.EntidadExiste;
+import py.gov.itaipu.controlacceso.model.exception.ErrorInesperado;
 
 /**
  *
@@ -157,34 +158,39 @@ public class JDialogMotivo extends javax.swing.JDialog {
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
-        if (motivo == null) {
-            return;
-        }
-        CRUDAction<Motivo> action = new CRUDAction<Motivo>(motivo);
-        if (jTextFieldMotivo.getText() == null || jTextFieldMotivo.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "El motivo es obligatorio", "Error", 0);
-            return;
-        }
-        motivo.setNombre(jTextFieldMotivo.getText());
-        motivo.setDescripcion(jTextAreaDescripcion.getText());
-        if (motivo.getId() == null) {
-            try {
-                action.crear();
-                JOptionPane.showMessageDialog(this, "Se ha creado con éxito", "Info", 1);
-            } catch (EntidadExiste e) {
-                JOptionPane.showMessageDialog(this, "El motivo ya existe", "Error", 0);
+        try {
+            if (motivo == null) {
                 return;
             }
-        } else {
-            try {
-                action.guardar();
-                JOptionPane.showMessageDialog(this, "Se ha actualizado correctamente", "Info", 1);
-            } catch (EntidadExiste e) {
-                JOptionPane.showMessageDialog(this, "El motivo ya existe", "Error", 0);
+            CRUDAction<Motivo> action = new CRUDAction<Motivo>(motivo);
+            if (jTextFieldMotivo.getText() == null || jTextFieldMotivo.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "El motivo es obligatorio", "Error", 0);
                 return;
             }
+            motivo.setNombre(jTextFieldMotivo.getText());
+            motivo.setDescripcion(jTextAreaDescripcion.getText());
+            if (motivo.getId() == null) {
+                try {
+                    action.crear();
+                    JOptionPane.showMessageDialog(this, "Se ha creado con éxito", "Info", 1);
+                } catch (EntidadExiste e) {
+                    JOptionPane.showMessageDialog(this, "El motivo ya existe", "Error", 0);
+                    return;
+                }
+            } else {
+                try {
+                    action.guardar();
+                    JOptionPane.showMessageDialog(this, "Se ha actualizado correctamente", "Info", 1);
+                } catch (EntidadExiste e) {
+                    JOptionPane.showMessageDialog(this, "El motivo ya existe", "Error", 0);
+                    return;
+                }
+            }
+            this.dispose();
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
-        this.dispose();
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated

@@ -5,6 +5,8 @@
     <Component class="java.util.List" name="listVisitas">
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="ObservableCollections.observableList(visitaAction.findVisitasPendientes())"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="try{"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="} catch (py.gov.itaipu.controlacceso.model.exception.ErrorInesperado ei) {&#xa;   JOptionPane.showMessageDialog(null, &quot;Verfique con el administrador la conexi&#xf3;n a la base de datos y vuelva a intentar.&quot;, &quot;Error&quot;, JOptionPane.ERROR_MESSAGE);&#xa;    System.exit(-1);&#xa;}"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.ButtonGroup" name="buttonGroupExtranjero">
@@ -12,6 +14,8 @@
     <Component class="java.util.List" name="listTipoDocumento">
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="ObservableCollections.observableList(tipoDocAction.findAll())"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="try{"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="}catch (py.gov.itaipu.controlacceso.model.exception.ErrorInesperado ei) {&#xa;  JOptionPane.showMessageDialog(null, &quot;Verfique con el administrador la conexi&#xf3;n a la base de datos y vuelva a intentar.&quot;, &quot;Error&quot;, JOptionPane.ERROR_MESSAGE);&#xa;  System.exit(-1);&#xa;}"/>
       </AuxValues>
     </Component>
     <Menu class="javax.swing.JMenuBar" name="menuBar">

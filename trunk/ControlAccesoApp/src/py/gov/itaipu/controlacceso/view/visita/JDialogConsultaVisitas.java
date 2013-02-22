@@ -38,6 +38,7 @@ import py.gov.itaipu.controlacceso.model.Motivo;
 import py.gov.itaipu.controlacceso.model.Organizacion;
 import py.gov.itaipu.controlacceso.model.Persona;
 import py.gov.itaipu.controlacceso.model.Visita;
+import py.gov.itaipu.controlacceso.model.exception.ErrorInesperado;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 import py.gov.itaipu.controlacceso.view.JDialogBuscador;
 import py.gov.itaipu.controlacceso.view.TimeRenderer;
@@ -85,14 +86,24 @@ public class JDialogConsultaVisitas extends javax.swing.JDialog {
 
         List<Visita> l=new ArrayList<Visita>();
         listVisitas = ObservableCollections.observableList(l);
-        listMotivos = ObservableCollections.observableList(motivoAction.findAll());
-        Motivo m=new Motivo();
-        m.setNombre("TODOS");
-        listMotivos.add(0,m);
-        listOrganizacionInternas = ObservableCollections.observableList(organizacionAction.findByNamedQuery("Organizacion.findAllInterna"));
-        Organizacion o=new Organizacion();
-        o.setNombre("TODAS");
-        listOrganizacionInternas.add(0, o);
+        try{
+            listMotivos = ObservableCollections.observableList(motivoAction.findAll());
+            Motivo m=new Motivo();
+            m.setNombre("TODOS");
+            listMotivos.add(0,m);
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
+        try{
+            listOrganizacionInternas = ObservableCollections.observableList(organizacionAction.findByNamedQuery("Organizacion.findAllInterna"));
+            Organizacion o=new Organizacion();
+            o.setNombre("TODAS");
+            listOrganizacionInternas.add(0, o);
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
         jButtonCerrar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableVisitas = new javax.swing.JTable();
@@ -478,43 +489,48 @@ public class JDialogConsultaVisitas extends javax.swing.JDialog {
 
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
         // TODO add your handling code here:
-        Visita v = new Visita();
-        Date hasta = null;
+        try {
+            Visita v = new Visita();
+            Date hasta = null;
 
-        if (jTextAreaObservacion.getText() != null && !jTextAreaObservacion.getText().equals("")) {
-            v.setObservacion(jTextAreaObservacion.getText().toUpperCase());
+            if (jTextAreaObservacion.getText() != null && !jTextAreaObservacion.getText().equals("")) {
+                v.setObservacion(jTextAreaObservacion.getText().toUpperCase());
+            }
+
+            Motivo motivo = (Motivo) jComboBoxMotivo.getSelectedItem();
+            if (motivo.getId() != null) {
+                v.setMotivo(motivo);
+            }
+
+            v.setPersona(persona);
+            v.setPersonaVisitada(personaVisitada);
+
+
+            if (organizacionVisitada != null && organizacionVisitada.getId() != null) {
+                v.setOrganizacionInterna(organizacionVisitada);
+            }
+
+            if (jFormattedTextFieldDesde.getText() != null && !jFormattedTextFieldDesde.getText().equals("")) {
+                v.setFechaIngreso(((Date) jFormattedTextFieldDesde.getValue()));
+            }
+
+            if (jFormattedTextFieldHasta.getText() != null && !jFormattedTextFieldHasta.getText().equals("")) {
+                hasta = (Date) jFormattedTextFieldHasta.getValue();
+                Calendar cal = Calendar.getInstance(); // creates calendar
+                cal.setTime(hasta); // sets calendar time/date
+                cal.add(Calendar.HOUR_OF_DAY, 23);
+                cal.add(Calendar.MINUTE, 59);
+                cal.add(Calendar.SECOND, 59);
+                hasta = cal.getTime();
+
+            }
+
+            listVisitas.clear();
+            listVisitas.addAll(visitaAction.findByParameters(v, hasta, organizacionExterna, "N"));
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
-
-        Motivo motivo = (Motivo) jComboBoxMotivo.getSelectedItem();
-        if (motivo.getId() != null) {
-            v.setMotivo(motivo);
-        }
-
-        v.setPersona(persona);
-        v.setPersonaVisitada(personaVisitada);
-
-
-        if (organizacionVisitada != null && organizacionVisitada.getId() != null) {
-            v.setOrganizacionInterna(organizacionVisitada);
-        }
-
-        if (jFormattedTextFieldDesde.getText() != null && !jFormattedTextFieldDesde.getText().equals("")) {
-            v.setFechaIngreso(((Date) jFormattedTextFieldDesde.getValue()));
-        }
-
-        if (jFormattedTextFieldHasta.getText() != null && !jFormattedTextFieldHasta.getText().equals("")) {
-            hasta = (Date) jFormattedTextFieldHasta.getValue();
-            Calendar cal = Calendar.getInstance(); // creates calendar
-            cal.setTime(hasta); // sets calendar time/date
-            cal.add(Calendar.HOUR_OF_DAY, 23);
-            cal.add(Calendar.MINUTE, 59);
-            cal.add(Calendar.SECOND, 59);
-            hasta = cal.getTime();
-
-        }
-
-        listVisitas.clear();
-        listVisitas.addAll(visitaAction.findByParameters(v, hasta, organizacionExterna, "N"));
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
     private void jButtonBuscarOrganizacionExternaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarOrganizacionExternaActionPerformed
