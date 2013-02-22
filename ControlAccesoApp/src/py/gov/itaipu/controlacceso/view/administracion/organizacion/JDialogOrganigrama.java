@@ -14,6 +14,7 @@ import py.gov.itaipu.controlacceso.action.persona.PersonaAction;
 import py.gov.itaipu.controlacceso.model.Organizacion;
 import py.gov.itaipu.controlacceso.model.Persona;
 import py.gov.itaipu.controlacceso.model.exception.EntidadExiste;
+import py.gov.itaipu.controlacceso.model.exception.ErrorInesperado;
 import py.gov.itaipu.controlacceso.utils.tree.CustomIconRenderer;
 import py.gov.itaipu.controlacceso.utils.tree.UtilesArbol;
 
@@ -56,52 +57,57 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jScrollPaneOrganigrama = new javax.swing.JScrollPane();
-        jTreeOrganigrama = new javax.swing.JTree();
-        jTextFieldEmpleadoApellido = new javax.swing.JTextField();
-        jButtonPersonaNuevo = new javax.swing.JButton();
-        jTextFieldEmpleadoNombre = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jTextFieldEmpleadoNroDoc = new javax.swing.JTextField();
-        jButtonOrganizacionNuevo = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
-        jTextFieldAreaNombre = new javax.swing.JTextField();
-        jTextFieldEmpleadoOrganizacion = new javax.swing.JTextField();
-        jTextFieldAreaPadreNombre = new javax.swing.JTextField();
-        jButtonGuardarArea = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jButtonGuardarEmpleado = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        try{
+            jTreeOrganigrama = new javax.swing.JTree();
+            jTextFieldEmpleadoApellido = new javax.swing.JTextField();
+            jButtonPersonaNuevo = new javax.swing.JButton();
+            jTextFieldEmpleadoNombre = new javax.swing.JTextField();
+            jLabel1 = new javax.swing.JLabel();
+            jLabel7 = new javax.swing.JLabel();
+            jTextFieldEmpleadoNroDoc = new javax.swing.JTextField();
+            jButtonOrganizacionNuevo = new javax.swing.JButton();
+            jLabel8 = new javax.swing.JLabel();
+            jTextFieldAreaNombre = new javax.swing.JTextField();
+            jTextFieldEmpleadoOrganizacion = new javax.swing.JTextField();
+            jTextFieldAreaPadreNombre = new javax.swing.JTextField();
+            jButtonGuardarArea = new javax.swing.JButton();
+            jLabel2 = new javax.swing.JLabel();
+            jButtonGuardarEmpleado = new javax.swing.JButton();
+            jLabel3 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("ORGANIGRAMA");
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowActivated(java.awt.event.WindowEvent evt) {
-                formWindowActivated(evt);
-            }
-        });
+            setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+            setTitle("ORGANIGRAMA");
+            addWindowListener(new java.awt.event.WindowAdapter() {
+                public void windowActivated(java.awt.event.WindowEvent evt) {
+                    formWindowActivated(evt);
+                }
+            });
 
-        jLabel6.setText("Apellido:");
+            jLabel6.setText("Apellido:");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel4.setText("Empleado");
+            jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+            jLabel4.setText("Empleado");
 
-        jLabel5.setText("Nombre:");
+            jLabel5.setText("Nombre:");
 
-        DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", true);
-        jTreeOrganigrama = new JTree(root);
-        jTreeOrganigrama.setCellRenderer(new CustomIconRenderer());
-        jTreeOrganigrama.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jTreeOrganigramaMousePressed(evt);
-            }
-        });
-        jTreeOrganigrama.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
-            public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
-                jTreeOrganigramaValueChanged(evt);
-            }
-        });
-        jScrollPaneOrganigrama.setViewportView(jTreeOrganigrama);
+            DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", true);
+            jTreeOrganigrama = new JTree(root);
+            jTreeOrganigrama.setCellRenderer(new CustomIconRenderer());
+            jTreeOrganigrama.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mousePressed(java.awt.event.MouseEvent evt) {
+                    jTreeOrganigramaMousePressed(evt);
+                }
+            });
+            jTreeOrganigrama.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+                public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+                    jTreeOrganigramaValueChanged(evt);
+                }
+            });
+            jScrollPaneOrganigrama.setViewportView(jTreeOrganigrama);
+        } catch (py.gov.itaipu.controlacceso.model.exception.ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
 
         jTextFieldEmpleadoApellido.setEditable(false);
 
@@ -356,10 +362,10 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
         if (activa) {
             jTextFieldAreaNombre.setText("");
             jTextFieldAreaNombre.setEditable(true);
-            if (area.getNivelOrganigrama()>1){
+            if (area.getNivelOrganigrama() > 1) {
                 jTextFieldAreaPadreNombre.setText(areaPadre.getNombre());
             }
-            
+
             jButtonGuardarArea.setEnabled(true);
         } else {
             jTextFieldAreaNombre.setText("");
@@ -380,26 +386,29 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
     }
     private void jButtonOrganizacionNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOrganizacionNuevoActionPerformed
         // TODO add your handling code here:
-
-        if (areaPadre == null || !esOrganizacion()) {
-            List<Organizacion> oPadre = organizacionAction.findByNamedQuery("Organizacion.findOrganizacionPadre");
-            if (oPadre.size() > 0) {
-                JOptionPane.showMessageDialog(this, "DEBE SELECCIONAR ORGANIZACION SUPERIOR.", "Error", 0);
-            } else{
+        try {
+            if (areaPadre == null || !esOrganizacion()) {
+                List<Organizacion> oPadre = organizacionAction.findByNamedQuery("Organizacion.findOrganizacionPadre");
+                if (oPadre.size() > 0) {
+                    JOptionPane.showMessageDialog(this, "DEBE SELECCIONAR ORGANIZACION SUPERIOR.", "Error", 0);
+                } else {
+                    area = new Organizacion();
+                    area.setNivelOrganigrama(1L);
+                    manejaOrganizacion(true);
+                    manejaPersona(false);
+                }
+            } else {
                 area = new Organizacion();
-                area.setNivelOrganigrama(1L);
+                area.setOrganizacionPadre(areaPadre);
+                area.setNivelOrganigrama(areaPadre.getNivelOrganigrama() + 1);
                 manejaOrganizacion(true);
                 manejaPersona(false);
+
             }
-        } else {
-            area = new Organizacion();
-            area.setOrganizacionPadre(areaPadre);
-            area.setNivelOrganigrama(areaPadre.getNivelOrganigrama()+1);
-            manejaOrganizacion(true);
-            manejaPersona(false);
-
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
-
     }//GEN-LAST:event_jButtonOrganizacionNuevoActionPerformed
 
     private void jTextFieldAreaNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldAreaNombreActionPerformed
@@ -408,46 +417,57 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
 
     private void jButtonGuardarAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarAreaActionPerformed
         // TODO add your handling code here:
-        if (validarOrganizacion()) {
-            
-            area.setNombre(jTextFieldAreaNombre.getText());
-            area.setTipoOrganizacion("INTERNA");
-            organizacionAction.setEntity(area);
-            try {
-                organizacionAction.crear();
+        try {
+            if (validarOrganizacion()) {
+
+                area.setNombre(jTextFieldAreaNombre.getText());
+                area.setTipoOrganizacion("INTERNA");
+                organizacionAction.setEntity(area);
+                try {
+                    organizacionAction.crear();
 //                areaPadre.getOrganizacionesHijas().add(area);
 
-                JOptionPane.showMessageDialog(this, "Se ha guardado con exito el Area Interna", "Info", 1);
-            } catch (EntidadExiste e) {
-                JOptionPane.showMessageDialog(this, "La organización ya existe", "Error", 0);
-                return;
-            }
-            manejaOrganizacion(false);
-            DefaultMutableTreeNode nodoSeleccionado = (DefaultMutableTreeNode) jTreeOrganigrama.getLastSelectedPathComponent();
-            //                DefaultMutableTreeNode nodoNuevo = new DefaultMutableTreeNode(area,true);
-            //                nodoSeleccionado.add(nodoNuevo);
-            //                jTreeOrganigrama.repaint();
-            actualizarArbol();
-            jTreeOrganigrama.setSelectionPath(new TreePath(nodoSeleccionado.getPath()));
-            jTreeOrganigrama.expandPath(new TreePath(nodoSeleccionado.getPath()));
-            area = null;
-            areaPadre = null;
+                    JOptionPane.showMessageDialog(this, "Se ha guardado con exito el Area Interna", "Info", 1);
+                } catch (EntidadExiste e) {
+                    JOptionPane.showMessageDialog(this, "La organización ya existe", "Error", 0);
+                    return;
+                }
+                manejaOrganizacion(false);
+                DefaultMutableTreeNode nodoSeleccionado = (DefaultMutableTreeNode) jTreeOrganigrama.getLastSelectedPathComponent();
+                //                DefaultMutableTreeNode nodoNuevo = new DefaultMutableTreeNode(area,true);
+                //                nodoSeleccionado.add(nodoNuevo);
+                //                jTreeOrganigrama.repaint();
+                actualizarArbol();
+                jTreeOrganigrama.setSelectionPath(new TreePath(nodoSeleccionado.getPath()));
+                jTreeOrganigrama.expandPath(new TreePath(nodoSeleccionado.getPath()));
+                area = null;
+                areaPadre = null;
 
+            }
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
     }//GEN-LAST:event_jButtonGuardarAreaActionPerformed
     private void actualizarArbol() {
-        DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", true);
-        jTreeOrganigrama = new JTree(root);
-        jTreeOrganigrama.setCellRenderer(new CustomIconRenderer());
-        jTreeOrganigrama.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
-            public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
-                jTreeOrganigramaValueChanged(evt);
-            }
-        });
-        jScrollPaneOrganigrama.setViewportView(jTreeOrganigrama);
+        try {
+            DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", true);
+            jTreeOrganigrama = new JTree(root);
+            jTreeOrganigrama.setCellRenderer(new CustomIconRenderer());
+            jTreeOrganigrama.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+                public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+                    jTreeOrganigramaValueChanged(evt);
+                }
+            });
+            jScrollPaneOrganigrama.setViewportView(jTreeOrganigrama);
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
     }
     private void jButtonGuardarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarEmpleadoActionPerformed
         // TODO add your handling code here:
+        try{
         if (validarPersona()) {
             persona.setNombre(jTextFieldEmpleadoNombre.getText());
             persona.setApellido(jTextFieldEmpleadoApellido.getText());
@@ -455,12 +475,12 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
             personaAction.setPersona(persona);
             try {
                 personaAction.crear();
-                   JOptionPane.showMessageDialog(this, "Se ha guardado con exito los Datos del Empleado", "Info", 1);
+                JOptionPane.showMessageDialog(this, "Se ha guardado con exito los Datos del Empleado", "Info", 1);
             } catch (EntidadExiste e) {
                 JOptionPane.showMessageDialog(this, "La persona ya existe", "Error", 0);
                 return;
             }
-         
+
 
             manejaPersona(false);
 
@@ -473,6 +493,10 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
             jTreeOrganigrama.expandPath(new TreePath(nodoSeleccionado.getPath()));
             persona = null;
 
+        }
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
     }//GEN-LAST:event_jButtonGuardarEmpleadoActionPerformed
 

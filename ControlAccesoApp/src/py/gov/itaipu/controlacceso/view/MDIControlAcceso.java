@@ -7,6 +7,8 @@ package py.gov.itaipu.controlacceso.view;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import py.gov.itaipu.controlacceso.view.persona.JInternalFramePersona;
 import javax.persistence.EntityManager;
 import javax.swing.JOptionPane;
@@ -18,6 +20,7 @@ import py.gov.itaipu.controlacceso.action.visita.VisitaAction;
 import py.gov.itaipu.controlacceso.model.Persona;
 import py.gov.itaipu.controlacceso.model.TipoDocumento;
 import py.gov.itaipu.controlacceso.model.Visita;
+import py.gov.itaipu.controlacceso.model.exception.ErrorInesperado;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 import py.gov.itaipu.controlacceso.utils.windows.WindowUtil;
 import py.gov.itaipu.controlacceso.view.administracion.organizacion.JDialogOrganigrama;
@@ -52,24 +55,29 @@ public class MDIControlAcceso extends javax.swing.JFrame {
     private PersonaAction personaAction;
     private TableCellRenderer rendererTime;
     private CRUDAction<TipoDocumento> tipoDocAction;
-    
+
     /**
      * Creates new form MDIControlAcceso
      */
     public MDIControlAcceso() {
-        visitaAction=new VisitaAction();
-        visitaAction.setVisita(new Visita());   
-        rendererTime = new TimeRenderer();
-        tipoDocAction = new CRUDAction(new TipoDocumento());
-        personaAction= new PersonaAction();
-        personaAction.setPersona(new Persona());
-        initComponents();
-        jComboBoxTipoDoc.setVisible(false);
-        jLabelTipoDeDoc.setVisible(false);
-        jButtonNuevoTipoDoc.setVisible(false);
-        jButtonEditTipoDoc.setVisible(false);
-        jComboBoxTipoDoc.setSelectedItem(tipoDocAction.findByNamedQuery("TipoDocumento.findCI").get(0));
-        this.menuBar.setVisible(false);
+        try {
+            visitaAction = new VisitaAction();
+            visitaAction.setVisita(new Visita());
+            rendererTime = new TimeRenderer();
+            tipoDocAction = new CRUDAction(new TipoDocumento());
+            personaAction = new PersonaAction();
+            personaAction.setPersona(new Persona());
+            initComponents();
+            jComboBoxTipoDoc.setVisible(false);
+            jLabelTipoDeDoc.setVisible(false);
+            jButtonNuevoTipoDoc.setVisible(false);
+            jButtonEditTipoDoc.setVisible(false);
+            jComboBoxTipoDoc.setSelectedItem(tipoDocAction.findByNamedQuery("TipoDocumento.findCI").get(0));
+            this.menuBar.setVisible(false);
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
         //        setExtendedState(MAXIMIZED_BOTH);
     }
 
@@ -83,69 +91,81 @@ public class MDIControlAcceso extends javax.swing.JFrame {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        listVisitas = ObservableCollections.observableList(visitaAction.findVisitasPendientes());
-        buttonGroupExtranjero = new javax.swing.ButtonGroup();
-        listTipoDocumento = ObservableCollections.observableList(tipoDocAction.findAll());
-        jPanel1 = new javax.swing.JPanel();
-        jLabelDocNro = new javax.swing.JLabel();
-        jTextFieldDocumentoPersona = new javax.swing.JTextField();
-        jSeparator1 = new javax.swing.JSeparator();
-        jLabelPersonaVisitada2 = new javax.swing.JLabel();
-        jLabelPersonaVisitada1 = new javax.swing.JLabel();
-        jSeparator5 = new javax.swing.JSeparator();
-        jLabelDocNro1 = new javax.swing.JLabel();
-        jTextFieldNroTicket = new javax.swing.JTextField();
-        jLabelPersonaVisitada3 = new javax.swing.JLabel();
-        jSeparator3 = new javax.swing.JSeparator();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableVisitas = new javax.swing.JTable();
-        jRadioButtonNacional = new javax.swing.JRadioButton();
-        jRadioButtonExtranjero = new javax.swing.JRadioButton();
-        jLabelTipoDeDoc = new javax.swing.JLabel();
-        jComboBoxTipoDoc = new javax.swing.JComboBox();
-        jLabelPersonaVisitada4 = new javax.swing.JLabel();
-        jSeparator4 = new javax.swing.JSeparator();
-        jButtonVisitantes = new javax.swing.JButton();
-        jButtonReportes = new javax.swing.JButton();
-        jButtonOrganigrama = new javax.swing.JButton();
-        jButtonVisitas = new javax.swing.JButton();
-        jLabelPersonaVisitada5 = new javax.swing.JLabel();
-        jSeparator6 = new javax.swing.JSeparator();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jButtonReporteGeneral = new javax.swing.JButton();
-        jButtonReporteVisitasPorVisitante = new javax.swing.JButton();
-        jButtonReporteVisitasPorArea = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jButtonReporteVisitasPorPersona1 = new javax.swing.JButton();
-        jButtonReporteVisitasPorPersona2 = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
-        jButtonNuevoTipoDoc = new javax.swing.JButton();
-        jButtonEditTipoDoc = new javax.swing.JButton();
-        menuBar = new javax.swing.JMenuBar();
-        jMenuPersona = new javax.swing.JMenu();
-        jMenuItemRegistro = new javax.swing.JMenuItem();
-        jMenuVisita = new javax.swing.JMenu();
-        jMenuItemRegistroVisita = new javax.swing.JMenuItem();
-        jMenuItemConsultaVisita = new javax.swing.JMenuItem();
-        jMenuAdministracion = new javax.swing.JMenu();
-        jMenuParametroGeneral = new javax.swing.JMenu();
-        jMenuItemMotivoVisita = new javax.swing.JMenuItem();
-        jMenuItemEstado = new javax.swing.JMenuItem();
-        jMenuItemAntecedente = new javax.swing.JMenuItem();
-        jMenuItemTipoDocumento = new javax.swing.JMenuItem();
-        jMenuItemNacionalidad = new javax.swing.JMenuItem();
-        jMenuOrganizacion = new javax.swing.JMenu();
-        jMenuItemOrganizacionInterna = new javax.swing.JMenuItem();
-        jMenuItemOrganizacionExterna = new javax.swing.JMenuItem();
-        helpMenu = new javax.swing.JMenu();
-        contentMenuItem = new javax.swing.JMenuItem();
-        aboutMenuItem = new javax.swing.JMenuItem();
+        try{
+            listVisitas = ObservableCollections.observableList(visitaAction.findVisitasPendientes());
+            buttonGroupExtranjero = new javax.swing.ButtonGroup();
+            try{
+                listTipoDocumento = ObservableCollections.observableList(tipoDocAction.findAll());
+                jPanel1 = new javax.swing.JPanel();
+                jLabelDocNro = new javax.swing.JLabel();
+                jTextFieldDocumentoPersona = new javax.swing.JTextField();
+                jSeparator1 = new javax.swing.JSeparator();
+                jLabelPersonaVisitada2 = new javax.swing.JLabel();
+                jLabelPersonaVisitada1 = new javax.swing.JLabel();
+                jSeparator5 = new javax.swing.JSeparator();
+                jLabelDocNro1 = new javax.swing.JLabel();
+                jTextFieldNroTicket = new javax.swing.JTextField();
+                jLabelPersonaVisitada3 = new javax.swing.JLabel();
+                jSeparator3 = new javax.swing.JSeparator();
+                jScrollPane1 = new javax.swing.JScrollPane();
+                jTableVisitas = new javax.swing.JTable();
+                jRadioButtonNacional = new javax.swing.JRadioButton();
+                jRadioButtonExtranjero = new javax.swing.JRadioButton();
+                jLabelTipoDeDoc = new javax.swing.JLabel();
+                jComboBoxTipoDoc = new javax.swing.JComboBox();
+                jLabelPersonaVisitada4 = new javax.swing.JLabel();
+                jSeparator4 = new javax.swing.JSeparator();
+                jButtonVisitantes = new javax.swing.JButton();
+                jButtonReportes = new javax.swing.JButton();
+                jButtonOrganigrama = new javax.swing.JButton();
+                jButtonVisitas = new javax.swing.JButton();
+                jLabelPersonaVisitada5 = new javax.swing.JLabel();
+                jSeparator6 = new javax.swing.JSeparator();
+                jLabel1 = new javax.swing.JLabel();
+                jLabel2 = new javax.swing.JLabel();
+                jLabel3 = new javax.swing.JLabel();
+                jLabel4 = new javax.swing.JLabel();
+                jButtonReporteGeneral = new javax.swing.JButton();
+                jButtonReporteVisitasPorVisitante = new javax.swing.JButton();
+                jButtonReporteVisitasPorArea = new javax.swing.JButton();
+                jLabel5 = new javax.swing.JLabel();
+                jLabel6 = new javax.swing.JLabel();
+                jLabel7 = new javax.swing.JLabel();
+                jLabel8 = new javax.swing.JLabel();
+                jButtonReporteVisitasPorPersona1 = new javax.swing.JButton();
+                jButtonReporteVisitasPorPersona2 = new javax.swing.JButton();
+                jLabel9 = new javax.swing.JLabel();
+                jButtonNuevoTipoDoc = new javax.swing.JButton();
+                jButtonEditTipoDoc = new javax.swing.JButton();
+                menuBar = new javax.swing.JMenuBar();
+                jMenuPersona = new javax.swing.JMenu();
+                jMenuItemRegistro = new javax.swing.JMenuItem();
+                jMenuVisita = new javax.swing.JMenu();
+                jMenuItemRegistroVisita = new javax.swing.JMenuItem();
+                jMenuItemConsultaVisita = new javax.swing.JMenuItem();
+                jMenuAdministracion = new javax.swing.JMenu();
+                jMenuParametroGeneral = new javax.swing.JMenu();
+                jMenuItemMotivoVisita = new javax.swing.JMenuItem();
+                jMenuItemEstado = new javax.swing.JMenuItem();
+                jMenuItemAntecedente = new javax.swing.JMenuItem();
+                jMenuItemTipoDocumento = new javax.swing.JMenuItem();
+                jMenuItemNacionalidad = new javax.swing.JMenuItem();
+                jMenuOrganizacion = new javax.swing.JMenu();
+                jMenuItemOrganizacionInterna = new javax.swing.JMenuItem();
+                jMenuItemOrganizacionExterna = new javax.swing.JMenuItem();
+                helpMenu = new javax.swing.JMenu();
+                contentMenuItem = new javax.swing.JMenuItem();
+                aboutMenuItem = new javax.swing.JMenuItem();
+
+            } catch (py.gov.itaipu.controlacceso.model.exception.ErrorInesperado ei) {
+                JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+                System.exit(-1);
+            }
+
+        }catch (py.gov.itaipu.controlacceso.model.exception.ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de control de acceso");
@@ -724,8 +744,8 @@ public class MDIControlAcceso extends javax.swing.JFrame {
 //        
         JDialogPersonaPrincipal dialogPersona = new JDialogPersonaPrincipal(null, false);
         dialogPersona.setVisible(true);
-        
-        
+
+
     }//GEN-LAST:event_jMenuItemRegistroActionPerformed
 
     private void jMenuItemOrganizacionInternaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemOrganizacionInternaActionPerformed
@@ -762,67 +782,78 @@ public class MDIControlAcceso extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldNroTicketActionPerformed
 
     private void jTextFieldNroTicketKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldNroTicketKeyPressed
-        // TODO add your handling code here:       
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (jTextFieldNroTicket.getText() != null && !jTextFieldNroTicket.getText().equals("")) {
-                Visita v = visitaAction.findPendienteById(Long.parseLong(jTextFieldNroTicket.getText()));
-                if(v==null){
-                    JOptionPane.showMessageDialog(this, "No existe la visita.", "Error", 0);
-                    return;
-                }
-                Calendar c = Calendar.getInstance();
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-                if (JOptionPane.showConfirmDialog(this, "Está seguro que desea marcar la salida de "
-                        + v.getPersona().getNombre()
-                        + " " + v.getPersona().getApellido()
-                        + ", a las: " + sdf.format(c.getTime())
-                        + "?", "Registro de salida", 0) != 0) {
-                    return;
-                }
+        // TODO add your handling code here:  
+        try {
+            if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                if (jTextFieldNroTicket.getText() != null && !jTextFieldNroTicket.getText().equals("")) {
+                    Visita v = visitaAction.findPendienteById(Long.parseLong(jTextFieldNroTicket.getText()));
+                    if (v == null) {
+                        JOptionPane.showMessageDialog(this, "No existe la visita.", "Error", 0);
+                        return;
+                    }
+                    Calendar c = Calendar.getInstance();
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                    if (JOptionPane.showConfirmDialog(this, "Está seguro que desea marcar la salida de "
+                            + v.getPersona().getNombre()
+                            + " " + v.getPersona().getApellido()
+                            + ", a las: " + sdf.format(c.getTime())
+                            + "?", "Registro de salida", 0) != 0) {
+                        return;
+                    }
 
-                v.setFechaSalida(c.getTime());
-                visitaAction.setVisita(v);
-                visitaAction.guardar();
-                listVisitas.clear();
-                listVisitas.addAll(visitaAction.findVisitasPendientes());
-                JOptionPane.showMessageDialog(this, "Se ha registrado la salida correctamente", "Info", 1);
-                jTextFieldNroTicket.setText(null);
+                    v.setFechaSalida(c.getTime());
+                    visitaAction.setVisita(v);
+                    visitaAction.guardar();
+                    listVisitas.clear();
+                    listVisitas.addAll(visitaAction.findVisitasPendientes());
+                    JOptionPane.showMessageDialog(this, "Se ha registrado la salida correctamente", "Info", 1);
+                    jTextFieldNroTicket.setText(null);
+                }
             }
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
     }//GEN-LAST:event_jTextFieldNroTicketKeyPressed
 
     private void jTextFieldDocumentoPersonaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldDocumentoPersonaKeyPressed
         // TODO add your handling code here:
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER && jTextFieldDocumentoPersona.getText()!=null && !jTextFieldDocumentoPersona.getText().equals("")) {
-            // Enter was pressed. Your code goes here.
-            JDialogVisita dialogVisita = new JDialogVisita(this, rootPaneCheckingEnabled);
-            WindowUtil.centerWindow(dialogVisita);
-            dialogVisita.setVisita(new Visita());
-            
-            
-            if(personaAction.findByNumeroDocumento(jTextFieldDocumentoPersona.getText(),(TipoDocumento) jComboBoxTipoDoc.getSelectedItem()).size()<1){
-                if (JOptionPane.showConfirmDialog(this, "La persona no existe, desea registrarla?", "Persona no registrada", 0) != 0) {
-                    return;
+        try {
+            if (evt.getKeyCode() == KeyEvent.VK_ENTER && jTextFieldDocumentoPersona.getText() != null && !jTextFieldDocumentoPersona.getText().equals("")) {
+                // Enter was pressed. Your code goes here.
+                JDialogVisita dialogVisita = new JDialogVisita(this, rootPaneCheckingEnabled);
+                WindowUtil.centerWindow(dialogVisita);
+                dialogVisita.setVisita(new Visita());
+
+
+                if (personaAction.findByNumeroDocumento(jTextFieldDocumentoPersona.getText(), (TipoDocumento) jComboBoxTipoDoc.getSelectedItem()).size() < 1) {
+                    if (JOptionPane.showConfirmDialog(this, "La persona no existe, desea registrarla?", "Persona no registrada", 0) != 0) {
+                        return;
+                    }
+                    JDialogPersona dialogPersona = new JDialogPersona(null, rootPaneCheckingEnabled);
+                    dialogPersona.getjTextFieldNroDoc().setText(jTextFieldDocumentoPersona.getText());
+                    dialogPersona.getjTextFieldNroDoc().setEditable(false);
+                    dialogPersona.getjComboBoxTipoDocumento().setSelectedItem(jComboBoxTipoDoc.getSelectedItem());
+                    dialogPersona.getjComboBoxTipoDocumento().setEnabled(false);
+                    WindowUtil.centerWindow(dialogPersona);
+                    dialogPersona.setVisible(true);
+                    listTipoDocumento.clear();
+                    listTipoDocumento.addAll(tipoDocAction.findAll());
+                    jComboBoxTipoDoc.setSelectedItem(dialogPersona.getjComboBoxTipoDocumento().getSelectedItem());
                 }
-                JDialogPersona dialogPersona = new JDialogPersona(null, rootPaneCheckingEnabled);
-                dialogPersona.getjTextFieldNroDoc().setText(jTextFieldDocumentoPersona.getText());
-                dialogPersona.getjTextFieldNroDoc().setEditable(false);
-                dialogPersona.getjComboBoxTipoDocumento().setSelectedItem(jComboBoxTipoDoc.getSelectedItem());
-                dialogPersona.getjComboBoxTipoDocumento().setEnabled(false);
-                WindowUtil.centerWindow(dialogPersona);
-                dialogPersona.setVisible(true);
-                listTipoDocumento.clear();
-                listTipoDocumento.addAll(tipoDocAction.findAll());
-                jComboBoxTipoDoc.setSelectedItem(dialogPersona.getjComboBoxTipoDocumento().getSelectedItem());
+
+                dialogVisita.getjTextFieldDocumentoPersona().setText(jTextFieldDocumentoPersona.getText());
+                dialogVisita.getjComboBoxTipoDoc().setSelectedItem(jComboBoxTipoDoc.getSelectedItem());
+                dialogVisita.actualizarDatos();
+                if (dialogVisita.getPersona().getId() != null) {
+                    dialogVisita.setVisible(true);
+                }
+                listVisitas.clear();
+                listVisitas.addAll(visitaAction.findVisitasPendientes());
             }
-            
-            dialogVisita.getjTextFieldDocumentoPersona().setText(jTextFieldDocumentoPersona.getText());
-            dialogVisita.getjComboBoxTipoDoc().setSelectedItem(jComboBoxTipoDoc.getSelectedItem());
-            dialogVisita.actualizarDatos();
-            if(dialogVisita.getPersona().getId()!=null)
-                dialogVisita.setVisible(true);
-            listVisitas.clear();
-            listVisitas.addAll(visitaAction.findVisitasPendientes());
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
     }//GEN-LAST:event_jTextFieldDocumentoPersonaKeyPressed
 
@@ -836,11 +867,16 @@ public class MDIControlAcceso extends javax.swing.JFrame {
 
     private void jRadioButtonNacionalItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioButtonNacionalItemStateChanged
         // TODO add your handling code here:
-        jComboBoxTipoDoc.setVisible(false);
-        jLabelTipoDeDoc.setVisible(false);
-        jButtonEditTipoDoc.setVisible(false);
-        jButtonNuevoTipoDoc.setVisible(false);
-        jComboBoxTipoDoc.setSelectedItem(tipoDocAction.findByNamedQuery("TipoDocumento.findCI").get(0));
+        try {
+            jComboBoxTipoDoc.setVisible(false);
+            jLabelTipoDeDoc.setVisible(false);
+            jButtonEditTipoDoc.setVisible(false);
+            jButtonNuevoTipoDoc.setVisible(false);
+            jComboBoxTipoDoc.setSelectedItem(tipoDocAction.findByNamedQuery("TipoDocumento.findCI").get(0));
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
     }//GEN-LAST:event_jRadioButtonNacionalItemStateChanged
 
     private void jButtonReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReportesActionPerformed
@@ -855,7 +891,7 @@ public class MDIControlAcceso extends javax.swing.JFrame {
         JDialogConsultaVisitas visitas = new JDialogConsultaVisitas(this, rootPaneCheckingEnabled);
         WindowUtil.centerWindow(visitas);
         visitas.setVisible(true);
-        
+
     }//GEN-LAST:event_jButtonVisitasActionPerformed
 
     private void jButtonVisitantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVisitantesActionPerformed
@@ -909,30 +945,38 @@ public class MDIControlAcceso extends javax.swing.JFrame {
 
     private void jButtonNuevoTipoDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoTipoDocActionPerformed
         // TODO add your handling code here:
-        TipoDocumento td = (TipoDocumento) jComboBoxTipoDoc.getSelectedItem();
-        JDialogTipoDocumento dialogTipoDocumento = new JDialogTipoDocumento(null, rootPaneCheckingEnabled);
-        dialogTipoDocumento.setTipoDocumento(new TipoDocumento());
-        WindowUtil.centerWindow(dialogTipoDocumento);
-        dialogTipoDocumento.setVisible(true);
-        listTipoDocumento.clear();
-        listTipoDocumento.addAll(tipoDocAction.findAll());
-        if (dialogTipoDocumento.getTipoDocumento().getId()!=null) {
-            jComboBoxTipoDoc.setSelectedItem(dialogTipoDocumento.getTipoDocumento());
-        }else{
-            jComboBoxTipoDoc.setSelectedItem(td);
+        try {
+            TipoDocumento td = (TipoDocumento) jComboBoxTipoDoc.getSelectedItem();
+            JDialogTipoDocumento dialogTipoDocumento = new JDialogTipoDocumento(null, rootPaneCheckingEnabled);
+            dialogTipoDocumento.setTipoDocumento(new TipoDocumento());
+            WindowUtil.centerWindow(dialogTipoDocumento);
+            dialogTipoDocumento.setVisible(true);
+            listTipoDocumento.clear();
+            listTipoDocumento.addAll(tipoDocAction.findAll());
+            if (dialogTipoDocumento.getTipoDocumento().getId() != null) {
+                jComboBoxTipoDoc.setSelectedItem(dialogTipoDocumento.getTipoDocumento());
+            } else {
+                jComboBoxTipoDoc.setSelectedItem(td);
+            }
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
     }//GEN-LAST:event_jButtonNuevoTipoDocActionPerformed
 
     private void jButtonEditTipoDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditTipoDocActionPerformed
-        // TODO add your handling code here:
-        // TODO add your handling code here:
-        JDialogTipoDocumento dialogTipoDocumento = new JDialogTipoDocumento(null, rootPaneCheckingEnabled);
-        dialogTipoDocumento.setTipoDocumento((TipoDocumento)jComboBoxTipoDoc.getSelectedItem());
-        WindowUtil.centerWindow(dialogTipoDocumento);
-        dialogTipoDocumento.setVisible(true);
-        listTipoDocumento.clear();
-        listTipoDocumento.addAll(tipoDocAction.findAll());
-        jComboBoxTipoDoc.setSelectedItem(dialogTipoDocumento.getTipoDocumento());
+        try {
+            JDialogTipoDocumento dialogTipoDocumento = new JDialogTipoDocumento(null, rootPaneCheckingEnabled);
+            dialogTipoDocumento.setTipoDocumento((TipoDocumento) jComboBoxTipoDoc.getSelectedItem());
+            WindowUtil.centerWindow(dialogTipoDocumento);
+            dialogTipoDocumento.setVisible(true);
+            listTipoDocumento.clear();
+            listTipoDocumento.addAll(tipoDocAction.findAll());
+            jComboBoxTipoDoc.setSelectedItem(dialogTipoDocumento.getTipoDocumento());
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
     }//GEN-LAST:event_jButtonEditTipoDocActionPerformed
 
     /**

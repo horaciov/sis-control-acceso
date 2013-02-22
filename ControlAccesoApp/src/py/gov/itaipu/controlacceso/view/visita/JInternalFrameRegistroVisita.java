@@ -34,32 +34,30 @@ import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.action.visita.VisitaAction;
 import py.gov.itaipu.controlacceso.model.Motivo;
 import py.gov.itaipu.controlacceso.model.Visita;
+import py.gov.itaipu.controlacceso.model.exception.ErrorInesperado;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 import py.gov.itaipu.controlacceso.view.TimeRenderer;
 import py.gov.itaipu.controlacceso.view.persona.JInternalFramePersona;
-
 
 /**
  *
  * @author vimartih
  */
 public class JInternalFrameRegistroVisita extends javax.swing.JInternalFrame {
-   
-    
+
     private VisitaAction visitaAction;
     private TableCellRenderer rendererTime;
-    
-    
+
     /**
      * Creates new form JInternalFrameMotivo
      */
     public JInternalFrameRegistroVisita() {
         setClosable(true);
-        visitaAction=new VisitaAction();
-        visitaAction.setVisita(new Visita());       
-        rendererTime=new TimeRenderer();
-        initComponents();      
-        
+        visitaAction = new VisitaAction();
+        visitaAction.setVisita(new Visita());
+        rendererTime = new TimeRenderer();
+        initComponents();
+
     }
 
     /**
@@ -72,18 +70,24 @@ public class JInternalFrameRegistroVisita extends javax.swing.JInternalFrame {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        listVisitas = ObservableCollections.observableList(visitaAction.findVisitasPendientes());
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableVisitas = new javax.swing.JTable();
-        jButtonVer = new javax.swing.JButton();
-        jButtonCerrar = new javax.swing.JButton();
-        jButtonAnular = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
-        jPanel1 = new javax.swing.JPanel();
-        jButtonRegistroSalida = new javax.swing.JButton();
-        jButtonNuevo = new javax.swing.JButton();
-        jButtonImprimirVisita = new javax.swing.JButton();
+        try{
+            listVisitas = ObservableCollections.observableList(visitaAction.findVisitasPendientes());
+            jScrollPane1 = new javax.swing.JScrollPane();
+            jTableVisitas = new javax.swing.JTable();
+            jButtonVer = new javax.swing.JButton();
+            jButtonCerrar = new javax.swing.JButton();
+            jButtonAnular = new javax.swing.JButton();
+            jLabel1 = new javax.swing.JLabel();
+            jSeparator1 = new javax.swing.JSeparator();
+            jPanel1 = new javax.swing.JPanel();
+            jButtonRegistroSalida = new javax.swing.JButton();
+            jButtonNuevo = new javax.swing.JButton();
+            jButtonImprimirVisita = new javax.swing.JButton();
+
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
 
         setTitle("Gestión de visitas");
 
@@ -222,7 +226,7 @@ public class JInternalFrameRegistroVisita extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 541, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -242,12 +246,16 @@ public class JInternalFrameRegistroVisita extends javax.swing.JInternalFrame {
 
     private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
         // TODO add your handling code here:    
-        JDialogVisita dialogVisita = new JDialogVisita(null, closable);
-        dialogVisita.setVisita(new Visita());
-        dialogVisita.setVisible(true);
-        listVisitas.clear();
-        listVisitas.addAll(visitaAction.findVisitasPendientes());
-
+        try {
+            JDialogVisita dialogVisita = new JDialogVisita(null, closable);
+            dialogVisita.setVisita(new Visita());
+            dialogVisita.setVisible(true);
+            listVisitas.clear();
+            listVisitas.addAll(visitaAction.findVisitasPendientes());
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
     }//GEN-LAST:event_jButtonNuevoActionPerformed
 
     private void jButtonVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerActionPerformed
@@ -256,31 +264,37 @@ public class JInternalFrameRegistroVisita extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Debe seleccionar una visita", "Error", 0);
             return;
         }
-        Visita v=(Visita) listVisitas.get(jTableVisitas.getSelectedRow());
+        Visita v = (Visita) listVisitas.get(jTableVisitas.getSelectedRow());
         JDialogVisita dialogVisita = new JDialogVisita(null, closable);
         dialogVisita.setVisita(v);
         dialogVisita.cargarDatosVisita();
         dialogVisita.setReadOnly(true);
         dialogVisita.setVisible(true);
-       
+
     }//GEN-LAST:event_jButtonVerActionPerformed
 
     private void jButtonAnularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnularActionPerformed
         // TODO add your handling code here:
-        if (jTableVisitas.getSelectedRow() < 0) {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar una visita", "Error", 0);
-            return;
+        try {
+            if (jTableVisitas.getSelectedRow() < 0) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar una visita", "Error", 0);
+                return;
+            }
+
+            if (JOptionPane.showConfirmDialog(this, "Está seguro que desea Anular?", "Anular Visita", 0) != 0) {
+                return;
+            }
+            Visita v = (Visita) listVisitas.get(jTableVisitas.getSelectedRow());
+            visitaAction.setVisita(v);
+            visitaAction.anular();
+            //        visitaAction.eliminar();
+            listVisitas.clear();
+            listVisitas.addAll(visitaAction.findVisitasPendientes());
+            JOptionPane.showMessageDialog(this, "Se ha Anulado correctamente", "Info", 1);
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
-        
-        if(JOptionPane.showConfirmDialog(this,"Está seguro que desea Anular?","Anular Visita",0)!=0)
-            return;       
-        Visita v = (Visita) listVisitas.get(jTableVisitas.getSelectedRow());
-        visitaAction.setVisita(v);
-        visitaAction.anular();
-        //        visitaAction.eliminar();
-        listVisitas.clear();
-        listVisitas.addAll(visitaAction.findVisitasPendientes());
-        JOptionPane.showMessageDialog(this, "Se ha Anulado correctamente","Info",1);
     }//GEN-LAST:event_jButtonAnularActionPerformed
 
     private void jButtonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarActionPerformed
@@ -290,39 +304,44 @@ public class JInternalFrameRegistroVisita extends javax.swing.JInternalFrame {
 
     private void jButtonRegistroSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistroSalidaActionPerformed
         // TODO add your handling code here:
-        if(jTableVisitas.getSelectedRow()<0){
-            JOptionPane.showMessageDialog(this, "Debe seleccionar una visita","Error",0);
-            return;
+        try {
+            if (jTableVisitas.getSelectedRow() < 0) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar una visita", "Error", 0);
+                return;
+            }
+            Calendar c = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+            Visita v = (Visita) listVisitas.get(jTableVisitas.getSelectedRow());
+            if (JOptionPane.showConfirmDialog(this, "Está seguro que desea marcar la salida de "
+                    + v.getPersona().getNombre()
+                    + " " + v.getPersona().getApellido()
+                    + ", a las: " + sdf.format(c.getTime())
+                    + "?", "Registro de salida", 0) != 0) {
+                return;
+            }
+
+            v.setFechaSalida(c.getTime());
+            visitaAction.setVisita(v);
+            visitaAction.guardar();
+            listVisitas.clear();
+            listVisitas.addAll(visitaAction.findVisitasPendientes());
+
+            JOptionPane.showMessageDialog(this, "Se ha registrado la salida correctamente", "Info", 1);
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
-        Calendar c= Calendar.getInstance();
-        SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        
-        Visita v=(Visita) listVisitas.get(jTableVisitas.getSelectedRow());
-        if(JOptionPane.showConfirmDialog(this,"Está seguro que desea marcar la salida de " 
-                +v.getPersona().getNombre()+
-                " "+v.getPersona().getApellido()+
-                ", a las: "+sdf.format(c.getTime())
-                +
-                "?","Registro de salida",0)!=0)
-            return;   
-        
-        v.setFechaSalida(c.getTime());
-        visitaAction.setVisita(v);
-        visitaAction.guardar();
-        listVisitas.clear();
-        listVisitas.addAll(visitaAction.findVisitasPendientes());
-        
-        JOptionPane.showMessageDialog(this, "Se ha registrado la salida correctamente","Info",1);
     }//GEN-LAST:event_jButtonRegistroSalidaActionPerformed
 
     private void jButtonImprimirVisitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImprimirVisitaActionPerformed
         // TODO add your handling code here:
-       if (jTableVisitas.getSelectedRow() < 0) {
+        if (jTableVisitas.getSelectedRow() < 0) {
             JOptionPane.showMessageDialog(this, "Debe seleccionar una visita", "Error", 0);
             return;
         }
         Visita v = (Visita) listVisitas.get(jTableVisitas.getSelectedRow());
-       try {
+        try {
 
             Class.forName("org.postgresql.Driver");
             Connection conexion = EntityManagerCA.getConexion();
@@ -332,7 +351,7 @@ public class JInternalFrameRegistroVisita extends javax.swing.JInternalFrame {
             parametros.put("idVis", (Object) v.getId());
             //Paso el full path del proyecto
             java.io.File file = new java.io.File("");   //Dummy file
-            String abspath=file.getAbsolutePath()+"/";
+            String abspath = file.getAbsolutePath() + "/";
             parametros.put("pathImagen", (Object) abspath);
 //                //Fotografia
 //                ByteArrayInputStream bis = new ByteArrayInputStream(visita.getPersona().getFotografia());
@@ -359,9 +378,6 @@ public class JInternalFrameRegistroVisita extends javax.swing.JInternalFrame {
         }
 
     }//GEN-LAST:event_jButtonImprimirVisitaActionPerformed
-    
-    
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAnular;
     private javax.swing.JButton jButtonCerrar;

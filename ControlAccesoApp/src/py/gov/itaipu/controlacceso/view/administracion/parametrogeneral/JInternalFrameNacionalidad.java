@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import org.jdesktop.observablecollections.ObservableCollections;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.model.Nacionalidad;
+import py.gov.itaipu.controlacceso.model.exception.ErrorInesperado;
 
 /**
  *
@@ -16,10 +17,9 @@ import py.gov.itaipu.controlacceso.model.Nacionalidad;
  */
 public class JInternalFrameNacionalidad extends javax.swing.JInternalFrame {
 
-     private CRUDAction<Nacionalidad> nacionalidadAction;
-     private Nacionalidad nacionalidad;
-    
-    
+    private CRUDAction<Nacionalidad> nacionalidadAction;
+    private Nacionalidad nacionalidad;
+
     /**
      * Creates new form JInternalFrameNacionalidad
      */
@@ -40,13 +40,19 @@ public class JInternalFrameNacionalidad extends javax.swing.JInternalFrame {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        listaNacionalidad = ObservableCollections.observableList(nacionalidadAction.findAll());
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableNacionalidad = new javax.swing.JTable();
-        jButtonNuevo = new javax.swing.JButton();
-        jButtonEditar = new javax.swing.JButton();
-        jButtonEliminar1 = new javax.swing.JButton();
-        jButtonVer = new javax.swing.JButton();
+        try{
+            listaNacionalidad = ObservableCollections.observableList(nacionalidadAction.findAll());
+            jScrollPane1 = new javax.swing.JScrollPane();
+            jTableNacionalidad = new javax.swing.JTable();
+            jButtonNuevo = new javax.swing.JButton();
+            jButtonEditar = new javax.swing.JButton();
+            jButtonEliminar1 = new javax.swing.JButton();
+            jButtonVer = new javax.swing.JButton();
+
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
 
         setClosable(true);
         setForeground(java.awt.Color.white);
@@ -136,7 +142,7 @@ public class JInternalFrameNacionalidad extends javax.swing.JInternalFrame {
                     .addComponent(jButtonEliminar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonVer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -146,66 +152,79 @@ public class JInternalFrameNacionalidad extends javax.swing.JInternalFrame {
 
     private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
         // TODO add your handling code here:
-         nacionalidad = new Nacionalidad();   
-         JDialogoNacionalidad dialogoNuevo = new JDialogoNacionalidad(null, closable);
-         dialogoNuevo.setNacionalidad(nacionalidad);
-         dialogoNuevo.setTitle("Nueva Nacionalidad");
-         dialogoNuevo.setVisible(true);
-         listaNacionalidad.clear();
-         listaNacionalidad.addAll(nacionalidadAction.findAll());
-        
-         
-         
+        try {
+            nacionalidad = new Nacionalidad();
+            JDialogoNacionalidad dialogoNuevo = new JDialogoNacionalidad(null, closable);
+            dialogoNuevo.setNacionalidad(nacionalidad);
+            dialogoNuevo.setTitle("Nueva Nacionalidad");
+            dialogoNuevo.setVisible(true);
+            listaNacionalidad.clear();
+            listaNacionalidad.addAll(nacionalidadAction.findAll());
+
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
+
     }//GEN-LAST:event_jButtonNuevoActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         // TODO add your handling code here:
-        if(jTableNacionalidad.getSelectedRow()<0){
-            JOptionPane.showMessageDialog(this, "Debe seleccionar una Nacionalidad","Error",0);
-            return;
-        } 
-         nacionalidad = (Nacionalidad) listaNacionalidad.get(jTableNacionalidad.getSelectedRow());
-         JDialogoNacionalidad dialogoNuevo = new JDialogoNacionalidad(null, closable);
-         dialogoNuevo.setNacionalidad(nacionalidad);
-         dialogoNuevo.setTitle("Editar Nacionalidad");
-         dialogoNuevo.setVisible(true);
-         listaNacionalidad.clear();
-         listaNacionalidad.addAll(nacionalidadAction.findAll());
-        
+        try {
+            if (jTableNacionalidad.getSelectedRow() < 0) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar una Nacionalidad", "Error", 0);
+                return;
+            }
+            nacionalidad = (Nacionalidad) listaNacionalidad.get(jTableNacionalidad.getSelectedRow());
+            JDialogoNacionalidad dialogoNuevo = new JDialogoNacionalidad(null, closable);
+            dialogoNuevo.setNacionalidad(nacionalidad);
+            dialogoNuevo.setTitle("Editar Nacionalidad");
+            dialogoNuevo.setVisible(true);
+            listaNacionalidad.clear();
+            listaNacionalidad.addAll(nacionalidadAction.findAll());
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonEliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminar1ActionPerformed
         // TODO add your handling code here:
-        if(jTableNacionalidad.getSelectedRow()<0){
-            JOptionPane.showMessageDialog(this, "Debe seleccionar una Nacionalidad","Error",0);
-            return;
+        try {
+            if (jTableNacionalidad.getSelectedRow() < 0) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar una Nacionalidad", "Error", 0);
+                return;
+            }
+            if (JOptionPane.showConfirmDialog(this, "Está seguro que desea eliminar?", "Eliminar Nacionalidad", 0) != 0) {
+                return;
+            }
+            Nacionalidad ta = (Nacionalidad) listaNacionalidad.get(jTableNacionalidad.getSelectedRow());
+            nacionalidadAction.setEntity(ta);
+            nacionalidadAction.eliminar();
+            listaNacionalidad.clear();
+            listaNacionalidad.addAll(nacionalidadAction.findAll());
+            JOptionPane.showMessageDialog(this, "Se ha eliminado correctamente", "Info", 1);
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
-        if(JOptionPane.showConfirmDialog(this,"Está seguro que desea eliminar?","Eliminar Nacionalidad",0)!=0)
-            return;       
-        Nacionalidad ta=(Nacionalidad) listaNacionalidad.get(jTableNacionalidad.getSelectedRow());
-        nacionalidadAction.setEntity(ta);
-        nacionalidadAction.eliminar();
-        listaNacionalidad.clear();
-        listaNacionalidad.addAll(nacionalidadAction.findAll());
-        JOptionPane.showMessageDialog(this, "Se ha eliminado correctamente","Info",1);
     }//GEN-LAST:event_jButtonEliminar1ActionPerformed
 
     private void jButtonVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerActionPerformed
-        if(jTableNacionalidad.getSelectedRow()<0){
-            JOptionPane.showMessageDialog(this, "Debe seleccionar una Nacionalidad","Error",0);
+        if (jTableNacionalidad.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una Nacionalidad", "Error", 0);
             return;
         }
-         nacionalidad = (Nacionalidad) listaNacionalidad.get(jTableNacionalidad.getSelectedRow());
-         JDialogoNacionalidad dialogoNuevo = new JDialogoNacionalidad(null, closable);
-         dialogoNuevo.setNacionalidad(nacionalidad);
-         dialogoNuevo.setTitle("Ver Nacionalidad");
-         dialogoNuevo.setReadOnly(true);
-         dialogoNuevo.setVisible(true);
-                
-      
+        nacionalidad = (Nacionalidad) listaNacionalidad.get(jTableNacionalidad.getSelectedRow());
+        JDialogoNacionalidad dialogoNuevo = new JDialogoNacionalidad(null, closable);
+        dialogoNuevo.setNacionalidad(nacionalidad);
+        dialogoNuevo.setTitle("Ver Nacionalidad");
+        dialogoNuevo.setReadOnly(true);
+        dialogoNuevo.setVisible(true);
+
+
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonVerActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonEliminar1;
@@ -224,6 +243,4 @@ public class JInternalFrameNacionalidad extends javax.swing.JInternalFrame {
     public void setNacionalidad(Nacionalidad nacionalidad) {
         this.nacionalidad = nacionalidad;
     }
-
-
 }

@@ -15,6 +15,7 @@ import py.gov.itaipu.controlacceso.action.persona.PersonaAction;
 import py.gov.itaipu.controlacceso.model.Organizacion;
 import py.gov.itaipu.controlacceso.model.Persona;
 import py.gov.itaipu.controlacceso.model.exception.EntidadExiste;
+import py.gov.itaipu.controlacceso.model.exception.ErrorInesperado;
 import py.gov.itaipu.controlacceso.utils.tree.CustomIconRenderer;
 import py.gov.itaipu.controlacceso.utils.tree.UtilesArbol;
 
@@ -51,37 +52,42 @@ public class JInternalFrameOrganigrama extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jScrollPaneOrganigrama = new javax.swing.JScrollPane();
-        jTreeOrganigrama = new javax.swing.JTree();
-        jButtonOrganizacionNuevo = new javax.swing.JButton();
-        jButtonPersonaNuevo = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jTextFieldAreaNombre = new javax.swing.JTextField();
-        jTextFieldAreaPadreNombre = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jTextFieldEmpleadoApellido = new javax.swing.JTextField();
-        jTextFieldEmpleadoNombre = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        jTextFieldEmpleadoNroDoc = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        jTextFieldEmpleadoOrganizacion = new javax.swing.JTextField();
-        jButtonGuardarArea = new javax.swing.JButton();
-        jButtonGuardarEmpleado = new javax.swing.JButton();
+        try{
+            jTreeOrganigrama = new javax.swing.JTree();
+            jButtonOrganizacionNuevo = new javax.swing.JButton();
+            jButtonPersonaNuevo = new javax.swing.JButton();
+            jLabel1 = new javax.swing.JLabel();
+            jLabel2 = new javax.swing.JLabel();
+            jLabel3 = new javax.swing.JLabel();
+            jTextFieldAreaNombre = new javax.swing.JTextField();
+            jTextFieldAreaPadreNombre = new javax.swing.JTextField();
+            jLabel4 = new javax.swing.JLabel();
+            jLabel5 = new javax.swing.JLabel();
+            jLabel6 = new javax.swing.JLabel();
+            jTextFieldEmpleadoApellido = new javax.swing.JTextField();
+            jTextFieldEmpleadoNombre = new javax.swing.JTextField();
+            jLabel7 = new javax.swing.JLabel();
+            jTextFieldEmpleadoNroDoc = new javax.swing.JTextField();
+            jLabel8 = new javax.swing.JLabel();
+            jTextFieldEmpleadoOrganizacion = new javax.swing.JTextField();
+            jButtonGuardarArea = new javax.swing.JButton();
+            jButtonGuardarEmpleado = new javax.swing.JButton();
 
-        setTitle("Organigrama");
+            setTitle("Organigrama");
 
-        DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", true);
-        jTreeOrganigrama = new JTree(root);
-        jTreeOrganigrama.setCellRenderer(new CustomIconRenderer());
-        jTreeOrganigrama.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
-            public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
-                jTreeOrganigramaValueChanged(evt);
-            }
-        });
-        jScrollPaneOrganigrama.setViewportView(jTreeOrganigrama);
+            DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", true);
+            jTreeOrganigrama = new JTree(root);
+            jTreeOrganigrama.setCellRenderer(new CustomIconRenderer());
+            jTreeOrganigrama.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+                public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+                    jTreeOrganigramaValueChanged(evt);
+                }
+            });
+            jScrollPaneOrganigrama.setViewportView(jTreeOrganigrama);
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
 
         jButtonOrganizacionNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/organizacion.png"))); // NOI18N
         jButtonOrganizacionNuevo.setText("Nueva Organizacion");
@@ -247,7 +253,7 @@ public class JInternalFrameOrganigrama extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonOrganizacionNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonPersonaNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         pack();
@@ -291,17 +297,17 @@ public class JInternalFrameOrganigrama extends javax.swing.JInternalFrame {
 
     private void jButtonOrganizacionNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOrganizacionNuevoActionPerformed
         // TODO add your handling code here:
-
-        if (areaPadre == null || !esOrganizacion()) {
-            List<Organizacion> oPadre = organizacionAction.findByNamedQuery("Organizacion.findOrganizacionPadre");
-            if (oPadre.size() > 0) {
-                JOptionPane.showMessageDialog(this, "DEBE SELECCIONAR ORGANIZACION SUPERIOR.", "Error", 0);
-            }
-        } else {
-            area = new Organizacion();
-            area.setOrganizacionPadre(areaPadre);
-            manejaOrganizacion(true);
-            manejaPersona(false);
+        try {
+            if (areaPadre == null || !esOrganizacion()) {
+                List<Organizacion> oPadre = organizacionAction.findByNamedQuery("Organizacion.findOrganizacionPadre");
+                if (oPadre.size() > 0) {
+                    JOptionPane.showMessageDialog(this, "DEBE SELECCIONAR ORGANIZACION SUPERIOR.", "Error", 0);
+                }
+            } else {
+                area = new Organizacion();
+                area.setOrganizacionPadre(areaPadre);
+                manejaOrganizacion(true);
+                manejaPersona(false);
 //            jTextFieldAreaNombre.setText("");
 //            jTextFieldAreaNombre.setEditable(true);
 //            jTextFieldAreaPadreNombre.setText(areaPadre.getNombre());
@@ -318,8 +324,11 @@ public class JInternalFrameOrganigrama extends javax.swing.JInternalFrame {
 //            jButtonGuardarEmpleado.setEnabled(false);
 
 
+            }
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
-
 
     }//GEN-LAST:event_jButtonOrganizacionNuevoActionPerformed
     private boolean esOrganizacion() {
@@ -427,70 +436,85 @@ public class JInternalFrameOrganigrama extends javax.swing.JInternalFrame {
 
     private void jButtonGuardarAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarAreaActionPerformed
         // TODO add your handling code here:
-        if (validarOrganizacion()) {
-            area.setNombre(jTextFieldAreaNombre.getText());
-            organizacionAction.setEntity(area);
-            try {
-                organizacionAction.crear();
-                areaPadre.getOrganizacionesHijas().add(area);
-                JOptionPane.showMessageDialog(this, "Se ha guardado con exito el Area Interna", "Info", 1);
-            } catch (EntidadExiste e) {
-                JOptionPane.showMessageDialog(this, "La organización ya existe", "Error", 0);
-                return;
-            }
-            manejaOrganizacion(false);
-            DefaultMutableTreeNode nodoSeleccionado = (DefaultMutableTreeNode) jTreeOrganigrama.getLastSelectedPathComponent();
+        try {
+            if (validarOrganizacion()) {
+                area.setNombre(jTextFieldAreaNombre.getText());
+                organizacionAction.setEntity(area);
+                try {
+                    organizacionAction.crear();
+                    areaPadre.getOrganizacionesHijas().add(area);
+                    JOptionPane.showMessageDialog(this, "Se ha guardado con exito el Area Interna", "Info", 1);
+                } catch (EntidadExiste e) {
+                    JOptionPane.showMessageDialog(this, "La organización ya existe", "Error", 0);
+                    return;
+                }
+                manejaOrganizacion(false);
+                DefaultMutableTreeNode nodoSeleccionado = (DefaultMutableTreeNode) jTreeOrganigrama.getLastSelectedPathComponent();
 //                DefaultMutableTreeNode nodoNuevo = new DefaultMutableTreeNode(area,true);
 //                nodoSeleccionado.add(nodoNuevo);
 //                jTreeOrganigrama.repaint();
-            actualizarArbol();
-            jTreeOrganigrama.setSelectionPath(new TreePath(nodoSeleccionado.getPath()));
-            jTreeOrganigrama.expandPath(new TreePath(nodoSeleccionado.getPath()));
-            area = null;
-            areaPadre = null;
+                actualizarArbol();
+                jTreeOrganigrama.setSelectionPath(new TreePath(nodoSeleccionado.getPath()));
+                jTreeOrganigrama.expandPath(new TreePath(nodoSeleccionado.getPath()));
+                area = null;
+                areaPadre = null;
 
 
 
+            }
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
     }//GEN-LAST:event_jButtonGuardarAreaActionPerformed
     private void actualizarArbol() {
-        DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", true);
-        jTreeOrganigrama = new JTree(root);
-        jTreeOrganigrama.setCellRenderer(new CustomIconRenderer());
-        jTreeOrganigrama.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
-            public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
-                jTreeOrganigramaValueChanged(evt);
-            }
-        });
+        try {
+            DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", true);
+            jTreeOrganigrama = new JTree(root);
+            jTreeOrganigrama.setCellRenderer(new CustomIconRenderer());
+            jTreeOrganigrama.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+                public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+                    jTreeOrganigramaValueChanged(evt);
+                }
+            });
 
-        jScrollPaneOrganigrama.setViewportView(jTreeOrganigrama);
+            jScrollPaneOrganigrama.setViewportView(jTreeOrganigrama);
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
     }
     private void jButtonGuardarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarEmpleadoActionPerformed
         // TODO add your handling code here:
-        if (validarPersona()) {
-            persona.setNombre(jTextFieldEmpleadoNombre.getText());
-            persona.setApellido(jTextFieldEmpleadoApellido.getText());
-            persona.setNumeroDocumento(jTextFieldEmpleadoNroDoc.getText());
-            personaAction.setPersona(persona);
-            try {
-                personaAction.crear();
+        try {
+            if (validarPersona()) {
+                persona.setNombre(jTextFieldEmpleadoNombre.getText());
+                persona.setApellido(jTextFieldEmpleadoApellido.getText());
+                persona.setNumeroDocumento(jTextFieldEmpleadoNroDoc.getText());
+                personaAction.setPersona(persona);
+                try {
+                    personaAction.crear();
 
-                JOptionPane.showMessageDialog(this, "Se ha guardado con exito los Datos del Empleado", "Info", 1);
-            } catch (EntidadExiste e) {
-                JOptionPane.showMessageDialog(this, "La persona ya existe", "Error", 0);
-                return;
-            }
-            manejaPersona(false);
+                    JOptionPane.showMessageDialog(this, "Se ha guardado con exito los Datos del Empleado", "Info", 1);
+                } catch (EntidadExiste e) {
+                    JOptionPane.showMessageDialog(this, "La persona ya existe", "Error", 0);
+                    return;
+                }
+                manejaPersona(false);
 
-            DefaultMutableTreeNode nodoSeleccionado = (DefaultMutableTreeNode) jTreeOrganigrama.getLastSelectedPathComponent();
+                DefaultMutableTreeNode nodoSeleccionado = (DefaultMutableTreeNode) jTreeOrganigrama.getLastSelectedPathComponent();
 //                DefaultMutableTreeNode nodoNuevo = new DefaultMutableTreeNode(persona,true);
 //                nodoSeleccionado.add(nodoNuevo);
 //                jTreeOrganigrama.repaint();
-            actualizarArbol();
-            jTreeOrganigrama.setSelectionPath(new TreePath(nodoSeleccionado.getPath()));
-            jTreeOrganigrama.expandPath(new TreePath(nodoSeleccionado.getPath()));
-            persona = null;
+                actualizarArbol();
+                jTreeOrganigrama.setSelectionPath(new TreePath(nodoSeleccionado.getPath()));
+                jTreeOrganigrama.expandPath(new TreePath(nodoSeleccionado.getPath()));
+                persona = null;
 
+            }
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
     }//GEN-LAST:event_jButtonGuardarEmpleadoActionPerformed
 

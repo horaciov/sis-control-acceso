@@ -16,27 +16,26 @@ import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.model.Estado;
 import py.gov.itaipu.controlacceso.model.Motivo;
 import py.gov.itaipu.controlacceso.model.TipoDocumento;
+import py.gov.itaipu.controlacceso.model.exception.ErrorInesperado;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
-
 
 /**
  *
  * @author vimartih
  */
 public class JInternalFrameTipoDocumento extends javax.swing.JInternalFrame {
-   
-    
+
     private CRUDAction<TipoDocumento> tipoDocumentoAction;
-    
+
     /**
      * Creates new form JInternalFrameMotivo
      */
     public JInternalFrameTipoDocumento() {
         setClosable(true);
-        tipoDocumentoAction=new CRUDAction<TipoDocumento>();
+        tipoDocumentoAction = new CRUDAction<TipoDocumento>();
         tipoDocumentoAction.setEntity(new TipoDocumento());
-        initComponents();      
-        
+        initComponents();
+
     }
 
     /**
@@ -49,16 +48,22 @@ public class JInternalFrameTipoDocumento extends javax.swing.JInternalFrame {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        listTipos = ObservableCollections.observableList(tipoDocumentoAction.findAll());
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableTipos = new javax.swing.JTable();
-        jButtonNuevo = new javax.swing.JButton();
-        jButtonEditar = new javax.swing.JButton();
-        jButtonCerrar = new javax.swing.JButton();
-        jButtonEliminar = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
-        jLabel1 = new javax.swing.JLabel();
-        jButtonVer = new javax.swing.JButton();
+        try{
+            listTipos = ObservableCollections.observableList(tipoDocumentoAction.findAll());
+            jScrollPane1 = new javax.swing.JScrollPane();
+            jTableTipos = new javax.swing.JTable();
+            jButtonNuevo = new javax.swing.JButton();
+            jButtonEditar = new javax.swing.JButton();
+            jButtonCerrar = new javax.swing.JButton();
+            jButtonEliminar = new javax.swing.JButton();
+            jSeparator1 = new javax.swing.JSeparator();
+            jLabel1 = new javax.swing.JLabel();
+            jButtonVer = new javax.swing.JButton();
+
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
 
         setTitle("Gestión de tipos de documentos");
 
@@ -169,7 +174,7 @@ public class JInternalFrameTipoDocumento extends javax.swing.JInternalFrame {
                     .addComponent(jButtonCerrar)
                     .addComponent(jButtonEliminar)
                     .addComponent(jButtonVer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
 
         getAccessibleContext().setAccessibleName("Gestión de estados");
@@ -181,42 +186,58 @@ public class JInternalFrameTipoDocumento extends javax.swing.JInternalFrame {
 
     private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
         // TODO add your handling code here:    
-        JDialogTipoDocumento dialogTipoDocumento = new JDialogTipoDocumento(null, closable);
-        dialogTipoDocumento.setTipoDocumento(new TipoDocumento());
-        dialogTipoDocumento.setVisible(true);
-        listTipos.clear();
-        listTipos.addAll(tipoDocumentoAction.findAll());
+        try {
+            JDialogTipoDocumento dialogTipoDocumento = new JDialogTipoDocumento(null, closable);
+            dialogTipoDocumento.setTipoDocumento(new TipoDocumento());
+            dialogTipoDocumento.setVisible(true);
+            listTipos.clear();
+            listTipos.addAll(tipoDocumentoAction.findAll());
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
 
     }//GEN-LAST:event_jButtonNuevoActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         // TODO add your handling code here:
-        if(jTableTipos.getSelectedRow()<0){
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un tipo","Error",0);
-            return;
+        try {
+            if (jTableTipos.getSelectedRow() < 0) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un tipo", "Error", 0);
+                return;
+            }
+            TipoDocumento t = (TipoDocumento) listTipos.get(jTableTipos.getSelectedRow());
+            JDialogTipoDocumento dialogTipoDocumento = new JDialogTipoDocumento(null, closable);
+            dialogTipoDocumento.setTipoDocumento(t);
+            dialogTipoDocumento.setVisible(true);
+            listTipos.clear();
+            listTipos.addAll(tipoDocumentoAction.findAll());
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
-        TipoDocumento t=(TipoDocumento) listTipos.get(jTableTipos.getSelectedRow());
-        JDialogTipoDocumento dialogTipoDocumento = new JDialogTipoDocumento(null, closable);
-        dialogTipoDocumento.setTipoDocumento(t);
-        dialogTipoDocumento.setVisible(true);
-        listTipos.clear();
-        listTipos.addAll(tipoDocumentoAction.findAll());
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
         // TODO add your handling code here:
-        if(jTableTipos.getSelectedRow()<0){
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un tipo","Error",0);
-            return;
+        try {
+            if (jTableTipos.getSelectedRow() < 0) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un tipo", "Error", 0);
+                return;
+            }
+            if (JOptionPane.showConfirmDialog(this, "Está seguro que desea eliminar?", "Eliminar Tipo de Documento", 0) != 0) {
+                return;
+            }
+            TipoDocumento t = (TipoDocumento) listTipos.get(jTableTipos.getSelectedRow());
+            tipoDocumentoAction.setEntity(t);
+            tipoDocumentoAction.eliminar();
+            listTipos.clear();
+            listTipos.addAll(tipoDocumentoAction.findAll());
+            JOptionPane.showMessageDialog(this, "Se ha eliminado correctamente", "Info", 1);
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
-        if(JOptionPane.showConfirmDialog(this,"Está seguro que desea eliminar?","Eliminar Tipo de Documento",0)!=0)
-            return;       
-        TipoDocumento t=(TipoDocumento) listTipos.get(jTableTipos.getSelectedRow());
-        tipoDocumentoAction.setEntity(t);
-        tipoDocumentoAction.eliminar();
-        listTipos.clear();
-        listTipos.addAll(tipoDocumentoAction.findAll());
-        JOptionPane.showMessageDialog(this, "Se ha eliminado correctamente","Info",1);
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jButtonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarActionPerformed
@@ -226,19 +247,16 @@ public class JInternalFrameTipoDocumento extends javax.swing.JInternalFrame {
 
     private void jButtonVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerActionPerformed
         // TODO add your handling code here:
-        if(jTableTipos.getSelectedRow()<0){
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un tipo","Error",0);
+        if (jTableTipos.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un tipo", "Error", 0);
             return;
         }
-        TipoDocumento t=(TipoDocumento) listTipos.get(jTableTipos.getSelectedRow());
+        TipoDocumento t = (TipoDocumento) listTipos.get(jTableTipos.getSelectedRow());
         JDialogTipoDocumento dialogTipoDocumento = new JDialogTipoDocumento(null, closable);
         dialogTipoDocumento.setTipoDocumento(t);
         dialogTipoDocumento.setReadOnly(true);
         dialogTipoDocumento.setVisible(true);
     }//GEN-LAST:event_jButtonVerActionPerformed
-    
-    
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCerrar;
     private javax.swing.JButton jButtonEditar;

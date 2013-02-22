@@ -14,30 +14,29 @@ import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.swingbinding.JTableBinding;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.model.Organizacion;
+import py.gov.itaipu.controlacceso.model.exception.ErrorInesperado;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
-
 
 /**
  *
  * @author vimartih
  */
 public class JInternalFrameOrganizacion extends javax.swing.JInternalFrame {
-   
-    
+
     private CRUDAction<Organizacion> organizacionAction;
     private Organizacion organizacionSeleccionada;
     private Boolean modoBuscador;
-    
+
     /**
      * Creates new form JInternalFrameOrganizacion
      */
     public JInternalFrameOrganizacion() {
         setClosable(true);
-        modoBuscador=false;             
-        organizacionAction=new CRUDAction<Organizacion>();
+        modoBuscador = false;
+        organizacionAction = new CRUDAction<Organizacion>();
         organizacionAction.setEntity(new Organizacion());
-        initComponents();      
-        
+        initComponents();
+
     }
 
     public Boolean getModoBuscador() {
@@ -56,8 +55,6 @@ public class JInternalFrameOrganizacion extends javax.swing.JInternalFrame {
         this.organizacionSeleccionada = organizacionSeleccionada;
     }
 
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -68,16 +65,22 @@ public class JInternalFrameOrganizacion extends javax.swing.JInternalFrame {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        listOrganizaciones = ObservableCollections.observableList(organizacionAction.findByNamedQuery("Organizacion.findAll"));
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableOrganizaciones = new javax.swing.JTable();
-        jButtonNuevo = new javax.swing.JButton();
-        jButtonEditar = new javax.swing.JButton();
-        jButtonCerrar = new javax.swing.JButton();
-        jButtonEliminar = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
-        jLabel1 = new javax.swing.JLabel();
-        jButtonVer = new javax.swing.JButton();
+        try{
+            listOrganizaciones = ObservableCollections.observableList(organizacionAction.findByNamedQuery("Organizacion.findAll"));
+            jScrollPane1 = new javax.swing.JScrollPane();
+            jTableOrganizaciones = new javax.swing.JTable();
+            jButtonNuevo = new javax.swing.JButton();
+            jButtonEditar = new javax.swing.JButton();
+            jButtonCerrar = new javax.swing.JButton();
+            jButtonEliminar = new javax.swing.JButton();
+            jSeparator1 = new javax.swing.JSeparator();
+            jLabel1 = new javax.swing.JLabel();
+            jButtonVer = new javax.swing.JButton();
+
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
 
         setTitle("Organizaciones");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
@@ -222,7 +225,7 @@ public class JInternalFrameOrganizacion extends javax.swing.JInternalFrame {
                     .addComponent(jButtonCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonVer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(101, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
@@ -232,42 +235,58 @@ public class JInternalFrameOrganizacion extends javax.swing.JInternalFrame {
 
     private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
         // TODO add your handling code here:    
-        JDialogOrganizacionExterna dialogOrganizacion = new JDialogOrganizacionExterna(null, closable);
-        dialogOrganizacion.setOrganizacion(new Organizacion());
-        dialogOrganizacion.setVisible(true);
-        listOrganizaciones.clear();
-        listOrganizaciones.addAll(organizacionAction.findByNamedQuery("Organizacion.findAll"));
+        try {
+            JDialogOrganizacionExterna dialogOrganizacion = new JDialogOrganizacionExterna(null, closable);
+            dialogOrganizacion.setOrganizacion(new Organizacion());
+            dialogOrganizacion.setVisible(true);
+            listOrganizaciones.clear();
+            listOrganizaciones.addAll(organizacionAction.findByNamedQuery("Organizacion.findAll"));
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
 
     }//GEN-LAST:event_jButtonNuevoActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         // TODO add your handling code here:
-        if(jTableOrganizaciones.getSelectedRow()<0){
-            JOptionPane.showMessageDialog(this, "Debe seleccionar una organización","Error",0);
-            return;
+        try {
+            if (jTableOrganizaciones.getSelectedRow() < 0) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar una organización", "Error", 0);
+                return;
+            }
+            Organizacion m = (Organizacion) listOrganizaciones.get(jTableOrganizaciones.getSelectedRow());
+            JDialogOrganizacionExterna dialogOrganizacion = new JDialogOrganizacionExterna(null, closable);
+            dialogOrganizacion.setOrganizacion(m);
+            dialogOrganizacion.setVisible(true);
+            listOrganizaciones.clear();
+            listOrganizaciones.addAll(organizacionAction.findByNamedQuery("Organizacion.findAll"));
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
-        Organizacion m=(Organizacion) listOrganizaciones.get(jTableOrganizaciones.getSelectedRow());
-        JDialogOrganizacionExterna dialogOrganizacion = new JDialogOrganizacionExterna(null, closable);
-        dialogOrganizacion.setOrganizacion(m);
-        dialogOrganizacion.setVisible(true);
-        listOrganizaciones.clear();
-        listOrganizaciones.addAll(organizacionAction.findByNamedQuery("Organizacion.findAll"));
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
         // TODO add your handling code here:
-         if(jTableOrganizaciones.getSelectedRow()<0){
-            JOptionPane.showMessageDialog(this, "Debe seleccionar una organización","Error",0);
-            return;
+        try {
+            if (jTableOrganizaciones.getSelectedRow() < 0) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar una organización", "Error", 0);
+                return;
+            }
+            if (JOptionPane.showConfirmDialog(this, "Está seguro que desea eliminar?", "Eliminar Organización", 0) != 0) {
+                return;
+            }
+            Organizacion m = (Organizacion) listOrganizaciones.get(jTableOrganizaciones.getSelectedRow());
+            organizacionAction.setEntity(m);
+            organizacionAction.eliminar();
+            listOrganizaciones.clear();
+            listOrganizaciones.addAll(organizacionAction.findByNamedQuery("Organizacion.findAll"));
+            JOptionPane.showMessageDialog(this, "Se ha eliminado correctamente", "Info", 1);
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
-        if(JOptionPane.showConfirmDialog(this,"Está seguro que desea eliminar?","Eliminar Organización",0)!=0)
-            return;       
-        Organizacion m=(Organizacion) listOrganizaciones.get(jTableOrganizaciones.getSelectedRow());
-        organizacionAction.setEntity(m);
-        organizacionAction.eliminar();
-        listOrganizaciones.clear();
-        listOrganizaciones.addAll(organizacionAction.findByNamedQuery("Organizacion.findAll"));
-        JOptionPane.showMessageDialog(this, "Se ha eliminado correctamente","Info",1);
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jButtonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarActionPerformed
@@ -277,11 +296,11 @@ public class JInternalFrameOrganizacion extends javax.swing.JInternalFrame {
 
     private void jButtonVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerActionPerformed
         // TODO add your handling code here:
-         if(jTableOrganizaciones.getSelectedRow()<0){
-            JOptionPane.showMessageDialog(this, "Debe seleccionar una organización","Error",0);
+        if (jTableOrganizaciones.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una organización", "Error", 0);
             return;
         }
-        Organizacion m=(Organizacion) listOrganizaciones.get(jTableOrganizaciones.getSelectedRow());
+        Organizacion m = (Organizacion) listOrganizaciones.get(jTableOrganizaciones.getSelectedRow());
         JDialogOrganizacionExterna dialogOrganizacion = new JDialogOrganizacionExterna(null, closable);
         dialogOrganizacion.setOrganizacion(m);
         dialogOrganizacion.setReadOnly(true);
@@ -290,28 +309,25 @@ public class JInternalFrameOrganizacion extends javax.swing.JInternalFrame {
 
     private void jTableOrganizacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableOrganizacionesMouseClicked
         // TODO add your handling code here:
-        if(evt.getClickCount()==2 && modoBuscador){      
-            int row=jTableOrganizaciones.getSelectedRow();
-            if(row>-1){
-                organizacionSeleccionada=(Organizacion)listOrganizaciones.get(row);
+        if (evt.getClickCount() == 2 && modoBuscador) {
+            int row = jTableOrganizaciones.getSelectedRow();
+            if (row > -1) {
+                organizacionSeleccionada = (Organizacion) listOrganizaciones.get(row);
             }
             this.dispose();
         }
-            
+
     }//GEN-LAST:event_jTableOrganizacionesMouseClicked
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
         // TODO add your handling code here:
-        if(modoBuscador){
+        if (modoBuscador) {
             jButtonEditar.setVisible(false);
             jButtonEliminar.setVisible(false);
             jButtonNuevo.setVisible(false);
             jButtonVer.setVisible(false);
         }
     }//GEN-LAST:event_formInternalFrameOpened
-    
-    
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCerrar;
     private javax.swing.JButton jButtonEditar;

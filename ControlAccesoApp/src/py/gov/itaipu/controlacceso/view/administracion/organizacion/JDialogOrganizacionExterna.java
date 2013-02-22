@@ -9,6 +9,7 @@ import org.jdesktop.observablecollections.ObservableCollections;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.model.Organizacion;
 import py.gov.itaipu.controlacceso.model.exception.EntidadExiste;
+import py.gov.itaipu.controlacceso.model.exception.ErrorInesperado;
 
 /**
  *
@@ -157,35 +158,40 @@ public class JDialogOrganizacionExterna extends javax.swing.JDialog {
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
-        if (organizacion == null) {
-            return;
-        }
-        CRUDAction<Organizacion> action = new CRUDAction<Organizacion>(organizacion);
-        if (jTextFieldOrganizacion.getText() == null || jTextFieldOrganizacion.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "El organizacion es obligatorio", "Error", 0);
-            return;
-        }
-        organizacion.setNombre(jTextFieldOrganizacion.getText());
-        organizacion.setDescripcion(jTextAreaDescripcion.getText());
-        organizacion.setTipoOrganizacion("EXTERNA");
-        if (organizacion.getId() == null) {
-            try {
-                action.crear();
-                JOptionPane.showMessageDialog(this, "Se ha creado con éxito", "Info", 1);
-            } catch (EntidadExiste e) {
-                JOptionPane.showMessageDialog(this, "La organización ya existe", "Error", 0);
+        try {
+            if (organizacion == null) {
                 return;
             }
-        } else {
-            try {
-                action.guardar();
-                JOptionPane.showMessageDialog(this, "Se ha actualizado correctamente", "Info", 1);
-            } catch (EntidadExiste e) {
-                JOptionPane.showMessageDialog(this, "La organización ya existe", "Error", 0);
+            CRUDAction<Organizacion> action = new CRUDAction<Organizacion>(organizacion);
+            if (jTextFieldOrganizacion.getText() == null || jTextFieldOrganizacion.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "El organizacion es obligatorio", "Error", 0);
                 return;
             }
+            organizacion.setNombre(jTextFieldOrganizacion.getText());
+            organizacion.setDescripcion(jTextAreaDescripcion.getText());
+            organizacion.setTipoOrganizacion("EXTERNA");
+            if (organizacion.getId() == null) {
+                try {
+                    action.crear();
+                    JOptionPane.showMessageDialog(this, "Se ha creado con éxito", "Info", 1);
+                } catch (EntidadExiste e) {
+                    JOptionPane.showMessageDialog(this, "La organización ya existe", "Error", 0);
+                    return;
+                }
+            } else {
+                try {
+                    action.guardar();
+                    JOptionPane.showMessageDialog(this, "Se ha actualizado correctamente", "Info", 1);
+                } catch (EntidadExiste e) {
+                    JOptionPane.showMessageDialog(this, "La organización ya existe", "Error", 0);
+                    return;
+                }
+            }
+            this.dispose();
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
-        this.dispose();
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated

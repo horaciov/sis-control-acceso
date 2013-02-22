@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.model.TipoDocumento;
 import py.gov.itaipu.controlacceso.model.exception.EntidadExiste;
+import py.gov.itaipu.controlacceso.model.exception.ErrorInesperado;
 
 /**
  *
@@ -157,34 +158,39 @@ public class JDialogTipoDocumento extends javax.swing.JDialog {
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
-        if (tipoDocumento == null) {
-            return;
-        }
-        CRUDAction<TipoDocumento> action = new CRUDAction<TipoDocumento>(tipoDocumento);
-        if (jTextFieldTipoDocumento.getText() == null || jTextFieldTipoDocumento.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "El tipo es obligatorio", "Error", 0);
-            return;
-        }
-        tipoDocumento.setNombre(jTextFieldTipoDocumento.getText());
-        tipoDocumento.setDescripcion(jTextAreaDescripcion.getText());
-        if (tipoDocumento.getId() == null) {
-            try {
-                action.crear();
-                JOptionPane.showMessageDialog(this, "Se ha creado con éxito", "Info", 1);
-            } catch (EntidadExiste e) {
-                JOptionPane.showMessageDialog(this, "El tipo de documento ya existe", "Error", 0);
+        try {
+            if (tipoDocumento == null) {
                 return;
             }
-        } else {
-            try {
-                action.guardar();
-                JOptionPane.showMessageDialog(this, "Se ha actualizado correctamente", "Info", 1);
-            } catch (EntidadExiste e) {
-                JOptionPane.showMessageDialog(this, "El tipo de documento ya existe", "Error", 0);
+            CRUDAction<TipoDocumento> action = new CRUDAction<TipoDocumento>(tipoDocumento);
+            if (jTextFieldTipoDocumento.getText() == null || jTextFieldTipoDocumento.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "El tipo es obligatorio", "Error", 0);
                 return;
             }
+            tipoDocumento.setNombre(jTextFieldTipoDocumento.getText());
+            tipoDocumento.setDescripcion(jTextAreaDescripcion.getText());
+            if (tipoDocumento.getId() == null) {
+                try {
+                    action.crear();
+                    JOptionPane.showMessageDialog(this, "Se ha creado con éxito", "Info", 1);
+                } catch (EntidadExiste e) {
+                    JOptionPane.showMessageDialog(this, "El tipo de documento ya existe", "Error", 0);
+                    return;
+                }
+            } else {
+                try {
+                    action.guardar();
+                    JOptionPane.showMessageDialog(this, "Se ha actualizado correctamente", "Info", 1);
+                } catch (EntidadExiste e) {
+                    JOptionPane.showMessageDialog(this, "El tipo de documento ya existe", "Error", 0);
+                    return;
+                }
+            }
+            this.dispose();
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
-        this.dispose();
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated

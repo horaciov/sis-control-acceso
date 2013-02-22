@@ -9,9 +9,8 @@ import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
-import javax.swing.JOptionPane;
-import org.hibernate.exception.ConstraintViolationException;
 import py.gov.itaipu.controlacceso.model.exception.EntidadExiste;
+import py.gov.itaipu.controlacceso.model.exception.ErrorInesperado;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 
 /**
@@ -32,25 +31,45 @@ public class CRUDAction<E> {
         em = EntityManagerCA.getEntityManger();
     }
 
-    public List<E> findAll() {
-        Query query;
-        query = em.createQuery("from " + entity.getClass().getSimpleName());
-        return query.getResultList();
-    }
-
-    public List<E> findAllProjection(String[] attributes) {
-        String query = "select ";
-        for (String a : attributes) {
-            query += a + ",";
+    public List<E> findAll() throws ErrorInesperado {
+        List<E> result = null;
+        try {
+            Query query;
+            query = em.createQuery("from " + entity.getClass().getSimpleName());
+            result = query.getResultList();
+        } catch (RuntimeException re) {
+            throw new ErrorInesperado("Error inesperado.");
         }
-        query = query.substring(0, query.length() - 1) + " from " + entity.getClass().getSimpleName();
-        return em.createQuery(query).getResultList();
+        return result;
+
     }
 
-    public List<E> findByNamedQuery(String queryNam) {
-        Query query;
-        query = em.createNamedQuery(queryNam);
-        return query.getResultList();
+    public List<E> findAllProjection(String[] attributes) throws ErrorInesperado {
+        List<E> result = null;
+        try {
+            String query = "select ";
+            for (String a : attributes) {
+                query += a + ",";
+            }
+            query = query.substring(0, query.length() - 1) + " from " + entity.getClass().getSimpleName();
+            result = em.createQuery(query).getResultList();
+        } catch (RuntimeException re) {
+            throw new ErrorInesperado("Error inesperado.");
+        }
+        return result;
+
+    }
+
+    public List<E> findByNamedQuery(String queryNam) throws ErrorInesperado {
+        List<E> result = null;
+        try {
+            Query query;
+            query = em.createNamedQuery(queryNam);
+            result = query.getResultList();
+        } catch (RuntimeException re) {
+            throw new ErrorInesperado("Error inesperado.");
+        }
+        return result;
     }
 
     public E getEntity() {
@@ -61,7 +80,7 @@ public class CRUDAction<E> {
         this.entity = entity;
     }
 
-    public void crear() throws EntidadExiste {
+    public void crear() throws EntidadExiste, ErrorInesperado {
         EntityTransaction tx = null;
         try {
             tx = em.getTransaction();
@@ -73,14 +92,13 @@ public class CRUDAction<E> {
             tx.rollback();
             throw new EntidadExiste("La entidad a persistir ya existe");
         } catch (RuntimeException e) {
-            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
-            System.exit(-1);
+            throw new ErrorInesperado("Error Inesperado");
         } finally {
             em.clear();
         }
     }
 
-    public void guardar() throws EntidadExiste {
+    public void guardar() throws EntidadExiste, ErrorInesperado {
         EntityTransaction tx = em.getTransaction();
         try {
             tx.begin();
@@ -91,20 +109,18 @@ public class CRUDAction<E> {
             tx.rollback();
             throw new EntidadExiste("La entidad a persistir ya existe");
         } catch (RuntimeException e) {
-            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
-            System.exit(-1);
+            throw new ErrorInesperado("Error Inesperado");
         }
     }
 
-    public void eliminar() {
+    public void eliminar() throws ErrorInesperado {
         try {
             EntityTransaction tx = em.getTransaction();
             tx.begin();
             em.remove(entity);
             tx.commit();
         } catch (RuntimeException e) {
-            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
-            System.exit(-1);
+            throw new ErrorInesperado("Error Inesperado");
         }
     }
 }

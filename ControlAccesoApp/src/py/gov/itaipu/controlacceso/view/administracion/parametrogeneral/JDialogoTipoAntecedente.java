@@ -9,6 +9,7 @@ import javax.xml.soap.Text;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.model.TipoAntecedente;
 import py.gov.itaipu.controlacceso.model.exception.EntidadExiste;
+import py.gov.itaipu.controlacceso.model.exception.ErrorInesperado;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 
 /**
@@ -120,30 +121,34 @@ public class JDialogoTipoAntecedente extends javax.swing.JDialog {
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
-        CRUDAction<TipoAntecedente> em = new CRUDAction(tipoAntecedente);
-        tipoAntecedente.setDescripcion(jTextAreaDescripcion.getText());
-        tipoAntecedente.setNombre(jTextFieldNombre.getText());
-        if (tipoAntecedente.getNombre().equals("")) {
-            JOptionPane.showMessageDialog(null, "Nombre es Obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
-        } else {
-            if (tipoAntecedente.getId() == null) {
-                try {
-                    em.crear();
-                } catch (EntidadExiste e) {
-                    JOptionPane.showMessageDialog(this, "El tipo de antecedente ya existe", "Error", 0);
-                    return;
-                }
+        try {
+            CRUDAction<TipoAntecedente> em = new CRUDAction(tipoAntecedente);
+            tipoAntecedente.setDescripcion(jTextAreaDescripcion.getText());
+            tipoAntecedente.setNombre(jTextFieldNombre.getText());
+            if (tipoAntecedente.getNombre().equals("")) {
+                JOptionPane.showMessageDialog(null, "Nombre es Obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                try {
-                    em.guardar();
-                }catch (EntidadExiste e) {
-                    JOptionPane.showMessageDialog(this, "El tipo de antecedente ya existe", "Error", 0);
-                    return;
+                if (tipoAntecedente.getId() == null) {
+                    try {
+                        em.crear();
+                    } catch (EntidadExiste e) {
+                        JOptionPane.showMessageDialog(this, "El tipo de antecedente ya existe", "Error", 0);
+                        return;
+                    }
+                } else {
+                    try {
+                        em.guardar();
+                    } catch (EntidadExiste e) {
+                        JOptionPane.showMessageDialog(this, "El tipo de antecedente ya existe", "Error", 0);
+                        return;
+                    }
                 }
+                this.setVisible(false);
             }
-            this.setVisible(false);
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
-
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void windowsActivate(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowsActivate

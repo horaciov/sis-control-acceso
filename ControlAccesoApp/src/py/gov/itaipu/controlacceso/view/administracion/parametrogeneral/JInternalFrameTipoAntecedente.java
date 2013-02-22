@@ -10,6 +10,7 @@ import org.jdesktop.observablecollections.ObservableCollections;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.model.TipoAntecedente;
 import py.gov.itaipu.controlacceso.model.exception.EntidadExiste;
+import py.gov.itaipu.controlacceso.model.exception.ErrorInesperado;
 
 /**
  *
@@ -40,21 +41,27 @@ public class JInternalFrameTipoAntecedente extends javax.swing.JInternalFrame {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        listaTipoAntecedente = ObservableCollections.observableList(tipoAntecedenteAction.findAll());
-        jDialogNuevoTipoAntecedente = new javax.swing.JDialog();
-        jButtonGuardar = new javax.swing.JButton();
-        jTextFieldNombre = new javax.swing.JTextField();
-        jLabelNombre = new javax.swing.JLabel();
-        jLabelNombreDescripcion = new javax.swing.JLabel();
-        jScrollPaneDescripcion = new javax.swing.JScrollPane();
-        jTextAreaDescripcion = new javax.swing.JTextArea();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableTiposAntecedentes = new javax.swing.JTable();
-        jButtonNuevo = new javax.swing.JButton();
-        jButtonEditar = new javax.swing.JButton();
-        jButtonEliminar = new javax.swing.JButton();
-        jButtonEliminar1 = new javax.swing.JButton();
-        jButtonVer = new javax.swing.JButton();
+        try{
+            listaTipoAntecedente = ObservableCollections.observableList(tipoAntecedenteAction.findAll());
+            jDialogNuevoTipoAntecedente = new javax.swing.JDialog();
+            jButtonGuardar = new javax.swing.JButton();
+            jTextFieldNombre = new javax.swing.JTextField();
+            jLabelNombre = new javax.swing.JLabel();
+            jLabelNombreDescripcion = new javax.swing.JLabel();
+            jScrollPaneDescripcion = new javax.swing.JScrollPane();
+            jTextAreaDescripcion = new javax.swing.JTextArea();
+            jScrollPane1 = new javax.swing.JScrollPane();
+            jTableTiposAntecedentes = new javax.swing.JTable();
+            jButtonNuevo = new javax.swing.JButton();
+            jButtonEditar = new javax.swing.JButton();
+            jButtonEliminar = new javax.swing.JButton();
+            jButtonEliminar1 = new javax.swing.JButton();
+            jButtonVer = new javax.swing.JButton();
+
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
 
         jDialogNuevoTipoAntecedente.setTitle("Nuevo Tipo Antecedente");
         jDialogNuevoTipoAntecedente.setAlwaysOnTop(true);
@@ -225,12 +232,12 @@ public class JInternalFrameTipoAntecedente extends javax.swing.JInternalFrame {
                     .addComponent(jButtonEliminar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonVer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(159, 159, 159)
                     .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(142, Short.MAX_VALUE)))
+                    .addContainerGap(158, Short.MAX_VALUE)))
         );
 
         bindingGroup.bind();
@@ -240,30 +247,38 @@ public class JInternalFrameTipoAntecedente extends javax.swing.JInternalFrame {
 
     private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
         // TODO add your handling code here:
-        tipoAntecedente = new TipoAntecedente();
-        JDialogoTipoAntecedente dialogoNuevo = new JDialogoTipoAntecedente(null, closable);
-        dialogoNuevo.setTipoAntecedente(tipoAntecedente);
-        dialogoNuevo.setVisible(true);
-        listaTipoAntecedente.clear();
-        listaTipoAntecedente.addAll(tipoAntecedenteAction.findAll());
-
+        try {
+            tipoAntecedente = new TipoAntecedente();
+            JDialogoTipoAntecedente dialogoNuevo = new JDialogoTipoAntecedente(null, closable);
+            dialogoNuevo.setTipoAntecedente(tipoAntecedente);
+            dialogoNuevo.setVisible(true);
+            listaTipoAntecedente.clear();
+            listaTipoAntecedente.addAll(tipoAntecedenteAction.findAll());
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
 
 
     }//GEN-LAST:event_jButtonNuevoActionPerformed
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         // TODO add your handling code here:
-        tipoAntecedente.setNombre(jTextFieldNombre.getText());
-        tipoAntecedente.setDescripcion(jTextAreaDescripcion.getText());
-        tipoAntecedenteAction.setEntity(tipoAntecedente);
         try {
-            tipoAntecedenteAction.crear();
-        } catch (EntidadExiste e) {
-            JOptionPane.showMessageDialog(this, "El tipo de antecedente ya existe", "Error", 0);
-            return;
+            tipoAntecedente.setNombre(jTextFieldNombre.getText());
+            tipoAntecedente.setDescripcion(jTextAreaDescripcion.getText());
+            tipoAntecedenteAction.setEntity(tipoAntecedente);
+            try {
+                tipoAntecedenteAction.crear();
+            } catch (EntidadExiste e) {
+                JOptionPane.showMessageDialog(this, "El tipo de antecedente ya existe", "Error", 0);
+                return;
+            }
+            jDialogNuevoTipoAntecedente.setVisible(false);
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
-        jDialogNuevoTipoAntecedente.setVisible(false);
-
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void jTextFieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreActionPerformed
@@ -272,17 +287,21 @@ public class JInternalFrameTipoAntecedente extends javax.swing.JInternalFrame {
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         // TODO add your handling code here:
-        if (jTableTiposAntecedentes.getSelectedRow() < 0) {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un Tipo de Antecedente", "Error", 0);
-            return;
+        try {
+            if (jTableTiposAntecedentes.getSelectedRow() < 0) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un Tipo de Antecedente", "Error", 0);
+                return;
+            }
+            tipoAntecedente = (TipoAntecedente) listaTipoAntecedente.get(jTableTiposAntecedentes.getSelectedRow());
+            JDialogoTipoAntecedente dialogoNuevo = new JDialogoTipoAntecedente(null, closable);
+            dialogoNuevo.setTipoAntecedente(tipoAntecedente);
+            dialogoNuevo.setVisible(true);
+            listaTipoAntecedente.clear();
+            listaTipoAntecedente.addAll(tipoAntecedenteAction.findAll());
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
-        tipoAntecedente = (TipoAntecedente) listaTipoAntecedente.get(jTableTiposAntecedentes.getSelectedRow());
-        JDialogoTipoAntecedente dialogoNuevo = new JDialogoTipoAntecedente(null, closable);
-        dialogoNuevo.setTipoAntecedente(tipoAntecedente);
-        dialogoNuevo.setVisible(true);
-        listaTipoAntecedente.clear();
-        listaTipoAntecedente.addAll(tipoAntecedenteAction.findAll());
-
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
@@ -291,19 +310,24 @@ public class JInternalFrameTipoAntecedente extends javax.swing.JInternalFrame {
 
     private void jButtonEliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminar1ActionPerformed
         // TODO add your handling code here:
-        if (jTableTiposAntecedentes.getSelectedRow() < 0) {
-            JOptionPane.showMessageDialog(this, "Debe seleccionar un Tipo de Antecedente", "Error", 0);
-            return;
+        try {
+            if (jTableTiposAntecedentes.getSelectedRow() < 0) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un Tipo de Antecedente", "Error", 0);
+                return;
+            }
+            if (JOptionPane.showConfirmDialog(this, "Está seguro que desea eliminar?", "Eliminar Tipo Antecedente", 0) != 0) {
+                return;
+            }
+            TipoAntecedente ta = (TipoAntecedente) listaTipoAntecedente.get(jTableTiposAntecedentes.getSelectedRow());
+            tipoAntecedenteAction.setEntity(ta);
+            tipoAntecedenteAction.eliminar();
+            listaTipoAntecedente.clear();
+            listaTipoAntecedente.addAll(tipoAntecedenteAction.findAll());
+            JOptionPane.showMessageDialog(this, "Se ha eliminado correctamente", "Info", 1);
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
         }
-        if (JOptionPane.showConfirmDialog(this, "Está seguro que desea eliminar?", "Eliminar Tipo Antecedente", 0) != 0) {
-            return;
-        }
-        TipoAntecedente ta = (TipoAntecedente) listaTipoAntecedente.get(jTableTiposAntecedentes.getSelectedRow());
-        tipoAntecedenteAction.setEntity(ta);
-        tipoAntecedenteAction.eliminar();
-        listaTipoAntecedente.clear();
-        listaTipoAntecedente.addAll(tipoAntecedenteAction.findAll());
-        JOptionPane.showMessageDialog(this, "Se ha eliminado correctamente", "Info", 1);
     }//GEN-LAST:event_jButtonEliminar1ActionPerformed
 
     private void jButtonVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerActionPerformed
