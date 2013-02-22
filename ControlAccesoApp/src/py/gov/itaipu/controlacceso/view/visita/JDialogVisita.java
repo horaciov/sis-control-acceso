@@ -735,7 +735,7 @@ public class JDialogVisita extends javax.swing.JDialog {
 
             if (persona.getEstado() != null && persona.getEstado().getNombre().equals("INHABILITADO")) {
                 Toolkit.getDefaultToolkit().beep();
-                JOptionPane.showMessageDialog(this, "ATENCIÓN!, la persona está inhabilitada. No es posible su ingreso", "Error", 0);
+                JOptionPane.showMessageDialog(this, "ATENCIÓN!, la persona está inhabilitada. No es posible su ingreso", "Warning", 2);
                 return;
             }
 
@@ -1023,7 +1023,7 @@ public class JDialogVisita extends javax.swing.JDialog {
                         jButtonCambiarEstadoPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/check.gif")));
                         jButtonCambiarEstadoPersona.setToolTipText("HABILITAR");
                         Toolkit.getDefaultToolkit().beep();
-                        JOptionPane.showMessageDialog(this, "ATENCIÓN!, la persona está inhabilitada. No es posible su ingreso", "Error", 0);
+                        JOptionPane.showMessageDialog(this, "ATENCIÓN!, la persona está inhabilitada. No es posible su ingreso", "Warning", 2);
                     } else {
                         jLabelSemaforo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/Semaforo_verde.png")));
                         jLabelPersonaEstado.setText("PERSONA HABILITADA");
