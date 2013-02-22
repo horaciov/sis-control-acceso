@@ -539,7 +539,7 @@
                 <BindingParameter name="NAME" value="Nacionalidad"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
               </Subbinding>
-              <Subbinding sourcePath="${fechaNac}">
+              <Subbinding sourcePath="${fechaNacimiento}">
                 <BindingParameter name="NAME" value="Fecha Nac"/>
                 <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
               </Subbinding>
