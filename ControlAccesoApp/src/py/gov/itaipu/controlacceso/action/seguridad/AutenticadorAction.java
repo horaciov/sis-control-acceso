@@ -22,27 +22,31 @@ import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 public class AutenticadorAction {
 
     public boolean autenticar(String usuario, String password) {
-        MessageDigest md = null;
-        String passwordDigest = null;
         EntityManager em = EntityManagerCA.getEntityManger();
         List<Usuario> usuarioValido;
+        usuarioValido = em.createQuery(" from Usuario where nombre = :nombre and password=:password")
+                .setParameter("nombre", usuario)
+                .setParameter("password", getDigest(password))
+                .getResultList();
+        if (usuarioValido.size() > 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static String getDigest(String mensaje) {
+        String mensajeDigest = null;
         try {
-            password.getBytes("UTF-8");
+            MessageDigest md = null;            
             md = MessageDigest.getInstance("SHA1");
-            passwordDigest = AutenticadorAction.bytesToHex(md.digest(password.getBytes("UTF-8")));
-            usuarioValido = em.createQuery(" from Usuario where nombre = :nombre and password=:password")
-                    .setParameter("nombre", usuario)
-                    .setParameter("password", passwordDigest)
-                    .getResultList();
-            if (usuarioValido.size() > 0) {
-                return true;
-            }
+            mensajeDigest = AutenticadorAction.bytesToHex(md.digest(mensaje.getBytes("UTF-8")));
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(AutenticadorAction.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        return false;
+        return mensajeDigest;
     }
 
     public static String bytesToHex(byte[] b) {
