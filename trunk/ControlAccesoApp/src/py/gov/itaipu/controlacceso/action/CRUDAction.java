@@ -43,7 +43,7 @@ public class CRUDAction<E> {
         return result;
 
     }
-
+    
     public List<E> findAllProjection(String[] attributes) throws ErrorInesperado {
         List<E> result = null;
         try {
@@ -71,6 +71,21 @@ public class CRUDAction<E> {
         }
         return result;
     }
+    
+    public List<E> findAllByName(String nombre) throws ErrorInesperado {
+        List<E> result = null;
+        try {
+            Query query;
+            query = em.createQuery(" from " + entity.getClass().getSimpleName()+ " where nombre like '%'||:nombre||'%' ");
+            query.setParameter("nombre", nombre.toUpperCase());
+            result = query.getResultList();
+        } catch (RuntimeException re) {
+            throw new ErrorInesperado("Error inesperado.");
+        }
+        return result;
+
+    }
+    
 
     public E getEntity() {
         return entity;

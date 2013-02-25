@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.tree.DefaultMutableTreeNode;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
+import py.gov.itaipu.controlacceso.action.persona.PersonaAction;
 import py.gov.itaipu.controlacceso.model.Organizacion;
 import py.gov.itaipu.controlacceso.model.Persona;
 import py.gov.itaipu.controlacceso.model.exception.ErrorInesperado;
@@ -40,6 +41,38 @@ public class UtilesArbol {
         return root;
     }
 
+    public static DefaultMutableTreeNode crearArbolFiltrado(String tituloArbol, String filtro, boolean incluyePersonas) throws ErrorInesperado {
+        DefaultMutableTreeNode node;
+        DefaultMutableTreeNode root = new DefaultMutableTreeNode(tituloArbol);
+        
+        
+        CRUDAction<Organizacion> organizacionAction = new CRUDAction<Organizacion>(new Organizacion());
+        List<Organizacion> listaOrganizacion = new ArrayList<Organizacion>();
+        listaOrganizacion = organizacionAction.findAllByName(filtro);
+        for (int i = 0; i < listaOrganizacion.size(); i++) {
+            Organizacion organizacion = listaOrganizacion.get(i);
+            node = new DefaultMutableTreeNode(organizacion, true);
+            root.add(node);
+        }
+        
+        
+        PersonaAction personaAction = new PersonaAction(new Persona());
+        List<Persona> listaPersonas = new ArrayList<Persona>();
+        listaPersonas = personaAction.findByNombreApellido(filtro);
+        for (int i = 0; i < listaPersonas.size(); i++) {
+            Persona persona = listaPersonas.get(i);
+            node = new DefaultMutableTreeNode(persona, true);
+            root.add(node);
+        }
+        
+        
+        
+        
+        
+        return root;
+    }
+    
+    
     private static void agregarhijos(DefaultMutableTreeNode nodo, boolean incluyePersonas) {
         if (incluyePersonas) {
             agregarPersonas(nodo);
@@ -63,4 +96,6 @@ public class UtilesArbol {
             nodo.add(node);
         }
     }
+    
+    
 }
