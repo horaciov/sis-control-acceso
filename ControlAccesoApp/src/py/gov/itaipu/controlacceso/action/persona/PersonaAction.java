@@ -67,6 +67,8 @@ public class PersonaAction {
         return result;
     }
 
+    
+    
     public List<Persona> findByParameters(Persona persona, Persona personaHasta, String tipoOrganizacion) throws ErrorInesperado {
         List<Persona> result = null;
         try {
@@ -176,6 +178,23 @@ public class PersonaAction {
         return result;
     }
 
+    
+    public List<Persona> findByNombreApellido(String nombreApellido) throws ErrorInesperado {
+        List<Persona> result = null;
+        try {
+            String sQuery = " Select p from Persona p left outer join p.organizacion where p.organizacion.tipoOrganizacion = 'INTERNA' and "
+                    + " ( p.nombre like '%'||:nombreapellido||'%' or p.apellido like '%'||:nombreapellido||'%' ) ";
+            
+            Query query = em.createQuery(sQuery);
+            
+            query.setParameter("nombreapellido", nombreApellido.toUpperCase());
+            result = query.getResultList();
+        } catch (RuntimeException re) {
+            throw new ErrorInesperado("Error inesperado.");
+        }
+        return result;
+    }
+    
     public void habilitar() throws ErrorInesperado {
         try {
             Estado e = (Estado) em.createNamedQuery("Estado.findByNombre").setParameter("nombre", "HABILITADO").getSingleResult();
