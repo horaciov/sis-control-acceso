@@ -11,27 +11,34 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
+/**
+ *
+ * @author vimartih
+ */
 @Entity
-@Table(name="usuario", uniqueConstraints=@UniqueConstraint(columnNames={"nombre"}))
-public class Usuario implements Serializable{
-   
+@NamedQueries({
+    @NamedQuery(name = "Funcionalidad.findAll", query = "SELECT f FROM Funcionalidad f")})
+@Table(name="funcionalidad", uniqueConstraints=@UniqueConstraint(columnNames={"nombre"}))
+public class Funcionalidad implements Serializable{
+    private static final long serialVersionUID = 1L;
+    
     private Long id;
     private String nombre;
-    private String password;
-    private List<Rol> roles;
+    private String descripcion;
     
-    public Usuario() {
     
+   
+    public Funcionalidad(){
+        super();
     }
 
-    public Usuario(String nombre, String password) {
-        this.nombre = nombre;
-        this.password = password;
-    }
-      
     @Id
     @GeneratedValue
     public Long getId() {
@@ -41,38 +48,33 @@ public class Usuario implements Serializable{
     public void setId(Long id) {
         this.id = id;
     }
-
+    
+    @NotEmpty
+    @Length(max=200)
     @Column(nullable=false)
     public String getNombre() {
         return nombre;
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombre = nombre.toUpperCase();
     }
 
-    @Column(nullable=false)
-    public String getPassword() {
-        return password;
+    @Length(max=500)
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
-    @ManyToMany
-    public List<Rol> getRoles() {
-        return roles;
-    }
 
-    public void setRoles(List<Rol> roles) {
-        this.roles = roles;
-    }
     
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 59 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 11 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
 
@@ -84,7 +86,7 @@ public class Usuario implements Serializable{
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Usuario other = (Usuario) obj;
+        final Funcionalidad other = (Funcionalidad) obj;
         if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
             return false;
         }
@@ -93,7 +95,9 @@ public class Usuario implements Serializable{
 
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", nombre=" + nombre + ", password=" + password + '}';
+        return getNombre();
     }
+
+   
     
 }
