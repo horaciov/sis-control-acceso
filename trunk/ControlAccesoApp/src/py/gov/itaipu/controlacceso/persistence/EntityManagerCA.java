@@ -15,26 +15,31 @@ import javax.persistence.Persistence;
  *
  * @author vimartih
  */
-
 public class EntityManagerCA {
+
     private static final String NAME_PU = "ControlAccesoAppPU";
-    private static  EntityManagerFactory emf;
-    private static  EntityManager em;
+    private static EntityManagerFactory emf;
+    private static EntityManager em;
     private static Connection conexion;
-    
-    public static void iniciarContexto(){
-        if(emf==null)
+
+    public static void iniciarContexto() {
+        if (emf == null) {
             emf = Persistence.createEntityManagerFactory(NAME_PU);
+        }
     }
-    
-    public static EntityManager getEntityManger(){      
-        if(em==null)
+
+    public static EntityManager getEntityManger() {
+        if (em == null) {
+            if (emf == null) {
+                emf = Persistence.createEntityManagerFactory(NAME_PU);
+            }
             em = emf.createEntityManager();
+        }
         return em;
     }
 
     public static Connection getConexion() throws SQLException {
-        if (conexion==null) {
+        if (conexion == null) {
 //            conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/controlaccesodb", "controlacceso", "controlacceso");
             conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/controlaccesodb", "controlacceso", "controlacceso");
         }
@@ -44,13 +49,11 @@ public class EntityManagerCA {
     public static void setConexion(Connection conexion) {
         EntityManagerCA.conexion = conexion;
     }
-    
-    
-    
-    public static void cerrar(){
+
+    public static void cerrar() {
         em.close();
-        em=null;
+        em = null;
         emf.close();
-        emf=null;
+        emf = null;
     }
 }

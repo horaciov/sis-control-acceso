@@ -43,15 +43,19 @@ public class PersonaAction {
         this.persona = persona;
     }
 
-    public List<Persona> findByNumeroDocumento(String numeroDocumento, TipoDocumento tipoDocumento) throws ErrorInesperado {
-        List<Persona> result = null;
+    public Persona findByNumeroDocumento(String numeroDocumento, TipoDocumento tipoDocumento) throws ErrorInesperado {
+        Persona result = null;
+        List<Persona> personas;
         try {
             Query query = em.createQuery(" from Persona p where numeroDocumento = :numeroDoc and tipoDocumento.id = :tipoDoc");
-            query.setParameter("numeroDoc", numeroDocumento).setParameter("tipoDoc", tipoDocumento.getId());
-            result = query.getResultList();
+            query.setParameter("numeroDoc", numeroDocumento).setParameter("tipoDoc", tipoDocumento.getId());            
+            personas = query.getResultList();
+            if(personas.size()>0)
+                result=personas.get(0);
         } catch (RuntimeException re) {
             throw new ErrorInesperado("Error inesperado.");
         }
+        
         return result;
     }
 
