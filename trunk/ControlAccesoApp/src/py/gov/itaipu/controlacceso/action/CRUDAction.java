@@ -43,7 +43,7 @@ public class CRUDAction<E> {
         return result;
 
     }
-    
+
     public List<E> findAllProjection(String[] attributes) throws ErrorInesperado {
         List<E> result = null;
         try {
@@ -71,12 +71,12 @@ public class CRUDAction<E> {
         }
         return result;
     }
-    
+
     public List<E> findAllByName(String nombre) throws ErrorInesperado {
         List<E> result = null;
         try {
             Query query;
-            query = em.createQuery(" from " + entity.getClass().getSimpleName()+ " where nombre like '%'||:nombre||'%' ");
+            query = em.createQuery(" from " + entity.getClass().getSimpleName() + " where nombre like '%'||:nombre||'%' ");
             query.setParameter("nombre", nombre.toUpperCase());
             result = query.getResultList();
         } catch (RuntimeException re) {
@@ -85,12 +85,31 @@ public class CRUDAction<E> {
         return result;
 
     }
-    
-     public List<E> findEqualName(String nombre) throws ErrorInesperado {
+
+    public boolean existeNombre(String nombre) throws ErrorInesperado {
+        boolean existe = false;
         List<E> result = null;
         try {
             Query query;
-            query = em.createQuery(" from " + entity.getClass().getSimpleName()+ " where nombre = :nombre");
+            query = em.createQuery(" from " + entity.getClass().getSimpleName() + " where nombre = :nombre");
+            query.setParameter("nombre", nombre);
+            result = query.getResultList();
+            if (result.size() > 0) {
+                existe = true;
+            }
+
+        } catch (RuntimeException re) {
+            throw new ErrorInesperado("Error inesperado.");
+        }
+
+        return existe;
+    }
+
+    public List<E> findEqualName(String nombre) throws ErrorInesperado {
+        List<E> result = null;
+        try {
+            Query query;
+            query = em.createQuery(" from " + entity.getClass().getSimpleName() + " where nombre = :nombre");
             query.setParameter("nombre", nombre);
             result = query.getResultList();
         } catch (RuntimeException re) {
@@ -99,7 +118,6 @@ public class CRUDAction<E> {
         return result;
 
     }
-    
 
     public E getEntity() {
         return entity;
@@ -124,7 +142,6 @@ public class CRUDAction<E> {
         } catch (RuntimeException e) {
             throw new ErrorInesperado("Error Inesperado");
         } finally {
-            
         }
     }
 

@@ -10,6 +10,7 @@ import py.gov.itaipu.controlacceso.model.Rol;
 import py.gov.itaipu.controlacceso.utils.windows.WindowUtil;
 import py.gov.itaipu.controlacceso.view.administracion.organizacion.JDialogOrganigrama;
 import py.gov.itaipu.controlacceso.view.persona.JDialogPersonaPrincipal;
+import py.gov.itaipu.controlacceso.view.seguridad.JDialogSeguridadMant;
 import py.gov.itaipu.controlacceso.view.visita.JDialogConsultaVisitas;
 
 /**
@@ -161,8 +162,12 @@ public class JDialogAdministracion extends javax.swing.JDialog {
     private void jButtonSeguridadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSeguridadActionPerformed
         // TODO add your handling code here:
         Rol rolSeguridad = new Rol();
-        rolSeguridad.setNombre("SEGURIDAD");
+        rolSeguridad.setNombre("SEGURIDAD SISTEMA");
         if (AutenticadorAction.getUsuarioConectado().getRoles().indexOf(rolSeguridad) > -1) {
+             JDialogSeguridadMant jdsm = new JDialogSeguridadMant(null, rootPaneCheckingEnabled);
+             jdsm.setSize(900, 320);
+             WindowUtil.centerWindow(jdsm);
+             jdsm.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "No cuenta con el rol de seguridad", "Warning", JOptionPane.WARNING_MESSAGE);
             return;

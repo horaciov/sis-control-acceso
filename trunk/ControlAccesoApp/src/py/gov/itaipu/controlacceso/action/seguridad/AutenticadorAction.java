@@ -31,7 +31,7 @@ public class AutenticadorAction {
         EntityManager em = EntityManagerCA.getEntityManger();
         List<Usuario> usuarioValido;
         usuarioValido = em.createQuery(" from Usuario where nombre = :nombre and password=:password")
-                .setParameter("nombre", usuario)
+                .setParameter("nombre", usuario.toLowerCase())
                 .setParameter("password", getDigest(password))
                 .getResultList();
         if (usuarioValido.size() > 0) {

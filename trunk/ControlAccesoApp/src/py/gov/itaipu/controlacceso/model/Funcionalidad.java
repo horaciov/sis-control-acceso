@@ -32,6 +32,7 @@ public class Funcionalidad implements Serializable{
     private Long id;
     private String nombre;
     private String descripcion;
+    private List<Rol> roles;
     
     
    
@@ -69,7 +70,14 @@ public class Funcionalidad implements Serializable{
         this.descripcion = descripcion;
     }
 
+    @ManyToMany
+    public List<Rol> getRoles() {
+        return roles;
+    }
 
+    public void setRoles(List<Rol> roles) {
+        this.roles = roles;
+    }
     
     @Override
     public int hashCode() {
