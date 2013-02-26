@@ -5,12 +5,15 @@
 package py.gov.itaipu.controlacceso.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import org.hibernate.validator.constraints.Length;
 
 /**
@@ -25,6 +28,10 @@ public class Antecedente implements Serializable {
     private Persona persona;
     private TipoAntecedente tipoAntecedente;
     private String observacion;
+    private Usuario usuarioCreacion;
+    private Usuario usuarioModificacion;
+    private Date fechaCreacion;
+    private Date fechaModificacion;
 
     public Antecedente() {
     }
@@ -34,6 +41,42 @@ public class Antecedente implements Serializable {
         this.tipoAntecedente = tipoAntecedente;
         this.observacion = observacion;
     }   
+    
+       @ManyToOne
+    public Usuario getUsuarioCreacion() {
+        return usuarioCreacion;
+    }
+
+    public void setUsuarioCreacion(Usuario usuarioCreacion) {
+        this.usuarioCreacion = usuarioCreacion;
+    }
+
+    @ManyToOne
+    public Usuario getUsuarioModificacion() {
+        return usuarioModificacion;
+    }
+
+    public void setUsuarioModificacion(Usuario usuarioModificacion) {
+        this.usuarioModificacion = usuarioModificacion;
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+     @Temporal(TemporalType.TIMESTAMP)
+    public Date getFechaModificacion() {
+        return fechaModificacion;
+    }
+
+    public void setFechaModificacion(Date fechaModificacion) {
+        this.fechaModificacion = fechaModificacion;
+    }
     
     @Id
     @GeneratedValue

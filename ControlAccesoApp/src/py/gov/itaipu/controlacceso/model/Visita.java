@@ -33,6 +33,11 @@ public class Visita implements Serializable {
     private String observacion;
     private String recibido;
     private String anulado;
+     private Usuario usuarioCreacion;
+    private Usuario usuarioModificacion;
+    private Date fechaCreacion;
+    private Date fechaModificacion;
+    
     
     public Visita() {
     }
@@ -42,6 +47,42 @@ public class Visita implements Serializable {
         this.personaVisitada = personaVisitada;
         this.motivo = motivo;
         this.fechaIngreso = fechaIngreso;
+    }
+    
+       @ManyToOne
+    public Usuario getUsuarioCreacion() {
+        return usuarioCreacion;
+    }
+
+    public void setUsuarioCreacion(Usuario usuarioCreacion) {
+        this.usuarioCreacion = usuarioCreacion;
+    }
+
+    @ManyToOne
+    public Usuario getUsuarioModificacion() {
+        return usuarioModificacion;
+    }
+
+    public void setUsuarioModificacion(Usuario usuarioModificacion) {
+        this.usuarioModificacion = usuarioModificacion;
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+     @Temporal(TemporalType.TIMESTAMP)
+    public Date getFechaModificacion() {
+        return fechaModificacion;
+    }
+
+    public void setFechaModificacion(Date fechaModificacion) {
+        this.fechaModificacion = fechaModificacion;
     }
     
     @Id
