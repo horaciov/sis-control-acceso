@@ -6,7 +6,12 @@ package py.gov.itaipu.controlacceso.view;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.media.CannotRealizeException;
+import javax.media.NoPlayerException;
 import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
@@ -26,6 +31,11 @@ public class ControlAccesoApp {
 
         try {
             EntityManagerCA.iniciarContexto();
+            try {
+                AdminCamera.iniciar();
+            } catch (Exception e){
+                //no hacemos nada al respecto.
+            }
             MDIControlAcceso mdi = new MDIControlAcceso();
             JDialogAutenticar login = new JDialogAutenticar(mdi, true);
             WindowUtil.centerWindow(login);

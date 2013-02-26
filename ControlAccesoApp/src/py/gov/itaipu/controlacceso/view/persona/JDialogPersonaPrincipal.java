@@ -763,9 +763,9 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
         try {
             Persona p = new Persona();
             JDialogPersona dialogPersona = new JDialogPersona(null, true);
-            WindowUtil.centerWindow(dialogPersona);
-            WindowUtil.centerWindow(dialogPersona);
-            dialogPersona.setPersona(p);
+            dialogPersona.setSize(1060, 460);
+            WindowUtil.centerWindow(dialogPersona);            
+            dialogPersona.setPersona(p);            
             dialogPersona.setVisible(true);
             listPersonas.clear();
             listPersonas.addAll(personaAction.findByParameters(personaFiltro, personaFiltro2, tipoOrganizacionPersona));
@@ -786,9 +786,10 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
             }
             Persona p = (Persona) listPersonas.get(jTablePersonas.getSelectedRow());
             JDialogPersona dialogPersona = new JDialogPersona(null, true);
+             dialogPersona.setSize(1060, 460);
             WindowUtil.centerWindow(dialogPersona);
             dialogPersona.setPersona(p);
-            dialogPersona.cargarDatospersona();
+            dialogPersona.cargarDatospersona();           
             dialogPersona.setVisible(true);
             listPersonas.clear();
             listPersonas.addAll(personaAction.findByParameters(personaFiltro, personaFiltro2, tipoOrganizacionPersona));
