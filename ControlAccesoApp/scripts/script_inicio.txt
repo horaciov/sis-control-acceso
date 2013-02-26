@@ -1,0 +1,22 @@
+INSERT INTO controlacceso.estado (id, descripcion, nombre) VALUES (1, 'INHABILITADO', 'INHABILITADO');
+INSERT INTO controlacceso.estado (id, descripcion, nombre) VALUES (2, 'HABILITADO', 'HABILITADO');
+
+
+INSERT INTO controlacceso.rol (id, descripcion, nombre) VALUES (1, 'OPERADOR', 'OPERADOR');
+INSERT INTO controlacceso.rol (id, descripcion, nombre) VALUES (2, 'ADMINISTRADOR', 'ADMINISTRADOR');
+INSERT INTO controlacceso.rol (id, descripcion, nombre) VALUES (3, 'ANALISTA', 'ANALISTA');
+INSERT INTO controlacceso.rol (id, descripcion, nombre) VALUES (4, 'SEGURIDAD SISTEMA', 'SEGURIDAD SISTEMA');
+
+INSERT INTO controlacceso.usuario (id, nombre, password) VALUES (1, 'admin', 'D033E22AE348AEB5660FC2140AEC35850C4DA997');
+
+
+INSERT INTO controlacceso.usuario_rol (usuarios_id, roles_id) VALUES (1, 1);
+INSERT INTO controlacceso.usuario_rol (usuarios_id, roles_id) VALUES (1, 2);
+INSERT INTO controlacceso.usuario_rol (usuarios_id, roles_id) VALUES (1, 3);
+INSERT INTO controlacceso.usuario_rol (usuarios_id, roles_id) VALUES (1, 4);
+
+INSERT INTO controlacceso.tipodocumento(id, descripcion, nombre) VALUES (1, 'CI', 'CI');
+
+INSERT INTO controlacceso.nacionalidad (id, descripcion, nombre) VALUES (1, 'PARAGUAYA','PARAGUAYA');
+
+INSERT INTO controlacceso.motivo  (id, descripcion,nombre) VALUES (1,'LABORAL','LABORAL');
