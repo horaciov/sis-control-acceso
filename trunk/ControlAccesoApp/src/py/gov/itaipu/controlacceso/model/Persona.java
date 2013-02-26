@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 /**
@@ -42,7 +43,10 @@ public class Persona implements Serializable{
     private List<Antecedente> antecedentes;
     private List<Visita> visitasRealizadas;
     private List<Visita> visitasRecibidas;
-    
+     private Usuario usuarioCreacion;
+    private Usuario usuarioModificacion;
+    private Date fechaCreacion;
+    private Date fechaModificacion;
 
     public Persona() {
         
@@ -52,6 +56,42 @@ public class Persona implements Serializable{
         this.nombre = nombre;
         this.apellido = apellido;
         this.fechaNacimiento = fechaNacimiento;
+    }
+    
+       @ManyToOne
+    public Usuario getUsuarioCreacion() {
+        return usuarioCreacion;
+    }
+
+    public void setUsuarioCreacion(Usuario usuarioCreacion) {
+        this.usuarioCreacion = usuarioCreacion;
+    }
+
+    @ManyToOne
+    public Usuario getUsuarioModificacion() {
+        return usuarioModificacion;
+    }
+
+    public void setUsuarioModificacion(Usuario usuarioModificacion) {
+        this.usuarioModificacion = usuarioModificacion;
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+     @Temporal(TemporalType.TIMESTAMP)
+    public Date getFechaModificacion() {
+        return fechaModificacion;
+    }
+
+    public void setFechaModificacion(Date fechaModificacion) {
+        this.fechaModificacion = fechaModificacion;
     }
     
     @Id

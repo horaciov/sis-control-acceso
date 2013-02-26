@@ -4,11 +4,13 @@
  */
 package py.gov.itaipu.controlacceso.action.persona;
 
+import java.util.Calendar;
 import java.util.List;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import py.gov.itaipu.controlacceso.action.seguridad.AutenticadorAction;
 import py.gov.itaipu.controlacceso.model.Estado;
 import py.gov.itaipu.controlacceso.model.Nacionalidad;
 import py.gov.itaipu.controlacceso.model.Persona;
@@ -205,6 +207,8 @@ public class PersonaAction {
             persona.setEstado(e);
             EntityTransaction tx = em.getTransaction();
             tx.begin();
+            persona.setUsuarioModificacion(AutenticadorAction.getUsuarioConectado());
+            persona.setFechaModificacion(Calendar.getInstance().getTime());
             em.merge(persona);
             tx.commit();
         } catch (RuntimeException e) {
@@ -218,6 +222,8 @@ public class PersonaAction {
             persona.setEstado(e);
             EntityTransaction tx = em.getTransaction();
             tx.begin();
+            persona.setUsuarioModificacion(AutenticadorAction.getUsuarioConectado());
+            persona.setFechaModificacion(Calendar.getInstance().getTime());
             em.merge(persona);
             tx.commit();
         } catch (RuntimeException e) {
@@ -230,6 +236,8 @@ public class PersonaAction {
         try {
             tx = em.getTransaction();
             tx.begin();
+            persona.setUsuarioCreacion(AutenticadorAction.getUsuarioConectado());
+            persona.setFechaCreacion(Calendar.getInstance().getTime());
             em.persist(persona);
             em.flush();
             tx.commit();
@@ -248,6 +256,8 @@ public class PersonaAction {
         try {
             EntityTransaction tx = em.getTransaction();
             tx.begin();
+            persona.setUsuarioModificacion(AutenticadorAction.getUsuarioConectado());
+            persona.setFechaModificacion(Calendar.getInstance().getTime());
             em.merge(persona);
             em.flush();
             tx.commit();

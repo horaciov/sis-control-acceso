@@ -4,12 +4,14 @@
  */
 package py.gov.itaipu.controlacceso.action.visita;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.swing.JOptionPane;
+import py.gov.itaipu.controlacceso.action.seguridad.AutenticadorAction;
 import py.gov.itaipu.controlacceso.model.Organizacion;
 import py.gov.itaipu.controlacceso.model.Persona;
 import py.gov.itaipu.controlacceso.model.Visita;
@@ -194,6 +196,8 @@ public class VisitaAction {
         try {
             EntityTransaction tx = em.getTransaction();
             tx.begin();
+            visita.setUsuarioCreacion(AutenticadorAction.getUsuarioConectado());
+            visita.setFechaCreacion(Calendar.getInstance().getTime());
             em.persist(visita);
             tx.commit();
         } catch (RuntimeException e) {
@@ -205,6 +209,8 @@ public class VisitaAction {
         try {
             EntityTransaction tx = em.getTransaction();
             tx.begin();
+            visita.setUsuarioCreacion(AutenticadorAction.getUsuarioConectado());
+            visita.setFechaCreacion(Calendar.getInstance().getTime());
             em.merge(visita);
             tx.commit();
             em.clear();

@@ -5,6 +5,7 @@
 package py.gov.itaipu.controlacceso.action.seguridad;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
@@ -46,6 +47,8 @@ public class RolAction {
         try {
             tx = em.getTransaction();
             tx.begin();
+            rol.setUsuarioCreacion(AutenticadorAction.getUsuarioConectado());
+            rol.setFechaCreacion(Calendar.getInstance().getTime());
             em.persist(rol);
             em.flush();
             tx.commit();
@@ -64,6 +67,8 @@ public class RolAction {
         try {
             EntityTransaction tx = em.getTransaction();
             tx.begin();
+            rol.setUsuarioModificacion(AutenticadorAction.getUsuarioConectado());
+            rol.setFechaModificacion(Calendar.getInstance().getTime());
             em.merge(rol);
             em.flush();
             tx.commit();
