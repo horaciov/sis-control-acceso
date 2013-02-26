@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteListadoVisitas" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ee45d72d-3ca7-4cc0-a591-7d2593bad67a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     persona."apellido" ||', '||persona."nombre"  AS persona,
+     persona."numerodocumento"   AS documento,
+     persona_A."apellido"||', '||persona_A."nombre" AS persona_A,
+     persona."organizacion_id" AS persona_organizacion_id,
+     persona_A."organizacion_id" AS persona_A_organizacion_id,
+     organizacion."nombre" AS organizacion_nombre,
+     organizacion_A."nombre" AS organizacion_A_nombre,
+     motivo."descripcion" AS motivo_descripcion,
+     visita."id" AS visita_id,
+     visita."fechaingreso" AS visita_fechaingreso,
+     visita."fechasalida" AS visita_fechasalida,
+     visita."observacion" AS visita_observacion,
+     visita."recibido" AS visita_recibido
+    FROM
+     "controlacceso"."visita" visita
+     INNER JOIN "controlacceso"."persona" persona ON visita."persona_id" = persona."id"
+     FULL JOIN "controlacceso"."persona" persona_A ON visita."personavisitada_id" = persona_A."id"
+     INNER JOIN "controlacceso"."motivo" motivo ON visita."motivo_id" = motivo."id"
+     FULL JOIN "controlacceso"."nacionalidad" nacionalidad ON persona."nacionalidad_id" = nacionalidad."id"
+     INNER JOIN "controlacceso"."organizacion" organizacion_A ON visita."organizacioninterna_id" = organizacion_A."id"
+     INNER JOIN "controlacceso"."tipodocumento" tipodocumento ON persona."tipodocumento_id" = tipodocumento."id"
+     FULL JOIN "controlacceso"."organizacion" organizacion ON persona."organizacion_id" = organizacion."id"
+   WHERE
+    ( visita."anulado" = 'N' ) and  visita."fechasalida" is null
+
+ ORDER BY visita."fechaingreso", visita."fechasalida", persona."apellido" ||', '||persona."nombre"]]>
+	</queryString>
+	<field name="persona" class="java.lang.String"/>
+	<field name="documento" class="java.lang.String"/>
+	<field name="persona_a" class="java.lang.String"/>
+	<field name="persona_organizacion_id" class="java.lang.Long"/>
+	<field name="persona_a_organizacion_id" class="java.lang.Long"/>
+	<field name="organizacion_nombre" class="java.lang.String"/>
+	<field name="organizacion_a_nombre" class="java.lang.String"/>
+	<field name="motivo_descripcion" class="java.lang.String"/>
+	<field name="visita_id" class="java.lang.Long"/>
+	<field name="visita_fechaingreso" class="java.sql.Timestamp"/>
+	<field name="visita_fechasalida" class="java.sql.Timestamp"/>
+	<field name="visita_observacion" class="java.lang.String"/>
+	<field name="visita_recibido" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="31" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="7e5ae091-d404-4167-b358-0e7f4ad6ad5f" x="0" y="0" width="802" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LISTADO DE VISITAS ACTIVAS]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="8d294165-234e-4c16-93b9-0554d77bf69f" x="0" y="20" width="802" height="1"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="8" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="31" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="606b40fa-f3f1-479e-9bce-f4897cd4df4d" x="0" y="0" width="802" height="29" backcolor="#CCCCCC"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="bf382379-daa5-4f67-b45b-093be993e9b5" x="127" y="0" width="64" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[VISITANTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d1c0a5eb-b382-4bd3-b2d7-11f75c0f4928" x="8" y="0" width="58" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA ING]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="13c8eb66-9fd9-49f9-843f-d3625ac272d2" x="436" y="0" width="132" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ORGANIZACION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0d363048-a40a-4681-9595-496eac34511b" x="144" y="14" width="111" height="15"/>
+				<textElement>
+					<font isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[PERSONA VISITADA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="756e5118-fe57-4b2c-8a9d-b7f96f9a0631" x="350" y="14" width="137" height="15"/>
+				<textElement>
+					<font isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[ORGANIZACION VISITADA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8f086ccd-6e0e-4aae-b22e-431228e9ffec" x="515" y="13" width="82" height="16"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[OBSERVACION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e382cd40-00ab-41d7-90cb-0c6dfb96c762" x="582" y="0" width="49" height="15"/>
+				<textElement>
+					<font isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[MOTIVO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="728943a9-c9b3-4976-a6a0-9ae708e358fa" x="325" y="0" width="84" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DOCUMENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="27ae54a8-f25f-40b8-8623-8716bfa20d63" x="17" y="14" width="68" height="15"/>
+				<textElement>
+					<font isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[FECHA SAL]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="42" splitType="Stretch">
+			<textField>
+				<reportElement uuid="29d22414-4e48-46f4-acad-0111752494ab" x="126" y="1" width="172" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{persona}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement uuid="d485784e-d45f-4684-bfbf-23814e103ffa" x="8" y="1" width="102" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{visita_fechaingreso}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ea9934b4-5253-46cd-bea5-f02cc54b9893" x="436" y="1" width="132" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[( $F{organizacion_nombre} == null ? "---" : $F{organizacion_nombre} )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="05240ebf-d913-4e9f-8fe8-66241ae61b5a" x="144" y="21" width="181" height="20"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $F{persona_a} == null ? "---" : $F{persona_a} )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f175680a-efa0-44a8-9b77-5b06ba90f7cc" x="350" y="21" width="152" height="20"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{organizacion_a_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e3601dd4-b582-4f5f-adfc-003d1b451ba4" x="515" y="21" width="287" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{visita_observacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3859acf2-e599-4b5c-8665-cdce68c1d3d1" x="582" y="1" width="220" height="20"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{motivo_descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="53174b52-c892-4d2e-8c25-4f53830786b3" x="325" y="1" width="101" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{documento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement uuid="add72a69-38a2-4c8a-9510-64cda5f85045" x="17" y="21" width="112" height="20"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $F{visita_fechasalida} == null ? "---" : $F{visita_fechasalida} )]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="9e0112ed-5049-4dd6-b2aa-bea07f2b646f" x="0" y="41" width="802" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement uuid="91023d80-4828-4ba5-b779-7c16b9f1613e" x="762" y="5" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e66347bf-0523-4d7f-aaf3-cf6967c0e232" x="621" y="5" width="141" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="4" splitType="Stretch"/>
+	</summary>
+</jasperReport>
