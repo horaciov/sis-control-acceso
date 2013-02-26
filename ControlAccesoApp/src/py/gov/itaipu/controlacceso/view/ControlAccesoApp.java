@@ -49,16 +49,34 @@ public class ControlAccesoApp {
                     JDialogVisita dialog = new JDialogVisita(new javax.swing.JFrame(), true);
                     dialog.setSize(1260, 600);
                     WindowUtil.centerWindow(dialog);
+                    dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                        @Override
+                        public void windowClosing(java.awt.event.WindowEvent e) {
+                            System.exit(0);
+                        }
+                    });
                     dialog.setVisible(true);
                 } else if (rol.getNombre().equals("ADMINISTRADOR")) {
                     JDialogAdministracion dialog = new JDialogAdministracion(new javax.swing.JFrame(), true);
                     dialog.setSize(350, 250);
                     WindowUtil.centerWindow(dialog);
+                    dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                        @Override
+                        public void windowClosing(java.awt.event.WindowEvent e) {
+                            System.exit(0);
+                        }
+                    });
                     dialog.setVisible(true);
                 } else if (rol.getNombre().equals("ANALISTA")) {
                     JDialogAnalisis dialog = new JDialogAnalisis(new javax.swing.JFrame(), true);
                     dialog.setSize(450, 250);
                     WindowUtil.centerWindow(dialog);
+                    dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                        @Override
+                        public void windowClosing(java.awt.event.WindowEvent e) {
+                            System.exit(0);
+                        }
+                    });
                     dialog.setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(null, "No cuenta con un rol para acceder al sistema, pongase en contacto con el administrador.", "Error", JOptionPane.ERROR_MESSAGE);
