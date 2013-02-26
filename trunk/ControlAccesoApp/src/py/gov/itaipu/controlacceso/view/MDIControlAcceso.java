@@ -43,7 +43,7 @@ import py.gov.itaipu.controlacceso.view.reportes.JDialogRepVisitasVisitante;
 import py.gov.itaipu.controlacceso.view.visita.JDialogConsultaVisitas;
 import py.gov.itaipu.controlacceso.view.visita.JDialogVisita;
 import py.gov.itaipu.controlacceso.view.visita.JInternalFrameConsultaVisita;
-import py.gov.itaipu.controlacceso.view.visita.JInternalFrameRegistroVisita;
+
 
 /**
  *
@@ -765,8 +765,8 @@ public class MDIControlAcceso extends javax.swing.JFrame {
 
     private void jMenuItemRegistroVisitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRegistroVisitaActionPerformed
         // TODO add your handling code here:
-        JInternalFrameRegistroVisita registroVisitaFrame = new JInternalFrameRegistroVisita();
-        registroVisitaFrame.setVisible(true);
+//        JInternalFrameRegistroVisita registroVisitaFrame = new JInternalFrameRegistroVisita();
+ //       registroVisitaFrame.setVisible(true);
 //        this.desktopPane.add(registroVisitaFrame);
     }//GEN-LAST:event_jMenuItemRegistroVisitaActionPerformed
 
@@ -823,10 +823,10 @@ public class MDIControlAcceso extends javax.swing.JFrame {
                 // Enter was pressed. Your code goes here.
                 JDialogVisita dialogVisita = new JDialogVisita(this, rootPaneCheckingEnabled);
                 WindowUtil.centerWindow(dialogVisita);
-                dialogVisita.setVisita(new Visita());
+//                dialogVisita.setVisita(new Visita());
 
 
-                if (personaAction.findByNumeroDocumento(jTextFieldDocumentoPersona.getText(), (TipoDocumento) jComboBoxTipoDoc.getSelectedItem()).size() < 1) {
+                if (personaAction.findByNumeroDocumento(jTextFieldDocumentoPersona.getText(), (TipoDocumento) jComboBoxTipoDoc.getSelectedItem())!=null) {
                     if (JOptionPane.showConfirmDialog(this, "La persona no existe, desea registrarla?", "Persona no registrada", 0) != 0) {
                         return;
                     }
@@ -842,12 +842,12 @@ public class MDIControlAcceso extends javax.swing.JFrame {
                     jComboBoxTipoDoc.setSelectedItem(dialogPersona.getjComboBoxTipoDocumento().getSelectedItem());
                 }
 
-                dialogVisita.getjTextFieldDocumentoPersona().setText(jTextFieldDocumentoPersona.getText());
-                dialogVisita.getjComboBoxTipoDoc().setSelectedItem(jComboBoxTipoDoc.getSelectedItem());
-                dialogVisita.actualizarDatos();
-                if (dialogVisita.getPersona().getId() != null) {
-                    dialogVisita.setVisible(true);
-                }
+//                dialogVisita.getjTextFieldDocumentoPersona().setText(jTextFieldDocumentoPersona.getText());
+             //   dialogVisita.getjComboBoxTipoDoc().setSelectedItem(jComboBoxTipoDoc.getSelectedItem());
+            //    dialogVisita.actualizarDatos();
+           //     if (dialogVisita.getPersona().getId() != null) {
+            //        dialogVisita.setVisible(true);
+           //     }
                 listVisitas.clear();
                 listVisitas.addAll(visitaAction.findVisitasPendientes());
             }
