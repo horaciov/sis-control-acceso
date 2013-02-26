@@ -21,6 +21,12 @@ import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
  */
 public class AutenticadorAction {
 
+    private static Usuario usuarioConectado;
+
+    public static Usuario getUsuarioConectado() {
+        return usuarioConectado;
+    }
+            
     public boolean autenticar(String usuario, String password) {
         EntityManager em = EntityManagerCA.getEntityManger();
         List<Usuario> usuarioValido;
@@ -29,6 +35,7 @@ public class AutenticadorAction {
                 .setParameter("password", getDigest(password))
                 .getResultList();
         if (usuarioValido.size() > 0) {
+            usuarioConectado=usuarioValido.get(0);
             return true;
         }
 

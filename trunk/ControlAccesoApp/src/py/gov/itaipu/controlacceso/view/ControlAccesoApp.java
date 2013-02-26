@@ -14,9 +14,12 @@ import javax.media.CannotRealizeException;
 import javax.media.NoPlayerException;
 import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
+import py.gov.itaipu.controlacceso.action.seguridad.AutenticadorAction;
+import py.gov.itaipu.controlacceso.model.Rol;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 import py.gov.itaipu.controlacceso.utils.windows.WindowUtil;
 import py.gov.itaipu.controlacceso.view.seguridad.JDialogAutenticar;
+import py.gov.itaipu.controlacceso.view.visita.JDialogVisita;
 
 /**
  *
@@ -33,15 +36,43 @@ public class ControlAccesoApp {
             EntityManagerCA.iniciarContexto();
             try {
                 AdminCamera.iniciar();
-            } catch (Exception e){
+            } catch (Exception e) {
                 //no hacemos nada al respecto.
             }
-            MDIControlAcceso mdi = new MDIControlAcceso();
-            JDialogAutenticar login = new JDialogAutenticar(mdi, true);
+            JDialogAutenticar login = new JDialogAutenticar(null, true);
             WindowUtil.centerWindow(login);
             login.setVisible(true);
-            WindowUtil.centerWindow(mdi);
-            mdi.setVisible(true);
+            //Abrimos la app según rol del usuario.
+            if (AutenticadorAction.getUsuarioConectado().getRoles().size() == 1) {
+                Rol rol = AutenticadorAction.getUsuarioConectado().getRoles().get(0);
+                if (rol.getNombre().equals("OPERADOR")) {
+                    JDialogVisita dialog = new JDialogVisita(new javax.swing.JFrame(), true);
+                    dialog.setSize(1260, 600);
+                    WindowUtil.centerWindow(dialog);
+                    dialog.setVisible(true);
+                } else if (rol.getNombre().equals("ADMINISTRADOR")) {
+                    JDialogAdministracion dialog = new JDialogAdministracion(new javax.swing.JFrame(), true);
+                    dialog.setSize(350, 250);
+                    WindowUtil.centerWindow(dialog);
+                    dialog.setVisible(true);
+                } else if (rol.getNombre().equals("ANALISTA")) {
+                    JDialogAnalisis dialog = new JDialogAnalisis(new javax.swing.JFrame(), true);
+                    dialog.setSize(450, 250);
+                    WindowUtil.centerWindow(dialog);
+                    dialog.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "No cuenta con un rol para acceder al sistema, pongase en contacto con el administrador.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            } else if (AutenticadorAction.getUsuarioConectado().getRoles().size() > 1) {
+                JDialogRolSelector dialog = new JDialogRolSelector(new javax.swing.JFrame(), false);
+                dialog.setSize(350, 145);
+                WindowUtil.centerWindow(dialog);
+                dialog.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "No cuenta con un rol para acceder al sistema, pongase en contacto con el administrador.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
         } catch (RuntimeException e) {
             JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
             return;

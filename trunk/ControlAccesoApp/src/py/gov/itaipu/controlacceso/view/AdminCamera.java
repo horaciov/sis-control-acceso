@@ -34,9 +34,6 @@ public class AdminCamera {
         formulario = new JDialogFotografia(null, true);        
     }
 
-    
-    
-    
     public static void start() {
         player.start();
     }
