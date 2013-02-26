@@ -42,6 +42,8 @@ public class JDialogAdministracion extends javax.swing.JDialog {
         jButtonVisitantes = new javax.swing.JButton();
         jSeparator6 = new javax.swing.JSeparator();
         jLabelPersonaVisitada5 = new javax.swing.JLabel();
+        jButtonSeguridad = new javax.swing.JButton();
+        jLabelSeguridad = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Administración del sistema");
@@ -54,17 +56,17 @@ public class JDialogAdministracion extends javax.swing.JDialog {
             }
         });
         getContentPane().add(jButtonReportes);
-        jButtonReportes.setBounds(246, 64, 66, 57);
+        jButtonReportes.setBounds(370, 60, 66, 57);
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Acerca de");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(246, 127, 65, 14);
+        jLabel4.setBounds(370, 120, 65, 14);
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Visitas");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(163, 127, 65, 14);
+        jLabel3.setBounds(190, 120, 65, 14);
 
         jButtonVisitas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/personas.jpeg"))); // NOI18N
         jButtonVisitas.addActionListener(new java.awt.event.ActionListener() {
@@ -73,7 +75,7 @@ public class JDialogAdministracion extends javax.swing.JDialog {
             }
         });
         getContentPane().add(jButtonVisitas);
-        jButtonVisitas.setBounds(163, 64, 65, 57);
+        jButtonVisitas.setBounds(190, 60, 65, 57);
 
         jButtonOrganigrama.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/organigrama.png"))); // NOI18N
         jButtonOrganigrama.addActionListener(new java.awt.event.ActionListener() {
@@ -82,15 +84,15 @@ public class JDialogAdministracion extends javax.swing.JDialog {
             }
         });
         getContentPane().add(jButtonOrganigrama);
-        jButtonOrganigrama.setBounds(83, 64, 70, 57);
+        jButtonOrganigrama.setBounds(100, 60, 70, 57);
 
         jLabel2.setText("Organigrama");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(87, 127, 70, 14);
+        jLabel2.setBounds(100, 120, 80, 14);
 
         jLabel1.setText("Visitantes");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(10, 127, 59, 14);
+        jLabel1.setBounds(30, 120, 59, 14);
 
         jButtonVisitantes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/ficha.png"))); // NOI18N
         jButtonVisitantes.addActionListener(new java.awt.event.ActionListener() {
@@ -99,14 +101,28 @@ public class JDialogAdministracion extends javax.swing.JDialog {
             }
         });
         getContentPane().add(jButtonVisitantes);
-        jButtonVisitantes.setBounds(10, 64, 63, 57);
+        jButtonVisitantes.setBounds(20, 60, 63, 57);
         getContentPane().add(jSeparator6);
-        jSeparator6.setBounds(10, 43, 300, 10);
+        jSeparator6.setBounds(10, 43, 430, 10);
 
         jLabelPersonaVisitada5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabelPersonaVisitada5.setText("Administración del sistema.");
         getContentPane().add(jLabelPersonaVisitada5);
         jLabelPersonaVisitada5.setBounds(10, 11, 236, 26);
+
+        jButtonSeguridad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/security.jpeg"))); // NOI18N
+        jButtonSeguridad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSeguridadActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonSeguridad);
+        jButtonSeguridad.setBounds(280, 60, 65, 57);
+
+        jLabelSeguridad.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelSeguridad.setText("Seguridad");
+        getContentPane().add(jLabelSeguridad);
+        jLabelSeguridad.setBounds(280, 120, 65, 14);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -138,6 +154,10 @@ public class JDialogAdministracion extends javax.swing.JDialog {
         WindowUtil.centerWindow(dialogPersona);
         dialogPersona.setVisible(true);
     }//GEN-LAST:event_jButtonVisitantesActionPerformed
+
+    private void jButtonSeguridadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSeguridadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonSeguridadActionPerformed
 
     /**
      * @param args the command line arguments
@@ -183,6 +203,7 @@ public class JDialogAdministracion extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonOrganigrama;
     private javax.swing.JButton jButtonReportes;
+    private javax.swing.JButton jButtonSeguridad;
     private javax.swing.JButton jButtonVisitantes;
     private javax.swing.JButton jButtonVisitas;
     private javax.swing.JLabel jLabel1;
@@ -190,6 +211,7 @@ public class JDialogAdministracion extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabelPersonaVisitada5;
+    private javax.swing.JLabel jLabelSeguridad;
     private javax.swing.JSeparator jSeparator6;
     // End of variables declaration//GEN-END:variables
 }
