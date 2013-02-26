@@ -6,6 +6,7 @@ package py.gov.itaipu.controlacceso.view;
 
 import py.gov.itaipu.controlacceso.utils.windows.WindowUtil;
 import py.gov.itaipu.controlacceso.view.reportes.JDialogRepPersonasNoGratas;
+import py.gov.itaipu.controlacceso.view.reportes.JDialogRepVisitasActivas;
 import py.gov.itaipu.controlacceso.view.reportes.JDialogRepVisitasAreaPersona;
 import py.gov.itaipu.controlacceso.view.reportes.JDialogRepVisitasFecha;
 import py.gov.itaipu.controlacceso.view.reportes.JDialogRepVisitasGeneral;
@@ -46,6 +47,8 @@ public class JDialogAnalisis extends javax.swing.JDialog {
         jButtonReporteVisitasPorVisitante = new javax.swing.JButton();
         jButtonReporteVisitasPorArea = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
+        jButtonReporteVisitasPorPersona3 = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -122,6 +125,19 @@ public class JDialogAnalisis extends javax.swing.JDialog {
         getContentPane().add(jLabel7);
         jLabel7.setBounds(45, 132, 177, 14);
 
+        jButtonReporteVisitasPorPersona3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/icon-doc.gif"))); // NOI18N
+        jButtonReporteVisitasPorPersona3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonReporteVisitasPorPersona3ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonReporteVisitasPorPersona3);
+        jButtonReporteVisitasPorPersona3.setBounds(213, 121, 31, 25);
+
+        jLabel10.setText("Visitas Activas");
+        getContentPane().add(jLabel10);
+        jLabel10.setBounds(250, 130, 128, 14);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -159,6 +175,13 @@ public class JDialogAnalisis extends javax.swing.JDialog {
         WindowUtil.centerWindow(dialogRepVisAreaPers);
         dialogRepVisAreaPers.setVisible(true);
     }//GEN-LAST:event_jButtonReporteVisitasPorAreaActionPerformed
+
+    private void jButtonReporteVisitasPorPersona3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReporteVisitasPorPersona3ActionPerformed
+        // TODO add your handling code here:
+        JDialogRepVisitasActivas dialogRepVisAc = new JDialogRepVisitasActivas(null, false);
+        WindowUtil.centerWindow(dialogRepVisAc);
+        dialogRepVisAc.setVisible(true);
+    }//GEN-LAST:event_jButtonReporteVisitasPorPersona3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -206,7 +229,9 @@ public class JDialogAnalisis extends javax.swing.JDialog {
     private javax.swing.JButton jButtonReporteVisitasPorArea;
     private javax.swing.JButton jButtonReporteVisitasPorPersona1;
     private javax.swing.JButton jButtonReporteVisitasPorPersona2;
+    private javax.swing.JButton jButtonReporteVisitasPorPersona3;
     private javax.swing.JButton jButtonReporteVisitasPorVisitante;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
