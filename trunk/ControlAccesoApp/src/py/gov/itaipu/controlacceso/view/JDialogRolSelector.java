@@ -85,7 +85,7 @@ public class JDialogRolSelector extends javax.swing.JDialog {
             dialog.setVisible(true);
         } else if (rol.getNombre().equals("ADMINISTRADOR")) {
             JDialogAdministracion dialog = new JDialogAdministracion(new javax.swing.JFrame(), false);
-            dialog.setSize(350, 250);
+            dialog.setSize(480, 230);
             WindowUtil.centerWindow(dialog);
             dialog.setVisible(true);
         } else if (rol.getNombre().equals("ANALISTA")) {
