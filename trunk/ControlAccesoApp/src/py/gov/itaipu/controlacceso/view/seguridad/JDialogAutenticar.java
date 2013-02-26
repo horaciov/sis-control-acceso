@@ -7,6 +7,7 @@ package py.gov.itaipu.controlacceso.view.seguridad;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import py.gov.itaipu.controlacceso.action.seguridad.AutenticadorAction;
+import py.gov.itaipu.controlacceso.utils.windows.WindowUtil;
 
 /**
  *
@@ -42,6 +43,7 @@ public class JDialogAutenticar extends javax.swing.JDialog {
         jButtonCancelar = new javax.swing.JButton();
         jButtonAceptar = new javax.swing.JButton();
         jPasswordField = new javax.swing.JPasswordField();
+        jButtonCambiarClave = new javax.swing.JButton();
 
         jButton2.setText("jButton1");
 
@@ -64,7 +66,7 @@ public class JDialogAutenticar extends javax.swing.JDialog {
 
         jLabelUsuario.setText("Usuario:");
 
-        jLabelPassword.setText("Password:");
+        jLabelPassword.setText("Clave:");
 
         jButtonCancelar.setText("Cancelar");
         jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -80,6 +82,13 @@ public class JDialogAutenticar extends javax.swing.JDialog {
             }
         });
 
+        jButtonCambiarClave.setText("Cambiar Clave");
+        jButtonCambiarClave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCambiarClaveActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -90,7 +99,9 @@ public class JDialogAutenticar extends javax.swing.JDialog {
                     .addComponent(jSeparator1)
                     .addComponent(jLabelTitulo)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelLogo)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelLogo)
+                            .addComponent(jButtonCambiarClave))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -134,9 +145,13 @@ public class JDialogAutenticar extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButtonCancelar)
-                            .addComponent(jButtonAceptar)))
-                    .addComponent(jLabelLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(21, Short.MAX_VALUE))
+                            .addComponent(jButtonAceptar))
+                        .addGap(0, 10, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonCambiarClave)))
+                .addContainerGap())
         );
 
         pack();
@@ -150,14 +165,14 @@ public class JDialogAutenticar extends javax.swing.JDialog {
     private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
         // TODO add your handling code here:
         if(jTextFieldUsuario.getText()==null || jTextFieldUsuario.getText().equals("") ||jPasswordField.getText()==null || jPasswordField.getText().equals("")){
-            JOptionPane.showMessageDialog(this, "Usuario y password son requeridos para el inicio de sesión.", "Error", 0);
+            JOptionPane.showMessageDialog(this, "Usuario y clave son requeridos para el inicio de sesión.", "Error", 0);
             return;
         }
         AutenticadorAction autenticador=new AutenticadorAction();
         if(autenticador.autenticar(jTextFieldUsuario.getText(), jPasswordField.getText())){
             this.dispose();
         }else{
-            JOptionPane.showMessageDialog(this, "Usuario y password incorrectos.", "Error", 0);
+            JOptionPane.showMessageDialog(this, "Usuario y clave incorrectos.", "Error", 0);
         }
     }//GEN-LAST:event_jButtonAceptarActionPerformed
 
@@ -165,6 +180,16 @@ public class JDialogAutenticar extends javax.swing.JDialog {
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_formWindowClosing
+
+    private void jButtonCambiarClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCambiarClaveActionPerformed
+        // TODO add your handling code here:
+        JDialogCambiarClave jDialogCambiarClave;
+        jDialogCambiarClave= new JDialogCambiarClave(null, true);
+        jDialogCambiarClave.getjTextFieldUsuario().setText(jTextFieldUsuario.getText());
+        jDialogCambiarClave.setSize(400, 300);
+        WindowUtil.centerWindow(jDialogCambiarClave);
+        jDialogCambiarClave.setVisible(true);
+    }//GEN-LAST:event_jButtonCambiarClaveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -210,6 +235,7 @@ public class JDialogAutenticar extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonAceptar;
+    private javax.swing.JButton jButtonCambiarClave;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JLabel jLabelLogo;
     private javax.swing.JLabel jLabelPassword;
