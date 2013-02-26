@@ -97,7 +97,7 @@ public class Rol implements Serializable{
         return hash;
     }
 
-    @Override
+     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
@@ -106,7 +106,7 @@ public class Rol implements Serializable{
             return false;
         }
         final Rol other = (Rol) obj;
-        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
+        if ((this.nombre == null) ? (other.nombre != null) : !this.nombre.equals(other.nombre)) {
             return false;
         }
         return true;
@@ -116,6 +116,8 @@ public class Rol implements Serializable{
     public String toString() {
         return getNombre();
     }
+
+   
 
    
     
