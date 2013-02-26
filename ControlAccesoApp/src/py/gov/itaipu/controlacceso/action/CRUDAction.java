@@ -117,13 +117,14 @@ public class CRUDAction<E> {
             em.persist(entity);
             em.flush();
             tx.commit();
+            em.clear();
         } catch (EntityExistsException re) {
             tx.rollback();
             throw new EntidadExiste("La entidad a persistir ya existe");
         } catch (RuntimeException e) {
             throw new ErrorInesperado("Error Inesperado");
         } finally {
-            em.clear();
+            
         }
     }
 
