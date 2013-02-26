@@ -67,7 +67,7 @@ public class Rol implements Serializable{
         return descripcion;
     }
 
-    @ManyToMany
+    @ManyToMany(mappedBy="roles")
     public List<Funcionalidad> getFuncionalidades() {
         return funcionalidades;
     }

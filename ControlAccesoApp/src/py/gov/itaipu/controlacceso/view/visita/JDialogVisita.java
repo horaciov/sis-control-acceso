@@ -117,7 +117,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         p.setFechaNacimiento((Date) jFormattedTextFieldFechaNac.getValue());
         p.setEstadoCivil(jComboBoxEstadoCivil.getSelectedItem().toString());
         p.setSexo(jComboBoxSexo.getSelectedItem().toString());
-        p.setNacionalidad((Nacionalidad) listNacionalidades.get(jComboBoxNacionalidad.getSelectedIndex()));
+            p.setNacionalidad((Nacionalidad) listNacionalidades.get(jComboBoxNacionalidad.getSelectedIndex()));
         p.setTipoDocumento((TipoDocumento) listTipoDocumento.get(jComboBoxTipoDoc.getSelectedIndex()));
     }
 

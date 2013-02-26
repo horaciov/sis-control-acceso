@@ -7,6 +7,7 @@ package py.gov.itaipu.controlacceso.view;
 import py.gov.itaipu.controlacceso.action.seguridad.AutenticadorAction;
 import py.gov.itaipu.controlacceso.model.Rol;
 import py.gov.itaipu.controlacceso.utils.windows.WindowUtil;
+import py.gov.itaipu.controlacceso.view.seguridad.JDialogSeguridadMant;
 import py.gov.itaipu.controlacceso.view.visita.JDialogVisita;
 
 /**
@@ -93,6 +94,11 @@ public class JDialogRolSelector extends javax.swing.JDialog {
             dialog.setSize(450, 250);
             WindowUtil.centerWindow(dialog);
             dialog.setVisible(true);
+        } else if (rol.getNombre().equals("SEGURIDAD SISTEMA")) {
+             JDialogSeguridadMant jdsm = new JDialogSeguridadMant(null, rootPaneCheckingEnabled);
+             jdsm.setSize(900, 320);
+             WindowUtil.centerWindow(jdsm);
+             jdsm.setVisible(true);
         }
     }//GEN-LAST:event_jButtonAccederActionPerformed
 
