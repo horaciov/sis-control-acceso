@@ -86,6 +86,20 @@ public class CRUDAction<E> {
 
     }
     
+     public List<E> findEqualName(String nombre) throws ErrorInesperado {
+        List<E> result = null;
+        try {
+            Query query;
+            query = em.createQuery(" from " + entity.getClass().getSimpleName()+ " where nombre = :nombre");
+            query.setParameter("nombre", nombre);
+            result = query.getResultList();
+        } catch (RuntimeException re) {
+            throw new ErrorInesperado("Error inesperado.");
+        }
+        return result;
+
+    }
+    
 
     public E getEntity() {
         return entity;
