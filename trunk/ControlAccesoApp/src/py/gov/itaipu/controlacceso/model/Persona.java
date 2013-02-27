@@ -43,7 +43,7 @@ public class Persona implements Serializable{
     private List<Antecedente> antecedentes;
     private List<Visita> visitasRealizadas;
     private List<Visita> visitasRecibidas;
-     private Usuario usuarioCreacion;
+    private Usuario usuarioCreacion;
     private Usuario usuarioModificacion;
     private Date fechaCreacion;
     private Date fechaModificacion;

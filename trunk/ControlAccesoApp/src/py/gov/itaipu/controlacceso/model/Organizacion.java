@@ -43,9 +43,10 @@ public class Organizacion implements Serializable{
     private String tipoOrganizacion;
     private Organizacion organizacionPadre;
     private Long nivelOrganigrama;
+    private Estado estado;
     private List<Persona> personas;
     private List<Organizacion> organizacionesHijas;
-     private Usuario usuarioCreacion;
+    private Usuario usuarioCreacion;
     private Usuario usuarioModificacion;
     private Date fechaCreacion;
     private Date fechaModificacion;
@@ -144,6 +145,14 @@ public class Organizacion implements Serializable{
         this.nivelOrganigrama = nivelOrganigrama;
     }
     
+    @ManyToOne
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
     
     @OneToMany(mappedBy="organizacion")
     public List<Persona> getPersonas() {
