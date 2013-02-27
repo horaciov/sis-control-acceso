@@ -290,11 +290,6 @@ public class PersonaAction {
         Persona per = new Persona();
         per.setTipoDocumento(tipoDocumento);
         per.setNacionalidad(nac);
-//        per.setSexo("MASCULINO");
-//        per.setEstadoCivil("SOLTERO");
-//        per.setNombre("HoR");
-//        per.setApellido("vIL");
-//        per.setEstadoCivil("SOLTERO");
         List<Persona> ps = p.findByParameters(per, new Persona(), null);
 
     }

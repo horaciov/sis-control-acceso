@@ -17,6 +17,7 @@ import py.gov.itaipu.controlacceso.action.organizacion.OrganizacionAction;
 import py.gov.itaipu.controlacceso.action.persona.PersonaAction;
 import py.gov.itaipu.controlacceso.model.Organizacion;
 import py.gov.itaipu.controlacceso.model.Persona;
+import py.gov.itaipu.controlacceso.model.TipoDocumento;
 import py.gov.itaipu.controlacceso.model.exception.EntidadExiste;
 import py.gov.itaipu.controlacceso.model.exception.ErrorInesperado;
 import py.gov.itaipu.controlacceso.utils.tree.CustomIconRenderer;
@@ -411,6 +412,16 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "DEBE SELECCIONAR ORGANIZACION SUPERIOR.", "Error", 0);
         } else {
             persona = new Persona();
+             //SETEAR CI como documento por defecto
+            try {
+                CRUDAction<TipoDocumento> tdAct = new CRUDAction<TipoDocumento>();
+                TipoDocumento ci;
+                ci = tdAct.findByNamedQuery("TipoDocumento.findCI").get(0);
+                persona.setTipoDocumento(ci);
+            } catch (ErrorInesperado ex) {
+                Logger.getLogger(JDialogOrganigrama.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
             persona.setOrganizacion(areaPadre);
 
             manejaOrganizacion(false);
@@ -666,7 +677,6 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
             jButtonMudarEmpleado.setVisible(false);
             jButtonEliminar.setVisible(false);
             jButtonEditar.setVisible(false);
-                    
         
         }
     }//GEN-LAST:event_formWindowActivated
@@ -798,6 +808,25 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "INGRESE NRO DOCUMENTO.", "Error", 0);
             return false;
         }
+        
+        try {
+            Persona personaExiste = new Persona();
+            personaExiste = personaAction.findByNumeroDocumento(jTextFieldEmpleadoNroDoc.getText().toUpperCase(),persona.getTipoDocumento());
+            if (personaExiste!=null && personaExiste.getId()!=null) {
+                if (persona.getId()==null) {
+                    JOptionPane.showMessageDialog(this, "NRO DE DOCUMENTO YA EXISTE.", "Error", 0);
+                    return false;
+                }else if(persona.getId() != personaExiste.getId()){
+                    JOptionPane.showMessageDialog(this, "NRO DE DOCUMENTO YA EXISTE.", "Error", 0);
+                    return false;
+                }
+            }
+            
+            
+        } catch (ErrorInesperado ex) {
+            Logger.getLogger(JDialogOrganigrama.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         return true;
     }
 
