@@ -14,6 +14,7 @@ import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -188,16 +189,23 @@ public class JDialogFotografia extends javax.swing.JDialog {
             Buffer buf = fgc.grabFrame();//grab the current frame on video screen
             BufferToImage btoi = new BufferToImage((VideoFormat) buf.getFormat());
             img = btoi.createImage(buf);
-          //  if (persona.getId() != null) {
-                // SI ES UNA ACTUALIZACION DE LA FOTO DE LA PERSONA
-                String pathFoto = "fotografias/" + persona.getNumeroDocumento() +"-"+ persona.getTipoDocumento().getNombre() + ".jpg";
-                saveImagetoFile(img, pathFoto);
-                persona.setFotografiaPath(pathFoto);
-            //    actualizarFotoPersona(pathFoto);
-
-          //  } else {
-                // SI ES LA CREACION DE UNA PERSONA NUEVA  SOLO SETEAMOS LA FOTO en la variable img.
-      //      }
+            String pathFoto = "";
+                      
+            if(persona.getFotografiaPath()==null || persona.getFotografiaPath().equals("")){
+                File file=new File("");
+                String path=file.getAbsolutePath();
+                File fileAnho=new File(path+"/fotografias/"+Calendar.getInstance().get(Calendar.YEAR));
+                File fileMes=new File(fileAnho.getAbsolutePath()+"/"+(Calendar.getInstance().get(Calendar.MONTH)+1));
+                if(!fileAnho.exists())
+                    fileAnho.mkdir();
+                if(!fileMes.exists())
+                    fileMes.mkdir();
+                pathFoto = fileMes.getAbsolutePath()+ "/" + persona.getNumeroDocumento() +"-"+ persona.getTipoDocumento().getNombre() + ".jpg";
+            }else{
+                pathFoto = persona.getFotografiaPath();
+            }
+            saveImagetoFile(img, pathFoto);
+            persona.setFotografiaPath(pathFoto);
         } catch (Exception e) {
         }
 

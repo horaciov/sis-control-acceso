@@ -53,6 +53,7 @@ import py.gov.itaipu.controlacceso.model.exception.ErrorInesperado;
 import py.gov.itaipu.controlacceso.test.ImageFrame;
 import py.gov.itaipu.controlacceso.test.ShowImage;
 import py.gov.itaipu.controlacceso.utils.windows.WindowUtil;
+import py.gov.itaipu.controlacceso.view.AdminCamera;
 import py.gov.itaipu.controlacceso.view.FileFilterExtension;
 import py.gov.itaipu.controlacceso.view.JDialogBuscador;
 import py.gov.itaipu.controlacceso.view.administracion.organizacion.JDialogOrganizacionExterna;
@@ -652,14 +653,12 @@ public class JDialogPersona extends javax.swing.JDialog {
 
     private void jButtonTomarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTomarFotoActionPerformed
         // TODO add your handling code here:
-
-        JDialogFotografia dialogFotografia;
         try {
-            dialogFotografia = new JDialogFotografia(null, rootPaneCheckingEnabled, "CAPTURAR", persona);
-//            dialogFotografia.setPersona(persona);
-            dialogFotografia.setVisible(true);        // TODO add your handling code here:
-            if (dialogFotografia.isCapturado()) {
-                imgFotoPersona = dialogFotografia.getImg();
+             WindowUtil.centerWindow(AdminCamera.formulario);
+            //            dialogFotografia.setPersona(persona);
+            AdminCamera.formulario.mostrarFormulario("CAPTURAR", persona);       // TODO add your handling code here:
+            if (AdminCamera.formulario.isCapturado()) {
+                imgFotoPersona = AdminCamera.formulario.getImg();
                 mostrarFotoPersona();
             }
         } catch (Exception ex) {
