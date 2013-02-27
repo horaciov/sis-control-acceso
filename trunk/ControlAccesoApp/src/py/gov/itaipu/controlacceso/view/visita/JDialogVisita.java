@@ -4,6 +4,7 @@
  */
 package py.gov.itaipu.controlacceso.view.visita;
 
+import java.awt.Desktop;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
@@ -117,7 +118,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         p.setFechaNacimiento((Date) jFormattedTextFieldFechaNac.getValue());
         p.setEstadoCivil(jComboBoxEstadoCivil.getSelectedItem().toString());
         p.setSexo(jComboBoxSexo.getSelectedItem().toString());
-            p.setNacionalidad((Nacionalidad) listNacionalidades.get(jComboBoxNacionalidad.getSelectedIndex()));
+        p.setNacionalidad((Nacionalidad) listNacionalidades.get(jComboBoxNacionalidad.getSelectedIndex()));
         p.setTipoDocumento((TipoDocumento) listTipoDocumento.get(jComboBoxTipoDoc.getSelectedIndex()));
     }
 
@@ -186,6 +187,7 @@ public class JDialogVisita extends javax.swing.JDialog {
                     jLabelFotografia = new javax.swing.JLabel();
                     jButtonTomarFotografia = new javax.swing.JButton();
                     jButtonNacionalidadEdit = new javax.swing.JButton();
+                    jButtonAyuda = new javax.swing.JButton();
                     jPanelVisita = new javax.swing.JPanel();
                     jLabel4 = new javax.swing.JLabel();
                     jSeparator3 = new javax.swing.JSeparator();
@@ -493,6 +495,15 @@ public class JDialogVisita extends javax.swing.JDialog {
         jPanelVisitante.add(jButtonNacionalidadEdit);
         jButtonNacionalidadEdit.setBounds(360, 160, 20, 20);
 
+        jButtonAyuda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/help.jpeg"))); // NOI18N
+        jButtonAyuda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAyudaActionPerformed(evt);
+            }
+        });
+        jPanelVisitante.add(jButtonAyuda);
+        jButtonAyuda.setBounds(833, 0, 20, 20);
+
         getContentPane().add(jPanelVisitante);
         jPanelVisitante.setBounds(400, 0, 860, 260);
 
@@ -606,8 +617,8 @@ public class JDialogVisita extends javax.swing.JDialog {
                 jTextFieldFiltroArbol.requestFocusInWindow();
                 jLabelIconStatus.setIcon(null);
             } else {
-                if (jCheckBoxReimprimir.isSelected()) {                    
-                    imprimirTicket(v);     
+                if (jCheckBoxReimprimir.isSelected()) {
+                    imprimirTicket(v);
                     jButtonNuevaVisita.setVisible(false);
                     limpiarDatosPersona();
                     inhabilitarEdicionPersona();
@@ -944,7 +955,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER && jTextFieldDocumentoPersona.getText() != null && !jTextFieldDocumentoPersona.getText().equals("")) {
             // Enter was pressed. Your code goes here.
             iniciarAccion();
-        } else if(jTextFieldDocumentoPersona.getText() == null || jTextFieldDocumentoPersona.getText().equals("")){
+        } else if (jTextFieldDocumentoPersona.getText() == null || jTextFieldDocumentoPersona.getText().equals("")) {
             limpiarDatosPersona();
             inhabilitarEdicionPersona();
             jLabelMensaje.setText("Introduzca un número de documento.");
@@ -961,7 +972,7 @@ public class JDialogVisita extends javax.swing.JDialog {
             if (persona == null) {
                 persona = new Persona();
                 persona.setNumeroDocumento(jTextFieldDocumentoPersona.getText());
-                persona.setTipoDocumento((TipoDocumento)jComboBoxTipoDoc.getSelectedItem());
+                persona.setTipoDocumento((TipoDocumento) jComboBoxTipoDoc.getSelectedItem());
                 limpiarDatosPersona();
                 habilitarEdicionPersona();
                 jLabelMensaje.setText("Nueva persona, ingrese sus datos.");
@@ -1172,6 +1183,21 @@ public class JDialogVisita extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBoxReimprimirActionPerformed
 
+    private void jButtonAyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAyudaActionPerformed
+        // TODO add your handling code here:
+        if (Desktop.isDesktopSupported()) {
+            try {
+                java.io.File file = new java.io.File("");   //Dummy file
+                String abspath = file.getAbsolutePath();
+                File myFile = new File(abspath+"/manuales/SCAModuloOperativo.pdf");
+                Desktop.getDesktop().open(myFile);
+            } catch (IOException ex) {
+                // no application registered for PDFs
+                JOptionPane.showMessageDialog(null, "El manual no se encuentra, verifique con el administrador del sistema.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jButtonAyudaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1179,9 +1205,6 @@ public class JDialogVisita extends javax.swing.JDialog {
         try {
             //</editor-fold>
             AdminCamera.iniciar();
-
-
-
 
         } catch (IOException ex) {
             Logger.getLogger(JDialogVisita.class
@@ -1210,6 +1233,7 @@ public class JDialogVisita extends javax.swing.JDialog {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroupExtranjero;
+    private javax.swing.JButton jButtonAyuda;
     private javax.swing.JButton jButtonBuscarOrganizacion;
     private javax.swing.JButton jButtonBuscarPersonaVisitada;
     private javax.swing.JButton jButtonEditTipoDoc;
