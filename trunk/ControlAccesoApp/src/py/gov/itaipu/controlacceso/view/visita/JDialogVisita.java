@@ -57,6 +57,7 @@ import py.gov.itaipu.controlacceso.utils.tree.CustomIconRenderer;
 import py.gov.itaipu.controlacceso.utils.tree.UtilesArbol;
 import py.gov.itaipu.controlacceso.utils.windows.WindowUtil;
 import py.gov.itaipu.controlacceso.view.AdminCamera;
+import py.gov.itaipu.controlacceso.view.JDialogAbout;
 import py.gov.itaipu.controlacceso.view.JDialogBuscador;
 import py.gov.itaipu.controlacceso.view.TimeRenderer;
 import py.gov.itaipu.controlacceso.view.administracion.organizacion.JDialogOrganizacionExterna;
@@ -187,6 +188,7 @@ public class JDialogVisita extends javax.swing.JDialog {
                     jLabelFotografia = new javax.swing.JLabel();
                     jButtonTomarFotografia = new javax.swing.JButton();
                     jButtonNacionalidadEdit = new javax.swing.JButton();
+                    jButtonAbout = new javax.swing.JButton();
                     jButtonAyuda = new javax.swing.JButton();
                     jPanelVisita = new javax.swing.JPanel();
                     jLabel4 = new javax.swing.JLabel();
@@ -495,14 +497,25 @@ public class JDialogVisita extends javax.swing.JDialog {
         jPanelVisitante.add(jButtonNacionalidadEdit);
         jButtonNacionalidadEdit.setBounds(360, 160, 20, 20);
 
+        jButtonAbout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/icon_about.png"))); // NOI18N
+        jButtonAbout.setToolTipText("Acerca de...");
+        jButtonAbout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAboutActionPerformed(evt);
+            }
+        });
+        jPanelVisitante.add(jButtonAbout);
+        jButtonAbout.setBounds(810, 0, 20, 20);
+
         jButtonAyuda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/help.jpeg"))); // NOI18N
+        jButtonAyuda.setToolTipText("Ayuda");
         jButtonAyuda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAyudaActionPerformed(evt);
             }
         });
         jPanelVisitante.add(jButtonAyuda);
-        jButtonAyuda.setBounds(833, 0, 20, 20);
+        jButtonAyuda.setBounds(830, 0, 20, 20);
 
         getContentPane().add(jPanelVisitante);
         jPanelVisitante.setBounds(400, 0, 860, 260);
@@ -1181,7 +1194,26 @@ public class JDialogVisita extends javax.swing.JDialog {
 
     private void jCheckBoxReimprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxReimprimirActionPerformed
         // TODO add your handling code here:
+        if (Desktop.isDesktopSupported()) {
+            try {
+                java.io.File file = new java.io.File("");   //Dummy file
+                String abspath = file.getAbsolutePath();
+                File myFile = new File(abspath + "/manuales/SCAModuloOperativo.pdf");
+                Desktop.getDesktop().open(myFile);
+            } catch (IOException ex) {
+                // no application registered for PDFs
+                JOptionPane.showMessageDialog(null, "El manual no se encuentra, verifique con el administrador del sistema.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_jCheckBoxReimprimirActionPerformed
+
+    private void jButtonAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAboutActionPerformed
+        // TODO add your handling code here:
+        JDialogAbout about = new JDialogAbout(null, true);
+        WindowUtil.centerWindow(about);
+        about.setVisible(true);
+
+    }//GEN-LAST:event_jButtonAboutActionPerformed
 
     private void jButtonAyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAyudaActionPerformed
         // TODO add your handling code here:
@@ -1189,7 +1221,7 @@ public class JDialogVisita extends javax.swing.JDialog {
             try {
                 java.io.File file = new java.io.File("");   //Dummy file
                 String abspath = file.getAbsolutePath();
-                File myFile = new File(abspath+"/manuales/SCAModuloOperativo.pdf");
+                File myFile = new File(abspath + "/manuales/SCAModuloOperativo.pdf");
                 Desktop.getDesktop().open(myFile);
             } catch (IOException ex) {
                 // no application registered for PDFs
@@ -1233,6 +1265,7 @@ public class JDialogVisita extends javax.swing.JDialog {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroupExtranjero;
+    private javax.swing.JButton jButtonAbout;
     private javax.swing.JButton jButtonAyuda;
     private javax.swing.JButton jButtonBuscarOrganizacion;
     private javax.swing.JButton jButtonBuscarPersonaVisitada;

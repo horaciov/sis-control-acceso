@@ -4,6 +4,10 @@
  */
 package py.gov.itaipu.controlacceso.view;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+import javax.swing.JOptionPane;
 import py.gov.itaipu.controlacceso.utils.windows.WindowUtil;
 import py.gov.itaipu.controlacceso.view.reportes.JDialogRepPersonasNoGratas;
 import py.gov.itaipu.controlacceso.view.reportes.JDialogRepVisitasActivas;
@@ -49,6 +53,8 @@ public class JDialogAnalisis extends javax.swing.JDialog {
         jLabel7 = new javax.swing.JLabel();
         jButtonReporteVisitasPorPersona3 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
+        jButtonAbout = new javax.swing.JButton();
+        jButtonAyuda = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -138,6 +144,26 @@ public class JDialogAnalisis extends javax.swing.JDialog {
         getContentPane().add(jLabel10);
         jLabel10.setBounds(250, 130, 128, 14);
 
+        jButtonAbout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/icon_about.png"))); // NOI18N
+        jButtonAbout.setToolTipText("Acerca de...");
+        jButtonAbout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAboutActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonAbout);
+        jButtonAbout.setBounds(380, 10, 20, 20);
+
+        jButtonAyuda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/help.jpeg"))); // NOI18N
+        jButtonAyuda.setToolTipText("Ayuda");
+        jButtonAyuda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAyudaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonAyuda);
+        jButtonAyuda.setBounds(400, 10, 20, 20);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -183,6 +209,28 @@ public class JDialogAnalisis extends javax.swing.JDialog {
         dialogRepVisAc.setVisible(true);
     }//GEN-LAST:event_jButtonReporteVisitasPorPersona3ActionPerformed
 
+    private void jButtonAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAboutActionPerformed
+        // TODO add your handling code here:
+        JDialogAbout about = new JDialogAbout(null, true);
+        WindowUtil.centerWindow(about);
+        about.setVisible(true);
+    }//GEN-LAST:event_jButtonAboutActionPerformed
+
+    private void jButtonAyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAyudaActionPerformed
+        // TODO add your handling code here:
+        if (Desktop.isDesktopSupported()) {
+            try {
+                java.io.File file = new java.io.File("");   //Dummy file
+                String abspath = file.getAbsolutePath();
+                File myFile = new File(abspath + "/manuales/SCAModuloAnalisis.pdf");
+                Desktop.getDesktop().open(myFile);
+            } catch (IOException ex) {
+                // no application registered for PDFs
+                JOptionPane.showMessageDialog(null, "El manual no se encuentra, verifique con el administrador del sistema.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jButtonAyudaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -225,6 +273,8 @@ public class JDialogAnalisis extends javax.swing.JDialog {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAbout;
+    private javax.swing.JButton jButtonAyuda;
     private javax.swing.JButton jButtonReporteGeneral;
     private javax.swing.JButton jButtonReporteVisitasPorArea;
     private javax.swing.JButton jButtonReporteVisitasPorPersona1;
