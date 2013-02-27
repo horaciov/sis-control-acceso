@@ -961,6 +961,7 @@ public class JDialogVisita extends javax.swing.JDialog {
             if (persona == null) {
                 persona = new Persona();
                 persona.setNumeroDocumento(jTextFieldDocumentoPersona.getText());
+                persona.setTipoDocumento((TipoDocumento)jComboBoxTipoDoc.getSelectedItem());
                 limpiarDatosPersona();
                 habilitarEdicionPersona();
                 jLabelMensaje.setText("Nueva persona, ingrese sus datos.");
