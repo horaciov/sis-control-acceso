@@ -5,11 +5,15 @@
 package py.gov.itaipu.controlacceso.view.administracion.organizacion;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTree;
+import javax.swing.event.TreeSelectionEvent;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
+import py.gov.itaipu.controlacceso.action.organizacion.OrganizacionAction;
 import py.gov.itaipu.controlacceso.action.persona.PersonaAction;
 import py.gov.itaipu.controlacceso.model.Organizacion;
 import py.gov.itaipu.controlacceso.model.Persona;
@@ -27,11 +31,12 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
     private CRUDAction<Organizacion> organizacionAction;
     private Persona persona;
     private Organizacion area;
+    private Organizacion areaMudanza;
     private Organizacion areaPadre;
     private PersonaAction personaAction;
     private Boolean modoBuscador;
     private Object seleccionado;
-
+    private boolean actualizarArbol;
     /**
      * Creates new form JDialogOrganigrama
      */
@@ -74,6 +79,11 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
             jLabel2 = new javax.swing.JLabel();
             jButtonGuardarEmpleado = new javax.swing.JButton();
             jLabel3 = new javax.swing.JLabel();
+            jButtonEditar = new javax.swing.JButton();
+            jButtonCancelarUsuario = new javax.swing.JButton();
+            jButtonCancelarArea = new javax.swing.JButton();
+            jButtonEliminar = new javax.swing.JButton();
+            jButtonMudarEmpleado = new javax.swing.JButton();
 
             setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
             setTitle("ORGANIGRAMA");
@@ -112,7 +122,8 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
         jTextFieldEmpleadoApellido.setEditable(false);
 
         jButtonPersonaNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/persona.jpg"))); // NOI18N
-        jButtonPersonaNuevo.setText("Nuevo empleado");
+        jButtonPersonaNuevo.setText("Nuevo Empleado");
+        jButtonPersonaNuevo.setToolTipText("Cargar un Nuevo Empleado");
         jButtonPersonaNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonPersonaNuevoActionPerformed(evt);
@@ -129,7 +140,8 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
         jTextFieldEmpleadoNroDoc.setEditable(false);
 
         jButtonOrganizacionNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/organizacion.png"))); // NOI18N
-        jButtonOrganizacionNuevo.setText("Nueva Organizacion");
+        jButtonOrganizacionNuevo.setText("Nueva Area");
+        jButtonOrganizacionNuevo.setToolTipText("Cargar una Nueva Area");
         jButtonOrganizacionNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonOrganizacionNuevoActionPerformed(evt);
@@ -169,51 +181,107 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
 
         jLabel3.setText("Area Superior:");
 
+        jButtonEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/edit.png"))); // NOI18N
+        jButtonEditar.setText("Editar");
+        jButtonEditar.setToolTipText("Editar Area-Empleado");
+        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditarActionPerformed(evt);
+            }
+        });
+
+        jButtonCancelarUsuario.setText("Cancelar");
+        jButtonCancelarUsuario.setEnabled(false);
+        jButtonCancelarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelarUsuarioActionPerformed(evt);
+            }
+        });
+
+        jButtonCancelarArea.setText("Cancelar");
+        jButtonCancelarArea.setEnabled(false);
+        jButtonCancelarArea.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelarAreaActionPerformed(evt);
+            }
+        });
+
+        jButtonEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/delete.png"))); // NOI18N
+        jButtonEliminar.setToolTipText("Eliminar Area-Empleado");
+        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarActionPerformed(evt);
+            }
+        });
+
+        jButtonMudarEmpleado.setText("Mudar");
+        jButtonMudarEmpleado.setToolTipText("Mudar de Area");
+        jButtonMudarEmpleado.setEnabled(false);
+        jButtonMudarEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonMudarEmpleadoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(117, 117, 117)
                         .addComponent(jButtonOrganizacionNuevo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonPersonaNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonPersonaNuevo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonEditar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPaneOrganigrama, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(jScrollPaneOrganigrama, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(5, 5, 5)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGap(18, 18, 18))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addGap(5, 5, 5)))
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jTextFieldAreaNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextFieldAreaPadreNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextFieldEmpleadoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextFieldEmpleadoApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextFieldEmpleadoNroDoc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jTextFieldEmpleadoOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jButtonGuardarArea, javax.swing.GroupLayout.Alignment.TRAILING))
-                            .addComponent(jButtonGuardarEmpleado, javax.swing.GroupLayout.Alignment.TRAILING))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jTextFieldAreaNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldAreaPadreNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldEmpleadoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldEmpleadoApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldEmpleadoNroDoc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButtonCancelarArea)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonGuardarArea))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jButtonMudarEmpleado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButtonCancelarUsuario)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonGuardarEmpleado))
+                            .addComponent(jTextFieldEmpleadoOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonOrganizacionNuevo, jButtonPersonaNuevo});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -246,7 +314,9 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
                                         .addComponent(jTextFieldAreaNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(25, 25, 25)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonGuardarArea, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jButtonGuardarArea, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButtonCancelarArea, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
@@ -261,13 +331,22 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
                             .addComponent(jTextFieldEmpleadoOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonGuardarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonMudarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jButtonGuardarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButtonCancelarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonOrganizacionNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonPersonaNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButtonOrganizacionNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonPersonaNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonEditar, jButtonOrganizacionNuevo, jButtonPersonaNuevo});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -303,10 +382,29 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
                 jTextFieldEmpleadoOrganizacion.setText("");
                 jTextFieldEmpleadoNroDoc.setText("");
 
+            } else {
+                persona = null;
+                area = null;
+                areaPadre = null;
+                jTextFieldAreaPadreNombre.setText("");
+                jTextFieldAreaNombre.setText("");
+                jTextFieldEmpleadoApellido.setText("");
+                jTextFieldEmpleadoNombre.setText("");
+                jTextFieldEmpleadoOrganizacion.setText("");
+                jTextFieldEmpleadoNroDoc.setText("");
             }
         }
     }//GEN-LAST:event_jTreeOrganigramaValueChanged
 
+    private void jTreeOrganigramaValueChangedMudar(TreeSelectionEvent evt) {
+         DefaultMutableTreeNode nodoSeleccionado = (DefaultMutableTreeNode) jTreeOrganigrama.getLastSelectedPathComponent();
+         Object objSel = nodoSeleccionado.getUserObject(); 
+         areaMudanza = (Organizacion) objSel;
+         persona.setOrganizacion(areaMudanza);
+         jTextFieldEmpleadoOrganizacion.setText(areaMudanza.getNombre());
+    }
+    
+    
     private void jButtonPersonaNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPersonaNuevoActionPerformed
         // TODO add your handling code here:
         if (areaPadre == null || !esOrganizacion()) {
@@ -315,24 +413,10 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
             persona = new Persona();
             persona.setOrganizacion(areaPadre);
 
-            manejaPersona(true);
             manejaOrganizacion(false);
+            manejaPersona(true);
+            jTreeOrganigrama.setEnabled(false);
         }
-
-        //            jTextFieldAreaNombre.setText("");
-        //            jTextFieldAreaNombre.setEditable(false);
-        //            jTextFieldAreaPadreNombre.setText("");
-        //
-        //            jTextFieldEmpleadoApellido.setText("");
-        //            jTextFieldEmpleadoApellido.setEditable(true);
-        //            jTextFieldEmpleadoNombre.setText("");
-        //            jTextFieldEmpleadoNombre.setEditable(true);
-        //            jTextFieldEmpleadoOrganizacion.setText(areaPadre.getNombre());
-        //            jTextFieldEmpleadoNroDoc.setText("");
-        //            jTextFieldEmpleadoNroDoc.setEditable(true);
-        //
-        //            jButtonGuardarArea.setEnabled(false);
-        //            jButtonGuardarEmpleado.setEnabled(true);
 
     }//GEN-LAST:event_jButtonPersonaNuevoActionPerformed
 
@@ -346,6 +430,12 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
             jTextFieldEmpleadoNroDoc.setText("");
             jTextFieldEmpleadoNroDoc.setEditable(true);
             jButtonGuardarEmpleado.setEnabled(true);
+            jButtonCancelarUsuario.setEnabled(true);
+            jButtonOrganizacionNuevo.setEnabled(false);
+            jButtonPersonaNuevo.setEnabled(false);
+            jButtonEditar.setEnabled(false);
+            jButtonEliminar.setEnabled(false);
+
         } else {
             jTextFieldEmpleadoApellido.setText("");
             jTextFieldEmpleadoApellido.setEditable(false);
@@ -355,6 +445,12 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
             jTextFieldEmpleadoNroDoc.setEditable(false);
             jTextFieldEmpleadoOrganizacion.setText("");
             jButtonGuardarEmpleado.setEnabled(false);
+            jButtonCancelarUsuario.setEnabled(false);
+            jButtonOrganizacionNuevo.setEnabled(true);
+            jButtonPersonaNuevo.setEnabled(true);
+            jButtonEditar.setEnabled(true);
+            jButtonEliminar.setEnabled(true);
+
         }
     }
 
@@ -365,14 +461,24 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
             if (area.getNivelOrganigrama() > 1) {
                 jTextFieldAreaPadreNombre.setText(areaPadre.getNombre());
             }
-
             jButtonGuardarArea.setEnabled(true);
+            jButtonCancelarArea.setEnabled(true);
+            jButtonOrganizacionNuevo.setEnabled(false);
+            jButtonPersonaNuevo.setEnabled(false);
+            jButtonEditar.setEnabled(false);
+            jButtonEliminar.setEnabled(false);
         } else {
             jTextFieldAreaNombre.setText("");
             jTextFieldAreaNombre.setEditable(false);
             jTextFieldAreaPadreNombre.setText("");
             jTextFieldAreaPadreNombre.setText("");
             jButtonGuardarArea.setEnabled(false);
+            jButtonCancelarArea.setEnabled(false);
+            jButtonOrganizacionNuevo.setEnabled(true);
+            jButtonPersonaNuevo.setEnabled(true);
+            jButtonEditar.setEnabled(true);
+            jButtonEliminar.setEnabled(true);
+
 
         }
     }
@@ -394,15 +500,17 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
                 } else {
                     area = new Organizacion();
                     area.setNivelOrganigrama(1L);
-                    manejaOrganizacion(true);
                     manejaPersona(false);
+                    manejaOrganizacion(true);
+                    jTreeOrganigrama.setEnabled(false);
                 }
             } else {
                 area = new Organizacion();
                 area.setOrganizacionPadre(areaPadre);
                 area.setNivelOrganigrama(areaPadre.getNivelOrganigrama() + 1);
-                manejaOrganizacion(true);
                 manejaPersona(false);
+                manejaOrganizacion(true);
+                jTreeOrganigrama.setEnabled(false);
 
             }
         } catch (ErrorInesperado ei) {
@@ -419,27 +527,46 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
         // TODO add your handling code here:
         try {
             if (validarOrganizacion()) {
-
-                area.setNombre(jTextFieldAreaNombre.getText());
+                area.setNombre(jTextFieldAreaNombre.getText().toUpperCase());
                 area.setTipoOrganizacion("INTERNA");
                 organizacionAction.setEntity(area);
                 try {
-                    organizacionAction.crear();
-//                areaPadre.getOrganizacionesHijas().add(area);
-
-                    JOptionPane.showMessageDialog(this, "Se ha guardado con exito el Area Interna", "Info", 1);
+                    if (area.getId() == null) {
+                        if (organizacionAction.existeNombre(area.getNombre().toUpperCase())) {
+                            List<Organizacion> orgs = organizacionAction.findEqualName(area.getNombre().toUpperCase());
+                            Organizacion or = orgs.get(0);
+                            if (or.getOrganizacionPadre() == null || or.getOrganizacionPadre().getId() == null) {
+                                or.setOrganizacionPadre(area.getOrganizacionPadre());
+                                or.setNivelOrganigrama(area.getOrganizacionPadre().getNivelOrganigrama() + 1);
+                                organizacionAction.setEntity(or);
+                                organizacionAction.crear();
+                                OrganizacionAction orgAct = new OrganizacionAction(or);
+                                orgAct.habilitar();
+                                JOptionPane.showMessageDialog(this, "La Organizacion ya existía y estaba inhabilitada. Se habilitó y asignó a la Org Padre.", "Info", 1);
+                            } else {
+                                JOptionPane.showMessageDialog(this, "La organización ya existe", "Error", 0);
+                                return;
+                            }
+                        } else {
+                            organizacionAction.crear();
+                            JOptionPane.showMessageDialog(this, "Se ha creado con exito el Area Interna", "Info", 1);
+                        }
+                    } else {
+                        organizacionAction.guardar();
+                        JOptionPane.showMessageDialog(this, "Se ha guardado con exito el Area Interna", "Info", 1);
+                    }
                 } catch (EntidadExiste e) {
                     JOptionPane.showMessageDialog(this, "La organización ya existe", "Error", 0);
                     return;
                 }
                 manejaOrganizacion(false);
-                DefaultMutableTreeNode nodoSeleccionado = (DefaultMutableTreeNode) jTreeOrganigrama.getLastSelectedPathComponent();
+//                DefaultMutableTreeNode nodoSeleccionado = (DefaultMutableTreeNode) jTreeOrganigrama.getLastSelectedPathComponent();
                 //                DefaultMutableTreeNode nodoNuevo = new DefaultMutableTreeNode(area,true);
                 //                nodoSeleccionado.add(nodoNuevo);
                 //                jTreeOrganigrama.repaint();
-                actualizarArbol();
-                jTreeOrganigrama.setSelectionPath(new TreePath(nodoSeleccionado.getPath()));
-                jTreeOrganigrama.expandPath(new TreePath(nodoSeleccionado.getPath()));
+                actualizarArbol(true,true);
+//                jTreeOrganigrama.setSelectionPath(new TreePath(nodoSeleccionado.getPath()));
+//                jTreeOrganigrama.expandPath(new TreePath(nodoSeleccionado.getPath()));
                 area = null;
                 areaPadre = null;
 
@@ -449,51 +576,67 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
             System.exit(-1);
         }
     }//GEN-LAST:event_jButtonGuardarAreaActionPerformed
-    private void actualizarArbol() {
+    private void actualizarArbol(boolean incluyePersonas, boolean seleccionable) {
         try {
-            DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", true);
+            DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", incluyePersonas);
             jTreeOrganigrama = new JTree(root);
             jTreeOrganigrama.setCellRenderer(new CustomIconRenderer());
-            jTreeOrganigrama.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
-                public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
-                    jTreeOrganigramaValueChanged(evt);
-                }
-            });
+            if (seleccionable) {
+                jTreeOrganigrama.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+                    public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+                        jTreeOrganigramaValueChanged(evt);
+                    }
+                });
+            }else{
+                jTreeOrganigrama.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+                    public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+                        jTreeOrganigramaValueChangedMudar(evt);
+                    }
+                });
+            }
+
             jScrollPaneOrganigrama.setViewportView(jTreeOrganigrama);
         } catch (ErrorInesperado ei) {
             JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
             System.exit(-1);
         }
     }
+    
+    
+    
     private void jButtonGuardarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarEmpleadoActionPerformed
         // TODO add your handling code here:
-        try{
-        if (validarPersona()) {
-            persona.setNombre(jTextFieldEmpleadoNombre.getText());
-            persona.setApellido(jTextFieldEmpleadoApellido.getText());
-            persona.setNumeroDocumento(jTextFieldEmpleadoNroDoc.getText());
-            personaAction.setPersona(persona);
-            try {
-                personaAction.crear();
-                JOptionPane.showMessageDialog(this, "Se ha guardado con exito los Datos del Empleado", "Info", 1);
-            } catch (EntidadExiste e) {
-                JOptionPane.showMessageDialog(this, "La persona ya existe", "Error", 0);
-                return;
+        try {
+            if (validarPersona()) {
+                persona.setNombre(jTextFieldEmpleadoNombre.getText());
+                persona.setApellido(jTextFieldEmpleadoApellido.getText());
+                persona.setNumeroDocumento(jTextFieldEmpleadoNroDoc.getText());
+                personaAction.setPersona(persona);
+                try {
+                    if (persona.getId() == null) {
+                        personaAction.crear();
+                        JOptionPane.showMessageDialog(this, "Se ha creado con exito el nuevo Empleado", "Info", 1);
+                    } else {
+                        personaAction.crear();
+                        JOptionPane.showMessageDialog(this, "Se ha guardado con exito los Datos del Empleado", "Info", 1);
+                    }
+                } catch (EntidadExiste e) {
+                    JOptionPane.showMessageDialog(this, "La persona ya existe", "Error", 0);
+                    return;
+                }
+
+                manejaPersona(false);
+
+//                DefaultMutableTreeNode nodoSeleccionado = (DefaultMutableTreeNode) jTreeOrganigrama.getLastSelectedPathComponent();
+//                //                DefaultMutableTreeNode nodoNuevo = new DefaultMutableTreeNode(persona,true);
+                //                nodoSeleccionado.add(nodoNuevo);
+                //                jTreeOrganigrama.repaint();
+                actualizarArbol(true,true);
+//                jTreeOrganigrama.setSelectionPath(new TreePath(nodoSeleccionado.getPath()));
+//                jTreeOrganigrama.expandPath(new TreePath(nodoSeleccionado.getPath()));
+                persona = null;
+
             }
-
-
-            manejaPersona(false);
-
-            DefaultMutableTreeNode nodoSeleccionado = (DefaultMutableTreeNode) jTreeOrganigrama.getLastSelectedPathComponent();
-            //                DefaultMutableTreeNode nodoNuevo = new DefaultMutableTreeNode(persona,true);
-            //                nodoSeleccionado.add(nodoNuevo);
-            //                jTreeOrganigrama.repaint();
-            actualizarArbol();
-            jTreeOrganigrama.setSelectionPath(new TreePath(nodoSeleccionado.getPath()));
-            jTreeOrganigrama.expandPath(new TreePath(nodoSeleccionado.getPath()));
-            persona = null;
-
-        }
         } catch (ErrorInesperado ei) {
             JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
             System.exit(-1);
@@ -520,14 +663,134 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
             jButtonOrganizacionNuevo.setVisible(false);
             jButtonGuardarArea.setVisible(false);
             jButtonGuardarEmpleado.setVisible(false);
+            jButtonMudarEmpleado.setVisible(false);
+            jButtonEliminar.setVisible(false);
+            jButtonEditar.setVisible(false);
+                    
+        
         }
     }//GEN-LAST:event_formWindowActivated
+
+    private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
+        // TODO add your handling code here:
+        if (persona != null && persona.getId() != null) {
+            manejaOrganizacion(false);
+            manejaPersona(true);
+            jTreeOrganigrama.setEnabled(false);
+            jTextFieldEmpleadoApellido.setText(persona.getApellido());
+            jTextFieldEmpleadoNombre.setText(persona.getNombre());
+            jTextFieldEmpleadoOrganizacion.setText(persona.getOrganizacion().getNombre());
+            jTextFieldEmpleadoNroDoc.setText(persona.getNumeroDocumento());
+            jButtonMudarEmpleado.setEnabled(true);
+            
+
+        } else if (area != null && area.getId() != null) {
+            manejaPersona(false);
+            manejaOrganizacion(true);
+            jTreeOrganigrama.setEnabled(false);
+            jTextFieldAreaNombre.setText(areaPadre.getNombre());
+            if (area.getOrganizacionPadre() != null) {
+                jTextFieldAreaPadreNombre.setText(areaPadre.getOrganizacionPadre().getNombre());
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "SELECCIONE AREA O PERSONA.", "Error", 0);
+        }
+    }//GEN-LAST:event_jButtonEditarActionPerformed
+    
+    private void jButtonCancelarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarUsuarioActionPerformed
+        // TODO add your handling code here:
+        jTreeOrganigrama.setEnabled(true);
+        jButtonMudarEmpleado.setEnabled(false);
+        manejaPersona(false);
+        manejaOrganizacion(false);
+        
+        if (actualizarArbol) {
+            actualizarArbol(true,true);
+            persona = null;
+        }else{
+            jTextFieldEmpleadoApellido.setText(persona.getApellido());
+            jTextFieldEmpleadoNombre.setText(persona.getNombre());
+            jTextFieldEmpleadoOrganizacion.setText(persona.getOrganizacion().getNombre());
+            jTextFieldEmpleadoNroDoc.setText(persona.getNumeroDocumento());
+        
+        }
+
+    }//GEN-LAST:event_jButtonCancelarUsuarioActionPerformed
+
+    private void jButtonCancelarAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarAreaActionPerformed
+        // TODO add your handling code here:
+        jTreeOrganigrama.setEnabled(true);
+        manejaPersona(false);
+        manejaOrganizacion(false);
+
+        jTextFieldAreaNombre.setText(areaPadre.getNombre());
+        if (area.getOrganizacionPadre() != null) {
+            jTextFieldAreaPadreNombre.setText(areaPadre.getOrganizacionPadre().getNombre());
+        }
+
+    }//GEN-LAST:event_jButtonCancelarAreaActionPerformed
+
+    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
+        // TODO add your handling code here:
+        if (persona != null && persona.getId() != null) {
+            if (JOptionPane.showConfirmDialog(this, "Desea eliminar al Empleado?", "Eliminar", 0) == 0) {
+                personaAction.setPersona(persona);
+                try {
+                    personaAction.inhabilitar();
+                    JOptionPane.showMessageDialog(this, "Se ha eliminado con exito", "Info", 1);
+                    actualizarArbol(true,true);
+                    persona = null;
+                } catch (ErrorInesperado ex) {
+                    JOptionPane.showMessageDialog(this, "Ha Ocurrido un error", "Error", 0);
+                }
+            }
+        } else if (area != null && area.getId() != null) {
+
+            if (JOptionPane.showConfirmDialog(this, "Desea eliminar el Area interna?", "Eliminar", 0) == 0) {
+                if (area.getNivelOrganigrama() == 1) {
+                    JOptionPane.showMessageDialog(this, "No se puede Eliminar Area Padre", "Error", 0);
+                    return;
+                }
+
+                DefaultMutableTreeNode nodoSeleccionado = (DefaultMutableTreeNode) jTreeOrganigrama.getLastSelectedPathComponent();
+                if (nodoSeleccionado.getChildCount() > 0) {
+                    JOptionPane.showMessageDialog(this, "No se puede Eliminar Area, porque tiene Areas o Empleados asociados", "Error", 0);
+                    return;
+                }
+
+                OrganizacionAction orgaAction = new OrganizacionAction(area);
+                try {
+                    orgaAction.inhabilitar();
+                    JOptionPane.showMessageDialog(this, "Se ha eliminado con exito", "Info", 1);
+                    actualizarArbol(true,true);
+                    area = null;
+                } catch (ErrorInesperado ex) {
+                    JOptionPane.showMessageDialog(this, "Ha Ocurrido un error", "Error", 0);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe Seleccionar Area o Empleado.", "Error", 0);
+        }
+    }//GEN-LAST:event_jButtonEliminarActionPerformed
+
+    private void jButtonMudarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMudarEmpleadoActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "Seleccione nueva Area", "MUDAR EMPLEADO DE AREA", 2);
+        actualizarArbol(false,false);
+        actualizarArbol = true;
+        jTreeOrganigrama.setEnabled(true);
+        jButtonMudarEmpleado.setEnabled(false);
+
+    }//GEN-LAST:event_jButtonMudarEmpleadoActionPerformed
+
+    
     private boolean validarPersona() {
         if (jTextFieldEmpleadoApellido.getText() == null || jTextFieldEmpleadoApellido.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "INGRESE APELLIDO.", "Error", 0);
             return false;
         }
-        if (jTextFieldEmpleadoNombre.getText() == null || jTextFieldEmpleadoApellido.getText().equals("")) {
+        if (jTextFieldEmpleadoNombre.getText() == null || jTextFieldEmpleadoNombre.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "INGRESE NOMBRE.", "Error", 0);
             return false;
         }
@@ -597,8 +860,13 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonCancelarArea;
+    private javax.swing.JButton jButtonCancelarUsuario;
+    private javax.swing.JButton jButtonEditar;
+    private javax.swing.JButton jButtonEliminar;
     private javax.swing.JButton jButtonGuardarArea;
     private javax.swing.JButton jButtonGuardarEmpleado;
+    private javax.swing.JButton jButtonMudarEmpleado;
     private javax.swing.JButton jButtonOrganizacionNuevo;
     private javax.swing.JButton jButtonPersonaNuevo;
     private javax.swing.JLabel jLabel1;

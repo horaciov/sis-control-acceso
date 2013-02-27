@@ -26,58 +26,71 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="jButtonOrganizacionNuevo" linkSize="1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButtonPersonaNuevo" linkSize="1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButtonEditar" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButtonEliminar" min="-2" pref="83" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="jScrollPaneOrganigrama" min="-2" pref="473" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jLabel1" alignment="0" min="-2" pref="91" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="117" max="-2" attributes="0"/>
-                      <Component id="jButtonOrganizacionNuevo" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel2" alignment="0" min="-2" pref="78" max="-2" attributes="0"/>
+                                  <Component id="jLabel4" alignment="0" min="-2" pref="78" max="-2" attributes="0"/>
+                                  <Component id="jLabel5" alignment="0" min="-2" pref="78" max="-2" attributes="0"/>
+                                  <Component id="jLabel6" alignment="0" min="-2" pref="78" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="jLabel7" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jLabel3" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jTextFieldAreaNombre" alignment="0" min="-2" pref="223" max="-2" attributes="0"/>
+                          <Component id="jTextFieldAreaPadreNombre" alignment="0" min="-2" pref="223" max="-2" attributes="0"/>
+                          <Component id="jTextFieldEmpleadoNombre" alignment="0" min="-2" pref="223" max="-2" attributes="0"/>
+                          <Component id="jTextFieldEmpleadoApellido" alignment="0" min="-2" pref="223" max="-2" attributes="0"/>
+                          <Component id="jTextFieldEmpleadoNroDoc" alignment="1" min="-2" pref="223" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="jButtonCancelarArea" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jButtonPersonaNuevo" min="-2" pref="152" max="-2" attributes="0"/>
+                      <Component id="jButtonGuardarArea" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="jScrollPaneOrganigrama" min="-2" pref="473" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" alignment="0" groupAlignment="0" attributes="0">
-                              <Component id="jLabel1" alignment="0" min="-2" pref="91" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="jLabel2" alignment="0" min="-2" pref="78" max="-2" attributes="0"/>
-                                              <Component id="jLabel4" alignment="0" min="-2" pref="78" max="-2" attributes="0"/>
-                                              <Component id="jLabel5" alignment="0" min="-2" pref="78" max="-2" attributes="0"/>
-                                              <Component id="jLabel6" alignment="0" min="-2" pref="78" max="-2" attributes="0"/>
-                                              <Component id="jLabel7" alignment="0" min="-2" pref="78" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jLabel3" max="32767" attributes="0"/>
-                                          <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jTextFieldAreaNombre" alignment="0" min="-2" pref="223" max="-2" attributes="0"/>
-                                      <Component id="jTextFieldAreaPadreNombre" alignment="0" min="-2" pref="223" max="-2" attributes="0"/>
-                                      <Component id="jTextFieldEmpleadoNombre" alignment="0" min="-2" pref="223" max="-2" attributes="0"/>
-                                      <Component id="jTextFieldEmpleadoApellido" alignment="0" min="-2" pref="223" max="-2" attributes="0"/>
-                                      <Component id="jTextFieldEmpleadoNroDoc" alignment="1" min="-2" pref="223" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel8" min="-2" pref="78" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jTextFieldEmpleadoOrganizacion" min="-2" pref="223" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="jButtonGuardarArea" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel8" min="-2" pref="78" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="jButtonMudarEmpleado" max="32767" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="jButtonCancelarUsuario" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jButtonGuardarEmpleado" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jButtonGuardarEmpleado" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextFieldEmpleadoOrganizacion" min="-2" pref="223" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="30" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -120,7 +133,10 @@
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jButtonGuardarArea" min="-2" pref="15" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jButtonGuardarArea" alignment="3" min="-2" pref="15" max="-2" attributes="0"/>
+                                  <Component id="jButtonCancelarArea" alignment="3" min="-2" pref="15" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -141,13 +157,23 @@
                           <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jButtonGuardarEmpleado" min="-2" pref="15" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jButtonMudarEmpleado" alignment="0" min="-2" pref="15" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jButtonGuardarEmpleado" alignment="3" min="-2" pref="15" max="-2" attributes="0"/>
+                              <Component id="jButtonCancelarUsuario" alignment="3" min="-2" pref="15" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
                   </Group>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButtonOrganizacionNuevo" alignment="3" min="-2" pref="17" max="-2" attributes="0"/>
-                  <Component id="jButtonPersonaNuevo" alignment="3" min="-2" pref="17" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jButtonEliminar" alignment="0" min="-2" pref="17" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jButtonOrganizacionNuevo" linkSize="2" alignment="3" min="-2" pref="17" max="-2" attributes="0"/>
+                      <Component id="jButtonPersonaNuevo" linkSize="2" alignment="3" min="-2" pref="17" max="-2" attributes="0"/>
+                      <Component id="jButtonEditar" linkSize="2" alignment="3" min="-2" pref="17" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace pref="23" max="32767" attributes="0"/>
           </Group>
@@ -204,7 +230,8 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/resource/img/persona.jpg"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Nuevo empleado"/>
+        <Property name="text" type="java.lang.String" value="Nuevo Empleado"/>
+        <Property name="toolTipText" type="java.lang.String" value="Cargar un Nuevo Empleado"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonPersonaNuevoActionPerformed"/>
@@ -238,7 +265,8 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/resource/img/organizacion.png"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Nueva Organizacion"/>
+        <Property name="text" type="java.lang.String" value="Nueva Area"/>
+        <Property name="toolTipText" type="java.lang.String" value="Cargar una Nueva Area"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonOrganizacionNuevoActionPerformed"/>
@@ -294,6 +322,57 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Area Superior:"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonEditar">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/resource/img/edit.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Editar"/>
+        <Property name="toolTipText" type="java.lang.String" value="Editar Area-Empleado"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonEditarActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonCancelarUsuario">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cancelar"/>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonCancelarUsuarioActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonCancelarArea">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cancelar"/>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonCancelarAreaActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonEliminar">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/resource/img/delete.png"/>
+        </Property>
+        <Property name="toolTipText" type="java.lang.String" value="Eliminar Area-Empleado"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonEliminarActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonMudarEmpleado">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Mudar"/>
+        <Property name="toolTipText" type="java.lang.String" value="Mudar de Area"/>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonMudarEmpleadoActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

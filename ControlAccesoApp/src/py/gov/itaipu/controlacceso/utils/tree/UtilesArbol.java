@@ -51,8 +51,10 @@ public class UtilesArbol {
         listaOrganizacion = organizacionAction.findAllByName(filtro);
         for (int i = 0; i < listaOrganizacion.size(); i++) {
             Organizacion organizacion = listaOrganizacion.get(i);
-            node = new DefaultMutableTreeNode(organizacion, true);
-            root.add(node);
+            if (!(organizacion.getEstado()!=null && organizacion.getEstado().getNombre().equals("INHABILITADO"))) {
+                node = new DefaultMutableTreeNode(organizacion, true);
+                root.add(node);
+            }
         }
         
         
@@ -61,8 +63,10 @@ public class UtilesArbol {
         listaPersonas = personaAction.findByNombreApellido(filtro);
         for (int i = 0; i < listaPersonas.size(); i++) {
             Persona persona = listaPersonas.get(i);
-            node = new DefaultMutableTreeNode(persona, true);
-            root.add(node);
+            if ( !(persona.getEstado()!=null && persona.getEstado().getNombre().equals("INHABILITADO"))) {
+                node = new DefaultMutableTreeNode(persona, true);
+                root.add(node);
+            }     
         }
         
         
@@ -81,9 +85,12 @@ public class UtilesArbol {
         Organizacion org = (Organizacion) nodo.getUserObject();
         List<Organizacion> hijas = org.getOrganizacionesHijas();
         for (Organizacion organizacion : hijas) {
-            node = new DefaultMutableTreeNode(organizacion, true);
-            nodo.add(node);
-            agregarhijos(node, incluyePersonas);
+            if (!(organizacion.getEstado()!=null && organizacion.getEstado().getNombre().equals("INHABILITADO"))) {
+                node = new DefaultMutableTreeNode(organizacion, true);
+                nodo.add(node);
+                agregarhijos(node, incluyePersonas);
+            }
+            
         }
     }
 
@@ -92,10 +99,12 @@ public class UtilesArbol {
         Organizacion org = (Organizacion) nodo.getUserObject();
         List<Persona> personas = org.getPersonas();
         for (Persona persona : personas) {
-            node = new DefaultMutableTreeNode(persona, true);
-            nodo.add(node);
+            if ( !(persona.getEstado()!=null && persona.getEstado().getNombre().equals("INHABILITADO"))) {
+                node = new DefaultMutableTreeNode(persona, true);
+                nodo.add(node); 
+            }
         }
     }
     
-    
+  
 }
