@@ -233,9 +233,11 @@ public class JDialogVisita extends javax.swing.JDialog {
 
         jPanelArbolVisita.setLayout(null);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 51, 102));
         jLabel1.setText("Número de documento.");
         jPanelArbolVisita.add(jLabel1);
-        jLabel1.setBounds(10, 10, 160, 14);
+        jLabel1.setBounds(10, 10, 160, 15);
         jPanelArbolVisita.add(jSeparator2);
         jSeparator2.setBounds(10, 30, 380, 10);
 
@@ -276,7 +278,7 @@ public class JDialogVisita extends javax.swing.JDialog {
             }
         });
         jPanelArbolVisita.add(jTextFieldDocumentoPersona);
-        jTextFieldDocumentoPersona.setBounds(10, 70, 380, 43);
+        jTextFieldDocumentoPersona.setBounds(10, 70, 300, 43);
 
         jButtonNuevoTipoDoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/new.jpg"))); // NOI18N
         jButtonNuevoTipoDoc.addActionListener(new java.awt.event.ActionListener() {
@@ -299,7 +301,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         jLabelMensaje.setForeground(new java.awt.Color(153, 0, 0));
         jLabelMensaje.setText("Introduzca un número de documento.");
         jPanelArbolVisita.add(jLabelMensaje);
-        jLabelMensaje.setBounds(10, 120, 380, 20);
+        jLabelMensaje.setBounds(10, 116, 310, 14);
 
         jLabel3.setText("Area/Persona: ");
         jPanelArbolVisita.add(jLabel3);
@@ -354,45 +356,42 @@ public class JDialogVisita extends javax.swing.JDialog {
             }
         });
         jPanelArbolVisita.add(jButtonNuevaVisita);
-        jButtonNuevaVisita.setBounds(340, 130, 48, 48);
+        jButtonNuevaVisita.setBounds(340, 70, 48, 48);
         jPanelArbolVisita.add(jLabelIconStatus);
-        jLabelIconStatus.setBounds(340, 120, 50, 50);
+        jLabelIconStatus.setBounds(340, 70, 50, 50);
 
         jCheckBoxReimprimir.setText("Reimprimir");
-        jCheckBoxReimprimir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxReimprimirActionPerformed(evt);
-            }
-        });
         jPanelArbolVisita.add(jCheckBoxReimprimir);
-        jCheckBoxReimprimir.setBounds(300, 112, 90, 20);
+        jCheckBoxReimprimir.setBounds(310, 80, 90, 20);
 
         getContentPane().add(jPanelArbolVisita);
         jPanelArbolVisita.setBounds(0, 0, 400, 520);
 
         jPanelVisitante.setLayout(null);
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 51, 102));
         jLabel2.setText("Visitante.");
         jPanelVisitante.add(jLabel2);
-        jLabel2.setBounds(10, 10, 100, 14);
+        jLabel2.setBounds(10, 10, 100, 15);
         jPanelVisitante.add(jTextFieldNombre);
-        jTextFieldNombre.setBounds(160, 40, 180, 22);
+        jTextFieldNombre.setBounds(140, 40, 180, 22);
         jPanelVisitante.add(jTextFieldApellido);
-        jTextFieldApellido.setBounds(160, 70, 180, 22);
+        jTextFieldApellido.setBounds(140, 70, 180, 22);
 
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listNacionalidades, jComboBoxNacionalidad);
         bindingGroup.addBinding(jComboBoxBinding);
 
         jPanelVisitante.add(jComboBoxNacionalidad);
-        jComboBoxNacionalidad.setBounds(160, 160, 180, 22);
+        jComboBoxNacionalidad.setBounds(140, 160, 180, 22);
 
         jComboBoxSexo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "MASCULINO", "FEMENINO" }));
         jPanelVisitante.add(jComboBoxSexo);
-        jComboBoxSexo.setBounds(160, 190, 180, 22);
+        jComboBoxSexo.setBounds(140, 190, 180, 22);
 
         jComboBoxEstadoCivil.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "SOLTERO", "CASADO", "DIVORCIADO", "VIUDO" }));
         jPanelVisitante.add(jComboBoxEstadoCivil);
-        jComboBoxEstadoCivil.setBounds(160, 100, 180, 22);
+        jComboBoxEstadoCivil.setBounds(140, 100, 180, 22);
 
         jButtonNacionalidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/new.jpg"))); // NOI18N
         jButtonNacionalidad.setFocusable(false);
@@ -402,15 +401,15 @@ public class JDialogVisita extends javax.swing.JDialog {
             }
         });
         jPanelVisitante.add(jButtonNacionalidad);
-        jButtonNacionalidad.setBounds(340, 160, 20, 20);
+        jButtonNacionalidad.setBounds(320, 160, 20, 20);
 
         jFormattedTextFieldFechaNac.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
         jPanelVisitante.add(jFormattedTextFieldFechaNac);
-        jFormattedTextFieldFechaNac.setBounds(160, 130, 180, 22);
+        jFormattedTextFieldFechaNac.setBounds(140, 130, 180, 22);
 
         jTextFieldOrganizacion.setEditable(false);
         jPanelVisitante.add(jTextFieldOrganizacion);
-        jTextFieldOrganizacion.setBounds(160, 220, 180, 22);
+        jTextFieldOrganizacion.setBounds(140, 220, 180, 22);
 
         jButtonBuscarOrganizacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/view.png"))); // NOI18N
         jButtonBuscarOrganizacion.setToolTipText("Buscar Organizacion");
@@ -421,7 +420,7 @@ public class JDialogVisita extends javax.swing.JDialog {
             }
         });
         jPanelVisitante.add(jButtonBuscarOrganizacion);
-        jButtonBuscarOrganizacion.setBounds(340, 220, 20, 20);
+        jButtonBuscarOrganizacion.setBounds(320, 220, 20, 20);
 
         jButtonNuevoOrganizacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/new.jpg"))); // NOI18N
         jButtonNuevoOrganizacion.setFocusable(false);
@@ -431,13 +430,13 @@ public class JDialogVisita extends javax.swing.JDialog {
             }
         });
         jPanelVisitante.add(jButtonNuevoOrganizacion);
-        jButtonNuevoOrganizacion.setBounds(360, 220, 20, 20);
+        jButtonNuevoOrganizacion.setBounds(340, 220, 20, 20);
 
-        jLabelNomb.setText("Nombre:");
+        jLabelNomb.setText("* Nombre:");
         jPanelVisitante.add(jLabelNomb);
         jLabelNomb.setBounds(10, 40, 80, 22);
 
-        jLabelApe.setText("Apellido:");
+        jLabelApe.setText("* Apellido:");
         jPanelVisitante.add(jLabelApe);
         jLabelApe.setBounds(10, 70, 80, 22);
 
@@ -461,7 +460,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         jPanelVisitante.add(jLabelFechaNac);
         jLabelFechaNac.setBounds(10, 130, 140, 22);
         jPanelVisitante.add(jSeparator1);
-        jSeparator1.setBounds(10, 30, 820, 10);
+        jSeparator1.setBounds(10, 30, 725, 10);
 
         jLabelFotografia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelFotografia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/sin_foto_small.jpg"))); // NOI18N
@@ -495,7 +494,7 @@ public class JDialogVisita extends javax.swing.JDialog {
             }
         });
         jPanelVisitante.add(jButtonNacionalidadEdit);
-        jButtonNacionalidadEdit.setBounds(360, 160, 20, 20);
+        jButtonNacionalidadEdit.setBounds(340, 160, 20, 20);
 
         jButtonAbout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/icon_about.png"))); // NOI18N
         jButtonAbout.setToolTipText("Acerca de...");
@@ -505,7 +504,7 @@ public class JDialogVisita extends javax.swing.JDialog {
             }
         });
         jPanelVisitante.add(jButtonAbout);
-        jButtonAbout.setBounds(810, 0, 20, 20);
+        jButtonAbout.setBounds(690, 0, 20, 20);
 
         jButtonAyuda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/help.jpeg"))); // NOI18N
         jButtonAyuda.setToolTipText("Ayuda");
@@ -515,18 +514,20 @@ public class JDialogVisita extends javax.swing.JDialog {
             }
         });
         jPanelVisitante.add(jButtonAyuda);
-        jButtonAyuda.setBounds(830, 0, 20, 20);
+        jButtonAyuda.setBounds(710, 0, 20, 20);
 
         getContentPane().add(jPanelVisitante);
         jPanelVisitante.setBounds(400, 0, 860, 260);
 
         jPanelVisita.setLayout(null);
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 51, 102));
         jLabel4.setText("Visita.");
         jPanelVisita.add(jLabel4);
-        jLabel4.setBounds(10, 10, 100, 14);
+        jLabel4.setBounds(10, 10, 100, 15);
         jPanelVisita.add(jSeparator3);
-        jSeparator3.setBounds(10, 30, 820, 10);
+        jSeparator3.setBounds(10, 30, 725, 10);
 
         jLabel8.setText("Area Visitada:");
         jPanelVisita.add(jLabel8);
@@ -534,7 +535,7 @@ public class JDialogVisita extends javax.swing.JDialog {
 
         jTextFieldAreaVisitada.setEditable(false);
         jPanelVisita.add(jTextFieldAreaVisitada);
-        jTextFieldAreaVisitada.setBounds(130, 70, 150, 20);
+        jTextFieldAreaVisitada.setBounds(140, 70, 180, 22);
 
         jLabel6.setText("Motivo:");
         jPanelVisita.add(jLabel6);
@@ -544,18 +545,18 @@ public class JDialogVisita extends javax.swing.JDialog {
         bindingGroup.addBinding(jComboBoxBinding);
 
         jPanelVisita.add(jComboBoxMotivo);
-        jComboBoxMotivo.setBounds(130, 40, 150, 20);
+        jComboBoxMotivo.setBounds(140, 40, 180, 22);
 
         jLabel5.setText("Observación:");
         jPanelVisita.add(jLabel5);
-        jLabel5.setBounds(330, 40, 80, 14);
+        jLabel5.setBounds(390, 40, 70, 14);
 
         jTextAreaObservacion.setColumns(20);
         jTextAreaObservacion.setRows(5);
         jScrollPane1.setViewportView(jTextAreaObservacion);
 
         jPanelVisita.add(jScrollPane1);
-        jScrollPane1.setBounds(410, 40, 330, 80);
+        jScrollPane1.setBounds(460, 40, 270, 80);
 
         jLabel7.setText("Persona Visitada:");
         jPanelVisita.add(jLabel7);
@@ -563,7 +564,7 @@ public class JDialogVisita extends javax.swing.JDialog {
 
         jTextFieldPersonaVisitada.setEditable(false);
         jPanelVisita.add(jTextFieldPersonaVisitada);
-        jTextFieldPersonaVisitada.setBounds(130, 100, 150, 20);
+        jTextFieldPersonaVisitada.setBounds(140, 100, 180, 22);
 
         jButtonNuevoMotivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/new.jpg"))); // NOI18N
         jButtonNuevoMotivo.setToolTipText("Actualizar Fotografia");
@@ -573,7 +574,7 @@ public class JDialogVisita extends javax.swing.JDialog {
             }
         });
         jPanelVisita.add(jButtonNuevoMotivo);
-        jButtonNuevoMotivo.setBounds(280, 40, 20, 20);
+        jButtonNuevoMotivo.setBounds(320, 40, 20, 20);
 
         jButtonMotivoEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/edit.png"))); // NOI18N
         jButtonMotivoEdit.setFocusable(false);
@@ -583,7 +584,7 @@ public class JDialogVisita extends javax.swing.JDialog {
             }
         });
         jPanelVisita.add(jButtonMotivoEdit);
-        jButtonMotivoEdit.setBounds(300, 40, 20, 20);
+        jButtonMotivoEdit.setBounds(340, 40, 20, 20);
 
         getContentPane().add(jPanelVisita);
         jPanelVisita.setBounds(400, 260, 860, 130);
@@ -604,13 +605,15 @@ public class JDialogVisita extends javax.swing.JDialog {
         jTableVisitas.getColumnModel().getColumn(0).setCellRenderer(rendererTime);
 
         jPanelInformativo.add(jScrollPane2);
-        jScrollPane2.setBounds(10, 40, 820, 90);
+        jScrollPane2.setBounds(10, 40, 720, 90);
 
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(0, 51, 102));
         jLabel10.setText("Ultimas visitas.");
         jPanelInformativo.add(jLabel10);
-        jLabel10.setBounds(10, 10, 90, 14);
+        jLabel10.setBounds(10, 10, 90, 15);
         jPanelInformativo.add(jSeparator4);
-        jSeparator4.setBounds(10, 30, 820, 10);
+        jSeparator4.setBounds(10, 30, 725, 10);
 
         getContentPane().add(jPanelInformativo);
         jPanelInformativo.setBounds(400, 390, 860, 150);
@@ -627,12 +630,14 @@ public class JDialogVisita extends javax.swing.JDialog {
             if (v == null) {
                 jLabelMensaje.setText("Introduzca los datos de la visita.");
                 jButtonNuevaVisita.setVisible(true);
+                jCheckBoxReimprimir.setVisible(false);
                 jTextFieldFiltroArbol.requestFocusInWindow();
                 jLabelIconStatus.setIcon(null);
             } else {
                 if (jCheckBoxReimprimir.isSelected()) {
                     imprimirTicket(v);
                     jButtonNuevaVisita.setVisible(false);
+                    jCheckBoxReimprimir.setVisible(true);
                     limpiarDatosPersona();
                     inhabilitarEdicionPersona();
                     jTextFieldDocumentoPersona.setText("");
@@ -642,6 +647,7 @@ public class JDialogVisita extends javax.swing.JDialog {
                 } else {
                     registrarSalida(v);
                     jButtonNuevaVisita.setVisible(false);
+                    jCheckBoxReimprimir.setVisible(true);
                     limpiarDatosPersona();
                     inhabilitarEdicionPersona();
                     jTextFieldDocumentoPersona.setText("");
@@ -975,6 +981,7 @@ public class JDialogVisita extends javax.swing.JDialog {
             jLabelMensaje.setText("Introduzca un número de documento.");
             jButtonTomarFotografia.setEnabled(false);
             jButtonNuevaVisita.setVisible(false);
+            jCheckBoxReimprimir.setVisible(true);
             jLabelIconStatus.setIcon(null);
         }
 
@@ -991,6 +998,7 @@ public class JDialogVisita extends javax.swing.JDialog {
                 habilitarEdicionPersona();
                 jLabelMensaje.setText("Nueva persona, ingrese sus datos.");
                 jButtonNuevaVisita.setVisible(true);
+                jCheckBoxReimprimir.setVisible(false);
                 jTextFieldNombre.requestFocusInWindow();
                 jButtonTomarFotografiaActionPerformed(null);
                 jButtonTomarFotografia.setEnabled(
@@ -1003,6 +1011,7 @@ public class JDialogVisita extends javax.swing.JDialog {
                     jLabelMensaje.setText("ATENCIÓN. La persona está inhabilitada.");
                     jLabelIconStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/Semaforo_rojo.png")));
                     jButtonNuevaVisita.setVisible(false);
+                    jCheckBoxReimprimir.setVisible(false);
                     return;
                 } else {
                     gestionVisita();
@@ -1017,6 +1026,7 @@ public class JDialogVisita extends javax.swing.JDialog {
                 jLabelMensaje.setText("Introduzca un número de documento.");
                 jButtonTomarFotografia.setEnabled(false);
                 jButtonNuevaVisita.setVisible(false);
+                jCheckBoxReimprimir.setVisible(true);
                 jLabelIconStatus.setIcon(null);
             }
         } catch (ErrorInesperado ei) {
@@ -1165,6 +1175,7 @@ public class JDialogVisita extends javax.swing.JDialog {
 
             registrarVisita();
             jButtonNuevaVisita.setVisible(false);
+            jCheckBoxReimprimir.setVisible(true);
             limpiarDatosPersona();
             inhabilitarEdicionPersona();
             jTextFieldDocumentoPersona.setText("");
@@ -1191,21 +1202,6 @@ public class JDialogVisita extends javax.swing.JDialog {
             System.exit(-1);
         }
     }//GEN-LAST:event_jButtonNacionalidadEditActionPerformed
-
-    private void jCheckBoxReimprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxReimprimirActionPerformed
-        // TODO add your handling code here:
-        if (Desktop.isDesktopSupported()) {
-            try {
-                java.io.File file = new java.io.File("");   //Dummy file
-                String abspath = file.getAbsolutePath();
-                File myFile = new File(abspath + "/manuales/SCAModuloOperativo.pdf");
-                Desktop.getDesktop().open(myFile);
-            } catch (IOException ex) {
-                // no application registered for PDFs
-                JOptionPane.showMessageDialog(null, "El manual no se encuentra, verifique con el administrador del sistema.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }//GEN-LAST:event_jCheckBoxReimprimirActionPerformed
 
     private void jButtonAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAboutActionPerformed
         // TODO add your handling code here:
