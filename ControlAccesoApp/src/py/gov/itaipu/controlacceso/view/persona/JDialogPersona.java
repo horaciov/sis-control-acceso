@@ -432,16 +432,24 @@ public class JDialogPersona extends javax.swing.JDialog {
         jTextFieldApellido.setText(persona.getApellido().toUpperCase());
         jTextFieldNombre.setText(persona.getNombre().toUpperCase());
         jTextFieldNroDoc.setText(persona.getNumeroDocumento().toUpperCase());
-
+        jComboBoxTipoDocumento.setSelectedItem(persona.getTipoDocumento());
+        
+        if (persona.getFechaNacimiento()!=null) {
+            jFormattedTextFieldFechaNac.setValue(persona.getFechaNacimiento());
+        }
         if (persona.getOrganizacion() != null) {
             jTextFieldOrganizacion.setText((persona.getOrganizacion().getNombre()));
         }
-
-        jFormattedTextFieldFechaNac.setValue(persona.getFechaNacimiento());
-        jComboBoxEstadoCivil.setSelectedItem(persona.getEstadoCivil().toUpperCase());
-        jComboBoxSexo.setSelectedItem(persona.getSexo().toUpperCase());
-        jComboBoxNacionalidad.setSelectedItem(persona.getNacionalidad());
-        jComboBoxTipoDocumento.setSelectedItem(persona.getTipoDocumento());
+        if (persona.getEstadoCivil()!=null) {
+           jComboBoxEstadoCivil.setSelectedItem(persona.getEstadoCivil().toUpperCase());    
+        }
+        if (persona.getSexo()!=null) {
+            jComboBoxSexo.setSelectedItem(persona.getSexo().toUpperCase());
+        }
+        if (persona.getNacionalidad()!=null) {
+            jComboBoxNacionalidad.setSelectedItem(persona.getNacionalidad());
+        }
+        
         listAntecedentes.clear();
         if (persona.getAntecedentes() != null) {
             listAntecedentes.addAll(persona.getAntecedentes());
