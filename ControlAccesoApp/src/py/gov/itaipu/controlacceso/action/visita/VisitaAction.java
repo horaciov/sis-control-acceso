@@ -186,6 +186,61 @@ public class VisitaAction {
         }
 
     }
+    
+    
+    public List<Visita> findPendientesByPersona(Persona persona) throws ErrorInesperado {
+        try {
+            Query query;
+            query = em.createQuery(" from Visita v where v.fechaSalida is null and v.anulado = 'N' and personaVisitada.id= :idPersona )");
+            query.setParameter("idPersona", persona.getId());
+            List<Visita> result = query.getResultList();
+            if (result.size() > 0) {
+                return result;
+            } else {
+                return null;
+            }
+        } catch (RuntimeException re) {
+            throw new ErrorInesperado("Error inesperado.");
+        }
+
+    }
+    
+    public List<Visita> findPendientesByArea(Organizacion organizacion) throws ErrorInesperado {
+        try {
+            Query query;
+            query = em.createQuery(" from Visita v where v.fechaSalida is null and v.anulado = 'N' and organizacionInterna.id= :idOrganizacion )");
+            query.setParameter("idOrganizacion", organizacion.getId());
+            List<Visita> result = query.getResultList();
+            if (result.size() > 0) {
+                return result;
+            } else {
+                return null;
+            }
+        } catch (RuntimeException re) {
+            throw new ErrorInesperado("Error inesperado.");
+        }
+
+    }
+    
+    
+    public List<Visita> findTerminadasByPersona(Persona persona) throws ErrorInesperado {
+        try {
+            Query query;
+            query = em.createQuery(" from Visita v where v.fechaSalida is not null and v.anulado = 'N' and personaVisitada.id= :idPersona )");
+            query.setParameter("idPersona", persona.getId());
+            List<Visita> result = query.getResultList();
+            if (result.size() > 0) {
+                return result;
+            } else {
+                return null;
+            }
+        } catch (RuntimeException re) {
+            throw new ErrorInesperado("Error inesperado.");
+        }
+
+    }
+    
+    
 
     public void anular() throws ErrorInesperado {
         visita.setAnulado("S");

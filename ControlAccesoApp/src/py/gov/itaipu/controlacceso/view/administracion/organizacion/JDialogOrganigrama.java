@@ -112,7 +112,7 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
             getContentPane().add(jLabel5);
             jLabel5.setBounds(510, 230, 78, 14);
 
-            DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", true);
+            DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", true,false,false);
             jTreeOrganigrama = new JTree(root);
             jTreeOrganigrama.setCellRenderer(new CustomIconRenderer());
             jTreeOrganigrama.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -555,7 +555,7 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonGuardarAreaActionPerformed
     private void actualizarArbol(boolean incluyePersonas, boolean seleccionable) {
         try {
-            DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", incluyePersonas);
+            DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", incluyePersonas,false,false);
             jTreeOrganigrama = new JTree(root);
             jTreeOrganigrama.setCellRenderer(new CustomIconRenderer());
             if (seleccionable) {
@@ -785,7 +785,7 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
         // TODO add your handling code here:
         try {
             jTextFieldFiltroArbol.setText("");
-            DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", true);
+            DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", true,false,false);
             jTreeOrganigrama = new JTree(root);
             jTreeOrganigrama.setCellRenderer(new CustomIconRenderer());
             jTreeOrganigrama.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {

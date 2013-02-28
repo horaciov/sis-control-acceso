@@ -75,7 +75,7 @@ public class JInternalFrameOrganigrama extends javax.swing.JInternalFrame {
 
             setTitle("Organigrama");
 
-            DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", true);
+            DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", true,false,false);
             jTreeOrganigrama = new JTree(root);
             jTreeOrganigrama.setCellRenderer(new CustomIconRenderer());
             jTreeOrganigrama.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
@@ -253,7 +253,7 @@ public class JInternalFrameOrganigrama extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonOrganizacionNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonPersonaNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         pack();
@@ -469,7 +469,7 @@ public class JInternalFrameOrganigrama extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButtonGuardarAreaActionPerformed
     private void actualizarArbol() {
         try {
-            DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", true);
+            DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", true,false,false);
             jTreeOrganigrama = new JTree(root);
             jTreeOrganigrama.setCellRenderer(new CustomIconRenderer());
             jTreeOrganigrama.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
