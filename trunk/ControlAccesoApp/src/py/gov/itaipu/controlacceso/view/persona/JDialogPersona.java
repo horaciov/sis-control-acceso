@@ -601,6 +601,7 @@ public class JDialogPersona extends javax.swing.JDialog {
             jButtonGuardar.setVisible(false);
             jButtonCargarFoto.setVisible(false);
             jButtonTomarFoto.setVisible(false);
+            jButtonCambiarEstadoPersona.setVisible(false);
         }
 
     }//GEN-LAST:event_windowActivated

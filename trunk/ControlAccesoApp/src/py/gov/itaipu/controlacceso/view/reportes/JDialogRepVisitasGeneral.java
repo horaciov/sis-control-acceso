@@ -489,7 +489,7 @@ public class JDialogRepVisitasGeneral extends javax.swing.JDialog {
 
     private void jButtonBuscarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarPersonaActionPerformed
         // TODO add your handling code here:
-         JDialogPersonaPrincipal jdP = new JDialogPersonaPrincipal(null, true);
+        JDialogPersonaPrincipal jdP = new JDialogPersonaPrincipal(null, true);
         jdP.setModoBuscador(true);
         jdP.setTitle("Buscador de Personas Externas");
         WindowUtil.centerWindow(jdP);
