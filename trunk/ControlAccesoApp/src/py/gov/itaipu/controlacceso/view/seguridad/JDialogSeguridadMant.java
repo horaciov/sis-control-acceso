@@ -4,6 +4,9 @@
  */
 package py.gov.itaipu.controlacceso.view.seguridad;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -18,6 +21,7 @@ import py.gov.itaipu.controlacceso.model.Usuario;
 import py.gov.itaipu.controlacceso.model.exception.EntidadExiste;
 import py.gov.itaipu.controlacceso.model.exception.ErrorInesperado;
 import py.gov.itaipu.controlacceso.utils.windows.WindowUtil;
+import py.gov.itaipu.controlacceso.view.JDialogAbout;
 
 /**
  *
@@ -111,6 +115,8 @@ public class JDialogSeguridadMant extends javax.swing.JDialog {
                     jLabel4 = new javax.swing.JLabel();
                     jSeparator1 = new javax.swing.JSeparator();
                     jLabel5 = new javax.swing.JLabel();
+                    jButtonAbout = new javax.swing.JButton();
+                    jButtonAyuda = new javax.swing.JButton();
 
                 } catch (ErrorInesperado ei) {
                     JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -339,6 +345,26 @@ public class JDialogSeguridadMant extends javax.swing.JDialog {
         jLabel5.setText("Roles");
         getContentPane().add(jLabel5);
         jLabel5.setBounds(10, 30, 50, 14);
+
+        jButtonAbout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/icon_about.png"))); // NOI18N
+        jButtonAbout.setToolTipText("Acerca de...");
+        jButtonAbout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAboutActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonAbout);
+        jButtonAbout.setBounds(850, 0, 20, 20);
+
+        jButtonAyuda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/help.jpeg"))); // NOI18N
+        jButtonAyuda.setToolTipText("Ayuda");
+        jButtonAyuda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAyudaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonAyuda);
+        jButtonAyuda.setBounds(870, 0, 20, 20);
 
         bindingGroup.bind();
 
@@ -641,6 +667,28 @@ public class JDialogSeguridadMant extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButtonEditlFuncActionPerformed
 
+    private void jButtonAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAboutActionPerformed
+        // TODO add your handling code here:
+        JDialogAbout about = new JDialogAbout(null, true);
+        WindowUtil.centerWindow(about);
+        about.setVisible(true);
+    }//GEN-LAST:event_jButtonAboutActionPerformed
+
+    private void jButtonAyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAyudaActionPerformed
+        // TODO add your handling code here:
+        if (Desktop.isDesktopSupported()) {
+            try {
+                java.io.File file = new java.io.File("");   //Dummy file
+                String abspath = file.getAbsolutePath();
+                File myFile = new File(abspath + "/manuales/SCAModuloSeguridad.pdf");
+                Desktop.getDesktop().open(myFile);
+            } catch (IOException ex) {
+                // no application registered for PDFs
+                JOptionPane.showMessageDialog(null, "El manual no se encuentra, verifique con el administrador del sistema.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jButtonAyudaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -683,9 +731,11 @@ public class JDialogSeguridadMant extends javax.swing.JDialog {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAbout;
     private javax.swing.JButton jButtonAddFunc;
     private javax.swing.JButton jButtonAddUsuario;
     private javax.swing.JButton jButtonAsignarUsuario;
+    private javax.swing.JButton jButtonAyuda;
     private javax.swing.JButton jButtonEditUsuario;
     private javax.swing.JButton jButtonEditlFunc;
     private javax.swing.JButton jButtonQuitarFuncionalidad;

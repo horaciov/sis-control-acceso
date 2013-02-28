@@ -919,6 +919,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         jFrameOrganizacion.setResizable(false);
         jFrameOrganizacion.setTitle("Buscador de organizaciones");
         buscador.getjDesktopPaneBuscador().add(jFrameOrganizacion);
+        WindowUtil.centerWindow(buscador);
         buscador.setVisible(true);
         if (jFrameOrganizacion.getOrganizacionSeleccionada() != null) {
             persona.setOrganizacion(jFrameOrganizacion.getOrganizacionSeleccionada());
