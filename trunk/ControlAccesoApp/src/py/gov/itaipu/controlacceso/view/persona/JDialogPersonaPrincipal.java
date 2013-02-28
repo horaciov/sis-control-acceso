@@ -491,11 +491,15 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
         jFrameOrganizacion.setResizable(false);
         jFrameOrganizacion.setTitle("Buscador de organizaciones");
         buscador.getjDesktopPaneBuscador().add(jFrameOrganizacion);
+        WindowUtil.centerWindow(buscador);
         buscador.setVisible(true);
         if (jFrameOrganizacion.getOrganizacionSeleccionada() != null) {
             personaFiltro.setOrganizacion(jFrameOrganizacion.getOrganizacionSeleccionada());
         }
-        jTextFieldOrganizacionFiltro.setText(personaFiltro.getOrganizacion().getNombre());
+        if (personaFiltro.getOrganizacion()!=null) {
+            jTextFieldOrganizacionFiltro.setText(personaFiltro.getOrganizacion().getNombre());    
+        }
+        
     }//GEN-LAST:event_jButtonBuscarOrganizacionActionPerformed
 
     private void jButtonVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerActionPerformed

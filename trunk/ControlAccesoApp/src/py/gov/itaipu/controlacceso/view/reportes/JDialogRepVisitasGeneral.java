@@ -389,7 +389,8 @@ public class JDialogRepVisitasGeneral extends javax.swing.JDialog {
         jFrameOrganizacionExterna.setClosable(false);
         jFrameOrganizacionExterna.setResizable(false);
         jFrameOrganizacionExterna.setTitle("Buscador de organización externa");
-        WindowUtil.centerWindow(jFrameOrganizacionExterna);
+        WindowUtil.centerWindow(buscador);
+//        WindowUtil.centerWindow(jFrameOrganizacionExterna);
         buscador.getjDesktopPaneBuscador().add(jFrameOrganizacionExterna);
         buscador.setVisible(true);
         organizacionExterna = jFrameOrganizacionExterna.getOrganizacionSeleccionada();

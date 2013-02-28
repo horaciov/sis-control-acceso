@@ -99,9 +99,10 @@ public class JDialogAdministracion extends javax.swing.JDialog {
         getContentPane().add(jLabel2);
         jLabel2.setBounds(100, 120, 80, 14);
 
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Visitantes");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(30, 120, 59, 14);
+        jLabel1.setBounds(19, 120, 60, 14);
 
         jButtonVisitantes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/ficha.png"))); // NOI18N
         jButtonVisitantes.addActionListener(new java.awt.event.ActionListener() {
