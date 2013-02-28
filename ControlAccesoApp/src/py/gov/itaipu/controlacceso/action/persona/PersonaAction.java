@@ -226,11 +226,29 @@ public class PersonaAction {
             persona.setFechaModificacion(Calendar.getInstance().getTime());
             em.merge(persona);
             tx.commit();
+            
         } catch (RuntimeException e) {
             throw new ErrorInesperado("Error Inesperado");
         }
     }
 
+    public void inhabilitarEmpleado() throws ErrorInesperado {
+        try {
+            Estado e = (Estado) em.createNamedQuery("Estado.findByNombre").setParameter("nombre", "ELIMINADO").getSingleResult();
+            persona.setEstado(e);
+            persona.setOrganizacion(null);
+            EntityTransaction tx = em.getTransaction();
+            tx.begin();
+            persona.setUsuarioModificacion(AutenticadorAction.getUsuarioConectado());
+            persona.setFechaModificacion(Calendar.getInstance().getTime());
+            em.merge(persona);
+            tx.commit();
+            em.clear();
+        } catch (RuntimeException e) {
+            throw new ErrorInesperado("Error Inesperado");
+        }
+    }
+    
     public void crear() throws EntidadExiste, ErrorInesperado {
         EntityTransaction tx = null;
         try {
