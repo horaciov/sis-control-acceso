@@ -174,6 +174,7 @@ public class JDialogAdministracion extends javax.swing.JDialog {
     private void jButtonOrganigramaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOrganigramaActionPerformed
         // TODO add your handling code here:
         JDialogOrganigrama dialogOrganigrama = new JDialogOrganigrama(null, true);
+        dialogOrganigrama.setSize(860,560);
         WindowUtil.centerWindow(dialogOrganigrama);
         dialogOrganigrama.setVisible(true);
     }//GEN-LAST:event_jButtonOrganigramaActionPerformed
@@ -181,6 +182,7 @@ public class JDialogAdministracion extends javax.swing.JDialog {
     private void jButtonVisitantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVisitantesActionPerformed
         // TODO add your handling code here:
         JDialogPersonaPrincipal dialogPersona = new JDialogPersonaPrincipal(null, true);
+        dialogPersona.setSize(1200, 665);
         WindowUtil.centerWindow(dialogPersona);
         dialogPersona.setVisible(true);
     }//GEN-LAST:event_jButtonVisitantesActionPerformed

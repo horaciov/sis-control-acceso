@@ -603,7 +603,6 @@ public class JDialogPersona extends javax.swing.JDialog {
             jButtonTomarFoto.setVisible(false);
             jButtonCambiarEstadoPersona.setVisible(false);
         }
-
     }//GEN-LAST:event_windowActivated
 
     private void jButtonCargarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCargarFotoActionPerformed
@@ -757,7 +756,6 @@ public class JDialogPersona extends javax.swing.JDialog {
                 jLabelPersonaEstado.setText("PERSONA HABILITADA");
                 jButtonCambiarEstadoPersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/stop_sign.jpeg")));
                 jButtonCambiarEstadoPersona.setToolTipText("INHABILITAR");
-
             } else {
                 personaAction.inhabilitar();
                 jLabelSemaforo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/Semaforo_rojo.png")));
