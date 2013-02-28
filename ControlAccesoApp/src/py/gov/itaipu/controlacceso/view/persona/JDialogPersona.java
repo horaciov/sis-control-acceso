@@ -776,7 +776,7 @@ public class JDialogPersona extends javax.swing.JDialog {
     }
 
     private void guardarImagen(Image img, File file) {
-        String string = "fotografias/" + persona.getNumeroDocumento() + ".jpg";
+        String string = persona.getFotografiaPath();
         if (img != null) {
             try {
                 int w = img.getWidth(null);
