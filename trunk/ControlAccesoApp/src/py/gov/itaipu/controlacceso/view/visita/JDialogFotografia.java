@@ -45,7 +45,7 @@ import py.gov.itaipu.controlacceso.view.persona.JDialogPersona;
 public class JDialogFotografia extends javax.swing.JDialog {
 
     private boolean capturado;
-    private String modo;   
+    private String modo;
     Component videoScreen;
     Persona persona;
     Image img;
@@ -84,7 +84,7 @@ public class JDialogFotografia extends javax.swing.JDialog {
         jPanelCamara.add(AdminCamera.player.getControlPanelComponent(), BorderLayout.SOUTH);
     }
 
-    public void mostrarFormulario(String modo,Persona persona) throws Exception{
+    public void mostrarFormulario(String modo, Persona persona) throws Exception {
         this.modo = modo;
         this.persona = persona;
         capturado = false;
@@ -94,12 +94,12 @@ public class JDialogFotografia extends javax.swing.JDialog {
             iniciarWebCam();
         } else if (modo.equals("VER")) {
             jLabelTitulo.setText("Mostrar Fotografia");
-            mostrarFotografia();            
+            mostrarFotografia();
             jButtonCapturar.setVisible(false);
         }
         this.setVisible(true);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -184,28 +184,30 @@ public class JDialogFotografia extends javax.swing.JDialog {
 
     private void jButtonCapturarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCapturarActionPerformed
         // TODO add your handling code here:
-       try {
+        try {
             FrameGrabbingControl fgc = (FrameGrabbingControl) AdminCamera.player.getControl("javax.media.control.FrameGrabbingControl");
             Buffer buf = fgc.grabFrame();//grab the current frame on video screen
             BufferToImage btoi = new BufferToImage((VideoFormat) buf.getFormat());
             img = btoi.createImage(buf);
             String pathFoto = "";
-                      
-            if(persona.getFotografiaPath()==null || persona.getFotografiaPath().equals("")){
-                File file=new File("");
-                String path=file.getAbsolutePath();
-                File fileAnho=new File(path+"/fotografias/"+Calendar.getInstance().get(Calendar.YEAR));
-                File fileMes=new File(fileAnho.getAbsolutePath()+"/"+(Calendar.getInstance().get(Calendar.MONTH)+1));
-                if(!fileAnho.exists())
-                    fileAnho.mkdir();
-                if(!fileMes.exists())
-                    fileMes.mkdir();
-                pathFoto = fileMes.getAbsolutePath()+ "/" + persona.getNumeroDocumento() +"-"+ persona.getTipoDocumento().getNombre() + ".jpg";
-            }else{
-                pathFoto = persona.getFotografiaPath();
+            File file = new File("");
+            String path = file.getAbsolutePath();
+            File fileAnho = new File(path + "/fotografias/" + Calendar.getInstance().get(Calendar.YEAR));
+            File fileMes = new File(fileAnho.getAbsolutePath() + "/" + (Calendar.getInstance().get(Calendar.MONTH) + 1));
+            if (!fileAnho.exists()) {
+                fileAnho.mkdir();
+            }
+            if (!fileMes.exists()) {
+                fileMes.mkdir();
+            }
+            pathFoto = fileMes.getAbsolutePath() + "/" + persona.getNumeroDocumento() + "-" + persona.getTipoDocumento().getNombre() + ".jpg";
+            if (persona.getFotografiaPath() != null && !persona.getFotografiaPath().equals("")) {
+                new File(path + "/" + persona.getFotografiaPath()).delete();
             }
             saveImagetoFile(img, pathFoto);
-            persona.setFotografiaPath(pathFoto);
+            persona.setFotografiaPath("fotografias/" + Calendar.getInstance().get(Calendar.YEAR) + "/"
+                    + (Calendar.getInstance().get(Calendar.MONTH) + 1) + "/"
+                    + persona.getNumeroDocumento() + "-" + persona.getTipoDocumento().getNombre() + ".jpg");
         } catch (Exception e) {
         }
 

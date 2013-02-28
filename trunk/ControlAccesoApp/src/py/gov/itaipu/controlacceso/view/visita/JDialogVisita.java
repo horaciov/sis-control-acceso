@@ -1142,7 +1142,6 @@ public class JDialogVisita extends javax.swing.JDialog {
     private void jButtonNuevaVisitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevaVisitaActionPerformed
         try {
             // TODO add your handling code here:
-
             if (persona.getId() == null) {
                 if (jTextFieldNombre.getText() != null && !jTextFieldNombre.getText().equals("") && jTextFieldApellido.getText() != null && !jTextFieldApellido.getText().equals("")) {
                     try {
