@@ -84,7 +84,7 @@ public class JDialogRolSelector extends javax.swing.JDialog {
             dialog.setSize(1260, 600);
             WindowUtil.centerWindow(dialog);
             dialog.setVisible(true);
-        } else if (rol.getNombre().equals("ADMINISTRADOR")) {
+        } else if (rol.getNombre().equals("ADMINISTRATIVO")) {
             JDialogAdministracion dialog = new JDialogAdministracion(new javax.swing.JFrame(), false);
             dialog.setSize(480, 230);
             WindowUtil.centerWindow(dialog);
@@ -95,7 +95,7 @@ public class JDialogRolSelector extends javax.swing.JDialog {
             WindowUtil.centerWindow(dialog);
             dialog.setVisible(true);
         } else if (rol.getNombre().equals("SEGURIDAD SISTEMA")) {
-             JDialogSeguridadMant jdsm = new JDialogSeguridadMant(null, rootPaneCheckingEnabled);
+             JDialogSeguridadMant jdsm = new JDialogSeguridadMant(new javax.swing.JFrame(), false);
              jdsm.setSize(900, 320);
              WindowUtil.centerWindow(jdsm);
              jdsm.setVisible(true);

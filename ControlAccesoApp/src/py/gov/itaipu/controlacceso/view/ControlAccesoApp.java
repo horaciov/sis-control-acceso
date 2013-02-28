@@ -19,6 +19,7 @@ import py.gov.itaipu.controlacceso.model.Rol;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 import py.gov.itaipu.controlacceso.utils.windows.WindowUtil;
 import py.gov.itaipu.controlacceso.view.seguridad.JDialogAutenticar;
+import py.gov.itaipu.controlacceso.view.seguridad.JDialogSeguridadMant;
 import py.gov.itaipu.controlacceso.view.visita.JDialogVisita;
 
 /**
@@ -56,7 +57,7 @@ public class ControlAccesoApp {
                         }
                     });
                     dialog.setVisible(true);
-                } else if (rol.getNombre().equals("ADMINISTRADOR")) {
+                } else if (rol.getNombre().equals("ADMINISTRATIVO")) {
                     JDialogAdministracion dialog = new JDialogAdministracion(new javax.swing.JFrame(), true);
                     dialog.setSize(480, 230);
                     WindowUtil.centerWindow(dialog);
@@ -70,6 +71,17 @@ public class ControlAccesoApp {
                 } else if (rol.getNombre().equals("ANALISTA")) {
                     JDialogAnalisis dialog = new JDialogAnalisis(new javax.swing.JFrame(), true);
                     dialog.setSize(450, 250);
+                    WindowUtil.centerWindow(dialog);
+                    dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                        @Override
+                        public void windowClosing(java.awt.event.WindowEvent e) {
+                            System.exit(0);
+                        }
+                    });
+                    dialog.setVisible(true);
+                } else if (rol.getNombre().equals("SEGURIDAD SISTEMA")) {
+                    JDialogSeguridadMant dialog = new JDialogSeguridadMant(new javax.swing.JFrame(), false);
+                    dialog.setSize(900, 320);
                     WindowUtil.centerWindow(dialog);
                     dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                         @Override
