@@ -167,6 +167,7 @@ public class JDialogAdministracion extends javax.swing.JDialog {
     private void jButtonVisitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVisitasActionPerformed
         // TODO add your handling code here:
         JDialogConsultaVisitas visitas = new JDialogConsultaVisitas(null, true);
+        visitas.setSize(1290,660);
         WindowUtil.centerWindow(visitas);
         visitas.setVisible(true);
     }//GEN-LAST:event_jButtonVisitasActionPerformed
