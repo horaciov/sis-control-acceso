@@ -165,6 +165,7 @@ public class JDialogVisita extends javax.swing.JDialog {
                     jButtonNuevaVisita = new javax.swing.JButton();
                     jLabelIconStatus = new javax.swing.JLabel();
                     jCheckBoxReimprimir = new javax.swing.JCheckBox();
+                    jButtonVisitasActivas = new javax.swing.JButton();
                     jPanelVisitante = new javax.swing.JPanel();
                     jLabel2 = new javax.swing.JLabel();
                     jTextFieldNombre = new javax.swing.JTextField();
@@ -363,6 +364,16 @@ public class JDialogVisita extends javax.swing.JDialog {
         jCheckBoxReimprimir.setText("Reimprimir");
         jPanelArbolVisita.add(jCheckBoxReimprimir);
         jCheckBoxReimprimir.setBounds(310, 80, 90, 20);
+
+        jButtonVisitasActivas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/clear.jpeg"))); // NOI18N
+        jButtonVisitasActivas.setToolTipText("Buscar Persona");
+        jButtonVisitasActivas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVisitasActivasActionPerformed(evt);
+            }
+        });
+        jPanelArbolVisita.add(jButtonVisitasActivas);
+        jButtonVisitasActivas.setBounds(360, 150, 20, 20);
 
         getContentPane().add(jPanelArbolVisita);
         jPanelArbolVisita.setBounds(0, 0, 400, 520);
@@ -1226,6 +1237,15 @@ public class JDialogVisita extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButtonAyudaActionPerformed
 
+    private void jButtonVisitasActivasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVisitasActivasActionPerformed
+        // TODO add your handling code here:
+        JDialogVisitasActivas jDialog=new JDialogVisitasActivas(null, true);
+        jDialog.setModoBuscador(true);
+        jDialog.setSize(860, 560);
+        WindowUtil.centerWindow(jDialog);
+        jDialog.setVisible(true);
+    }//GEN-LAST:event_jButtonVisitasActivasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1275,6 +1295,7 @@ public class JDialogVisita extends javax.swing.JDialog {
     private javax.swing.JButton jButtonNuevoOrganizacion;
     private javax.swing.JButton jButtonNuevoTipoDoc;
     private javax.swing.JButton jButtonTomarFotografia;
+    private javax.swing.JButton jButtonVisitasActivas;
     private javax.swing.JCheckBox jCheckBoxReimprimir;
     private javax.swing.JComboBox jComboBoxEstadoCivil;
     private javax.swing.JComboBox jComboBoxMotivo;

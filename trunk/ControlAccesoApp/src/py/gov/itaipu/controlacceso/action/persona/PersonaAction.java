@@ -205,12 +205,12 @@ public class PersonaAction {
         try {
             Estado e = (Estado) em.createNamedQuery("Estado.findByNombre").setParameter("nombre", "HABILITADO").getSingleResult();
             persona.setEstado(e);
-            EntityTransaction tx = em.getTransaction();
-            tx.begin();
-            persona.setUsuarioModificacion(AutenticadorAction.getUsuarioConectado());
-            persona.setFechaModificacion(Calendar.getInstance().getTime());
-            em.merge(persona);
-            tx.commit();
+           // EntityTransaction tx = em.getTransaction();
+          //  tx.begin();
+         //   persona.setUsuarioModificacion(AutenticadorAction.getUsuarioConectado());
+         //   persona.setFechaModificacion(Calendar.getInstance().getTime());
+         //   em.merge(persona);
+         //   tx.commit();
         } catch (RuntimeException e) {
             throw new ErrorInesperado("Error Inesperado");
         }
@@ -220,12 +220,12 @@ public class PersonaAction {
         try {
             Estado e = (Estado) em.createNamedQuery("Estado.findByNombre").setParameter("nombre", "INHABILITADO").getSingleResult();
             persona.setEstado(e);
-            EntityTransaction tx = em.getTransaction();
-            tx.begin();
-            persona.setUsuarioModificacion(AutenticadorAction.getUsuarioConectado());
-            persona.setFechaModificacion(Calendar.getInstance().getTime());
-            em.merge(persona);
-            tx.commit();
+          //  EntityTransaction tx = em.getTransaction();
+         //   tx.begin();
+         //   persona.setUsuarioModificacion(AutenticadorAction.getUsuarioConectado());
+         //   persona.setFechaModificacion(Calendar.getInstance().getTime());
+          //  em.merge(persona);
+          //  tx.commit();
             
         } catch (RuntimeException e) {
             throw new ErrorInesperado("Error Inesperado");
