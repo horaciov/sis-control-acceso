@@ -837,6 +837,11 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
 
     public void setModoBuscador(Boolean modoBuscador) {
         this.modoBuscador = modoBuscador;
+        if(modoBuscador){
+            jButtonNuevo.setVisible(false);
+            jButtonModificar.setVisible(false);
+            jButtonEliminar.setVisible(false);
+        }
     }
 
     /**
