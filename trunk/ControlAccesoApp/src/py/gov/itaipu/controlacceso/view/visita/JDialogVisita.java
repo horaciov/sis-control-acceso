@@ -549,7 +549,7 @@ public class JDialogVisita extends javax.swing.JDialog {
 
         jLabel5.setText("Observación:");
         jPanelVisita.add(jLabel5);
-        jLabel5.setBounds(390, 40, 70, 14);
+        jLabel5.setBounds(370, 40, 90, 14);
 
         jTextAreaObservacion.setColumns(20);
         jTextAreaObservacion.setRows(5);
