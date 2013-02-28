@@ -640,7 +640,7 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
                 }
 
                 manejaPersona(false);
-
+                jButtonMudarEmpleado.setEnabled(false);
 //                DefaultMutableTreeNode nodoSeleccionado = (DefaultMutableTreeNode) jTreeOrganigrama.getLastSelectedPathComponent();
 //                //                DefaultMutableTreeNode nodoNuevo = new DefaultMutableTreeNode(persona,true);
                 //                nodoSeleccionado.add(nodoNuevo);
