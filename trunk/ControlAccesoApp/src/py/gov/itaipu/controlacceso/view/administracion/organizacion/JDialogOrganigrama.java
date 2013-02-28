@@ -363,7 +363,9 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
 
                 jTextFieldEmpleadoApellido.setText(persona.getApellido());
                 jTextFieldEmpleadoNombre.setText(persona.getNombre());
-                jTextFieldEmpleadoOrganizacion.setText(persona.getOrganizacion().getNombre());
+                if (persona.getOrganizacion()!=null && !persona.getOrganizacion().getNombre().equals("")) {
+                    jTextFieldEmpleadoOrganizacion.setText(persona.getOrganizacion().getNombre());
+                }
                 jTextFieldEmpleadoNroDoc.setText(persona.getNumeroDocumento());
                 jTextFieldAreaPadreNombre.setText("");
                 jTextFieldAreaNombre.setText("");
@@ -618,6 +620,7 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
     private void jButtonGuardarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarEmpleadoActionPerformed
         // TODO add your handling code here:
         try {
+            
             if (validarPersona()) {
                 persona.setNombre(jTextFieldEmpleadoNombre.getText());
                 persona.setApellido(jTextFieldEmpleadoApellido.getText());
@@ -747,7 +750,7 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
             if (JOptionPane.showConfirmDialog(this, "Desea eliminar al Empleado?", "Eliminar", 0) == 0) {
                 personaAction.setPersona(persona);
                 try {
-                    personaAction.inhabilitar();
+                    personaAction.inhabilitarEmpleado();
                     JOptionPane.showMessageDialog(this, "Se ha eliminado con exito", "Info", 1);
                     actualizarArbol(true,true);
                     persona = null;
@@ -814,16 +817,37 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
             personaExiste = personaAction.findByNumeroDocumento(jTextFieldEmpleadoNroDoc.getText().toUpperCase(),persona.getTipoDocumento());
             if (personaExiste!=null && personaExiste.getId()!=null) {
                 if (persona.getId()==null) {
-                    JOptionPane.showMessageDialog(this, "NRO DE DOCUMENTO YA EXISTE.", "Error", 0);
-                    return false;
+                    ///SI EL NRODOC YA EXISTE, SE VERIFICA QUE LA PERSONA NO ESTÉ ASIGNADA A OTRO DPTO. INTERNO.
+                    if (personaExiste.getOrganizacion()!=null
+                            && personaExiste.getOrganizacion().getTipoOrganizacion().toUpperCase().equals("INTERNA")){
+                            JOptionPane.showMessageDialog(this, "NRO DE DOCUMENTO YA EXISTE DENTRO DE LA EMPRESA.", "Error", 0);
+                            return false;
+                    }else{
+                        ///LA PERSONA YA EXISTE, SOLO SE ACTUALIZA SUS DATOS.
+                        try {
+                            persona.setId(personaExiste.getId());
+                            personaExiste.setNombre(jTextFieldEmpleadoNombre.getText());
+                            personaExiste.setApellido(jTextFieldEmpleadoApellido.getText());
+                            personaExiste.setOrganizacion(persona.getOrganizacion());
+                            personaAction.setPersona(personaExiste);
+                            personaAction.crear();
+                            personaAction.habilitar();
+                            JOptionPane.showMessageDialog(this, "Persona ya registrada, se actualiza como Empleado.", "Info", 1);
+                            manejaPersona(false);
+                            actualizarArbol(true,true);
+                            persona = null;
+                            return false;
+                         } catch (EntidadExiste ex) {
+                            Logger.getLogger(JDialogOrganigrama.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                      }
+                    
                 }else if(persona.getId() != personaExiste.getId()){
                     JOptionPane.showMessageDialog(this, "NRO DE DOCUMENTO YA EXISTE.", "Error", 0);
                     return false;
                 }
             }
-            
-            
-        } catch (ErrorInesperado ex) {
+         } catch (ErrorInesperado ex) {
             Logger.getLogger(JDialogOrganigrama.class.getName()).log(Level.SEVERE, null, ex);
         }
         
