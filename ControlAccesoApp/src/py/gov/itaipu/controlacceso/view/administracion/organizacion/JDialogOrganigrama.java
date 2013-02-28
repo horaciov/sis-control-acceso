@@ -85,6 +85,10 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
             jButtonCancelarArea = new javax.swing.JButton();
             jButtonEliminar = new javax.swing.JButton();
             jButtonMudarEmpleado = new javax.swing.JButton();
+            jLabel9 = new javax.swing.JLabel();
+            jTextFieldFiltroArbol = new javax.swing.JTextField();
+            jButtonBuscar = new javax.swing.JButton();
+            jButtonLimpiar = new javax.swing.JButton();
 
             setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
             setTitle("ORGANIGRAMA");
@@ -93,13 +97,20 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
                     formWindowActivated(evt);
                 }
             });
+            getContentPane().setLayout(null);
 
             jLabel6.setText("Apellido:");
+            getContentPane().add(jLabel6);
+            jLabel6.setBounds(510, 260, 78, 14);
 
             jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
             jLabel4.setText("Empleado");
+            getContentPane().add(jLabel4);
+            jLabel4.setBounds(510, 210, 78, 15);
 
             jLabel5.setText("Nombre:");
+            getContentPane().add(jLabel5);
+            jLabel5.setBounds(510, 230, 78, 14);
 
             DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", true);
             jTreeOrganigrama = new JTree(root);
@@ -120,36 +131,55 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
             System.exit(-1);
         }
 
+        getContentPane().add(jScrollPaneOrganigrama);
+        jScrollPaneOrganigrama.setBounds(20, 66, 480, 440);
+
         jTextFieldEmpleadoApellido.setEditable(false);
+        getContentPane().add(jTextFieldEmpleadoApellido);
+        jTextFieldEmpleadoApellido.setBounds(610, 260, 230, 20);
 
         jButtonPersonaNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/persona.jpg"))); // NOI18N
-        jButtonPersonaNuevo.setText("Nuevo Empleado");
+        jButtonPersonaNuevo.setText("Empleado");
         jButtonPersonaNuevo.setToolTipText("Cargar un Nuevo Empleado");
         jButtonPersonaNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonPersonaNuevoActionPerformed(evt);
             }
         });
+        getContentPane().add(jButtonPersonaNuevo);
+        jButtonPersonaNuevo.setBounds(140, 40, 110, 17);
 
         jTextFieldEmpleadoNombre.setEditable(false);
+        getContentPane().add(jTextFieldEmpleadoNombre);
+        jTextFieldEmpleadoNombre.setBounds(610, 230, 230, 20);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Area Interna:");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(510, 110, 91, 15);
 
         jLabel7.setText("Nro Documento:");
+        getContentPane().add(jLabel7);
+        jLabel7.setBounds(510, 290, 91, 14);
 
         jTextFieldEmpleadoNroDoc.setEditable(false);
+        getContentPane().add(jTextFieldEmpleadoNroDoc);
+        jTextFieldEmpleadoNroDoc.setBounds(610, 290, 230, 20);
 
         jButtonOrganizacionNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/organizacion.png"))); // NOI18N
-        jButtonOrganizacionNuevo.setText("Nueva Area");
+        jButtonOrganizacionNuevo.setText(" Area");
         jButtonOrganizacionNuevo.setToolTipText("Cargar una Nueva Area");
         jButtonOrganizacionNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonOrganizacionNuevoActionPerformed(evt);
             }
         });
+        getContentPane().add(jButtonOrganizacionNuevo);
+        jButtonOrganizacionNuevo.setBounds(20, 40, 110, 17);
 
         jLabel8.setText("Area:");
+        getContentPane().add(jLabel8);
+        jLabel8.setBounds(510, 320, 78, 14);
 
         jTextFieldAreaNombre.setEditable(false);
         jTextFieldAreaNombre.addActionListener(new java.awt.event.ActionListener() {
@@ -157,10 +187,16 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
                 jTextFieldAreaNombreActionPerformed(evt);
             }
         });
+        getContentPane().add(jTextFieldAreaNombre);
+        jTextFieldAreaNombre.setBounds(610, 130, 230, 20);
 
         jTextFieldEmpleadoOrganizacion.setEditable(false);
+        getContentPane().add(jTextFieldEmpleadoOrganizacion);
+        jTextFieldEmpleadoOrganizacion.setBounds(610, 320, 230, 20);
 
         jTextFieldAreaPadreNombre.setEditable(false);
+        getContentPane().add(jTextFieldAreaPadreNombre);
+        jTextFieldAreaPadreNombre.setBounds(610, 160, 230, 20);
 
         jButtonGuardarArea.setText("Guardar");
         jButtonGuardarArea.setEnabled(false);
@@ -169,8 +205,12 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
                 jButtonGuardarAreaActionPerformed(evt);
             }
         });
+        getContentPane().add(jButtonGuardarArea);
+        jButtonGuardarArea.setBounds(760, 190, 80, 15);
 
         jLabel2.setText("Nombre:");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(510, 130, 78, 20);
 
         jButtonGuardarEmpleado.setText("Guardar");
         jButtonGuardarEmpleado.setEnabled(false);
@@ -179,8 +219,12 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
                 jButtonGuardarEmpleadoActionPerformed(evt);
             }
         });
+        getContentPane().add(jButtonGuardarEmpleado);
+        jButtonGuardarEmpleado.setBounds(760, 350, 80, 15);
 
         jLabel3.setText("Area Superior:");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(510, 160, 91, 14);
 
         jButtonEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/edit.png"))); // NOI18N
         jButtonEditar.setText("Editar");
@@ -190,30 +234,39 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
                 jButtonEditarActionPerformed(evt);
             }
         });
+        getContentPane().add(jButtonEditar);
+        jButtonEditar.setBounds(260, 40, 110, 17);
 
-        jButtonCancelarUsuario.setText("Cancelar");
+        jButtonCancelarUsuario.setText("Cancel");
         jButtonCancelarUsuario.setEnabled(false);
         jButtonCancelarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCancelarUsuarioActionPerformed(evt);
             }
         });
+        getContentPane().add(jButtonCancelarUsuario);
+        jButtonCancelarUsuario.setBounds(680, 350, 80, 15);
 
-        jButtonCancelarArea.setText("Cancelar");
+        jButtonCancelarArea.setText("Cancel");
         jButtonCancelarArea.setEnabled(false);
         jButtonCancelarArea.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCancelarAreaActionPerformed(evt);
             }
         });
+        getContentPane().add(jButtonCancelarArea);
+        jButtonCancelarArea.setBounds(680, 190, 80, 15);
 
         jButtonEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/delete.png"))); // NOI18N
+        jButtonEliminar.setText("Eliminar");
         jButtonEliminar.setToolTipText("Eliminar Area-Empleado");
         jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonEliminarActionPerformed(evt);
             }
         });
+        getContentPane().add(jButtonEliminar);
+        jButtonEliminar.setBounds(390, 40, 110, 17);
 
         jButtonMudarEmpleado.setText("Mudar");
         jButtonMudarEmpleado.setToolTipText("Mudar de Area");
@@ -223,131 +276,34 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
                 jButtonMudarEmpleadoActionPerformed(evt);
             }
         });
+        getContentPane().add(jButtonMudarEmpleado);
+        jButtonMudarEmpleado.setBounds(610, 350, 70, 15);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButtonOrganizacionNuevo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonPersonaNuevo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonEditar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPaneOrganigrama, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(5, 5, 5)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldAreaNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldAreaPadreNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldEmpleadoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldEmpleadoApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldEmpleadoNroDoc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButtonCancelarArea)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonGuardarArea))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jButtonMudarEmpleado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButtonCancelarUsuario)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonGuardarEmpleado))
-                            .addComponent(jTextFieldEmpleadoOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(30, Short.MAX_VALUE))
-        );
+        jLabel9.setText("Buscar");
+        getContentPane().add(jLabel9);
+        jLabel9.setBounds(510, 70, 60, 20);
+        getContentPane().add(jTextFieldFiltroArbol);
+        jTextFieldFiltroArbol.setBounds(610, 70, 230, 20);
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonOrganizacionNuevo, jButtonPersonaNuevo});
+        jButtonBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/view.png"))); // NOI18N
+        jButtonBuscar.setToolTipText("Buscar Persona");
+        jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonBuscar);
+        jButtonBuscar.setBounds(800, 90, 20, 20);
 
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jScrollPaneOrganigrama, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel3)
-                                .addGap(50, 50, 50)
-                                .addComponent(jLabel4)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel5))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(11, 11, 11)
-                                        .addComponent(jTextFieldEmpleadoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jTextFieldAreaPadreNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jTextFieldAreaNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(25, 25, 25)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jButtonGuardarArea, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButtonCancelarArea, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextFieldEmpleadoApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(8, 8, 8)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jTextFieldEmpleadoNroDoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel7))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextFieldEmpleadoOrganizacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButtonMudarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jButtonGuardarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButtonCancelarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButtonOrganizacionNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButtonPersonaNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(23, Short.MAX_VALUE))
-        );
-
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonEditar, jButtonOrganizacionNuevo, jButtonPersonaNuevo});
+        jButtonLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/clear.jpeg"))); // NOI18N
+        jButtonLimpiar.setToolTipText("Buscar Persona");
+        jButtonLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLimpiarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonLimpiar);
+        jButtonLimpiar.setBounds(820, 90, 20, 20);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -448,6 +404,8 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
             jButtonPersonaNuevo.setEnabled(false);
             jButtonEditar.setEnabled(false);
             jButtonEliminar.setEnabled(false);
+            jButtonBuscar.setEnabled(false);
+            jButtonLimpiar.setEnabled(false);
 
         } else {
             jTextFieldEmpleadoApellido.setText("");
@@ -463,6 +421,8 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
             jButtonPersonaNuevo.setEnabled(true);
             jButtonEditar.setEnabled(true);
             jButtonEliminar.setEnabled(true);
+            jButtonBuscar.setEnabled(true);
+            jButtonLimpiar.setEnabled(true);
 
         }
     }
@@ -480,6 +440,8 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
             jButtonPersonaNuevo.setEnabled(false);
             jButtonEditar.setEnabled(false);
             jButtonEliminar.setEnabled(false);
+            jButtonBuscar.setEnabled(false);
+            jButtonLimpiar.setEnabled(false);
         } else {
             jTextFieldAreaNombre.setText("");
             jTextFieldAreaNombre.setEditable(false);
@@ -491,6 +453,8 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
             jButtonPersonaNuevo.setEnabled(true);
             jButtonEditar.setEnabled(true);
             jButtonEliminar.setEnabled(true);
+            jButtonBuscar.setEnabled(true);
+            jButtonLimpiar.setEnabled(true);
 
 
         }
@@ -797,6 +761,45 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
 
     }//GEN-LAST:event_jButtonMudarEmpleadoActionPerformed
 
+    private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
+        // TODO add your handling code here:
+        if (jTextFieldFiltroArbol.getText() != null && !jTextFieldFiltroArbol.equals("")) {
+            try {
+                DefaultMutableTreeNode root = UtilesArbol.crearArbolFiltrado("ORGANIGRAMA", jTextFieldFiltroArbol.getText().toUpperCase(), true);
+                jTreeOrganigrama = new JTree(root);
+                jTreeOrganigrama.setCellRenderer(new CustomIconRenderer());
+                jTreeOrganigrama.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+                    public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+                        jTreeOrganigramaValueChanged(evt);
+                    }
+                });
+                jScrollPaneOrganigrama.setViewportView(jTreeOrganigrama);
+            } catch (ErrorInesperado ei) {
+                JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+                System.exit(-1);
+            }
+        }
+    }//GEN-LAST:event_jButtonBuscarActionPerformed
+
+    private void jButtonLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarActionPerformed
+        // TODO add your handling code here:
+        try {
+            jTextFieldFiltroArbol.setText("");
+            DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", true);
+            jTreeOrganigrama = new JTree(root);
+            jTreeOrganigrama.setCellRenderer(new CustomIconRenderer());
+            jTreeOrganigrama.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+                public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+                    jTreeOrganigramaValueChanged(evt);
+                }
+            });
+            jScrollPaneOrganigrama.setViewportView(jTreeOrganigrama);
+        } catch (ErrorInesperado ei) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
+    }//GEN-LAST:event_jButtonLimpiarActionPerformed
+
     
     private boolean validarPersona() {
         if (jTextFieldEmpleadoApellido.getText() == null || jTextFieldEmpleadoApellido.getText().equals("")) {
@@ -913,12 +916,14 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonCancelarArea;
     private javax.swing.JButton jButtonCancelarUsuario;
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonEliminar;
     private javax.swing.JButton jButtonGuardarArea;
     private javax.swing.JButton jButtonGuardarEmpleado;
+    private javax.swing.JButton jButtonLimpiar;
     private javax.swing.JButton jButtonMudarEmpleado;
     private javax.swing.JButton jButtonOrganizacionNuevo;
     private javax.swing.JButton jButtonPersonaNuevo;
@@ -930,6 +935,7 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPaneOrganigrama;
     private javax.swing.JTextField jTextFieldAreaNombre;
     private javax.swing.JTextField jTextFieldAreaPadreNombre;
@@ -937,6 +943,7 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldEmpleadoNombre;
     private javax.swing.JTextField jTextFieldEmpleadoNroDoc;
     private javax.swing.JTextField jTextFieldEmpleadoOrganizacion;
+    private javax.swing.JTextField jTextFieldFiltroArbol;
     private javax.swing.JTree jTreeOrganigrama;
     // End of variables declaration//GEN-END:variables
 }
