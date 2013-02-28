@@ -493,6 +493,7 @@ public class JDialogRepVisitasGeneral extends javax.swing.JDialog {
         JDialogPersonaPrincipal jdP = new JDialogPersonaPrincipal(null, true);
         jdP.setModoBuscador(true);
         jdP.setTitle("Buscador de Personas Externas");
+        jdP.setSize(1200, 665);
         WindowUtil.centerWindow(jdP);
         jdP.setResizable(false);
         jdP.setVisible(true);
