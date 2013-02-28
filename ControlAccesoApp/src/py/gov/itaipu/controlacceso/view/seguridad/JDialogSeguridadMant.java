@@ -154,22 +154,7 @@ public class JDialogSeguridadMant extends javax.swing.JDialog {
                 jTableRolesMouseClicked(evt);
             }
         });
-        jTableRoles.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-            }
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                jTableRolesInputMethodTextChanged(evt);
-            }
-        });
-        jTableRoles.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                jTableRolesPropertyChange(evt);
-            }
-        });
         jTableRoles.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTableRolesKeyPressed(evt);
-            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTableRolesKeyReleased(evt);
             }
@@ -391,10 +376,6 @@ public class JDialogSeguridadMant extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButtonRolAddActionPerformed
 
-    private void jTableRolesPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTableRolesPropertyChange
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTableRolesPropertyChange
-
     private void jTableRolesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableRolesMouseClicked
         // TODO add your handling code here:
         actualizarFuncUsers();
@@ -411,12 +392,6 @@ public class JDialogSeguridadMant extends javax.swing.JDialog {
 
             listUsuariosRol.clear();
             listUsuariosRol.addAll(rol.getUsuarios());
-//            for (int i = 0; i < listUsuariosRol.size(); i++) {
-//                Object object = listUsuariosRol.get(i);
-//                if (listUsuarios.contains(object)) {
-//                    listUsuarios.remove(object);
-//                }
-//            }
 
             listFuncionalidadesRol.clear();
             listFuncionalidadesRol.addAll(rol.getFuncionalidades());
@@ -610,14 +585,6 @@ public class JDialogSeguridadMant extends javax.swing.JDialog {
 
     }//GEN-LAST:event_formWindowActivated
 
-    private void jTableRolesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableRolesKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTableRolesKeyPressed
-
-    private void jTableRolesInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jTableRolesInputMethodTextChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTableRolesInputMethodTextChanged
-
     private void jTableRolesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTableRolesKeyReleased
         // TODO add your handling code here:
         actualizarFuncUsers();
@@ -629,6 +596,8 @@ public class JDialogSeguridadMant extends javax.swing.JDialog {
         WindowUtil.centerWindow(diUsu);
         diUsu.setVisible(true);
         postClear();
+        
+        
                 
     }//GEN-LAST:event_jButtonAddUsuarioActionPerformed
 
