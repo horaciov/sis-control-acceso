@@ -332,7 +332,7 @@ public class JDialogVisita extends javax.swing.JDialog {
 
         DefaultMutableTreeNode root = null;
         try{
-            root = UtilesArbol.crearArbol("ORGANIGRAMA", true);
+            root = UtilesArbol.crearArbol("ORGANIGRAMA", true,false,false);
         } catch (ErrorInesperado ei) {
             JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
             System.exit(-1);
@@ -1119,7 +1119,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         // TODO add your handling code here:
         try {
             jTextFieldFiltroArbol.setText("");
-            DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", true);
+            DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", true,false,false);
             jTreePersonaVisitada = new JTree(root);
             jTreePersonaVisitada.setCellRenderer(new CustomIconRenderer());
             jTreePersonaVisitada.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {

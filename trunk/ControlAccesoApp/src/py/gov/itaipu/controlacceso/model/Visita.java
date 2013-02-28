@@ -33,7 +33,7 @@ public class Visita implements Serializable {
     private String observacion;
     private String recibido;
     private String anulado;
-     private Usuario usuarioCreacion;
+    private Usuario usuarioCreacion;
     private Usuario usuarioModificacion;
     private Date fechaCreacion;
     private Date fechaModificacion;
