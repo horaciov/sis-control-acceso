@@ -28,6 +28,7 @@ public class JDialogoTipoAntecedente extends javax.swing.JDialog {
         super(parent, modal);
         readOnly = false;
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/resource/img/bandera-paraguay.png")).getImage());
     }
 
     /**

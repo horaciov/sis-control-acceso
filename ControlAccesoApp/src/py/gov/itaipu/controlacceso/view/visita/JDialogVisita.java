@@ -99,6 +99,7 @@ public class JDialogVisita extends javax.swing.JDialog {
             personaVisitada = new Persona();
             areaVisitada = new Organizacion();
             initComponents();
+            this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/resource/img/bandera-paraguay.png")).getImage());
             jButtonNuevoTipoDoc.setVisible(false);
             jButtonEditTipoDoc.setVisible(false);
             jComboBoxTipoDoc.setVisible(false);

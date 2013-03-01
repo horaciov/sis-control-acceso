@@ -77,6 +77,7 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
         modoBuscador = false;
         initComponents();
         jButtonEliminar.setVisible(false);
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/resource/img/bandera-paraguay.png")).getImage());
     }
 
     /**

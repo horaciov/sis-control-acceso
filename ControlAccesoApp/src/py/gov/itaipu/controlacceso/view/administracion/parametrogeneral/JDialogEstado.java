@@ -28,6 +28,7 @@ public class JDialogEstado extends javax.swing.JDialog {
         readOnly = false;
         initComponents();
         this.getRootPane().setDefaultButton(jButtonGuardar);
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/resource/img/bandera-paraguay.png")).getImage());
     }
 
     public Estado getEstado() {

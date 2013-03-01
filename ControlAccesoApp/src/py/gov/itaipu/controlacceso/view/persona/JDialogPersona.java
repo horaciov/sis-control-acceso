@@ -96,6 +96,7 @@ public class JDialogPersona extends javax.swing.JDialog {
             antecedenteAction = new CRUDAction(new Antecedente());
             initComponents();
             jComboBoxTipoDocumento.setSelectedItem(tipoDocAction.findByNamedQuery("TipoDocumento.findCI").get(0));
+            this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/resource/img/bandera-paraguay.png")).getImage());
         } catch (ErrorInesperado ei) {
             JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
             System.exit(-1);

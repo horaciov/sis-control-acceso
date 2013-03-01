@@ -37,6 +37,7 @@ public class JDialogUsuario extends javax.swing.JDialog {
         usuAction = new CRUDAction<Usuario>(usuario);
         initComponents();
         this.getRootPane().setDefaultButton(jButtonGuardar);
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/resource/img/bandera-paraguay.png")).getImage());
     }
 
     public Usuario getUsuario() {

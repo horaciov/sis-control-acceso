@@ -66,6 +66,7 @@ public class JDialogFotografia extends javax.swing.JDialog {
     public JDialogFotografia(java.awt.Frame parent, boolean modal, String modo, Persona persona) throws Exception {
         super(parent, modal);
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/resource/img/bandera-paraguay.png")).getImage());
         this.modo = modo;
         this.persona = persona;
         capturado = false;
