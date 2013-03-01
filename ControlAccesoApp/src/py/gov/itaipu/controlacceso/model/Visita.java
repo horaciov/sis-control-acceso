@@ -200,11 +200,11 @@ public class Visita implements Serializable {
     
     @Override
     public String toString() {
-        
+        SimpleDateFormat format = new SimpleDateFormat("hh:mm:ss");
         if (fechaSalida==null) {
-            return persona +" "+ fechaIngreso.getHours()+":"+fechaIngreso.getMinutes();
+            return persona +" "+ format.format(fechaIngreso);
         }else{
-            return persona +" "+ fechaIngreso.getHours()+":"+fechaIngreso.getMinutes()+" - "+fechaSalida.getHours()+":"+fechaSalida.getMinutes();
+            return persona +" "+ format.format(fechaIngreso) +" - "+format.format(fechaSalida);
         }
         
     }

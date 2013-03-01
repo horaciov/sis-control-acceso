@@ -46,10 +46,8 @@ public class CustomIconRenderer extends DefaultTreeCellRenderer {
                 setIcon(visitaActivaIcon);
             }else{
                 setIcon(visitaTerminadaIcon);
-                
-            }
-           
-        }else{
+             }
+         }else{
             setIcon(deptoIcon);
         }
     return this;
