@@ -35,6 +35,7 @@ public class JDialogVisitasActivas extends javax.swing.JDialog {
         modoBuscador = false;
         organizacionAction = new CRUDAction<Organizacion>();
         organizacionAction.setEntity(new Organizacion());
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/resource/img/bandera-paraguay.png")).getImage());
         initComponents();
     }
 
@@ -64,7 +65,7 @@ public class JDialogVisitasActivas extends javax.swing.JDialog {
             });
             getContentPane().setLayout(null);
 
-            DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", true,true,true);
+            DefaultMutableTreeNode root = UtilesArbol.crearArbol("VISITAS", true,true,true);
             jTreeOrganigrama = new JTree(root);
             jTreeOrganigrama.setCellRenderer(new CustomIconRenderer());
             jTreeOrganigrama.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -84,13 +85,13 @@ public class JDialogVisitasActivas extends javax.swing.JDialog {
         }
 
         getContentPane().add(jScrollPaneOrganigrama);
-        jScrollPaneOrganigrama.setBounds(20, 56, 480, 450);
+        jScrollPaneOrganigrama.setBounds(20, 50, 480, 450);
 
         jLabel9.setText("Buscar");
         getContentPane().add(jLabel9);
-        jLabel9.setBounds(20, 30, 40, 20);
+        jLabel9.setBounds(20, 20, 60, 20);
         getContentPane().add(jTextFieldFiltroArbol);
-        jTextFieldFiltroArbol.setBounds(60, 30, 290, 20);
+        jTextFieldFiltroArbol.setBounds(90, 20, 260, 20);
 
         jButtonBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/view.png"))); // NOI18N
         jButtonBuscar.setToolTipText("Buscar Persona");
@@ -100,7 +101,7 @@ public class JDialogVisitasActivas extends javax.swing.JDialog {
             }
         });
         getContentPane().add(jButtonBuscar);
-        jButtonBuscar.setBounds(360, 30, 20, 20);
+        jButtonBuscar.setBounds(360, 20, 20, 20);
 
         jButtonLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/clear.jpeg"))); // NOI18N
         jButtonLimpiar.setToolTipText("Buscar Persona");
@@ -110,7 +111,7 @@ public class JDialogVisitasActivas extends javax.swing.JDialog {
             }
         });
         getContentPane().add(jButtonLimpiar);
-        jButtonLimpiar.setBounds(380, 30, 20, 20);
+        jButtonLimpiar.setBounds(380, 20, 20, 20);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -138,7 +139,7 @@ public class JDialogVisitasActivas extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (jTextFieldFiltroArbol.getText() != null && !jTextFieldFiltroArbol.equals("")) {
             try {
-                DefaultMutableTreeNode root = UtilesArbol.crearArbolFiltrado("ORGANIGRAMA", jTextFieldFiltroArbol.getText().toUpperCase(), true);
+                DefaultMutableTreeNode root = UtilesArbol.crearArbolFiltrado("VISITAS", jTextFieldFiltroArbol.getText().toUpperCase(), true,true,true);
                 jTreeOrganigrama = new JTree(root);
                 jTreeOrganigrama.setCellRenderer(new CustomIconRenderer());
                 jTreeOrganigrama.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
@@ -158,7 +159,7 @@ public class JDialogVisitasActivas extends javax.swing.JDialog {
         // TODO add your handling code here:
         try {
             jTextFieldFiltroArbol.setText("");
-            DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", true, true, true);
+            DefaultMutableTreeNode root = UtilesArbol.crearArbol("VISITAS", true, true, true);
             jTreeOrganigrama = new JTree(root);
             jTreeOrganigrama.setCellRenderer(new CustomIconRenderer());
             jTreeOrganigrama.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {

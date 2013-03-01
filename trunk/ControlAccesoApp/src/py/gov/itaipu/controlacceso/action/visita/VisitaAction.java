@@ -4,6 +4,7 @@
  */
 package py.gov.itaipu.controlacceso.action.visita;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -189,11 +190,13 @@ public class VisitaAction {
     }
     
     
-    public List<Visita> findPendientesByPersona(Persona persona) throws ErrorInesperado {
-       
+    public List<Visita> findActivasByPersona(Persona persona, Date fecha) throws ErrorInesperado {
+            SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+            String fechaFormat = format.format(fecha);
             Query query;
-            query = em.createQuery(" from Visita v where v.fechaSalida is null and v.anulado = 'N' and personaVisitada.id= :idPersona )");
+            query = em.createQuery(" from Visita v where to_char(v.fechaIngreso,'YYYYMMDD') = :fecha and v.fechaSalida is null and v.anulado = 'N' and personaVisitada.id= :idPersona )");
             query.setParameter("idPersona", persona.getId());
+            query.setParameter("fecha", fechaFormat);
             List<Visita> result = new ArrayList<Visita>();
             result = query.getResultList();
             return result;
@@ -201,11 +204,13 @@ public class VisitaAction {
 
     }
     
-    public List<Visita> findPendientesByArea(Organizacion organizacion) throws ErrorInesperado {
-        
+    public List<Visita> findActivasByArea(Organizacion organizacion, Date fecha) throws ErrorInesperado {
+            SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+            String fechaFormat = format.format(fecha);
             Query query;
-            query = em.createQuery(" from Visita v where v.fechaSalida is null and v.anulado = 'N' and organizacionInterna.id= :idOrganizacion )");
+            query = em.createQuery(" from Visita v where to_char(v.fechaIngreso,'YYYYMMDD') = :fecha and v.fechaSalida is null and v.anulado = 'N' and organizacionInterna.id= :idOrganizacion )");
             query.setParameter("idOrganizacion", organizacion.getId());
+            query.setParameter("fecha", fechaFormat);
             List<Visita> result = new ArrayList<Visita>();
             result = query.getResultList();
             return result;
@@ -213,22 +218,27 @@ public class VisitaAction {
     }
     
     
-    public List<Visita> findTerminadasByPersona(Persona persona) throws ErrorInesperado {
-       
+    public List<Visita> findTerminadasByPersona(Persona persona, Date fecha) throws ErrorInesperado {
+            SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+            String fechaFormat = format.format(fecha);
+        
             Query query;
-            query = em.createQuery(" from Visita v where v.fechaSalida is not null and v.anulado = 'N' and personaVisitada.id= :idPersona )");
+            query = em.createQuery(" from Visita v where to_char(v.fechaIngreso,'YYYYMMDD') = :fecha and v.fechaSalida is not null and v.anulado = 'N' and personaVisitada.id= :idPersona )");
             query.setParameter("idPersona", persona.getId());
+            query.setParameter("fecha", fechaFormat);
             List<Visita> result = new ArrayList<Visita>();
             result = query.getResultList();
             return result;
           
     }
     
-    public List<Visita> findTerminadasByArea(Organizacion organizacion) throws ErrorInesperado {
-       
+    public List<Visita> findTerminadasByArea(Organizacion organizacion, Date fecha) throws ErrorInesperado {
+            SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+            String fechaFormat = format.format(fecha);
             Query query;
-            query = em.createQuery(" from Visita v where v.fechaSalida is not null and v.anulado = 'N' and organizacionInterna.id= :idOrganizacion )");
+            query = em.createQuery(" from Visita v where to_char(v.fechaIngreso,'YYYYMMDD') = :fecha and v.fechaSalida is not null and v.anulado = 'N' and organizacionInterna.id= :idOrganizacion )");
             query.setParameter("idOrganizacion", organizacion.getId());
+            query.setParameter("fecha", fechaFormat);
             List<Visita> result = new ArrayList<Visita>();
             result = query.getResultList();
             return result;

@@ -765,7 +765,7 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (jTextFieldFiltroArbol.getText() != null && !jTextFieldFiltroArbol.equals("")) {
             try {
-                DefaultMutableTreeNode root = UtilesArbol.crearArbolFiltrado("ORGANIGRAMA", jTextFieldFiltroArbol.getText().toUpperCase(), true);
+                DefaultMutableTreeNode root = UtilesArbol.crearArbolFiltrado("ORGANIGRAMA", jTextFieldFiltroArbol.getText().toUpperCase(), true,false,false);
                 jTreeOrganigrama = new JTree(root);
                 jTreeOrganigrama.setCellRenderer(new CustomIconRenderer());
                 jTreeOrganigrama.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
