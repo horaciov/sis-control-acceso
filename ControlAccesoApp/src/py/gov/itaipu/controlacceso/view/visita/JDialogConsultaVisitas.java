@@ -17,15 +17,24 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
+import javax.print.attribute.HashPrintServiceAttributeSet;
+import javax.print.attribute.PrintServiceAttributeSet;
+import javax.print.attribute.standard.PrinterName;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableCellRenderer;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.export.JRPrintServiceExporter;
+import net.sf.jasperreports.engine.export.JRPrintServiceExporterParameter;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import org.jdesktop.observablecollections.ObservableCollections;
@@ -620,10 +629,28 @@ public class JDialogConsultaVisitas extends javax.swing.JDialog {
             //                parametros.put("fotografia",(Object)iS);
             JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, conexion);
 
-            //            Muestra el Reporte en Pantalla
-            JasperViewer jviewer = new JasperViewer(jasperPrint, false);
-            jviewer.setModalExclusionType(Dialog.ModalExclusionType.NO_EXCLUDE);
-            jviewer.viewReport(jasperPrint, false);
+//            //            Muestra el Reporte en Pantalla
+//            JasperViewer jviewer = new JasperViewer(jasperPrint, false);
+//            jviewer.setModalExclusionType(Dialog.ModalExclusionType.NO_EXCLUDE);
+//            jviewer.viewReport(jasperPrint, false);
+            
+            ///IMPRIMIR DIRECTO A IMPRESORA
+            final JRPrintServiceExporter exporter = new JRPrintServiceExporter();
+            exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+            exporter.setParameter(JRPrintServiceExporterParameter.DISPLAY_PAGE_DIALOG, Boolean.FALSE);
+            exporter.setParameter(JRPrintServiceExporterParameter.DISPLAY_PRINT_DIALOG, Boolean.FALSE);
+            ///BUSCO LA IMPRESORA POR DEFECTO
+            PrintServiceAttributeSet printService = new HashPrintServiceAttributeSet();
+            PrintService defaultPrinter = PrintServiceLookup.lookupDefaultPrintService();
+            printService.add(new PrinterName(defaultPrinter.getName(), Locale.getDefault()));
+            ///
+            exporter.setParameter(JRPrintServiceExporterParameter.OFFSET_X, new Integer(0));
+            exporter.setParameter(JRPrintServiceExporterParameter.OFFSET_Y, new Integer(0));
+            exporter.setParameter(JRPrintServiceExporterParameter.PRINT_SERVICE_ATTRIBUTE_SET,printService);
+            exporter.exportReport(); 
+            
+            
+            
 
             //     Genera el Reporte en PDF
             //            JRExporter exporter = new JRPdfExporter();
