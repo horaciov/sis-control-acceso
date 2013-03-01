@@ -5,6 +5,8 @@
 package py.gov.itaipu.controlacceso.model;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -195,10 +197,16 @@ public class Visita implements Serializable {
         }
         return true;
     }
-
+    
     @Override
     public String toString() {
-        return "Visita{" + "id=" + id + ", persona=" + persona + ", personaVisitada=" + personaVisitada + ", motivo=" + motivo + ", fechaIngreso=" + fechaIngreso + ", fechaSalida=" + fechaSalida + ", observacion=" + observacion + ", recibido=" + recibido + '}';
+        
+        if (fechaSalida==null) {
+            return persona +" "+ fechaIngreso.getHours()+":"+fechaIngreso.getMinutes();
+        }else{
+            return persona +" "+ fechaIngreso.getHours()+":"+fechaIngreso.getMinutes()+" - "+fechaSalida.getHours()+":"+fechaSalida.getMinutes();
+        }
+        
     }
 
     

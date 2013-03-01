@@ -10,6 +10,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
+import py.gov.itaipu.controlacceso.model.Persona;
+import py.gov.itaipu.controlacceso.model.Visita;
 
 /**
  *
@@ -17,10 +19,14 @@ import javax.swing.tree.DefaultTreeCellRenderer;
  */
 public class CustomIconRenderer extends DefaultTreeCellRenderer {
     Icon personaIcon;
+    Icon visitaActivaIcon;
+    Icon visitaTerminadaIcon;
     Icon deptoIcon;
     public CustomIconRenderer() {
         deptoIcon = new ImageIcon(getClass().getResource("/resource/img/carpeta_cerrada.jpg"));
         personaIcon = new ImageIcon(getClass().getResource("/resource/img/persona.jpg"));
+        visitaActivaIcon = new ImageIcon(getClass().getResource("/resource/img/circle_green.png"));
+        visitaTerminadaIcon = new ImageIcon(getClass().getResource("/resource/img/circle_red.png"));
         
     }
 
@@ -31,7 +37,15 @@ public class CustomIconRenderer extends DefaultTreeCellRenderer {
         // check whatever you need to on the node user object
         if (nodeObj.getClass().getSimpleName().equals("Persona")) {
             setIcon(personaIcon);
-        } else {
+        } else if (nodeObj.getClass().getSimpleName().equals("Visita")) {
+            Visita vis = (Visita) nodeObj;
+            if (vis.getFechaSalida()==null) {
+                setIcon(visitaActivaIcon);
+            }else{
+                setIcon(visitaTerminadaIcon);
+            }
+           
+        }else{
             setIcon(deptoIcon);
         }
     return this;

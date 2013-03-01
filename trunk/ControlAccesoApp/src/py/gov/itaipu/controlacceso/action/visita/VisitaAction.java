@@ -4,6 +4,7 @@
  */
 package py.gov.itaipu.controlacceso.action.visita;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -189,55 +190,49 @@ public class VisitaAction {
     
     
     public List<Visita> findPendientesByPersona(Persona persona) throws ErrorInesperado {
-        try {
+       
             Query query;
             query = em.createQuery(" from Visita v where v.fechaSalida is null and v.anulado = 'N' and personaVisitada.id= :idPersona )");
             query.setParameter("idPersona", persona.getId());
-            List<Visita> result = query.getResultList();
-            if (result.size() > 0) {
-                return result;
-            } else {
-                return null;
-            }
-        } catch (RuntimeException re) {
-            throw new ErrorInesperado("Error inesperado.");
-        }
+            List<Visita> result = new ArrayList<Visita>();
+            result = query.getResultList();
+            return result;
+      
 
     }
     
     public List<Visita> findPendientesByArea(Organizacion organizacion) throws ErrorInesperado {
-        try {
+        
             Query query;
             query = em.createQuery(" from Visita v where v.fechaSalida is null and v.anulado = 'N' and organizacionInterna.id= :idOrganizacion )");
             query.setParameter("idOrganizacion", organizacion.getId());
-            List<Visita> result = query.getResultList();
-            if (result.size() > 0) {
-                return result;
-            } else {
-                return null;
-            }
-        } catch (RuntimeException re) {
-            throw new ErrorInesperado("Error inesperado.");
-        }
-
+            List<Visita> result = new ArrayList<Visita>();
+            result = query.getResultList();
+            return result;
+     
     }
     
     
     public List<Visita> findTerminadasByPersona(Persona persona) throws ErrorInesperado {
-        try {
+       
             Query query;
             query = em.createQuery(" from Visita v where v.fechaSalida is not null and v.anulado = 'N' and personaVisitada.id= :idPersona )");
             query.setParameter("idPersona", persona.getId());
-            List<Visita> result = query.getResultList();
-            if (result.size() > 0) {
-                return result;
-            } else {
-                return null;
-            }
-        } catch (RuntimeException re) {
-            throw new ErrorInesperado("Error inesperado.");
-        }
-
+            List<Visita> result = new ArrayList<Visita>();
+            result = query.getResultList();
+            return result;
+          
+    }
+    
+    public List<Visita> findTerminadasByArea(Organizacion organizacion) throws ErrorInesperado {
+       
+            Query query;
+            query = em.createQuery(" from Visita v where v.fechaSalida is not null and v.anulado = 'N' and organizacionInterna.id= :idOrganizacion )");
+            query.setParameter("idOrganizacion", organizacion.getId());
+            List<Visita> result = new ArrayList<Visita>();
+            result = query.getResultList();
+            return result;
+          
     }
     
     

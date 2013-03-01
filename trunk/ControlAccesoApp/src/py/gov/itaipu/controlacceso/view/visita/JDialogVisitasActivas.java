@@ -47,23 +47,9 @@ public class JDialogVisitasActivas extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel6 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jScrollPaneOrganigrama = new javax.swing.JScrollPane();
         try{
             jTreeOrganigrama = new javax.swing.JTree();
-            jTextFieldEmpleadoApellido = new javax.swing.JTextField();
-            jTextFieldEmpleadoNombre = new javax.swing.JTextField();
-            jLabel1 = new javax.swing.JLabel();
-            jLabel7 = new javax.swing.JLabel();
-            jTextFieldEmpleadoNroDoc = new javax.swing.JTextField();
-            jLabel8 = new javax.swing.JLabel();
-            jTextFieldAreaNombre = new javax.swing.JTextField();
-            jTextFieldEmpleadoOrganizacion = new javax.swing.JTextField();
-            jTextFieldAreaPadreNombre = new javax.swing.JTextField();
-            jLabel2 = new javax.swing.JLabel();
-            jLabel3 = new javax.swing.JLabel();
             jLabel9 = new javax.swing.JLabel();
             jTextFieldFiltroArbol = new javax.swing.JTextField();
             jButtonBuscar = new javax.swing.JButton();
@@ -77,19 +63,6 @@ public class JDialogVisitasActivas extends javax.swing.JDialog {
                 }
             });
             getContentPane().setLayout(null);
-
-            jLabel6.setText("Apellido:");
-            getContentPane().add(jLabel6);
-            jLabel6.setBounds(510, 260, 78, 14);
-
-            jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-            jLabel4.setText("Empleado");
-            getContentPane().add(jLabel4);
-            jLabel4.setBounds(510, 210, 78, 15);
-
-            jLabel5.setText("Nombre:");
-            getContentPane().add(jLabel5);
-            jLabel5.setBounds(510, 230, 78, 14);
 
             DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", true,true,true);
             jTreeOrganigrama = new JTree(root);
@@ -111,63 +84,13 @@ public class JDialogVisitasActivas extends javax.swing.JDialog {
         }
 
         getContentPane().add(jScrollPaneOrganigrama);
-        jScrollPaneOrganigrama.setBounds(20, 36, 480, 470);
-
-        jTextFieldEmpleadoApellido.setEditable(false);
-        getContentPane().add(jTextFieldEmpleadoApellido);
-        jTextFieldEmpleadoApellido.setBounds(610, 260, 230, 20);
-
-        jTextFieldEmpleadoNombre.setEditable(false);
-        getContentPane().add(jTextFieldEmpleadoNombre);
-        jTextFieldEmpleadoNombre.setBounds(610, 230, 230, 20);
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel1.setText("Area Interna:");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(510, 110, 91, 15);
-
-        jLabel7.setText("Nro Documento:");
-        getContentPane().add(jLabel7);
-        jLabel7.setBounds(510, 290, 91, 14);
-
-        jTextFieldEmpleadoNroDoc.setEditable(false);
-        getContentPane().add(jTextFieldEmpleadoNroDoc);
-        jTextFieldEmpleadoNroDoc.setBounds(610, 290, 230, 20);
-
-        jLabel8.setText("Area:");
-        getContentPane().add(jLabel8);
-        jLabel8.setBounds(510, 320, 78, 14);
-
-        jTextFieldAreaNombre.setEditable(false);
-        jTextFieldAreaNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldAreaNombreActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jTextFieldAreaNombre);
-        jTextFieldAreaNombre.setBounds(610, 130, 230, 20);
-
-        jTextFieldEmpleadoOrganizacion.setEditable(false);
-        getContentPane().add(jTextFieldEmpleadoOrganizacion);
-        jTextFieldEmpleadoOrganizacion.setBounds(610, 320, 230, 20);
-
-        jTextFieldAreaPadreNombre.setEditable(false);
-        getContentPane().add(jTextFieldAreaPadreNombre);
-        jTextFieldAreaPadreNombre.setBounds(610, 160, 230, 20);
-
-        jLabel2.setText("Nombre:");
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(510, 130, 78, 20);
-
-        jLabel3.setText("Area Superior:");
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(510, 160, 91, 14);
+        jScrollPaneOrganigrama.setBounds(20, 56, 480, 450);
 
         jLabel9.setText("Buscar");
         getContentPane().add(jLabel9);
-        jLabel9.setBounds(510, 40, 60, 20);
+        jLabel9.setBounds(20, 30, 40, 20);
         getContentPane().add(jTextFieldFiltroArbol);
-        jTextFieldFiltroArbol.setBounds(610, 40, 230, 20);
+        jTextFieldFiltroArbol.setBounds(60, 30, 290, 20);
 
         jButtonBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/view.png"))); // NOI18N
         jButtonBuscar.setToolTipText("Buscar Persona");
@@ -177,7 +100,7 @@ public class JDialogVisitasActivas extends javax.swing.JDialog {
             }
         });
         getContentPane().add(jButtonBuscar);
-        jButtonBuscar.setBounds(800, 60, 20, 20);
+        jButtonBuscar.setBounds(360, 30, 20, 20);
 
         jButtonLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/clear.jpeg"))); // NOI18N
         jButtonLimpiar.setToolTipText("Buscar Persona");
@@ -187,62 +110,15 @@ public class JDialogVisitasActivas extends javax.swing.JDialog {
             }
         });
         getContentPane().add(jButtonLimpiar);
-        jButtonLimpiar.setBounds(820, 60, 20, 20);
+        jButtonLimpiar.setBounds(380, 30, 20, 20);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTreeOrganigramaValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_jTreeOrganigramaValueChanged
-        // TODO add your handling code here:
-        if (jTreeOrganigrama.getLastSelectedPathComponent() != null) {
-            DefaultMutableTreeNode nodoSeleccionado = (DefaultMutableTreeNode) jTreeOrganigrama.getLastSelectedPathComponent();
-            Object objSel = nodoSeleccionado.getUserObject();
-            if (objSel.getClass().getSimpleName().equals("Persona")) {
-                persona = (Persona) objSel;
-                areaPadre = persona.getOrganizacion();
-
-                jTextFieldEmpleadoApellido.setText(persona.getApellido());
-                jTextFieldEmpleadoNombre.setText(persona.getNombre());
-                if (persona.getOrganizacion()!=null && !persona.getOrganizacion().getNombre().equals("")) {
-                    jTextFieldEmpleadoOrganizacion.setText(persona.getOrganizacion().getNombre());
-                }
-                jTextFieldEmpleadoNroDoc.setText(persona.getNumeroDocumento());
-                jTextFieldAreaPadreNombre.setText("");
-                jTextFieldAreaNombre.setText("");
-
-            } else if (objSel.getClass().getSimpleName().equals("Organizacion")) {
-                persona = null;
-                area = (Organizacion) objSel;
-                areaPadre = (Organizacion) objSel;
-
-                jTextFieldAreaNombre.setText(areaPadre.getNombre());
-                if (area.getOrganizacionPadre() != null) {
-                    jTextFieldAreaPadreNombre.setText(areaPadre.getOrganizacionPadre().getNombre());
-                }
-
-                jTextFieldEmpleadoApellido.setText("");
-                jTextFieldEmpleadoNombre.setText("");
-                jTextFieldEmpleadoOrganizacion.setText("");
-                jTextFieldEmpleadoNroDoc.setText("");
-
-            } else {
-                persona = null;
-                area = null;
-                areaPadre = null;
-                jTextFieldAreaPadreNombre.setText("");
-                jTextFieldAreaNombre.setText("");
-                jTextFieldEmpleadoApellido.setText("");
-                jTextFieldEmpleadoNombre.setText("");
-                jTextFieldEmpleadoOrganizacion.setText("");
-                jTextFieldEmpleadoNroDoc.setText("");
-            }
-        }
+        
     }//GEN-LAST:event_jTreeOrganigramaValueChanged
-      
-    private void jTextFieldAreaNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldAreaNombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldAreaNombreActionPerformed
-       
+             
     private void jTreeOrganigramaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTreeOrganigramaMousePressed
         // TODO add your handling code here:
        
@@ -352,22 +228,8 @@ public class JDialogVisitasActivas extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonLimpiar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPaneOrganigrama;
-    private javax.swing.JTextField jTextFieldAreaNombre;
-    private javax.swing.JTextField jTextFieldAreaPadreNombre;
-    private javax.swing.JTextField jTextFieldEmpleadoApellido;
-    private javax.swing.JTextField jTextFieldEmpleadoNombre;
-    private javax.swing.JTextField jTextFieldEmpleadoNroDoc;
-    private javax.swing.JTextField jTextFieldEmpleadoOrganizacion;
     private javax.swing.JTextField jTextFieldFiltroArbol;
     private javax.swing.JTree jTreeOrganigrama;
     // End of variables declaration//GEN-END:variables

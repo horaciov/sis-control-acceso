@@ -33,7 +33,7 @@ public class UtilesArbol {
 
         List<Organizacion> listaOrganizacionesArbolAux = new ArrayList<Organizacion>();
 
-        //SE AGREGAN TODAS LAS ORGANIZACIONES AL ARBOL
+       
         listaOrganizacionesArbolAux = organizacionAction.findByNamedQuery("Organizacion.findOrganizacionPadre");
         Organizacion orgPadre;
         if(listaOrganizacionesArbolAux.size()<1)
@@ -81,14 +81,8 @@ public class UtilesArbol {
         if (incluyePersonas) {
             agregarPersonas(nodo,incluyeVisitasActivas,incluyeVisitasTerminadas);
         }
-        if (incluyeVisitasActivas) {
-            agregarVisitasActivas(nodo);
-        }
-        
-        if (incluyeVisitasTerminadas) {
-            agregarVisitasTerminadas(nodo);
-        }
-        
+        agregarVisitas(nodo,incluyeVisitasActivas,incluyeVisitasTerminadas);
+                
         DefaultMutableTreeNode node;
         Organizacion org = (Organizacion) nodo.getUserObject();
         List<Organizacion> hijas = org.getOrganizacionesHijas();
@@ -110,62 +104,76 @@ public class UtilesArbol {
             if ( !(persona.getEstado()!=null && persona.getEstado().getNombre().equals("INHABILITADO"))) {
                 node = new DefaultMutableTreeNode(persona, true);
                 nodo.add(node); 
-                if (incluyeVisitasActivas) {
-                    agregarVisitasActivas(nodo);
-                }
-                
-                if (incluyeVisitasTerminadas) {
-                    agregarVisitasTerminadas(nodo);
-                }
+                agregarVisitas(node,incluyeVisitasActivas,incluyeVisitasTerminadas);
                 
             }
         }
     }
     
-    private  static  void agregarVisitasActivas(DefaultMutableTreeNode nodo){
+    private  static  void agregarVisitas(DefaultMutableTreeNode nodo, boolean activas, boolean terminadas){
         DefaultMutableTreeNode node;
-        if (nodo.getUserObject().getClass().getSimpleName().equals("PERSONA")) {
+        if (nodo.getUserObject().getClass().getSimpleName().toUpperCase().equals("PERSONA")) {
             try {
                 Persona personaVisitada = (Persona) nodo.getUserObject();
-                List<Visita> visitasPendientes = new ArrayList<Visita>();
                 VisitaAction visAction = new VisitaAction();
-                visitasPendientes=visAction.findPendientesByPersona(personaVisitada);
-                for (int i = 0; i < visitasPendientes.size(); i++) {
-                    Persona visitante = visitasPendientes.get(i).getPersona();
-                    node = new DefaultMutableTreeNode(visitante, true);
-                    nodo.add(node); 
+                if (activas) {
+                    List<Visita> visitasActivas = new ArrayList<Visita>();
+                    visitasActivas=visAction.findPendientesByPersona(personaVisitada);
+                    for (int i = 0; i < visitasActivas.size(); i++) {
+                        Visita visita = visitasActivas.get(i);
+                        node = new DefaultMutableTreeNode(visita, true);
+                        nodo.add(node); 
+                    }
                 }
-             } catch (ErrorInesperado ex) {
+                
+                if (terminadas) {
+                    List<Visita> visitasTerminadas = new ArrayList<Visita>();
+                    visitasTerminadas=visAction.findTerminadasByPersona(personaVisitada);
+                    for (int i = 0; i < visitasTerminadas.size(); i++) {
+                        Visita visita = visitasTerminadas.get(i);
+                        node = new DefaultMutableTreeNode(visita, true);
+                        nodo.add(node); 
+                    }
+                }
+              
+            } catch (ErrorInesperado ex) {
                 Logger.getLogger(UtilesArbol.class.getName()).log(Level.SEVERE, null, ex);
             }
            
         }else{
             try {
                 Organizacion organizacionVisitada = (Organizacion) nodo.getUserObject();
-                List<Visita> visitasPendientes = new ArrayList<Visita>();
                 VisitaAction visAction = new VisitaAction();
-                visitasPendientes=visAction.findPendientesByArea(organizacionVisitada);
-                for (int i = 0; i < visitasPendientes.size(); i++) {
-                    Persona visitante = visitasPendientes.get(i).getPersona();
-                    node = new DefaultMutableTreeNode(visitante, true);
-                    nodo.add(node); 
-                }
                 
+                if (activas) {
+                    List<Visita> visitasPendientes = new ArrayList<Visita>();
+                    visitasPendientes=visAction.findPendientesByArea(organizacionVisitada);
+               
+                    for (int i = 0; i < visitasPendientes.size(); i++) {
+                        if (visitasPendientes.get(i).getPersonaVisitada()==null) {
+                            Visita visita = visitasPendientes.get(i);
+                            node = new DefaultMutableTreeNode(visita, true);
+                            nodo.add(node); 
+                        }
+                    }
+                }
+                if (terminadas) {
+                    List<Visita> visitasTerminadas = new ArrayList<Visita>();
+                    visitasTerminadas=visAction.findTerminadasByArea(organizacionVisitada);
+               
+                    for (int i = 0; i < visitasTerminadas.size(); i++) {
+                        if (visitasTerminadas.get(i).getPersonaVisitada()==null) {
+                            Visita visita = visitasTerminadas.get(i);
+                            node = new DefaultMutableTreeNode(visita, true);
+                            nodo.add(node); 
+                        }
+                    }
+                }
             } catch (ErrorInesperado ex) {
                 Logger.getLogger(UtilesArbol.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         
     }
-    
-    private  static  void agregarVisitasTerminadas(DefaultMutableTreeNode nodo){
-        if (nodo.getUserObject().getClass().getSimpleName().equals("PERSONA")) {
-            
-        }else{
-        
-        }
-        
-    }
-    
-  
+   
 }
