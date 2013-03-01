@@ -71,6 +71,7 @@ public class JDialogRepVisitasGeneral extends javax.swing.JDialog {
         organizacionAction = new CRUDAction<Organizacion>(new Organizacion());
         rendererTime = new TimeRenderer();
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/resource/img/bandera-paraguay.png")).getImage());
     }
 
     /**

@@ -31,6 +31,7 @@ public class JDialogOrganizacionInterna extends javax.swing.JDialog {
         readOnly = false;
         organizacionAction = new CRUDAction<Organizacion>(new Organizacion());
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/resource/img/bandera-paraguay.png")).getImage());
     }
 
     public Organizacion getOrganizacion() {

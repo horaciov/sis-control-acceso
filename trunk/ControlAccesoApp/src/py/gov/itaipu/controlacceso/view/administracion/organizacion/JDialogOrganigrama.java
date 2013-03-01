@@ -48,6 +48,7 @@ public class JDialogOrganigrama extends javax.swing.JDialog {
         organizacionAction = new CRUDAction<Organizacion>();
         organizacionAction.setEntity(new Organizacion());
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/resource/img/bandera-paraguay.png")).getImage());
     }
 
     /**

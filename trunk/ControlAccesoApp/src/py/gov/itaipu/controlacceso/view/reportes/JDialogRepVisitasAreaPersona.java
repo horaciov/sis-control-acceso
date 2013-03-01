@@ -40,6 +40,7 @@ public class JDialogRepVisitasAreaPersona extends javax.swing.JDialog {
     public JDialogRepVisitasAreaPersona(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/resource/img/bandera-paraguay.png")).getImage());
     }
 
     /**

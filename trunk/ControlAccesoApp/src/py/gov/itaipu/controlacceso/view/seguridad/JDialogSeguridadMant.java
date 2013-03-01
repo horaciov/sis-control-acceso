@@ -52,11 +52,13 @@ public class JDialogSeguridadMant extends javax.swing.JDialog {
             usuariosTodos = usuAction.findAll();
             funcionalidadesTodos = funAction.findAll();
             initComponents();
+            this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/resource/img/bandera-paraguay.png")).getImage());
                 ///SE OCULTAN FUNCIONALIDADES PARA FUTURO USO
                 jPanelFuncionalidades.setVisible(false);
                 jTextFieldRolNuevo.setVisible(false);
                 jButtonRolAdd.setVisible(false);
                 jButtonRolDel.setVisible(false);
+                
             
         } catch (ErrorInesperado ex) {
             Logger.getLogger(JDialogSeguridadMant.class.getName()).log(Level.SEVERE, null, ex);
