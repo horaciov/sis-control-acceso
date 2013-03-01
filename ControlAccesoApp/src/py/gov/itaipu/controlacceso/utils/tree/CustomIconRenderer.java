@@ -4,7 +4,9 @@
  */
 package py.gov.itaipu.controlacceso.utils.tree;
 
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JTree;
@@ -39,10 +41,12 @@ public class CustomIconRenderer extends DefaultTreeCellRenderer {
             setIcon(personaIcon);
         } else if (nodeObj.getClass().getSimpleName().equals("Visita")) {
             Visita vis = (Visita) nodeObj;
+            setForeground(Color.BLUE);
             if (vis.getFechaSalida()==null) {
                 setIcon(visitaActivaIcon);
             }else{
                 setIcon(visitaTerminadaIcon);
+                
             }
            
         }else{

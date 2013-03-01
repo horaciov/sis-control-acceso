@@ -1100,7 +1100,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (jTextFieldFiltroArbol.getText() != null && !jTextFieldFiltroArbol.equals("")) {
             try {
-                DefaultMutableTreeNode root = UtilesArbol.crearArbolFiltrado("ORGANIGRAMA", jTextFieldFiltroArbol.getText().toUpperCase(), true);
+                DefaultMutableTreeNode root = UtilesArbol.crearArbolFiltrado("ORGANIGRAMA", jTextFieldFiltroArbol.getText().toUpperCase(), true,false,false);
                 jTreePersonaVisitada = new JTree(root);
                 jTreePersonaVisitada.setCellRenderer(new CustomIconRenderer());
                 jTreePersonaVisitada.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
@@ -1242,7 +1242,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         // TODO add your handling code here:
         JDialogVisitasActivas jDialog=new JDialogVisitasActivas(null, true);
         jDialog.setModoBuscador(true);
-        jDialog.setSize(860, 560);
+        jDialog.setSize(532, 552);
         WindowUtil.centerWindow(jDialog);
         jDialog.setVisible(true);
     }//GEN-LAST:event_jButtonVisitasActivasActionPerformed

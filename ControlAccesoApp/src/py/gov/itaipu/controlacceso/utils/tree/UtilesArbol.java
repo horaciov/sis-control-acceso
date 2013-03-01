@@ -5,6 +5,8 @@
 package py.gov.itaipu.controlacceso.utils.tree;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,7 +47,7 @@ public class UtilesArbol {
         return root;
     }
 
-    public static DefaultMutableTreeNode crearArbolFiltrado(String tituloArbol, String filtro, boolean incluyePersonas) throws ErrorInesperado {
+    public static DefaultMutableTreeNode crearArbolFiltrado(String tituloArbol, String filtro, boolean incluyePersonas, boolean incluyeVisitasActivas, boolean incluyeVisitasTerminadas) throws ErrorInesperado {
         DefaultMutableTreeNode node;
         DefaultMutableTreeNode root = new DefaultMutableTreeNode(tituloArbol);
         
@@ -58,6 +60,7 @@ public class UtilesArbol {
             if (!(organizacion.getEstado()!=null && organizacion.getEstado().getNombre().equals("INHABILITADO"))) {
                 node = new DefaultMutableTreeNode(organizacion, true);
                 root.add(node);
+                agregarVisitas(node, incluyeVisitasActivas, incluyeVisitasTerminadas);
             }
         }
         
@@ -70,6 +73,7 @@ public class UtilesArbol {
             if ( !(persona.getEstado()!=null && persona.getEstado().getNombre().equals("INHABILITADO"))) {
                 node = new DefaultMutableTreeNode(persona, true);
                 root.add(node);
+                agregarVisitas(node, incluyeVisitasActivas, incluyeVisitasTerminadas);
             }     
         }
          
@@ -112,13 +116,14 @@ public class UtilesArbol {
     
     private  static  void agregarVisitas(DefaultMutableTreeNode nodo, boolean activas, boolean terminadas){
         DefaultMutableTreeNode node;
+        Date fecha = new Date();
         if (nodo.getUserObject().getClass().getSimpleName().toUpperCase().equals("PERSONA")) {
             try {
                 Persona personaVisitada = (Persona) nodo.getUserObject();
                 VisitaAction visAction = new VisitaAction();
                 if (activas) {
                     List<Visita> visitasActivas = new ArrayList<Visita>();
-                    visitasActivas=visAction.findPendientesByPersona(personaVisitada);
+                    visitasActivas=visAction.findActivasByPersona(personaVisitada,fecha);
                     for (int i = 0; i < visitasActivas.size(); i++) {
                         Visita visita = visitasActivas.get(i);
                         node = new DefaultMutableTreeNode(visita, true);
@@ -128,7 +133,7 @@ public class UtilesArbol {
                 
                 if (terminadas) {
                     List<Visita> visitasTerminadas = new ArrayList<Visita>();
-                    visitasTerminadas=visAction.findTerminadasByPersona(personaVisitada);
+                    visitasTerminadas=visAction.findTerminadasByPersona(personaVisitada,fecha);
                     for (int i = 0; i < visitasTerminadas.size(); i++) {
                         Visita visita = visitasTerminadas.get(i);
                         node = new DefaultMutableTreeNode(visita, true);
@@ -147,7 +152,7 @@ public class UtilesArbol {
                 
                 if (activas) {
                     List<Visita> visitasPendientes = new ArrayList<Visita>();
-                    visitasPendientes=visAction.findPendientesByArea(organizacionVisitada);
+                    visitasPendientes=visAction.findActivasByArea(organizacionVisitada,fecha);
                
                     for (int i = 0; i < visitasPendientes.size(); i++) {
                         if (visitasPendientes.get(i).getPersonaVisitada()==null) {
@@ -159,7 +164,7 @@ public class UtilesArbol {
                 }
                 if (terminadas) {
                     List<Visita> visitasTerminadas = new ArrayList<Visita>();
-                    visitasTerminadas=visAction.findTerminadasByArea(organizacionVisitada);
+                    visitasTerminadas=visAction.findTerminadasByArea(organizacionVisitada,fecha);
                
                     for (int i = 0; i < visitasTerminadas.size(); i++) {
                         if (visitasTerminadas.get(i).getPersonaVisitada()==null) {
