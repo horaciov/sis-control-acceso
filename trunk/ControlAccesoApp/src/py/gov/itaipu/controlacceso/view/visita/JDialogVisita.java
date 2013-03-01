@@ -366,15 +366,17 @@ public class JDialogVisita extends javax.swing.JDialog {
         jPanelArbolVisita.add(jCheckBoxReimprimir);
         jCheckBoxReimprimir.setBounds(310, 80, 90, 20);
 
-        jButtonVisitasActivas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/clear.jpeg"))); // NOI18N
-        jButtonVisitasActivas.setToolTipText("Buscar Persona");
+        jButtonVisitasActivas.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jButtonVisitasActivas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/organizacion.png"))); // NOI18N
+        jButtonVisitasActivas.setText("Visitas");
+        jButtonVisitasActivas.setToolTipText("Monitoreo de Visitas");
         jButtonVisitasActivas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonVisitasActivasActionPerformed(evt);
             }
         });
         jPanelArbolVisita.add(jButtonVisitasActivas);
-        jButtonVisitasActivas.setBounds(360, 150, 20, 20);
+        jButtonVisitasActivas.setBounds(300, 150, 90, 20);
 
         getContentPane().add(jPanelArbolVisita);
         jPanelArbolVisita.setBounds(0, 0, 400, 520);
@@ -720,9 +722,16 @@ public class JDialogVisita extends javax.swing.JDialog {
             jTextFieldOrganizacion.setText("");
         }
         jFormattedTextFieldFechaNac.setValue(persona.getFechaNacimiento());
-        jComboBoxEstadoCivil.setSelectedItem(persona.getEstadoCivil().toUpperCase());
-        jComboBoxSexo.setSelectedItem(persona.getSexo().toUpperCase());
-        jComboBoxNacionalidad.setSelectedItem(persona.getNacionalidad());
+        if (persona.getEstadoCivil()!=null) {
+            jComboBoxEstadoCivil.setSelectedItem(persona.getEstadoCivil().toUpperCase());
+        }
+        if (persona.getSexo()!=null) {
+            jComboBoxSexo.setSelectedItem(persona.getSexo().toUpperCase());
+        }
+        if (persona.getNacionalidad()!=null) {
+            jComboBoxNacionalidad.setSelectedItem(persona.getNacionalidad());    
+        }
+        
         jComboBoxTipoDoc.setSelectedItem(persona.getTipoDocumento());
         listUltimasVisitas.clear();
         listUltimasVisitas.addAll(visitaAction.findByPersona(persona));
