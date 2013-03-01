@@ -1,9 +1,10 @@
 INSERT INTO controlacceso.estado (id, descripcion, nombre) VALUES (1, 'INHABILITADO', 'INHABILITADO');
 INSERT INTO controlacceso.estado (id, descripcion, nombre) VALUES (2, 'HABILITADO', 'HABILITADO');
+INSERT INTO controlacceso.estado (id, descripcion, nombre) VALUES (3, 'ELIMINADO', 'ELIMINADO');
 
 
 INSERT INTO controlacceso.rol (id, descripcion, nombre) VALUES (1, 'OPERADOR', 'OPERADOR');
-INSERT INTO controlacceso.rol (id, descripcion, nombre) VALUES (2, 'ADMINISTRADOR', 'ADMINISTRADOR');
+INSERT INTO controlacceso.rol (id, descripcion, nombre) VALUES (2, 'ADMINISTRATIVO', 'ADMINISTRATIVO');
 INSERT INTO controlacceso.rol (id, descripcion, nombre) VALUES (3, 'ANALISTA', 'ANALISTA');
 INSERT INTO controlacceso.rol (id, descripcion, nombre) VALUES (4, 'SEGURIDAD SISTEMA', 'SEGURIDAD SISTEMA');
 
@@ -20,3 +21,5 @@ INSERT INTO controlacceso.tipodocumento(id, descripcion, nombre) VALUES (1, 'CI'
 INSERT INTO controlacceso.nacionalidad (id, descripcion, nombre) VALUES (1, 'PARAGUAYA','PARAGUAYA');
 
 INSERT INTO controlacceso.motivo  (id, descripcion,nombre) VALUES (1,'LABORAL','LABORAL');
+
+INSERT INTO controlacceso.organizacion  (id, descripcion,nombre,tipoorganizacion,nivelorganigrama) VALUES (1,'PRESIDENCIA','PRESIDENCIAS,'INTERNA',1)
