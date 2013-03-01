@@ -5,6 +5,7 @@
 package py.gov.itaipu.controlacceso.view;
 
 import java.awt.Desktop;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.JOptionPane;
@@ -28,6 +29,7 @@ public class JDialogAdministracion extends javax.swing.JDialog {
     public JDialogAdministracion(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/resource/img/bandera-paraguay.png")).getImage());
     }
 
     /**

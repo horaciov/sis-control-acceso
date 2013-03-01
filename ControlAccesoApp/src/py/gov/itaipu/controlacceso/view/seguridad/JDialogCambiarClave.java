@@ -30,6 +30,7 @@ public class JDialogCambiarClave extends javax.swing.JDialog {
         super(parent, modal);
         usuarioAction = new CRUDAction<Usuario>(new Usuario());
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/resource/img/bandera-paraguay.png")).getImage());
     }
 
     /**
