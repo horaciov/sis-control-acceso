@@ -607,9 +607,7 @@ public class JDialogPersona extends javax.swing.JDialog {
     }//GEN-LAST:event_windowActivated
 
     private void jButtonCargarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCargarFotoActionPerformed
-        // TODO add your handling code here:
-        File input;
-        //Selector de Archivos
+               //Selector de Archivos
         JFileChooser chooser = new JFileChooser();
         //Filtro De Extensiones
         FileFilterExtension filtroExtension = new FileFilterExtension("JPG, JPEG, PNG", new String[]{"JPG", "JPEG", "PNG"});
@@ -803,6 +801,7 @@ public class JDialogPersona extends javax.swing.JDialog {
             }
         } else if (imgFotoPersonaFile != null) {
             try {
+                string = file.getName();
                 BufferedImage bi = ImageIO.read(imgFotoPersonaFile);
                 String fileType = string.substring(string.indexOf('.') + 1);
                 ImageIO.write(bi, fileType, new File(string));

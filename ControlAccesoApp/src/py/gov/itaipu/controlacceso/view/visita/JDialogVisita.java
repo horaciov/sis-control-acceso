@@ -20,21 +20,30 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.media.CannotRealizeException;
 import javax.media.NoPlayerException;
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
+import javax.print.attribute.HashPrintServiceAttributeSet;
+import javax.print.attribute.PrintServiceAttributeSet;
+import javax.print.attribute.standard.PrinterName;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTree;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.tree.DefaultMutableTreeNode;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.export.JRPrintServiceExporter;
+import net.sf.jasperreports.engine.export.JRPrintServiceExporterParameter;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import org.jdesktop.observablecollections.ObservableCollections;
@@ -765,22 +774,38 @@ public class JDialogVisita extends javax.swing.JDialog {
             String abspath = file.getAbsolutePath() + "/";
             parametros.put("pathImagen", (Object) abspath);
             parametros.put("barCode", bis);
-//                //Fotografia
-//                ByteArrayInputStream bis = new ByteArrayInputStream(visita.getPersona().getFotografia());
-//                InputStream iS = bis;
-//                parametros.put("fotografia",(Object)iS);
             JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, conexion);
-
+            
 //            Muestra el Reporte en Pantalla
-            JasperViewer jviewer = new JasperViewer(jasperPrint, false);
-            jviewer.setModalExclusionType(ModalExclusionType.NO_EXCLUDE);
-            jviewer.viewReport(jasperPrint, false);
 
-            //     Genera el Reporte en PDF            
+//            JasperViewer jviewer = new JasperViewer(jasperPrint, false);
+//            jviewer.setModalExclusionType(ModalExclusionType.NO_EXCLUDE);
+//            jviewer.viewReport(jasperPrint, false);
+
+
+//     Genera el Reporte en PDF            
 //            JRExporter exporter = new JRPdfExporter();
 //            exporter.setParameter(JRExporterParameter.JASPER_PRINT,jasperPrint); 
 //            exporter.setParameter(JRExporterParameter.OUTPUT_FILE,new java.io.File("reportePDF.pdf"));
-//            exporter.exportReport();
+//            exporter.exportReport();            
+            
+            
+            ///IMPRIMIR DIRECTO A IMPRESORA
+            final JRPrintServiceExporter exporter = new JRPrintServiceExporter();
+            exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+            exporter.setParameter(JRPrintServiceExporterParameter.DISPLAY_PAGE_DIALOG, Boolean.FALSE);
+            exporter.setParameter(JRPrintServiceExporterParameter.DISPLAY_PRINT_DIALOG, Boolean.FALSE);
+            ///BUSCO LA IMPRESORA POR DEFECTO
+            PrintServiceAttributeSet printService = new HashPrintServiceAttributeSet();
+            PrintService defaultPrinter = PrintServiceLookup.lookupDefaultPrintService();
+            printService.add(new PrinterName(defaultPrinter.getName(), Locale.getDefault()));
+            ///
+            exporter.setParameter(JRPrintServiceExporterParameter.OFFSET_X, new Integer(0));
+            exporter.setParameter(JRPrintServiceExporterParameter.OFFSET_Y, new Integer(0));
+            exporter.setParameter(JRPrintServiceExporterParameter.PRINT_SERVICE_ATTRIBUTE_SET,printService);
+            exporter.exportReport(); 
+            
+
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(JInternalFramePersona.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
