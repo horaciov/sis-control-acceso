@@ -4,6 +4,12 @@
  */
 package py.gov.itaipu.controlacceso.view.seguridad;
 
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import py.gov.itaipu.controlacceso.action.seguridad.AutenticadorAction;
@@ -20,8 +26,9 @@ public class JDialogAutenticar extends javax.swing.JDialog {
      */
     public JDialogAutenticar(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        initComponents();        
+        initComponents();
         getRootPane().setDefaultButton(jButtonAceptar);
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/resource/img/bandera-paraguay.png")).getImage());
     }
 
     /**
@@ -164,14 +171,14 @@ public class JDialogAutenticar extends javax.swing.JDialog {
 
     private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
         // TODO add your handling code here:
-        if(jTextFieldUsuario.getText()==null || jTextFieldUsuario.getText().equals("") ||jPasswordField.getText()==null || jPasswordField.getText().equals("")){
+        if (jTextFieldUsuario.getText() == null || jTextFieldUsuario.getText().equals("") || jPasswordField.getText() == null || jPasswordField.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Usuario y clave son requeridos para el inicio de sesión.", "Error", 0);
             return;
         }
-        AutenticadorAction autenticador=new AutenticadorAction();
-        if(autenticador.autenticar(jTextFieldUsuario.getText(), jPasswordField.getText())){
+        AutenticadorAction autenticador = new AutenticadorAction();
+        if (autenticador.autenticar(jTextFieldUsuario.getText(), jPasswordField.getText())) {
             this.dispose();
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Usuario y clave incorrectos.", "Error", 0);
         }
     }//GEN-LAST:event_jButtonAceptarActionPerformed
@@ -184,7 +191,7 @@ public class JDialogAutenticar extends javax.swing.JDialog {
     private void jButtonCambiarClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCambiarClaveActionPerformed
         // TODO add your handling code here:
         JDialogCambiarClave jDialogCambiarClave;
-        jDialogCambiarClave= new JDialogCambiarClave(null, true);
+        jDialogCambiarClave = new JDialogCambiarClave(null, true);
         jDialogCambiarClave.getjTextFieldUsuario().setText(jTextFieldUsuario.getText());
         jDialogCambiarClave.setSize(400, 300);
         WindowUtil.centerWindow(jDialogCambiarClave);
@@ -221,7 +228,9 @@ public class JDialogAutenticar extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JDialogAutenticar dialog = new JDialogAutenticar(new javax.swing.JFrame(), true);
+                JDialogAutenticar dialog = null;
+                    dialog = new JDialogAutenticar(new javax.swing.JFrame(), true);
+
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

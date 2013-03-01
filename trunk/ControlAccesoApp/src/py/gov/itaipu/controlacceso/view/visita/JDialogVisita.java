@@ -106,6 +106,7 @@ public class JDialogVisita extends javax.swing.JDialog {
             inhabilitarEdicionPersona();
             jButtonNuevaVisita.setVisible(false);
             jTextFieldDocumentoPersona.requestFocusInWindow();
+            this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/resource/img/bandera-paraguay.png")).getImage());
         } catch (ErrorInesperado ei) {
             JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
             System.exit(-1);

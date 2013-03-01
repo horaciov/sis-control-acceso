@@ -60,7 +60,7 @@ public class JDialogFotografia extends javax.swing.JDialog {
 //            //place player and video screen on the frame
         jPanelCamara.add(videoScreen, BorderLayout.CENTER);
         jPanelCamara.add(AdminCamera.player.getControlPanelComponent(), BorderLayout.SOUTH);
-
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/resource/img/bandera-paraguay.png")).getImage());
     }
 
     public JDialogFotografia(java.awt.Frame parent, boolean modal, String modo, Persona persona) throws Exception {
