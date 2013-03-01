@@ -22,4 +22,4 @@ INSERT INTO controlacceso.nacionalidad (id, descripcion, nombre) VALUES (1, 'PAR
 
 INSERT INTO controlacceso.motivo  (id, descripcion,nombre) VALUES (1,'LABORAL','LABORAL');
 
-INSERT INTO controlacceso.organizacion  (id, descripcion,nombre,tipoorganizacion,nivelorganigrama) VALUES (1,'PRESIDENCIA','PRESIDENCIAS,'INTERNA',1)
+INSERT INTO controlacceso.organizacion  (id, descripcion,nombre,tipoorganizacion,nivelorganigrama) VALUES (1,'PRESIDENCIA','PRESIDENCIA','INTERNA',1)
