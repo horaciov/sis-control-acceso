@@ -27,7 +27,7 @@ INSERT INTO controlacceso.organizacion  (id, descripcion,nombre,tipoorganizacion
 CREATE UNIQUE INDEX persona_tipo_nro_doc_idx ON controlacceso.persona (tipodocumento_id ASC NULLS LAST, numerodocumento ASC NULLS LAST);
 COMMENT ON INDEX controlacceso.persona_tipo_nro_doc_idx IS 'Indice por Tipo y Nro Documento';
 
-CREATE INDEX persona_apellido_nombre_idx  ON controlacceso.persona  USING btree (apellido COLLATE pg_catalog."default", nombre COLLATE pg_catalog."default");
+CREATE INDEX persona_apellido_nombre_idx  ON controlacceso.persona  USING btree (apellido pg_catalog."default", nombre  pg_catalog."default");
 COMMENT ON INDEX controlacceso.persona_apellido_nombre_idx IS 'Indice por Apellido y Nombre';
 
 CREATE INDEX persona_organizacion_idx ON controlacceso.persona (organizacion_id ASC NULLS LAST);
@@ -45,3 +45,12 @@ COMMENT ON INDEX controlacceso.visita_persona_idx IS 'Visitas por Persona Visita
 
 CREATE INDEX visita_organizacion_idx ON controlacceso.visita (organizacioninterna_id ASC NULLS LAST);
 COMMENT ON INDEX controlacceso.visita_organizacion_idx IS 'Visitas por organizacion Visitada';
+
+DROP SEQUENCE controlacceso.hibernate_sequence;
+
+CREATE SEQUENCE controlacceso.hibernate_sequence
+  INCREMENT 1
+  MINVALUE 20
+  MAXVALUE 9223372036854775807
+  START 20
+  CACHE 1;
