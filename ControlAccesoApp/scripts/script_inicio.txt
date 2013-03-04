@@ -27,7 +27,7 @@ INSERT INTO controlacceso.organizacion  (id, descripcion,nombre,tipoorganizacion
 CREATE UNIQUE INDEX persona_tipo_nro_doc_idx ON controlacceso.persona (tipodocumento_id ASC NULLS LAST, numerodocumento ASC NULLS LAST);
 COMMENT ON INDEX controlacceso.persona_tipo_nro_doc_idx IS 'Indice por Tipo y Nro Documento';
 
-CREATE INDEX persona_apellido_nombre_idx  ON controlacceso.persona  USING btree (apellido pg_catalog."default", nombre  pg_catalog."default");
+CREATE INDEX persona_apellido_nombre_idx  ON controlacceso.persona  USING btree (apellido , nombre );
 COMMENT ON INDEX controlacceso.persona_apellido_nombre_idx IS 'Indice por Apellido y Nombre';
 
 CREATE INDEX persona_organizacion_idx ON controlacceso.persona (organizacion_id ASC NULLS LAST);
