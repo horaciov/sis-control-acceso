@@ -51,9 +51,11 @@ public class JDialogRolSelector extends javax.swing.JDialog {
         });
         getContentPane().setLayout(null);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 51, 102));
         jLabel1.setText("Seleccione el rol para acceder al sistema.");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(0, 11, 310, 14);
+        jLabel1.setBounds(0, 11, 310, 15);
         getContentPane().add(jSeparator1);
         jSeparator1.setBounds(0, 30, 310, 10);
 
@@ -61,7 +63,7 @@ public class JDialogRolSelector extends javax.swing.JDialog {
         bindingGroup.addBinding(jComboBoxBinding);
 
         getContentPane().add(jComboBoxRoles);
-        jComboBoxRoles.setBounds(10, 50, 190, 20);
+        jComboBoxRoles.setBounds(10, 50, 190, 27);
 
         jButtonAcceder.setText("Aceptar");
         jButtonAcceder.addActionListener(new java.awt.event.ActionListener() {
@@ -70,7 +72,7 @@ public class JDialogRolSelector extends javax.swing.JDialog {
             }
         });
         getContentPane().add(jButtonAcceder);
-        jButtonAcceder.setBounds(210, 50, 100, 23);
+        jButtonAcceder.setBounds(210, 50, 100, 29);
 
         bindingGroup.bind();
 
