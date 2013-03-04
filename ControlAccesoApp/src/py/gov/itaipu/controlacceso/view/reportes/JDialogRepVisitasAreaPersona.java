@@ -144,6 +144,7 @@ public class JDialogRepVisitasAreaPersona extends javax.swing.JDialog {
     private void jButtonBuscarAreaPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarAreaPersonaActionPerformed
         // TODO add your handling code here:
         JDialogOrganigrama jOrganigrama = new JDialogOrganigrama(null, true);
+        jOrganigrama.setSize(860,560);
         jOrganigrama.setModoBuscador(true);
         jOrganigrama.setTitle("Seleccionar Area/Persona Visitada");
         WindowUtil.centerWindow(jOrganigrama);
