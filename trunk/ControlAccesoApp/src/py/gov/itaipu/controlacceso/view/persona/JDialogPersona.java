@@ -24,6 +24,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -434,23 +435,23 @@ public class JDialogPersona extends javax.swing.JDialog {
         jTextFieldNombre.setText(persona.getNombre().toUpperCase());
         jTextFieldNroDoc.setText(persona.getNumeroDocumento().toUpperCase());
         jComboBoxTipoDocumento.setSelectedItem(persona.getTipoDocumento());
-        
-        if (persona.getFechaNacimiento()!=null) {
+
+        if (persona.getFechaNacimiento() != null) {
             jFormattedTextFieldFechaNac.setValue(persona.getFechaNacimiento());
         }
         if (persona.getOrganizacion() != null) {
             jTextFieldOrganizacion.setText((persona.getOrganizacion().getNombre()));
         }
-        if (persona.getEstadoCivil()!=null) {
-           jComboBoxEstadoCivil.setSelectedItem(persona.getEstadoCivil().toUpperCase());    
+        if (persona.getEstadoCivil() != null) {
+            jComboBoxEstadoCivil.setSelectedItem(persona.getEstadoCivil().toUpperCase());
         }
-        if (persona.getSexo()!=null) {
+        if (persona.getSexo() != null) {
             jComboBoxSexo.setSelectedItem(persona.getSexo().toUpperCase());
         }
-        if (persona.getNacionalidad()!=null) {
+        if (persona.getNacionalidad() != null) {
             jComboBoxNacionalidad.setSelectedItem(persona.getNacionalidad());
         }
-        
+
         listAntecedentes.clear();
         if (persona.getAntecedentes() != null) {
             listAntecedentes.addAll(persona.getAntecedentes());
@@ -607,34 +608,52 @@ public class JDialogPersona extends javax.swing.JDialog {
     }//GEN-LAST:event_windowActivated
 
     private void jButtonCargarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCargarFotoActionPerformed
-               //Selector de Archivos
-        JFileChooser chooser = new JFileChooser();
-        //Filtro De Extensiones
-        FileFilterExtension filtroExtension = new FileFilterExtension("JPG, JPEG, PNG", new String[]{"JPG", "JPEG", "PNG"});
-        chooser.setFileFilter(filtroExtension);
-        //Desaparece la opcion TODOS LOS ARCHIVOS
-        chooser.setAcceptAllFileFilterUsed(false);
+        if (validacionesNuevaPersona()) {
+            //Selector de Archivos
+            JFileChooser chooser = new JFileChooser();
+            //Filtro De Extensiones
+            FileFilterExtension filtroExtension = new FileFilterExtension("JPG, JPEG, PNG", new String[]{"JPG", "JPEG", "PNG"});
+            chooser.setFileFilter(filtroExtension);
+            //Desaparece la opcion TODOS LOS ARCHIVOS
+            chooser.setAcceptAllFileFilterUsed(false);
 
-        int returnVal = chooser.showOpenDialog(this);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            imgFotoPersonaFile = chooser.getSelectedFile();
+            int returnVal = chooser.showOpenDialog(this);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                imgFotoPersonaFile = chooser.getSelectedFile();
 
-            ////LA FOTOGRAFIA YA NO SE GUARDA EN LA BD. SE GUARDA EL ARCHIVO Y EL PATH EN EL PROYECTO
-            //            RandomAccessFile f;
-            // byte[] fotografiaByte = null;
-            // f = new RandomAccessFile(chooser.getSelectedFile(), "r");
+                ////LA FOTOGRAFIA YA NO SE GUARDA EN LA BD. SE GUARDA EL ARCHIVO Y EL PATH EN EL PROYECTO
+                //            RandomAccessFile f;
+                // byte[] fotografiaByte = null;
+                // f = new RandomAccessFile(chooser.getSelectedFile(), "r");
 //                fotografiaByte = new byte[(int) f.length()];
 //                f.read(fotografiaByte);
 //                persona.setFotografia(fotografiaByte);
 
-
-
-            try {
-                BufferedImage image = ImageIO.read(chooser.getSelectedFile());
-                iconoFoto = new javax.swing.ImageIcon(image);
-                jLabelFoto.setIcon(iconoFoto);
-            } catch (IOException ex) {
-                Logger.getLogger(JDialogPersona.class.getName()).log(Level.SEVERE, null, ex);
+                String pathFoto = "";
+                File file = new File("");
+                String path = file.getAbsolutePath();
+                File fileAnho = new File(path + "/fotografias/" + Calendar.getInstance().get(Calendar.YEAR));
+                File fileMes = new File(fileAnho.getAbsolutePath() + "/" + (Calendar.getInstance().get(Calendar.MONTH) + 1));
+                if (!fileAnho.exists()) {
+                    fileAnho.mkdir();
+                }
+                if (!fileMes.exists()) {
+                    fileMes.mkdir();
+                }
+                pathFoto = fileMes.getAbsolutePath() + "/" + persona.getNumeroDocumento() + "-" + persona.getTipoDocumento().getNombre() + ".jpg";
+                if (persona.getFotografiaPath() != null && !persona.getFotografiaPath().equals("")) {
+                    new File(path + "/" + persona.getFotografiaPath()).delete();
+                }
+                persona.setFotografiaPath("fotografias/" + Calendar.getInstance().get(Calendar.YEAR) + "/"
+                        + (Calendar.getInstance().get(Calendar.MONTH) + 1) + "/"
+                        + persona.getNumeroDocumento() + "-" + persona.getTipoDocumento().getNombre() + ".jpg");
+                try {
+                    BufferedImage image = ImageIO.read(chooser.getSelectedFile());
+                    iconoFoto = new javax.swing.ImageIcon(image);
+                    jLabelFoto.setIcon(iconoFoto);
+                } catch (IOException ex) {
+                    Logger.getLogger(JDialogPersona.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
 
@@ -662,7 +681,7 @@ public class JDialogPersona extends javax.swing.JDialog {
     private void jButtonTomarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTomarFotoActionPerformed
         // TODO add your handling code here:
         try {
-             WindowUtil.centerWindow(AdminCamera.formulario);
+            WindowUtil.centerWindow(AdminCamera.formulario);
             //            dialogFotografia.setPersona(persona);
             AdminCamera.formulario.mostrarFormulario("CAPTURAR", persona);       // TODO add your handling code here:
             if (AdminCamera.formulario.isCapturado()) {
@@ -783,7 +802,7 @@ public class JDialogPersona extends javax.swing.JDialog {
     }
 
     private void guardarImagen(Image img, File file) {
-        String string = persona.getFotografiaPath();
+        String string = new File("").getAbsolutePath()+"/"+persona.getFotografiaPath();
         if (img != null) {
             try {
                 int w = img.getWidth(null);
@@ -794,18 +813,18 @@ public class JDialogPersona extends javax.swing.JDialog {
                 g2.dispose();
                 String fileType = string.substring(string.indexOf('.') + 1);
                 ImageIO.write(bi, fileType, new File(string));
-                persona.setFotografiaPath(string);
+                //persona.setFotografiaPath(string);
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "No se ha podido generar el archivo de Fotografia", "Error", 0);
             }
         } else if (imgFotoPersonaFile != null) {
             try {
-                string = file.getName();
+              //  string = file.getName();
                 BufferedImage bi = ImageIO.read(imgFotoPersonaFile);
                 String fileType = string.substring(string.indexOf('.') + 1);
                 ImageIO.write(bi, fileType, new File(string));
-                persona.setFotografiaPath(string);
+              //  persona.setFotografiaPath(string);
 
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(this, "No se ha podido generar el archivo de Fotografia", "Error", 0);
