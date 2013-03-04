@@ -798,6 +798,10 @@ public class JDialogVisita extends javax.swing.JDialog {
             ///BUSCO LA IMPRESORA POR DEFECTO
             PrintServiceAttributeSet printService = new HashPrintServiceAttributeSet();
             PrintService defaultPrinter = PrintServiceLookup.lookupDefaultPrintService();
+            if (defaultPrinter == null) {
+                JOptionPane.showMessageDialog(this, "No se encuentra impresora para Impresion del Ticket", "Error", 0);
+                return;
+            }
             printService.add(new PrinterName(defaultPrinter.getName(), Locale.getDefault()));
             ///
             exporter.setParameter(JRPrintServiceExporterParameter.OFFSET_X, new Integer(0));
