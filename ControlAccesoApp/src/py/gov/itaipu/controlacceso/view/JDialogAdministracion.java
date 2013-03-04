@@ -168,7 +168,7 @@ public class JDialogAdministracion extends javax.swing.JDialog {
 
     private void jButtonVisitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVisitasActionPerformed
         // TODO add your handling code here:
-        JDialogConsultaVisitas visitas = new JDialogConsultaVisitas(null, true);
+        JDialogConsultaVisitas visitas = new JDialogConsultaVisitas(null, false);
         visitas.setSize(1290,660);
         WindowUtil.centerWindow(visitas);
         visitas.setVisible(true);
@@ -184,7 +184,7 @@ public class JDialogAdministracion extends javax.swing.JDialog {
 
     private void jButtonVisitantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVisitantesActionPerformed
         // TODO add your handling code here:
-        JDialogPersonaPrincipal dialogPersona = new JDialogPersonaPrincipal(null, true);
+        JDialogPersonaPrincipal dialogPersona = new JDialogPersonaPrincipal(null, false);
         dialogPersona.setSize(1200, 665);
         WindowUtil.centerWindow(dialogPersona);
         dialogPersona.setVisible(true);
@@ -218,7 +218,7 @@ public class JDialogAdministracion extends javax.swing.JDialog {
             try {
                 java.io.File file = new java.io.File("");   //Dummy file
                 String abspath = file.getAbsolutePath();
-                File myFile = new File(abspath + "/manuales/SCAModuloAdministracion.pdf");
+                File myFile = new File(abspath + "/manuales/SCAModuloAdministrativo.pdf");
                 Desktop.getDesktop().open(myFile);
             } catch (IOException ex) {
                 // no application registered for PDFs
