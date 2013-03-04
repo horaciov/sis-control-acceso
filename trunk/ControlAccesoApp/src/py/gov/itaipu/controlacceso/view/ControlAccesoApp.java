@@ -47,7 +47,7 @@ public class ControlAccesoApp {
             if (AutenticadorAction.getUsuarioConectado().getRoles().size() == 1) {
                 Rol rol = AutenticadorAction.getUsuarioConectado().getRoles().get(0);
                 if (rol.getNombre().equals("OPERADOR")) {
-                    JDialogVisita dialog = new JDialogVisita(new javax.swing.JFrame(), true);
+                    JDialogVisita dialog = new JDialogVisita(new javax.swing.JFrame(), false);
                     dialog.setSize(1155, 555);
                     WindowUtil.centerWindow(dialog);
                     dialog.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -58,7 +58,7 @@ public class ControlAccesoApp {
                     });
                     dialog.setVisible(true);
                 } else if (rol.getNombre().equals("ADMINISTRATIVO")) {
-                    JDialogAdministracion dialog = new JDialogAdministracion(new javax.swing.JFrame(), true);
+                    JDialogAdministracion dialog = new JDialogAdministracion(new javax.swing.JFrame(), false);
                     dialog.setSize(480, 230);
                     WindowUtil.centerWindow(dialog);
                     dialog.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -69,7 +69,7 @@ public class ControlAccesoApp {
                     });
                     dialog.setVisible(true);
                 } else if (rol.getNombre().equals("ANALISTA")) {
-                    JDialogAnalisis dialog = new JDialogAnalisis(new javax.swing.JFrame(), true);
+                    JDialogAnalisis dialog = new JDialogAnalisis(new javax.swing.JFrame(), false);
                     dialog.setSize(450, 250);
                     WindowUtil.centerWindow(dialog);
                     dialog.addWindowListener(new java.awt.event.WindowAdapter() {
