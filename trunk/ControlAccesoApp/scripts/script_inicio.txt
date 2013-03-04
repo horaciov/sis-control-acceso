@@ -22,13 +22,13 @@ INSERT INTO controlacceso.nacionalidad (id, descripcion, nombre) VALUES (1, 'PAR
 
 INSERT INTO controlacceso.motivo  (id, descripcion,nombre) VALUES (1,'LABORAL','LABORAL');
 
-INSERT INTO controlacceso.organizacion  (id, descripcion,nombre,tipoorganizacion,nivelorganigrama) VALUES (1,'PRESIDENCIA','PRESIDENCIA','INTERNA',1)
+INSERT INTO controlacceso.organizacion  (id, descripcion,nombre,tipoorganizacion,nivelorganigrama) VALUES (1,'PRESIDENCIA','PRESIDENCIA','INTERNA',1);
 
 CREATE UNIQUE INDEX persona_tipo_nro_doc_idx ON controlacceso.persona (tipodocumento_id ASC NULLS LAST, numerodocumento ASC NULLS LAST);
-COMMENT ON INDEX controlacceso.tipo_nro_doc_idx IS 'Indice por Tipo y Nro Documento';
+COMMENT ON INDEX controlacceso.persona_tipo_nro_doc_idx IS 'Indice por Tipo y Nro Documento';
 
 CREATE INDEX persona_apellido_nombre_idx  ON controlacceso.persona  USING btree (apellido COLLATE pg_catalog."default", nombre COLLATE pg_catalog."default");
-COMMENT ON INDEX controlacceso.apellido_nombre_idx IS 'Indice por Apellido y Nombre';
+COMMENT ON INDEX controlacceso.persona_apellido_nombre_idx IS 'Indice por Apellido y Nombre';
 
 CREATE INDEX persona_organizacion_idx ON controlacceso.persona (organizacion_id ASC NULLS LAST);
 COMMENT ON INDEX controlacceso.persona_organizacion_idx IS 'Persona por Organizacion';
@@ -44,7 +44,4 @@ CREATE INDEX visita_persona_idx ON controlacceso.visita (persona_id ASC NULLS LA
 COMMENT ON INDEX controlacceso.visita_persona_idx IS 'Visitas por Persona Visitada';
 
 CREATE INDEX visita_organizacion_idx ON controlacceso.visita (organizacioninterna_id ASC NULLS LAST);
-COMMENT ON INDEX controlacceso.visita_organizacion IS 'Visitas por organizacion Visitada';
-
-
-
+COMMENT ON INDEX controlacceso.visita_organizacion_idx IS 'Visitas por organizacion Visitada';
