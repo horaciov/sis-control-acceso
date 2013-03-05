@@ -24,7 +24,8 @@
      organizacion_A."nombre" AS organizacion_A_nombre,
      persona."fotografiapath" AS persona_fotografiapath,
      persona."fotografia" AS persona_fotografia,
-     persona."fotografia" AS persona_fotografiada
+     persona."fotografia" AS persona_fotografiada,
+     visita."codigocarnet" AS visita_codigocarnet
 
 FROM
      "controlacceso"."visita" visita
@@ -53,6 +54,7 @@ WHERE
 	<field name="persona_fotografia" class="java.io.InputStream"/>
 	<field name="persona_fotografiada" class="java.io.InputStream"/>
 	<field name="persona_fotografiaPath" class="java.lang.String"/>
+	<field name="visita_codigocarnet" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -65,7 +67,7 @@ WHERE
 				<reportElement uuid="38d66c08-abfa-4c98-9b44-4715546421ad" x="293" y="209" width="251" height="120"/>
 			</rectangle>
 			<rectangle>
-				<reportElement uuid="d5bfef2c-1971-4404-becd-8f3c38ef2a1c" x="17" y="127" width="240" height="197"/>
+				<reportElement uuid="d5bfef2c-1971-4404-becd-8f3c38ef2a1c" x="17" y="127" width="240" height="163"/>
 			</rectangle>
 			<staticText>
 				<reportElement uuid="01a2a34e-c694-4af5-903a-179be96dae30" x="15" y="81" width="84" height="20"/>
@@ -123,7 +125,7 @@ WHERE
 				<text><![CDATA[Organizacion:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="84ce0aef-0cfe-4481-9394-caf47f3b04fc" x="27" y="141" width="218" height="163"/>
+				<reportElement uuid="84ce0aef-0cfe-4481-9394-caf47f3b04fc" x="27" y="141" width="218" height="139"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{visita_observacion}]]></textFieldExpression>
 			</textField>
@@ -234,6 +236,16 @@ WHERE
 				<reportElement uuid="c3808b54-42f6-42e4-9732-548b1f04da44" x="48" y="339" width="145" height="51"/>
 				<imageExpression><![CDATA[$P{barCode}]]></imageExpression>
 			</image>
+			<staticText>
+				<reportElement uuid="1c72c837-ee7d-4ebf-a7c8-0638f25d2f2b" x="15" y="306" width="84" height="20"/>
+				<textElement/>
+				<text><![CDATA[Código Carnet:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="7a147c06-1adf-471f-a19a-838936fc66f4" x="111" y="306" width="146" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{visita_codigocarnet}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>
