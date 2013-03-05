@@ -179,11 +179,16 @@ public class JDialogConsultaVisitas extends javax.swing.JDialog {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${observacion}"));
         columnBinding.setColumnName("Observacion");
         columnBinding.setEditable(false);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${codigoCarnet}"));
+        columnBinding.setColumnName("Carnet");
+        columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         jScrollPane1.setViewportView(jTableVisitas);
         jTableVisitas.getColumnModel().getColumn(2).setCellRenderer(rendererTime);
         jTableVisitas.getColumnModel().getColumn(3).setCellRenderer(rendererTime);
+        jTableVisitas.getColumnModel().getColumn(8).setResizable(false);
+        jTableVisitas.getColumnModel().getColumn(8).setPreferredWidth(20);
 
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(10, 270, 1270, 342);

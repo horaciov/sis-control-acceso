@@ -216,6 +216,9 @@ public class JDialogVisita extends javax.swing.JDialog {
                     jTextFieldPersonaVisitada = new javax.swing.JTextField();
                     jButtonNuevoMotivo = new javax.swing.JButton();
                     jButtonMotivoEdit = new javax.swing.JButton();
+                    jTextFieldPersonaVisitada1 = new javax.swing.JTextField();
+                    jLabelCodigoCarnet = new javax.swing.JLabel();
+                    jTextFieldCodigoCarnet = new javax.swing.JTextField();
                     jPanelInformativo = new javax.swing.JPanel();
                     jScrollPane2 = new javax.swing.JScrollPane();
                     jTableVisitas = new javax.swing.JTable();
@@ -358,7 +361,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         jScrollPanePersonasVisitadas.setViewportView(jTreePersonaVisitada);
 
         jPanelArbolVisita.add(jScrollPanePersonasVisitadas);
-        jScrollPanePersonasVisitadas.setBounds(10, 180, 380, 340);
+        jScrollPanePersonasVisitadas.setBounds(10, 180, 380, 370);
 
         jButtonNuevaVisita.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/save48.png"))); // NOI18N
         jButtonNuevaVisita.setToolTipText("Registrar Visita");
@@ -389,7 +392,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         jButtonVisitasActivas.setBounds(300, 150, 90, 20);
 
         getContentPane().add(jPanelArbolVisita);
-        jPanelArbolVisita.setBounds(0, 0, 400, 520);
+        jPanelArbolVisita.setBounds(0, 0, 400, 550);
 
         jPanelVisitante.setLayout(null);
 
@@ -555,11 +558,11 @@ public class JDialogVisita extends javax.swing.JDialog {
 
         jLabel8.setText("Area Visitada:");
         jPanelVisita.add(jLabel8);
-        jLabel8.setBounds(10, 70, 90, 14);
+        jLabel8.setBounds(10, 100, 90, 14);
 
         jTextFieldAreaVisitada.setEditable(false);
         jPanelVisita.add(jTextFieldAreaVisitada);
-        jTextFieldAreaVisitada.setBounds(140, 70, 180, 22);
+        jTextFieldAreaVisitada.setBounds(140, 100, 180, 22);
 
         jLabel6.setText("Motivo:");
         jPanelVisita.add(jLabel6);
@@ -584,11 +587,11 @@ public class JDialogVisita extends javax.swing.JDialog {
 
         jLabel7.setText("Persona Visitada:");
         jPanelVisita.add(jLabel7);
-        jLabel7.setBounds(10, 100, 100, 14);
+        jLabel7.setBounds(10, 130, 100, 14);
 
         jTextFieldPersonaVisitada.setEditable(false);
         jPanelVisita.add(jTextFieldPersonaVisitada);
-        jTextFieldPersonaVisitada.setBounds(140, 100, 180, 22);
+        jTextFieldPersonaVisitada.setBounds(140, 130, 180, 22);
 
         jButtonNuevoMotivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/new.jpg"))); // NOI18N
         jButtonNuevoMotivo.setToolTipText("Actualizar Fotografia");
@@ -610,8 +613,18 @@ public class JDialogVisita extends javax.swing.JDialog {
         jPanelVisita.add(jButtonMotivoEdit);
         jButtonMotivoEdit.setBounds(340, 40, 20, 20);
 
+        jTextFieldPersonaVisitada1.setEditable(false);
+        jPanelVisita.add(jTextFieldPersonaVisitada1);
+        jTextFieldPersonaVisitada1.setBounds(140, 100, 180, 22);
+
+        jLabelCodigoCarnet.setText("Código Carnet:");
+        jPanelVisita.add(jLabelCodigoCarnet);
+        jLabelCodigoCarnet.setBounds(10, 70, 120, 14);
+        jPanelVisita.add(jTextFieldCodigoCarnet);
+        jTextFieldCodigoCarnet.setBounds(140, 70, 180, 22);
+
         getContentPane().add(jPanelVisita);
-        jPanelVisita.setBounds(400, 260, 860, 130);
+        jPanelVisita.setBounds(400, 260, 860, 160);
 
         jPanelInformativo.setPreferredSize(new java.awt.Dimension(930, 210));
         jPanelInformativo.setLayout(null);
@@ -640,7 +653,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         jSeparator4.setBounds(10, 30, 725, 10);
 
         getContentPane().add(jPanelInformativo);
-        jPanelInformativo.setBounds(400, 390, 860, 150);
+        jPanelInformativo.setBounds(400, 420, 860, 130);
 
         bindingGroup.bind();
 
@@ -693,7 +706,9 @@ public class JDialogVisita extends javax.swing.JDialog {
 
         visita.setFechaIngreso(Calendar.getInstance().getTime());
         visita.setOrganizacionInterna(areaVisitada);
-
+        if (jTextFieldCodigoCarnet.getText()!= null && !jTextFieldCodigoCarnet.getText().equals("")) {
+            visita.setCodigoCarnet(jTextFieldCodigoCarnet.getText().toUpperCase());
+        }
         visita.setMotivo((Motivo) jComboBoxMotivo.getSelectedItem());
         visita.setObservacion(jTextAreaObservacion.getText());
         visita.setAnulado("N");
@@ -755,6 +770,8 @@ public class JDialogVisita extends javax.swing.JDialog {
         jFormattedTextFieldFechaNac.setValue(null);
         jTextFieldPersonaVisitada.setText("");
         jTextFieldAreaVisitada.setText("");
+        jTextAreaObservacion.setText("");
+        jTextFieldCodigoCarnet.setText("");
         listUltimasVisitas.clear();
         jTreePersonaVisitada.setSelectionPath(null);
         jLabelFotografia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/sin_foto_small.jpg")));
@@ -1353,6 +1370,7 @@ public class JDialogVisita extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabelApe;
+    private javax.swing.JLabel jLabelCodigoCarnet;
     private javax.swing.JLabel jLabelEstCiv;
     private javax.swing.JLabel jLabelEstCiv1;
     private javax.swing.JLabel jLabelFechaNac;
@@ -1379,11 +1397,13 @@ public class JDialogVisita extends javax.swing.JDialog {
     private javax.swing.JTextArea jTextAreaObservacion;
     private javax.swing.JTextField jTextFieldApellido;
     private javax.swing.JTextField jTextFieldAreaVisitada;
+    private javax.swing.JTextField jTextFieldCodigoCarnet;
     private javax.swing.JTextField jTextFieldDocumentoPersona;
     private javax.swing.JTextField jTextFieldFiltroArbol;
     private javax.swing.JTextField jTextFieldNombre;
     private javax.swing.JTextField jTextFieldOrganizacion;
     private javax.swing.JTextField jTextFieldPersonaVisitada;
+    private javax.swing.JTextField jTextFieldPersonaVisitada1;
     private javax.swing.JTree jTreePersonaVisitada;
     private java.util.List listMotivos;
     private java.util.List listNacionalidades;

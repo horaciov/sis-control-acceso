@@ -48,7 +48,7 @@ public class ControlAccesoApp {
                 Rol rol = AutenticadorAction.getUsuarioConectado().getRoles().get(0);
                 if (rol.getNombre().equals("OPERADOR")) {
                     JDialogVisita dialog = new JDialogVisita(new javax.swing.JFrame(), false);
-                    dialog.setSize(1155, 555);
+                    dialog.setSize(1152, 600);
                     WindowUtil.centerWindow(dialog);
                     dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                         @Override

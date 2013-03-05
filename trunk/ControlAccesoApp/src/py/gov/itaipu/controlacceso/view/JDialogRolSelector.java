@@ -84,7 +84,7 @@ public class JDialogRolSelector extends javax.swing.JDialog {
         Rol rol = (Rol) jComboBoxRoles.getSelectedItem();
         if (rol.getNombre().equals("OPERADOR")) {
             JDialogVisita dialog = new JDialogVisita(new javax.swing.JFrame(), false);
-            dialog.setSize(1155, 555);
+            dialog.setSize(1152, 600);
             WindowUtil.centerWindow(dialog);
             dialog.setVisible(true);
         } else if (rol.getNombre().equals("ADMINISTRATIVO")) {
