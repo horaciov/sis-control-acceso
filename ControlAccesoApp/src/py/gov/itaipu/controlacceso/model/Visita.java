@@ -33,6 +33,7 @@ public class Visita implements Serializable {
     private Date fechaIngreso;
     private Date fechaSalida;
     private String observacion;
+    private String codigoCarnet;
     private String recibido;
     private String anulado;
     private Usuario usuarioCreacion;
@@ -162,6 +163,14 @@ public class Visita implements Serializable {
         this.observacion = observacion.toUpperCase();
     }
 
+    public String getCodigoCarnet() {
+        return codigoCarnet;
+    }
+
+    public void setCodigoCarnet(String codigoCarnet) {
+        this.codigoCarnet = codigoCarnet;
+    }
+    
     public String getRecibido() {
         return recibido;
     }
