@@ -16,6 +16,7 @@ import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.model.Organizacion;
 import py.gov.itaipu.controlacceso.model.exception.ErrorInesperado;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
+import py.gov.itaipu.controlacceso.utils.windows.WindowUtil;
 
 /**
  *
@@ -76,6 +77,8 @@ public class JInternalFrameOrganizacionExterna extends javax.swing.JInternalFram
             jSeparator1 = new javax.swing.JSeparator();
             jLabel1 = new javax.swing.JLabel();
             jButtonVer = new javax.swing.JButton();
+            jLabel2 = new javax.swing.JLabel();
+            jTextFieldOrganizacion = new javax.swing.JTextField();
 
         } catch (ErrorInesperado ei) {
             JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -84,22 +87,23 @@ public class JInternalFrameOrganizacionExterna extends javax.swing.JInternalFram
 
         setTitle("Gestión de organizaciones externas");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
-            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
-            }
-            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
-            }
-            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
-            }
-            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
-            }
-            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
-            }
-            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
-            }
             public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
                 formInternalFrameOpened(evt);
             }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
         });
+        getContentPane().setLayout(null);
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listOrganizaciones, jTableOrganizaciones);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nombre}"));
@@ -118,12 +122,15 @@ public class JInternalFrameOrganizacionExterna extends javax.swing.JInternalFram
             }
         });
         jScrollPane1.setViewportView(jTableOrganizaciones);
-        jTableOrganizaciones.getColumnModel().getColumn(0).setMinWidth(200);
-        jTableOrganizaciones.getColumnModel().getColumn(0).setPreferredWidth(200);
-        jTableOrganizaciones.getColumnModel().getColumn(0).setMaxWidth(200);
+        jTableOrganizaciones.getColumnModel().getColumn(0).setMinWidth(300);
+        jTableOrganizaciones.getColumnModel().getColumn(0).setPreferredWidth(300);
+        jTableOrganizaciones.getColumnModel().getColumn(0).setMaxWidth(400);
         jTableOrganizaciones.getColumnModel().getColumn(1).setMinWidth(400);
         jTableOrganizaciones.getColumnModel().getColumn(1).setPreferredWidth(400);
         jTableOrganizaciones.getColumnModel().getColumn(1).setMaxWidth(400);
+
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(6, 129, 595, 310);
 
         jButtonNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/new.jpg"))); // NOI18N
         jButtonNuevo.setText("Nuevo");
@@ -135,6 +142,8 @@ public class JInternalFrameOrganizacionExterna extends javax.swing.JInternalFram
                 jButtonNuevoActionPerformed(evt);
             }
         });
+        getContentPane().add(jButtonNuevo);
+        jButtonNuevo.setBounds(330, 90, 100, 25);
 
         jButtonEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/edit.png"))); // NOI18N
         jButtonEditar.setText("Editar");
@@ -146,6 +155,8 @@ public class JInternalFrameOrganizacionExterna extends javax.swing.JInternalFram
                 jButtonEditarActionPerformed(evt);
             }
         });
+        getContentPane().add(jButtonEditar);
+        jButtonEditar.setBounds(230, 90, 100, 25);
 
         jButtonCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/exit.png"))); // NOI18N
         jButtonCerrar.setText("Cerrar");
@@ -157,6 +168,8 @@ public class JInternalFrameOrganizacionExterna extends javax.swing.JInternalFram
                 jButtonCerrarActionPerformed(evt);
             }
         });
+        getContentPane().add(jButtonCerrar);
+        jButtonCerrar.setBounds(430, 90, 100, 25);
 
         jButtonEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/delete.png"))); // NOI18N
         jButtonEliminar.setText("Eliminar");
@@ -166,8 +179,16 @@ public class JInternalFrameOrganizacionExterna extends javax.swing.JInternalFram
                 jButtonEliminarActionPerformed(evt);
             }
         });
+        getContentPane().add(jButtonEliminar);
+        jButtonEliminar.setBounds(130, 90, 100, 25);
+        getContentPane().add(jSeparator1);
+        jSeparator1.setBounds(6, 27, 575, 12);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 51, 102));
         jLabel1.setText("Organizaciones");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(10, 10, 92, 15);
 
         jButtonVer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/view.png"))); // NOI18N
         jButtonVer.setText("Ver");
@@ -179,54 +200,20 @@ public class JInternalFrameOrganizacionExterna extends javax.swing.JInternalFram
                 jButtonVerActionPerformed(evt);
             }
         });
+        getContentPane().add(jButtonVer);
+        jButtonVer.setBounds(30, 90, 100, 25);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 595, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButtonVer, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButtonNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButtonCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(20, 20, 20))))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(7, 7, 7)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonVer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(97, Short.MAX_VALUE))
-        );
+        jLabel2.setText("Organización:");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(10, 50, 120, 16);
+
+        jTextFieldOrganizacion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldOrganicacionKeyRealeased(evt);
+            }
+        });
+        getContentPane().add(jTextFieldOrganizacion);
+        jTextFieldOrganizacion.setBounds(110, 50, 420, 28);
 
         bindingGroup.bind();
 
@@ -236,8 +223,9 @@ public class JInternalFrameOrganizacionExterna extends javax.swing.JInternalFram
     private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
         // TODO add your handling code here:    
         try {
-            JDialogOrganizacionExterna dialogOrganizacion = new JDialogOrganizacionExterna(null, closable);
+            JDialogOrganizacionExterna dialogOrganizacion = new JDialogOrganizacionExterna(null, true);
             dialogOrganizacion.setOrganizacion(new Organizacion());
+            WindowUtil.centerWindow(dialogOrganizacion);
             dialogOrganizacion.setVisible(true);
             listOrganizaciones.clear();
             listOrganizaciones.addAll(organizacionAction.findByNamedQuery("Organizacion.findAllExterna"));
@@ -324,10 +312,22 @@ public class JInternalFrameOrganizacionExterna extends javax.swing.JInternalFram
         if (modoBuscador) {
             jButtonEditar.setVisible(false);
             jButtonEliminar.setVisible(false);
-            jButtonNuevo.setVisible(false);
+            jButtonNuevo.setVisible(true);
             jButtonVer.setVisible(false);
         }
     }//GEN-LAST:event_formInternalFrameOpened
+
+    private void jTextFieldOrganicacionKeyRealeased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldOrganicacionKeyRealeased
+        try {
+            // TODO add your handling code here:
+            listOrganizaciones.clear();
+            listOrganizaciones.addAll(organizacionAction.findAllByNameWithCondition(jTextFieldOrganizacion.getText(),"tipoOrganizacion='EXTERNA'"));
+        } catch (ErrorInesperado ex) {
+            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
+    }//GEN-LAST:event_jTextFieldOrganicacionKeyRealeased
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCerrar;
     private javax.swing.JButton jButtonEditar;
@@ -335,9 +335,11 @@ public class JInternalFrameOrganizacionExterna extends javax.swing.JInternalFram
     private javax.swing.JButton jButtonNuevo;
     private javax.swing.JButton jButtonVer;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTableOrganizaciones;
+    private javax.swing.JTextField jTextFieldOrganizacion;
     private java.util.List listOrganizaciones;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables

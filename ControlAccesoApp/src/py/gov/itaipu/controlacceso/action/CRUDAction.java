@@ -93,6 +93,20 @@ public class CRUDAction<E> {
 
     }
 
+      public List<E> findAllByNameWithCondition(String nombre,String condition) throws ErrorInesperado {
+        List<E> result = null;
+        try {
+            Query query;
+            query = em.createQuery(" from " + entity.getClass().getSimpleName() + " where nombre like '%'||:nombre||'%' and "+condition);
+            query.setParameter("nombre", nombre.toUpperCase());
+            result = query.getResultList();
+        } catch (RuntimeException re) {
+            throw new ErrorInesperado("Error inesperado.");
+        }
+        return result;
+
+    }
+    
     public boolean existeNombre(String nombre) throws ErrorInesperado {
         boolean existe = false;
         List<E> result = null;

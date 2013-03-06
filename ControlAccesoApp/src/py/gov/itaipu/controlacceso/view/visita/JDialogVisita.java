@@ -71,6 +71,7 @@ import py.gov.itaipu.controlacceso.view.JDialogBuscador;
 import py.gov.itaipu.controlacceso.view.TimeRenderer;
 import py.gov.itaipu.controlacceso.view.administracion.organizacion.JDialogOrganizacionExterna;
 import py.gov.itaipu.controlacceso.view.administracion.organizacion.JInternalFrameOrganizacion;
+import py.gov.itaipu.controlacceso.view.administracion.organizacion.JInternalFrameOrganizacionExterna;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JDialogMotivo;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JDialogTipoDocumento;
 import py.gov.itaipu.controlacceso.view.administracion.parametrogeneral.JDialogoNacionalidad;
@@ -913,7 +914,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         jComboBoxSexo.setEnabled(true);
         jComboBoxNacionalidad.setEnabled(true);
         jButtonBuscarOrganizacion.setVisible(true);
-        jButtonNuevoOrganizacion.setVisible(true);
+        jButtonNuevoOrganizacion.setVisible(false);
         jButtonNacionalidad.setVisible(true);
         jButtonNacionalidadEdit.setVisible(true);
     }
@@ -995,11 +996,13 @@ public class JDialogVisita extends javax.swing.JDialog {
 
     private void jButtonBuscarOrganizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarOrganizacionActionPerformed
         // TODO add your handling code here:
-        JInternalFrameOrganizacion jFrameOrganizacion = new JInternalFrameOrganizacion();
+        JInternalFrameOrganizacionExterna jFrameOrganizacion = new JInternalFrameOrganizacionExterna();
         jFrameOrganizacion.setModoBuscador(true);
         jFrameOrganizacion.setVisible(true);
         JDialogBuscador buscador = new JDialogBuscador(null, rootPaneCheckingEnabled);
+        jFrameOrganizacion.setSize(600,500);
         buscador.setSize(jFrameOrganizacion.getSize());
+        
         jFrameOrganizacion.setClosable(false);
         jFrameOrganizacion.setResizable(false);
         jFrameOrganizacion.setTitle("Buscador de organizaciones");
