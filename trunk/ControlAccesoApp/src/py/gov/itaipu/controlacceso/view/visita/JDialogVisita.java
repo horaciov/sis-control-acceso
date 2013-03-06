@@ -1165,7 +1165,7 @@ public class JDialogVisita extends javax.swing.JDialog {
 
     private void jButtonBuscarPersonaVisitadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarPersonaVisitadaActionPerformed
         // TODO add your handling code here:
-        if (jTextFieldFiltroArbol.getText() != null && !jTextFieldFiltroArbol.equals("")) {
+        if (jTextFieldFiltroArbol.getText() != null && !jTextFieldFiltroArbol.getText().equals("")) {
             try {
                 DefaultMutableTreeNode root = UtilesArbol.crearArbolFiltrado("ORGANIGRAMA", jTextFieldFiltroArbol.getText().toUpperCase(), true,false,false);
                 jTreePersonaVisitada = new JTree(root);
@@ -1180,6 +1180,10 @@ public class JDialogVisita extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
                 System.exit(-1);
             }
+        }else{
+        
+            jButtonLimpiarPersonaVisitadaActionPerformed(null);
+        
         }
     }//GEN-LAST:event_jButtonBuscarPersonaVisitadaActionPerformed
 
