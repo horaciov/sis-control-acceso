@@ -127,6 +127,8 @@ public class JDialogFotografia extends javax.swing.JDialog {
             }
         });
 
+        jLabelTitulo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabelTitulo.setForeground(new java.awt.Color(0, 51, 102));
         jLabelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelTitulo.setText("Cargar Fotografia");
 
@@ -177,7 +179,7 @@ public class JDialogFotografia extends javax.swing.JDialog {
                 .addComponent(jPanelCamara, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonCapturar)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
