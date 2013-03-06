@@ -244,6 +244,11 @@ public class JDialogVisita extends javax.swing.JDialog {
         setTitle("Registro de visita");
         setModalityType(null);
         setResizable(false);
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jDialogVisitaKeyReleased(evt);
+            }
+        });
         getContentPane().setLayout(null);
 
         jPanelArbolVisita.setLayout(null);
@@ -293,7 +298,7 @@ public class JDialogVisita extends javax.swing.JDialog {
             }
         });
         jPanelArbolVisita.add(jTextFieldDocumentoPersona);
-        jTextFieldDocumentoPersona.setBounds(10, 70, 300, 43);
+        jTextFieldDocumentoPersona.setBounds(10, 70, 300, 49);
 
         jButtonNuevoTipoDoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/new.jpg"))); // NOI18N
         jButtonNuevoTipoDoc.addActionListener(new java.awt.event.ActionListener() {
@@ -316,16 +321,22 @@ public class JDialogVisita extends javax.swing.JDialog {
         jLabelMensaje.setForeground(new java.awt.Color(153, 0, 0));
         jLabelMensaje.setText("Introduzca un número de documento.");
         jPanelArbolVisita.add(jLabelMensaje);
-        jLabelMensaje.setBounds(10, 116, 310, 14);
+        jLabelMensaje.setBounds(10, 116, 310, 16);
 
         jLabel3.setText("Area/Persona: ");
         jPanelArbolVisita.add(jLabel3);
-        jLabel3.setBounds(10, 150, 130, 14);
+        jLabel3.setBounds(10, 150, 130, 16);
+
+        jTextFieldFiltroArbol.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldFiltroArbolKeyReleased(evt);
+            }
+        });
         jPanelArbolVisita.add(jTextFieldFiltroArbol);
-        jTextFieldFiltroArbol.setBounds(90, 150, 170, 20);
+        jTextFieldFiltroArbol.setBounds(90, 150, 170, 28);
 
         jButtonBuscarPersonaVisitada.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/view.png"))); // NOI18N
-        jButtonBuscarPersonaVisitada.setToolTipText("Buscar Persona");
+        jButtonBuscarPersonaVisitada.setToolTipText("Buscar Area/Persona");
         jButtonBuscarPersonaVisitada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonBuscarPersonaVisitadaActionPerformed(evt);
@@ -335,7 +346,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         jButtonBuscarPersonaVisitada.setBounds(260, 150, 20, 20);
 
         jButtonLimpiarPersonaVisitada.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/clear.jpeg"))); // NOI18N
-        jButtonLimpiarPersonaVisitada.setToolTipText("Buscar Persona");
+        jButtonLimpiarPersonaVisitada.setToolTipText("Iniciar Arbol");
         jButtonLimpiarPersonaVisitada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonLimpiarPersonaVisitadaActionPerformed(evt);
@@ -511,7 +522,7 @@ public class JDialogVisita extends javax.swing.JDialog {
             }
         });
         jPanelVisitante.add(jButtonTomarFotografia);
-        jButtonTomarFotografia.setBounds(460, 40, 270, 25);
+        jButtonTomarFotografia.setBounds(460, 40, 270, 28);
 
         jButtonNacionalidadEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/edit.png"))); // NOI18N
         jButtonNacionalidadEdit.setFocusable(false);
@@ -558,7 +569,7 @@ public class JDialogVisita extends javax.swing.JDialog {
 
         jLabel8.setText("Area Visitada:");
         jPanelVisita.add(jLabel8);
-        jLabel8.setBounds(10, 100, 90, 14);
+        jLabel8.setBounds(10, 100, 90, 16);
 
         jTextFieldAreaVisitada.setEditable(false);
         jPanelVisita.add(jTextFieldAreaVisitada);
@@ -566,7 +577,7 @@ public class JDialogVisita extends javax.swing.JDialog {
 
         jLabel6.setText("Motivo:");
         jPanelVisita.add(jLabel6);
-        jLabel6.setBounds(10, 40, 90, 14);
+        jLabel6.setBounds(10, 40, 90, 16);
 
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listMotivos, jComboBoxMotivo);
         bindingGroup.addBinding(jComboBoxBinding);
@@ -576,7 +587,7 @@ public class JDialogVisita extends javax.swing.JDialog {
 
         jLabel5.setText("Observación:");
         jPanelVisita.add(jLabel5);
-        jLabel5.setBounds(370, 40, 90, 14);
+        jLabel5.setBounds(370, 40, 90, 16);
 
         jTextAreaObservacion.setColumns(20);
         jTextAreaObservacion.setRows(5);
@@ -587,7 +598,7 @@ public class JDialogVisita extends javax.swing.JDialog {
 
         jLabel7.setText("Persona Visitada:");
         jPanelVisita.add(jLabel7);
-        jLabel7.setBounds(10, 130, 100, 14);
+        jLabel7.setBounds(10, 130, 100, 16);
 
         jTextFieldPersonaVisitada.setEditable(false);
         jPanelVisita.add(jTextFieldPersonaVisitada);
@@ -619,7 +630,7 @@ public class JDialogVisita extends javax.swing.JDialog {
 
         jLabelCodigoCarnet.setText("Código Carnet:");
         jPanelVisita.add(jLabelCodigoCarnet);
-        jLabelCodigoCarnet.setBounds(10, 70, 120, 14);
+        jLabelCodigoCarnet.setBounds(10, 70, 120, 16);
         jPanelVisita.add(jTextFieldCodigoCarnet);
         jTextFieldCodigoCarnet.setBounds(140, 70, 180, 22);
 
@@ -896,7 +907,7 @@ public class JDialogVisita extends javax.swing.JDialog {
     private void habilitarEdicionPersona() {
         jTextFieldApellido.setEditable(true);
         jTextFieldNombre.setEditable(true);
-        jTextFieldOrganizacion.setEditable(true);
+        //jTextFieldOrganizacion.setEditable(true);
         jFormattedTextFieldFechaNac.setEditable(true);
         jComboBoxEstadoCivil.setEnabled(true);
         jComboBoxSexo.setEnabled(true);
@@ -1302,6 +1313,21 @@ public class JDialogVisita extends javax.swing.JDialog {
         WindowUtil.centerWindow(jDialog);
         jDialog.setVisible(true);
     }//GEN-LAST:event_jButtonVisitasActivasActionPerformed
+
+    private void jTextFieldFiltroArbolKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldFiltroArbolKeyReleased
+
+        // TODO add your handling code here:
+        jButtonBuscarPersonaVisitadaActionPerformed(null);
+    }//GEN-LAST:event_jTextFieldFiltroArbolKeyReleased
+
+    private void jDialogVisitaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jDialogVisitaKeyReleased
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_F12) {
+            jButtonNuevaVisitaActionPerformed(null);
+            
+        }
+        
+    }//GEN-LAST:event_jDialogVisitaKeyReleased
 
     /**
      * @param args the command line arguments
