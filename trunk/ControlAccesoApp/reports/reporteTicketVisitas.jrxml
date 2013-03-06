@@ -244,7 +244,7 @@ WHERE
 			<textField>
 				<reportElement uuid="7a147c06-1adf-471f-a19a-838936fc66f4" x="111" y="306" width="146" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{visita_codigocarnet}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[( $F{visita_codigocarnet} == null ? "---" : $F{visita_codigocarnet} == null )]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
