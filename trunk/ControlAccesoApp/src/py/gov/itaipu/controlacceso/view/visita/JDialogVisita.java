@@ -7,6 +7,8 @@ package py.gov.itaipu.controlacceso.view.visita;
 import java.awt.Desktop;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -33,8 +35,10 @@ import javax.print.attribute.HashPrintServiceAttributeSet;
 import javax.print.attribute.PrintServiceAttributeSet;
 import javax.print.attribute.standard.PrinterName;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JTree;
+import javax.swing.KeyStroke;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.tree.DefaultMutableTreeNode;
 import net.sf.jasperreports.engine.JRException;
@@ -117,6 +121,7 @@ public class JDialogVisita extends javax.swing.JDialog {
             inhabilitarEdicionPersona();
             jButtonNuevaVisita.setVisible(false);
             jTextFieldDocumentoPersona.requestFocusInWindow();
+            registrarF12();
             this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/resource/img/bandera-paraguay.png")).getImage());
         } catch (ErrorInesperado ei) {
             JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -124,6 +129,21 @@ public class JDialogVisita extends javax.swing.JDialog {
         }
     }
 
+    //Registra el boton f12 para guardar la visita
+    private void registrarF12(){
+     ActionListener escListener = new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if(jButtonNuevaVisita.isVisible()){
+                        jButtonNuevaVisitaActionPerformed(null);
+                    }
+                }
+            };
+            this.getRootPane().registerKeyboardAction(escListener,
+                    KeyStroke.getKeyStroke(KeyEvent.VK_F12, 0),
+                    JComponent.WHEN_IN_FOCUSED_WINDOW);
+    }
+    
     private void fillPersona(Persona p) {
         p.setApellido(jTextFieldApellido.getText());
         p.setNombre(jTextFieldNombre.getText());
@@ -245,13 +265,23 @@ public class JDialogVisita extends javax.swing.JDialog {
         setTitle("Registro de visita");
         setModalityType(null);
         setResizable(false);
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
         addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jDialogVisitaKeyReleased(evt);
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
             }
         });
         getContentPane().setLayout(null);
 
+        jPanelArbolVisita.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jPanelArbolVisitaKeyReleased(evt);
+            }
+        });
         jPanelArbolVisita.setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -299,7 +329,7 @@ public class JDialogVisita extends javax.swing.JDialog {
             }
         });
         jPanelArbolVisita.add(jTextFieldDocumentoPersona);
-        jTextFieldDocumentoPersona.setBounds(10, 70, 300, 49);
+        jTextFieldDocumentoPersona.setBounds(10, 70, 300, 43);
 
         jButtonNuevoTipoDoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/new.jpg"))); // NOI18N
         jButtonNuevoTipoDoc.addActionListener(new java.awt.event.ActionListener() {
@@ -322,11 +352,11 @@ public class JDialogVisita extends javax.swing.JDialog {
         jLabelMensaje.setForeground(new java.awt.Color(153, 0, 0));
         jLabelMensaje.setText("Introduzca un número de documento.");
         jPanelArbolVisita.add(jLabelMensaje);
-        jLabelMensaje.setBounds(10, 116, 310, 16);
+        jLabelMensaje.setBounds(10, 116, 310, 14);
 
         jLabel3.setText("Area/Persona: ");
         jPanelArbolVisita.add(jLabel3);
-        jLabel3.setBounds(10, 150, 130, 16);
+        jLabel3.setBounds(10, 150, 130, 14);
 
         jTextFieldFiltroArbol.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -334,7 +364,7 @@ public class JDialogVisita extends javax.swing.JDialog {
             }
         });
         jPanelArbolVisita.add(jTextFieldFiltroArbol);
-        jTextFieldFiltroArbol.setBounds(90, 150, 170, 28);
+        jTextFieldFiltroArbol.setBounds(90, 150, 170, 20);
 
         jButtonBuscarPersonaVisitada.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/view.png"))); // NOI18N
         jButtonBuscarPersonaVisitada.setToolTipText("Buscar Area/Persona");
@@ -523,7 +553,7 @@ public class JDialogVisita extends javax.swing.JDialog {
             }
         });
         jPanelVisitante.add(jButtonTomarFotografia);
-        jButtonTomarFotografia.setBounds(460, 40, 270, 28);
+        jButtonTomarFotografia.setBounds(460, 40, 270, 25);
 
         jButtonNacionalidadEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/edit.png"))); // NOI18N
         jButtonNacionalidadEdit.setFocusable(false);
@@ -570,7 +600,7 @@ public class JDialogVisita extends javax.swing.JDialog {
 
         jLabel8.setText("Area Visitada:");
         jPanelVisita.add(jLabel8);
-        jLabel8.setBounds(10, 100, 90, 16);
+        jLabel8.setBounds(10, 100, 90, 14);
 
         jTextFieldAreaVisitada.setEditable(false);
         jPanelVisita.add(jTextFieldAreaVisitada);
@@ -578,7 +608,7 @@ public class JDialogVisita extends javax.swing.JDialog {
 
         jLabel6.setText("Motivo:");
         jPanelVisita.add(jLabel6);
-        jLabel6.setBounds(10, 40, 90, 16);
+        jLabel6.setBounds(10, 40, 90, 14);
 
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listMotivos, jComboBoxMotivo);
         bindingGroup.addBinding(jComboBoxBinding);
@@ -588,7 +618,7 @@ public class JDialogVisita extends javax.swing.JDialog {
 
         jLabel5.setText("Observación:");
         jPanelVisita.add(jLabel5);
-        jLabel5.setBounds(370, 40, 90, 16);
+        jLabel5.setBounds(370, 40, 90, 14);
 
         jTextAreaObservacion.setColumns(20);
         jTextAreaObservacion.setRows(5);
@@ -599,7 +629,7 @@ public class JDialogVisita extends javax.swing.JDialog {
 
         jLabel7.setText("Persona Visitada:");
         jPanelVisita.add(jLabel7);
-        jLabel7.setBounds(10, 130, 100, 16);
+        jLabel7.setBounds(10, 130, 100, 14);
 
         jTextFieldPersonaVisitada.setEditable(false);
         jPanelVisita.add(jTextFieldPersonaVisitada);
@@ -631,7 +661,7 @@ public class JDialogVisita extends javax.swing.JDialog {
 
         jLabelCodigoCarnet.setText("Código Carnet:");
         jPanelVisita.add(jLabelCodigoCarnet);
-        jLabelCodigoCarnet.setBounds(10, 70, 120, 16);
+        jLabelCodigoCarnet.setBounds(10, 70, 120, 14);
         jPanelVisita.add(jTextFieldCodigoCarnet);
         jTextFieldCodigoCarnet.setBounds(140, 70, 180, 22);
 
@@ -718,7 +748,7 @@ public class JDialogVisita extends javax.swing.JDialog {
 
         visita.setFechaIngreso(Calendar.getInstance().getTime());
         visita.setOrganizacionInterna(areaVisitada);
-        if (jTextFieldCodigoCarnet.getText()!= null && !jTextFieldCodigoCarnet.getText().equals("")) {
+        if (jTextFieldCodigoCarnet.getText() != null && !jTextFieldCodigoCarnet.getText().equals("")) {
             visita.setCodigoCarnet(jTextFieldCodigoCarnet.getText().toUpperCase());
         }
         visita.setMotivo((Motivo) jComboBoxMotivo.getSelectedItem());
@@ -759,16 +789,16 @@ public class JDialogVisita extends javax.swing.JDialog {
             jTextFieldOrganizacion.setText("");
         }
         jFormattedTextFieldFechaNac.setValue(persona.getFechaNacimiento());
-        if (persona.getEstadoCivil()!=null) {
+        if (persona.getEstadoCivil() != null) {
             jComboBoxEstadoCivil.setSelectedItem(persona.getEstadoCivil().toUpperCase());
         }
-        if (persona.getSexo()!=null) {
+        if (persona.getSexo() != null) {
             jComboBoxSexo.setSelectedItem(persona.getSexo().toUpperCase());
         }
-        if (persona.getNacionalidad()!=null) {
-            jComboBoxNacionalidad.setSelectedItem(persona.getNacionalidad());    
+        if (persona.getNacionalidad() != null) {
+            jComboBoxNacionalidad.setSelectedItem(persona.getNacionalidad());
         }
-        
+
         jComboBoxTipoDoc.setSelectedItem(persona.getTipoDocumento());
         listUltimasVisitas.clear();
         listUltimasVisitas.addAll(visitaAction.findByPersona(persona));
@@ -804,7 +834,7 @@ public class JDialogVisita extends javax.swing.JDialog {
             parametros.put("pathImagen", (Object) abspath);
             parametros.put("barCode", bis);
             JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parametros, conexion);
-            
+
 //            Muestra el Reporte en Pantalla
 
 //            JasperViewer jviewer = new JasperViewer(jasperPrint, false);
@@ -817,8 +847,8 @@ public class JDialogVisita extends javax.swing.JDialog {
 //            exporter.setParameter(JRExporterParameter.JASPER_PRINT,jasperPrint); 
 //            exporter.setParameter(JRExporterParameter.OUTPUT_FILE,new java.io.File("reportePDF.pdf"));
 //            exporter.exportReport();            
-            
-            
+
+
             ///IMPRIMIR DIRECTO A IMPRESORA
             final JRPrintServiceExporter exporter = new JRPrintServiceExporter();
             exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
@@ -835,9 +865,9 @@ public class JDialogVisita extends javax.swing.JDialog {
             ///
             exporter.setParameter(JRPrintServiceExporterParameter.OFFSET_X, new Integer(0));
             exporter.setParameter(JRPrintServiceExporterParameter.OFFSET_Y, new Integer(0));
-            exporter.setParameter(JRPrintServiceExporterParameter.PRINT_SERVICE_ATTRIBUTE_SET,printService);
-            exporter.exportReport(); 
-            
+            exporter.setParameter(JRPrintServiceExporterParameter.PRINT_SERVICE_ATTRIBUTE_SET, printService);
+            exporter.exportReport();
+
 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(JInternalFramePersona.class.getName()).log(Level.SEVERE, null, ex);
@@ -1000,9 +1030,9 @@ public class JDialogVisita extends javax.swing.JDialog {
         jFrameOrganizacion.setModoBuscador(true);
         jFrameOrganizacion.setVisible(true);
         JDialogBuscador buscador = new JDialogBuscador(null, rootPaneCheckingEnabled);
-        jFrameOrganizacion.setSize(600,500);
+        jFrameOrganizacion.setSize(600, 500);
         buscador.setSize(jFrameOrganizacion.getSize());
-        
+
         jFrameOrganizacion.setClosable(false);
         jFrameOrganizacion.setResizable(false);
         jFrameOrganizacion.setTitle("Buscador de organizaciones");
@@ -1170,7 +1200,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (jTextFieldFiltroArbol.getText() != null && !jTextFieldFiltroArbol.getText().equals("")) {
             try {
-                DefaultMutableTreeNode root = UtilesArbol.crearArbolFiltrado("ORGANIGRAMA", jTextFieldFiltroArbol.getText().toUpperCase(), true,false,false);
+                DefaultMutableTreeNode root = UtilesArbol.crearArbolFiltrado("ORGANIGRAMA", jTextFieldFiltroArbol.getText().toUpperCase(), true, false, false);
                 jTreePersonaVisitada = new JTree(root);
                 jTreePersonaVisitada.setCellRenderer(new CustomIconRenderer());
                 jTreePersonaVisitada.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
@@ -1183,10 +1213,10 @@ public class JDialogVisita extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
                 System.exit(-1);
             }
-        }else{
-        
+        } else {
+
             jButtonLimpiarPersonaVisitadaActionPerformed(null);
-        
+
         }
     }//GEN-LAST:event_jButtonBuscarPersonaVisitadaActionPerformed
 
@@ -1194,7 +1224,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         // TODO add your handling code here:
         try {
             jTextFieldFiltroArbol.setText("");
-            DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", true,false,false);
+            DefaultMutableTreeNode root = UtilesArbol.crearArbol("ORGANIGRAMA", true, false, false);
             jTreePersonaVisitada = new JTree(root);
             jTreePersonaVisitada.setCellRenderer(new CustomIconRenderer());
             jTreePersonaVisitada.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
@@ -1314,7 +1344,7 @@ public class JDialogVisita extends javax.swing.JDialog {
 
     private void jButtonVisitasActivasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVisitasActivasActionPerformed
         // TODO add your handling code here:
-        JDialogVisitasActivas jDialog=new JDialogVisitasActivas(null, true);
+        JDialogVisitasActivas jDialog = new JDialogVisitasActivas(null, true);
         jDialog.setModoBuscador(true);
         jDialog.setSize(532, 552);
         WindowUtil.centerWindow(jDialog);
@@ -1327,14 +1357,17 @@ public class JDialogVisita extends javax.swing.JDialog {
         jButtonBuscarPersonaVisitadaActionPerformed(null);
     }//GEN-LAST:event_jTextFieldFiltroArbolKeyReleased
 
-    private void jDialogVisitaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jDialogVisitaKeyReleased
+    private void jPanelArbolVisitaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanelArbolVisitaKeyReleased
         // TODO add your handling code here:
-        if (evt.getKeyCode() == KeyEvent.VK_F12) {
-            jButtonNuevaVisitaActionPerformed(null);
-            
-        }
-        
-    }//GEN-LAST:event_jDialogVisitaKeyReleased
+    }//GEN-LAST:event_jPanelArbolVisitaKeyReleased
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formMouseClicked
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formKeyPressed
 
     /**
      * @param args the command line arguments
