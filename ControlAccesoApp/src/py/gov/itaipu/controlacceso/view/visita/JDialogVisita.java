@@ -777,7 +777,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         v.setFechaSalida(c.getTime());
         visitaAction.setVisita(v);
         visitaAction.guardar();
-        JOptionPane.showMessageDialog(this, "Se ha registrado la salida correctamente", "Info", 1);
+        //JOptionPane.showMessageDialog(this, "Se ha registrado la salida correctamente", "Info", 1);
     }
 
     private void cargarDatosPersona() throws ErrorInesperado {
