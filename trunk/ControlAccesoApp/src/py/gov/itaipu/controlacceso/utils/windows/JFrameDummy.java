@@ -4,6 +4,8 @@
  */
 package py.gov.itaipu.controlacceso.utils.windows;
 
+import py.gov.itaipu.controlacceso.view.JDialogAbout;
+
 /**
  *
  * @author ferboy
@@ -33,16 +35,20 @@ public class JFrameDummy extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setEnabled(false);
+        setFocusable(false);
+        setResizable(false);
+        setUndecorated(true);
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 400, Short.MAX_VALUE)
+            .add(0, 331, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 300, Short.MAX_VALUE)
+            .add(0, 0, Short.MAX_VALUE)
         );
 
         pack();
