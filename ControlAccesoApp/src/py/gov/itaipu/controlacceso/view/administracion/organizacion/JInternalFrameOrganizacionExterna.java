@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import org.jdesktop.observablecollections.ObservableCollections;
 import org.jdesktop.swingbinding.JTableBinding;
@@ -55,6 +56,12 @@ public class JInternalFrameOrganizacionExterna extends javax.swing.JInternalFram
     public void setOrganizacionSeleccionada(Organizacion organizacionSeleccionada) {
         this.organizacionSeleccionada = organizacionSeleccionada;
     }
+
+    public JTextField getjTextFieldOrganizacion() {
+        return jTextFieldOrganizacion;
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -222,17 +229,15 @@ public class JInternalFrameOrganizacionExterna extends javax.swing.JInternalFram
 
     private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
         // TODO add your handling code here:    
-        try {
             JDialogOrganizacionExterna dialogOrganizacion = new JDialogOrganizacionExterna(null, true);
-            dialogOrganizacion.setOrganizacion(new Organizacion());
+            Organizacion o=new Organizacion();
+            o.setNombre(jTextFieldOrganizacion.getText());
+            dialogOrganizacion.setOrganizacion(o);
             WindowUtil.centerWindow(dialogOrganizacion);
             dialogOrganizacion.setVisible(true);
             listOrganizaciones.clear();
-            listOrganizaciones.addAll(organizacionAction.findByNamedQuery("Organizacion.findAllExterna"));
-        } catch (ErrorInesperado ei) {
-            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
-            System.exit(-1);
-        }
+            listOrganizaciones.add(o);
+        
 
     }//GEN-LAST:event_jButtonNuevoActionPerformed
 

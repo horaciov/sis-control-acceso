@@ -5,6 +5,7 @@
 package py.gov.itaipu.controlacceso.view.administracion.organizacion;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import org.jdesktop.observablecollections.ObservableCollections;
 import py.gov.itaipu.controlacceso.action.CRUDAction;
 import py.gov.itaipu.controlacceso.model.Organizacion;
@@ -45,6 +46,12 @@ public class JDialogOrganizacionExterna extends javax.swing.JDialog {
     public void setReadOnly(Boolean readOnly) {
         this.readOnly = readOnly;
     }
+
+    public JTextField getjTextFieldOrganizacion() {
+        return jTextFieldOrganizacion;
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
