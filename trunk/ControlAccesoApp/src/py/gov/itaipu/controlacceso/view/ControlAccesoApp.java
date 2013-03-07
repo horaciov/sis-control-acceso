@@ -60,7 +60,6 @@ public class ControlAccesoApp {
                         }
                     });
                     dialog.setVisible(true);
-                    frameDummy.setVisible(false);
                 } else if (rol.getNombre().equals("ADMINISTRATIVO")) {
                     JDialogAdministracion dialog = new JDialogAdministracion(frameDummy, false);
                     dialog.setSize(480, 230);
@@ -72,7 +71,6 @@ public class ControlAccesoApp {
                         }
                     });
                     dialog.setVisible(true);
-                    frameDummy.dispose();
                 } else if (rol.getNombre().equals("ANALISTA")) {
                     JDialogAnalisis dialog = new JDialogAnalisis(frameDummy, false);
                     dialog.setSize(450, 250);
@@ -84,7 +82,6 @@ public class ControlAccesoApp {
                         }
                     });
                     dialog.setVisible(true);
-                    frameDummy.dispose();
                 } else if (rol.getNombre().equals("SEGURIDAD SISTEMA")) {
                     JDialogSeguridadMant dialog = new JDialogSeguridadMant(frameDummy, false);
                     dialog.setSize(900, 320);
@@ -96,7 +93,6 @@ public class ControlAccesoApp {
                         }
                     });
                     dialog.setVisible(true);
-                    frameDummy.dispose();
                 } else {
                     JOptionPane.showMessageDialog(null, "No cuenta con un rol para acceder al sistema, pongase en contacto con el administrador.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
@@ -106,7 +102,6 @@ public class ControlAccesoApp {
                 dialog.setSize(350, 145);
                 WindowUtil.centerWindow(dialog);
                 dialog.setVisible(true);
-                frameDummy.dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "No cuenta con un rol para acceder al sistema, pongase en contacto con el administrador.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
