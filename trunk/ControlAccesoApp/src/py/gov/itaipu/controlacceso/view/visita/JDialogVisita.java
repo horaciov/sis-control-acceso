@@ -68,6 +68,7 @@ import py.gov.itaipu.controlacceso.model.exception.ErrorInesperado;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
 import py.gov.itaipu.controlacceso.utils.tree.CustomIconRenderer;
 import py.gov.itaipu.controlacceso.utils.tree.UtilesArbol;
+import py.gov.itaipu.controlacceso.utils.windows.JFrameDummy;
 import py.gov.itaipu.controlacceso.utils.windows.WindowUtil;
 import py.gov.itaipu.controlacceso.view.AdminCamera;
 import py.gov.itaipu.controlacceso.view.JDialogAbout;
@@ -715,6 +716,7 @@ public class JDialogVisita extends javax.swing.JDialog {
             } else {
                 if (jCheckBoxReimprimir.isSelected()) {
                     imprimirTicket(v);
+                    jCheckBoxReimprimir.setSelected(false);
                     jButtonNuevaVisita.setVisible(false);
                     jCheckBoxReimprimir.setVisible(true);
                     limpiarDatosPersona();
@@ -815,7 +817,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         jTextAreaObservacion.setText("");
         jTextFieldCodigoCarnet.setText("");
         listUltimasVisitas.clear();
-        jTreePersonaVisitada.setSelectionPath(null);
+        jTreePersonaVisitada.setSelectionPath(null);        
         jLabelFotografia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/sin_foto_small.jpg")));
     }
 
