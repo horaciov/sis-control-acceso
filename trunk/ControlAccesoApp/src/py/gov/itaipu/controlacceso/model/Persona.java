@@ -262,7 +262,7 @@ public class Persona implements Serializable{
 
     @Override
     public String toString() {
-        return  apellido + ", "+nombre;
+        return  tipoDocumento.getNombre().toUpperCase()+": "+numeroDocumento+", "+apellido + ", "+nombre;
     }
     
 }
