@@ -58,8 +58,6 @@ public class JDialogFotografia extends javax.swing.JDialog {
         initComponents();
         videoScreen = AdminCamera.player.getVisualComponent();
 //            //place player and video screen on the frame
-        jPanelCamara.add(videoScreen, BorderLayout.CENTER);
-        jPanelCamara.add(AdminCamera.player.getControlPanelComponent(), BorderLayout.SOUTH);
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/resource/img/bandera-paraguay.png")).getImage());
     }
 
@@ -89,6 +87,7 @@ public class JDialogFotografia extends javax.swing.JDialog {
         this.modo = modo;
         this.persona = persona;
         capturado = false;
+        jPanelCamara.removeAll();
         if (modo.equals("CAPTURAR")) {
             jLabelTitulo.setText("Capturar Fotografia");
             //place player and video screen on the frame
@@ -328,6 +327,9 @@ public class JDialogFotografia extends javax.swing.JDialog {
     }
 
     private void iniciarWebCam() throws Exception {
+        jPanelCamara.add(videoScreen, BorderLayout.CENTER);
+        jPanelCamara.add(AdminCamera.player.getControlPanelComponent(), BorderLayout.SOUTH);
+        jButtonCapturar.setVisible(true);
         AdminCamera.player.start();
     }
 
