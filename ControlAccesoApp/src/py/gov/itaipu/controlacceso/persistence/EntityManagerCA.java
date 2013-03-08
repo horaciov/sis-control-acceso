@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import org.hibernate.Session;
 
 /**
  *
@@ -40,9 +41,8 @@ public class EntityManagerCA {
 
     public static Connection getConexion() throws SQLException {
         if (conexion == null) {
-//            conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/controlaccesodb", "controlacceso", "controlacceso");
-            conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/controlaccesodb", "controlacceso", "controlacceso");
-        }
+            conexion = ((Session)em.getDelegate()).connection();
+        }        
         return conexion;
     }
 
