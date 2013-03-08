@@ -386,6 +386,7 @@ public class JDialogRepVisitasGeneral extends javax.swing.JDialog {
         JInternalFrameOrganizacionExterna jFrameOrganizacionExterna = new JInternalFrameOrganizacionExterna();
         jFrameOrganizacionExterna.setModoBuscador(true);
         jFrameOrganizacionExterna.setVisible(true);
+        jFrameOrganizacionExterna.setSize(600, 500);
         JDialogBuscador buscador = new JDialogBuscador(null, true);
         buscador.setSize(jFrameOrganizacionExterna.getSize());
         jFrameOrganizacionExterna.setClosable(false);
