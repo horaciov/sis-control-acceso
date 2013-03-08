@@ -535,6 +535,7 @@ public class JInternalFrameConsultaVisita extends javax.swing.JInternalFrame {
         JInternalFrameOrganizacionExterna jFrameOrganizacionExterna = new JInternalFrameOrganizacionExterna();
         jFrameOrganizacionExterna.setModoBuscador(true);
         jFrameOrganizacionExterna.setVisible(true);
+        jFrameOrganizacionExterna.setSize(600, 500);
         JDialogBuscador buscador = new JDialogBuscador(null, closable);
         buscador.setSize(jFrameOrganizacionExterna.getSize());
         jFrameOrganizacionExterna.setClosable(false);
