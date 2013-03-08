@@ -383,9 +383,10 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
 
     private void jButtonBuscarOrganizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarOrganizacionActionPerformed
         // TODO add your handling code here:
-        JInternalFrameOrganizacion jFrameOrganizacion = new JInternalFrameOrganizacion();
+        JInternalFrameOrganizacionExterna jFrameOrganizacion = new JInternalFrameOrganizacionExterna();
         jFrameOrganizacion.setModoBuscador(true);
         jFrameOrganizacion.setVisible(true);
+        jFrameOrganizacion.setSize(600,500);
         JDialogBuscador buscador = new JDialogBuscador(null, true);
         buscador.setSize(jFrameOrganizacion.getSize());
         jFrameOrganizacion.setClosable(false);
@@ -526,7 +527,7 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
             //            Muestra el Reporte en Pantalla
             JasperViewer jviewer = new JasperViewer(jasperPrint, false);
             jviewer.setModalExclusionType(Dialog.ModalExclusionType.NO_EXCLUDE);
-            jviewer.viewReport(jasperPrint, true);
+            jviewer.viewReport(jasperPrint, false);
 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(JInternalFramePersona.class.getName()).log(Level.SEVERE, null, ex);
@@ -540,7 +541,7 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
 
     private void jButtonLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarActionPerformed
         // TODO add your handling code here:
-        try {
+     
             jTextFieldNombreFiltro.setText(null);
             jTextFieldApellidoFiltro.setText(null);
             jTextFieldNroDoc.setText(null);
@@ -551,41 +552,45 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
             jComboBoxNacionalidad.setSelectedIndex(0);
             jFormattedTextFechDesde.setText(null);
             jFormattedTextFechHasta.setText(null);
-            if (!modoBuscador) {
-//                jRadioButtonAmbos.setSelected(true);
-            }
-
             personaFiltro = new Persona();
             personaFiltro2 = new Persona();
             listPersonas.clear();
-            listPersonas.addAll(personaAction.findByParameters(personaFiltro, personaFiltro2, tipoOrganizacionPersona));
-        } catch (ErrorInesperado ei) {
-            JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
-            System.exit(-1);
-        }
+            
+        
     }//GEN-LAST:event_jButtonLimpiarActionPerformed
 
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
         // TODO add your handling code here:
+        
         try {
             if (jTextFieldNombreFiltro.getText() != null && !jTextFieldNombreFiltro.getText().equals("")) {
                 personaFiltro.setNombre(jTextFieldNombreFiltro.getText().toUpperCase());
+            }else{
+                personaFiltro.setNombre("");
             }
 
             if (jTextFieldApellidoFiltro.getText() != null && !jTextFieldApellidoFiltro.getText().equals("")) {
                 personaFiltro.setApellido(jTextFieldApellidoFiltro.getText().toUpperCase());
+            }else{
+                personaFiltro.setApellido("");
             }
 
             if (jTextFieldNroDoc.getText() != null && !jTextFieldNroDoc.getText().equals("")) {
                 personaFiltro.setNumeroDocumento(jTextFieldNroDoc.getText().toUpperCase());
+            }else{
+                personaFiltro.setNumeroDocumento(null);
             }
 
             if (jFormattedTextFechDesde.getText() != null && !jFormattedTextFechDesde.getText().equals("")) {
                 personaFiltro.setFechaNacimiento(((Date) jFormattedTextFechDesde.getValue()));
+            }else{
+                 personaFiltro.setFechaNacimiento(null);
             }
 
             if (jFormattedTextFechHasta.getText() != null && !jFormattedTextFechHasta.getText().equals("")) {
                 personaFiltro2.setFechaNacimiento(((Date) jFormattedTextFechHasta.getValue()));
+            }else{
+                personaFiltro2.setFechaNacimiento(null);
             }
 
             Nacionalidad nac = (Nacionalidad) jComboBoxNacionalidad.getSelectedItem();
@@ -635,6 +640,8 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
                 cal.add(Calendar.SECOND, 59);
                 fec1 = cal.getTime();
                 personaFiltro.setFechaNacimiento(fec1);
+            }else{
+                personaFiltro.setFechaNacimiento(null);
             }
 
             if (jFormattedTextFechHasta.getText() != null && !jFormattedTextFechHasta.getText().equals("")) {
@@ -647,6 +654,8 @@ public class JDialogPersonaPrincipal extends javax.swing.JDialog {
                 cal.add(Calendar.SECOND, 59);
                 fec2 = cal.getTime();
                 personaFiltro2.setFechaNacimiento(fec2);
+            }else{
+                personaFiltro2.setFechaNacimiento(null);
             }
 
             listPersonas.clear();
