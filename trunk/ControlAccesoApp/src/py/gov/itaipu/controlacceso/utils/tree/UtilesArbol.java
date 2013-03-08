@@ -54,7 +54,7 @@ public class UtilesArbol {
         
         CRUDAction<Organizacion> organizacionAction = new CRUDAction<Organizacion>(new Organizacion());
         List<Organizacion> listaOrganizacion = new ArrayList<Organizacion>();
-        listaOrganizacion = organizacionAction.findAllByName(filtro);
+        listaOrganizacion = organizacionAction.findAllByNameWithCondition(filtro,"tipoOrganizacion='INTERNA'");
         for (int i = 0; i < listaOrganizacion.size(); i++) {
             Organizacion organizacion = listaOrganizacion.get(i);
             if (!(organizacion.getEstado()!=null && organizacion.getEstado().getNombre().equals("INHABILITADO"))) {
