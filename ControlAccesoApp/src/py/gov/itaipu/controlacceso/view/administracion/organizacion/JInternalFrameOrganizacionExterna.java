@@ -94,20 +94,20 @@ public class JInternalFrameOrganizacionExterna extends javax.swing.JInternalFram
 
         setTitle("Gestión de organizaciones externas");
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
-            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
-                formInternalFrameOpened(evt);
-            }
-            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
             }
-            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
             }
-            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
             }
-            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
             }
         });
         getContentPane().setLayout(null);
@@ -137,7 +137,7 @@ public class JInternalFrameOrganizacionExterna extends javax.swing.JInternalFram
         jTableOrganizaciones.getColumnModel().getColumn(1).setMaxWidth(400);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(6, 129, 595, 310);
+        jScrollPane1.setBounds(6, 129, 595, 290);
 
         jButtonNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/new.jpg"))); // NOI18N
         jButtonNuevo.setText("Nuevo");
@@ -189,13 +189,13 @@ public class JInternalFrameOrganizacionExterna extends javax.swing.JInternalFram
         getContentPane().add(jButtonEliminar);
         jButtonEliminar.setBounds(130, 90, 100, 25);
         getContentPane().add(jSeparator1);
-        jSeparator1.setBounds(6, 27, 575, 12);
+        jSeparator1.setBounds(6, 27, 575, 2);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 51, 102));
         jLabel1.setText("Organizaciones");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(10, 10, 92, 15);
+        jLabel1.setBounds(10, 10, 91, 15);
 
         jButtonVer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/view.png"))); // NOI18N
         jButtonVer.setText("Ver");
@@ -212,7 +212,7 @@ public class JInternalFrameOrganizacionExterna extends javax.swing.JInternalFram
 
         jLabel2.setText("Organización:");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(10, 50, 120, 16);
+        jLabel2.setBounds(10, 50, 120, 14);
 
         jTextFieldOrganizacion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -220,7 +220,7 @@ public class JInternalFrameOrganizacionExterna extends javax.swing.JInternalFram
             }
         });
         getContentPane().add(jTextFieldOrganizacion);
-        jTextFieldOrganizacion.setBounds(110, 50, 420, 28);
+        jTextFieldOrganizacion.setBounds(110, 50, 420, 20);
 
         bindingGroup.bind();
 
@@ -249,7 +249,7 @@ public class JInternalFrameOrganizacionExterna extends javax.swing.JInternalFram
                 return;
             }
             Organizacion m = (Organizacion) listOrganizaciones.get(jTableOrganizaciones.getSelectedRow());
-            JDialogOrganizacionExterna dialogOrganizacion = new JDialogOrganizacionExterna(null, closable);
+            JDialogOrganizacionExterna dialogOrganizacion = new JDialogOrganizacionExterna(null, true);
             dialogOrganizacion.setOrganizacion(m);
             dialogOrganizacion.setVisible(true);
             listOrganizaciones.clear();
@@ -315,7 +315,7 @@ public class JInternalFrameOrganizacionExterna extends javax.swing.JInternalFram
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
         // TODO add your handling code here:
         if (modoBuscador) {
-            jButtonEditar.setVisible(false);
+            jButtonEditar.setVisible(true);
             jButtonEliminar.setVisible(false);
             jButtonNuevo.setVisible(true);
             jButtonVer.setVisible(false);
