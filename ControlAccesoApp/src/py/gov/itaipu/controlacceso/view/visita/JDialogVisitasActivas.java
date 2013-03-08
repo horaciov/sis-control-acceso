@@ -1,3 +1,4 @@
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -90,8 +91,14 @@ public class JDialogVisitasActivas extends javax.swing.JDialog {
         jLabel9.setText("Buscar");
         getContentPane().add(jLabel9);
         jLabel9.setBounds(20, 20, 60, 20);
+
+        jTextFieldFiltroArbol.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldFiltroArbolKeyReleased(evt);
+            }
+        });
         getContentPane().add(jTextFieldFiltroArbol);
-        jTextFieldFiltroArbol.setBounds(90, 20, 260, 20);
+        jTextFieldFiltroArbol.setBounds(90, 20, 260, 28);
 
         jButtonBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/view.png"))); // NOI18N
         jButtonBuscar.setToolTipText("Buscar Persona");
@@ -174,8 +181,11 @@ public class JDialogVisitasActivas extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButtonLimpiarActionPerformed
 
-    
-    
+    private void jTextFieldFiltroArbolKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldFiltroArbolKeyReleased
+        // TODO add your handling code here:
+        jButtonBuscarActionPerformed(null);
+    }//GEN-LAST:event_jTextFieldFiltroArbolKeyReleased
+
 
     public Boolean getModoBuscador() {
         return modoBuscador;
