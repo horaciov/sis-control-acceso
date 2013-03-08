@@ -49,10 +49,12 @@ import py.gov.itaipu.controlacceso.model.Persona;
 import py.gov.itaipu.controlacceso.model.Visita;
 import py.gov.itaipu.controlacceso.model.exception.ErrorInesperado;
 import py.gov.itaipu.controlacceso.persistence.EntityManagerCA;
+import py.gov.itaipu.controlacceso.utils.windows.WindowUtil;
 import py.gov.itaipu.controlacceso.view.JDialogBuscador;
 import py.gov.itaipu.controlacceso.view.TimeRenderer;
 import py.gov.itaipu.controlacceso.view.administracion.organizacion.JDialogOrganigrama;
 import py.gov.itaipu.controlacceso.view.administracion.organizacion.JInternalFrameOrganizacionExterna;
+import py.gov.itaipu.controlacceso.view.persona.JDialogPersonaPrincipal;
 import py.gov.itaipu.controlacceso.view.persona.JInternalFramePersona;
 
 /**
@@ -402,18 +404,15 @@ public class JDialogConsultaVisitas extends javax.swing.JDialog {
 
     private void jButtonBuscarPersonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarPersonaActionPerformed
         // TODO add your handling code here:
-        JInternalFramePersona jFramePersona = new JInternalFramePersona();
-        jFramePersona.setModoBuscador(true);
-        jFramePersona.setTitle("Buscador de Personas Externas");
-        jFramePersona.setTipoOrganizacionPersona("EXTERNA");
-        jFramePersona.setVisible(true);
-        JDialogBuscador buscador = new JDialogBuscador(null, true);
-        buscador.setSize(jFramePersona.getSize());
-        //jFramePersona.setClosable(false);
-        jFramePersona.setResizable(false);
-        buscador.getjDesktopPaneBuscador().add(jFramePersona);
-        buscador.setVisible(true);
-        persona = jFramePersona.getPersonaSeleccionada();
+        
+        JDialogPersonaPrincipal jdP = new JDialogPersonaPrincipal(null, true);
+        jdP.setModoBuscador(true);
+        jdP.setTitle("Buscador de Personas Externas");
+        jdP.setSize(1200, 665);
+        WindowUtil.centerWindow(jdP);
+        jdP.setResizable(false);
+        jdP.setVisible(true);
+        persona=jdP.getPersonaSeleccionada();
         if (persona != null) {
             jTextFieldPersona.setText(persona.getNombre() + ", " + persona.getApellido());
         }
@@ -471,8 +470,10 @@ public class JDialogConsultaVisitas extends javax.swing.JDialog {
         JInternalFrameOrganizacionExterna jFrameOrganizacionExterna = new JInternalFrameOrganizacionExterna();
         jFrameOrganizacionExterna.setModoBuscador(true);
         jFrameOrganizacionExterna.setVisible(true);
+        jFrameOrganizacionExterna.setSize(600, 500);
         JDialogBuscador buscador = new JDialogBuscador(null, true);
         buscador.setSize(jFrameOrganizacionExterna.getSize());
+        WindowUtil.centerWindow(buscador);
         jFrameOrganizacionExterna.setClosable(false);
         jFrameOrganizacionExterna.setResizable(false);
         jFrameOrganizacionExterna.setTitle("Buscador de organización externa");
