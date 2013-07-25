@@ -167,7 +167,7 @@ public class JDialogVisita extends javax.swing.JDialog {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         try{
-            listNacionalidades = nacionalidadAction.findAll();
+            listNacionalidades = nacionalidadAction.findAllOrderbyId();
         } catch (ErrorInesperado ei) {
             JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
             System.exit(-1);
@@ -331,7 +331,7 @@ public class JDialogVisita extends javax.swing.JDialog {
             }
         });
         jPanelArbolVisita.add(jTextFieldDocumentoPersona);
-        jTextFieldDocumentoPersona.setBounds(10, 70, 300, 49);
+        jTextFieldDocumentoPersona.setBounds(10, 70, 300, 43);
 
         jButtonNuevoTipoDoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/new.jpg"))); // NOI18N
         jButtonNuevoTipoDoc.addActionListener(new java.awt.event.ActionListener() {
@@ -354,11 +354,11 @@ public class JDialogVisita extends javax.swing.JDialog {
         jLabelMensaje.setForeground(new java.awt.Color(153, 0, 0));
         jLabelMensaje.setText("Introduzca un número de documento.");
         jPanelArbolVisita.add(jLabelMensaje);
-        jLabelMensaje.setBounds(10, 116, 310, 16);
+        jLabelMensaje.setBounds(10, 116, 310, 14);
 
         jLabel3.setText("Area/Persona: ");
         jPanelArbolVisita.add(jLabel3);
-        jLabel3.setBounds(10, 150, 130, 16);
+        jLabel3.setBounds(10, 150, 130, 14);
 
         jTextFieldFiltroArbol.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -366,7 +366,7 @@ public class JDialogVisita extends javax.swing.JDialog {
             }
         });
         jPanelArbolVisita.add(jTextFieldFiltroArbol);
-        jTextFieldFiltroArbol.setBounds(90, 150, 170, 28);
+        jTextFieldFiltroArbol.setBounds(90, 150, 170, 20);
 
         jButtonBuscarPersonaVisitada.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/view.png"))); // NOI18N
         jButtonBuscarPersonaVisitada.setToolTipText("Buscar Area/Persona");
@@ -555,7 +555,7 @@ public class JDialogVisita extends javax.swing.JDialog {
             }
         });
         jPanelVisitante.add(jButtonTomarFotografia);
-        jButtonTomarFotografia.setBounds(460, 40, 270, 28);
+        jButtonTomarFotografia.setBounds(460, 40, 270, 25);
 
         jButtonNacionalidadEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/edit.png"))); // NOI18N
         jButtonNacionalidadEdit.setFocusable(false);
@@ -612,7 +612,7 @@ public class JDialogVisita extends javax.swing.JDialog {
 
         jLabel8.setText("Area Visitada:");
         jPanelVisita.add(jLabel8);
-        jLabel8.setBounds(10, 100, 90, 16);
+        jLabel8.setBounds(10, 100, 90, 14);
 
         jTextFieldAreaVisitada.setEditable(false);
         jPanelVisita.add(jTextFieldAreaVisitada);
@@ -620,7 +620,7 @@ public class JDialogVisita extends javax.swing.JDialog {
 
         jLabel6.setText("Motivo:");
         jPanelVisita.add(jLabel6);
-        jLabel6.setBounds(10, 40, 90, 16);
+        jLabel6.setBounds(10, 40, 90, 14);
 
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listMotivos, jComboBoxMotivo);
         bindingGroup.addBinding(jComboBoxBinding);
@@ -630,7 +630,7 @@ public class JDialogVisita extends javax.swing.JDialog {
 
         jLabel5.setText("Observación:");
         jPanelVisita.add(jLabel5);
-        jLabel5.setBounds(370, 40, 90, 16);
+        jLabel5.setBounds(370, 40, 90, 14);
 
         jTextAreaObservacion.setColumns(20);
         jTextAreaObservacion.setRows(5);
@@ -641,7 +641,7 @@ public class JDialogVisita extends javax.swing.JDialog {
 
         jLabel7.setText("Persona Visitada:");
         jPanelVisita.add(jLabel7);
-        jLabel7.setBounds(10, 130, 100, 16);
+        jLabel7.setBounds(10, 130, 100, 14);
 
         jTextFieldPersonaVisitada.setEditable(false);
         jPanelVisita.add(jTextFieldPersonaVisitada);
@@ -673,7 +673,7 @@ public class JDialogVisita extends javax.swing.JDialog {
 
         jLabelCodigoCarnet.setText("Código Carnet:");
         jPanelVisita.add(jLabelCodigoCarnet);
-        jLabelCodigoCarnet.setBounds(10, 70, 120, 16);
+        jLabelCodigoCarnet.setBounds(10, 70, 120, 14);
         jPanelVisita.add(jTextFieldCodigoCarnet);
         jTextFieldCodigoCarnet.setBounds(140, 70, 180, 22);
 
@@ -827,6 +827,12 @@ public class JDialogVisita extends javax.swing.JDialog {
         jTextFieldAreaVisitada.setText("");
         jTextAreaObservacion.setText("");
         jTextFieldCodigoCarnet.setText("");
+        Nacionalidad paraguaya =  null;
+        try{
+            paraguaya=nacionalidadAction.findEqualName("PARAGUAYA").get(0);
+            jComboBoxNacionalidad.setSelectedItem(paraguaya);
+        }catch(ErrorInesperado e){
+        }
         listUltimasVisitas.clear();
         jTreePersonaVisitada.setSelectionPath(null);        
         jLabelFotografia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/sin_foto_small.jpg")));
