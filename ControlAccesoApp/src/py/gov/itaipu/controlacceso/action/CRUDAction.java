@@ -50,6 +50,19 @@ public class CRUDAction<E> {
         return result;
 
     }
+    
+    public List<E> findAllOrderbyId() throws ErrorInesperado {
+        List<E> result = null;
+        try {
+            Query query;
+            query = em.createQuery("from " + entity.getClass().getSimpleName()+" order by id");
+            result = query.getResultList();
+        } catch (RuntimeException re) {
+            throw new ErrorInesperado("Error inesperado.");
+        }
+        return result;
+
+    }
 
     public List<E> findAllProjection(String[] attributes) throws ErrorInesperado {
         List<E> result = null;
