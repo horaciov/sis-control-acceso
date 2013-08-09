@@ -131,20 +131,20 @@ public class JDialogVisita extends javax.swing.JDialog {
     }
 
     //Registra el boton f12 para guardar la visita
-    private void registrarF12(){
-     ActionListener escListener = new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if(jButtonNuevaVisita.isVisible()){
-                        jButtonNuevaVisitaActionPerformed(null);
-                    }
+    private void registrarF12() {
+        ActionListener escListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (jButtonNuevaVisita.isVisible()) {
+                    jButtonNuevaVisitaActionPerformed(null);
                 }
-            };
-            this.getRootPane().registerKeyboardAction(escListener,
-                    KeyStroke.getKeyStroke(KeyEvent.VK_F12, 0),
-                    JComponent.WHEN_IN_FOCUSED_WINDOW);
+            }
+        };
+        this.getRootPane().registerKeyboardAction(escListener,
+                KeyStroke.getKeyStroke(KeyEvent.VK_F12, 0),
+                JComponent.WHEN_IN_FOCUSED_WINDOW);
     }
-    
+
     private void fillPersona(Persona p) {
         p.setApellido(jTextFieldApellido.getText());
         p.setNombre(jTextFieldNombre.getText());
@@ -827,14 +827,14 @@ public class JDialogVisita extends javax.swing.JDialog {
         jTextFieldAreaVisitada.setText("");
         jTextAreaObservacion.setText("");
         jTextFieldCodigoCarnet.setText("");
-        Nacionalidad paraguaya =  null;
-        try{
-            paraguaya=nacionalidadAction.findEqualName("PARAGUAYA").get(0);
+        Nacionalidad paraguaya = null;
+        try {
+            paraguaya = nacionalidadAction.findEqualName("PARAGUAYA").get(0);
             jComboBoxNacionalidad.setSelectedItem(paraguaya);
-        }catch(ErrorInesperado e){
+        } catch (ErrorInesperado e) {
         }
         listUltimasVisitas.clear();
-        jTreePersonaVisitada.setSelectionPath(null);        
+        jTreePersonaVisitada.setSelectionPath(null);
         jLabelFotografia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img/sin_foto_small.jpg")));
     }
 
@@ -899,8 +899,28 @@ public class JDialogVisita extends javax.swing.JDialog {
 
     private InputStream generaBarCode(String codeDigits) {
 
-        while (codeDigits.length() < 11) {
-            codeDigits = "0" + codeDigits;
+        boolean tieneSoloDigitos = true;
+        int test = 0;
+        String codeWithOutCharacter = "";
+
+        for (char c : codeDigits.toCharArray()) {
+            try {
+                test = Integer.parseInt("" + c);
+                codeWithOutCharacter += "" + c;
+            } catch (RuntimeException re) {
+                tieneSoloDigitos = false;                
+            }
+        }
+
+
+        if (tieneSoloDigitos) {
+            while (codeDigits.length() < 11) {
+                codeDigits = "0" + codeDigits;
+            }
+        } else {
+            while (codeWithOutCharacter.length() < 11) {
+                codeWithOutCharacter = "0" + codeWithOutCharacter;
+            }
         }
 
         ByteArrayInputStream bis;
@@ -911,7 +931,11 @@ public class JDialogVisita extends javax.swing.JDialog {
         bean.doQuietZone(true);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         BitmapCanvasProvider canvas = new BitmapCanvasProvider(out, "image/jpeg", dpi, BufferedImage.TYPE_BYTE_BINARY, false, 0);
-        bean.generateBarcode(canvas, codeDigits);
+        if (tieneSoloDigitos) {
+            bean.generateBarcode(canvas, codeDigits);
+        } else {
+            bean.generateBarcode(canvas, codeWithOutCharacter);
+        }
         try {
             canvas.finish();
             out.flush();
@@ -1289,23 +1313,24 @@ public class JDialogVisita extends javax.swing.JDialog {
     private void jButtonNuevaVisitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevaVisitaActionPerformed
         try {
             // TODO add your handling code here:
-            
-                if (jTextFieldNombre.getText() != null && !jTextFieldNombre.getText().equals("") && jTextFieldApellido.getText() != null && !jTextFieldApellido.getText().equals("")) {
-                    try {
-                        fillPersona(persona);
-                        personaAction.setPersona(persona);
-                        if (persona.getId() == null) 
-                            personaAction.crear();
-                        else
-                            personaAction.guardar();
-                    } catch (EntidadExiste ex) {
-                        //No debe pasar
+
+            if (jTextFieldNombre.getText() != null && !jTextFieldNombre.getText().equals("") && jTextFieldApellido.getText() != null && !jTextFieldApellido.getText().equals("")) {
+                try {
+                    fillPersona(persona);
+                    personaAction.setPersona(persona);
+                    if (persona.getId() == null) {
+                        personaAction.crear();
+                    } else {
+                        personaAction.guardar();
                     }
-                } else {
-                    JOptionPane.showMessageDialog(null, "El nombre y apellido son obligatorios.", "Warning", JOptionPane.WARNING_MESSAGE);
-                    return;
+                } catch (EntidadExiste ex) {
+                    //No debe pasar
                 }
-            
+            } else {
+                JOptionPane.showMessageDialog(null, "El nombre y apellido son obligatorios.", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
             if (jTextFieldAreaVisitada.getText() == null || jTextFieldAreaVisitada.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Debe visitar una área o persona.", "Warning", JOptionPane.WARNING_MESSAGE);
                 return;
