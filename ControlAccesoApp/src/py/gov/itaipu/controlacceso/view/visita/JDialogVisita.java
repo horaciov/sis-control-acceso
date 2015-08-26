@@ -1017,6 +1017,10 @@ public class JDialogVisita extends javax.swing.JDialog {
         // TODO add your handling code here:
         // TODO add your handling code here:
         try {
+            if("CI".equals(((TipoDocumento) jComboBoxTipoDoc.getSelectedItem()).getNombre())){
+                  JOptionPane.showMessageDialog(null, "No se puede editar el tipo de documento CI", "Atención", JOptionPane.WARNING_MESSAGE);
+                  return;
+            }
             JDialogTipoDocumento dialogTipoDocumento = new JDialogTipoDocumento(null, rootPaneCheckingEnabled);
             dialogTipoDocumento.setTipoDocumento((TipoDocumento) jComboBoxTipoDoc.getSelectedItem());
             WindowUtil.centerWindow(dialogTipoDocumento);
@@ -1024,6 +1028,7 @@ public class JDialogVisita extends javax.swing.JDialog {
             listTipoDocumento.clear();
             listTipoDocumento.addAll(tipoDocAction.findAll());
             jComboBoxTipoDoc.setSelectedItem(dialogTipoDocumento.getTipoDocumento());
+            
         } catch (ErrorInesperado ei) {
             JOptionPane.showMessageDialog(null, "Verfique con el administrador la conexión a la base de datos y vuelva a intentar.", "Error", JOptionPane.ERROR_MESSAGE);
             System.exit(-1);
@@ -1352,6 +1357,10 @@ public class JDialogVisita extends javax.swing.JDialog {
     private void jButtonNacionalidadEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNacionalidadEditActionPerformed
         // TODO add your handling code here:
         try {
+            if("PARAGUAYA".equals(((Nacionalidad) jComboBoxNacionalidad.getSelectedItem()).getNombre())){
+                  JOptionPane.showMessageDialog(null, "No se puede editar la nacionalidad PARAGUAYA", "Atención", JOptionPane.WARNING_MESSAGE);
+                  return;
+            }
             Nacionalidad nac = (Nacionalidad) jComboBoxNacionalidad.getSelectedItem();
             JDialogoNacionalidad dialogNacionalidad = new JDialogoNacionalidad(null, rootPaneCheckingEnabled);
             dialogNacionalidad.setNacionalidad(nac);
