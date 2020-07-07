@@ -18,7 +18,7 @@ import org.hibernate.validator.constraints.Length;
 
 /**
  *
- * @author vimartih
+ * @author vimartih Horacio Villalba
  */
 @Entity
 public class Antecedente implements Serializable {
